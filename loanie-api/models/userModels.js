@@ -9,27 +9,27 @@ const userSchema = new mongoose.Schema({
   usertype: {
     type: String,
     required: true
-  }
+  },
   email: {
     type: String,
-  }
+  },
   mobilephone: {
     type: Number,
-  }
+  },
   accepttexts: {
     type: Boolean,
-  }
+  },
   acceptemails: {
     type: Boolean,
-  }
+  },
   subscriptionenddate: {
     type: Date,
     required: true
-  }
+  },
   password: {
     type: String,
     required: true
-  }
+  },
 });
 
 module.exports = mongoose.model('User', userSchema);

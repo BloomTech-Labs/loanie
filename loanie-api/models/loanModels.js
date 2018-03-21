@@ -10,7 +10,7 @@ const LoanSchema = new mongoose.Schema({
     required: true
   },
   loanmanager: {
-    username: String,
+    type: String,
     required: true
   },
   timestamp: {
