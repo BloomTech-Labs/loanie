@@ -1,30 +1,29 @@
-const Post = require('../models/postModels');
+const Loan = require('../models/loanModels');
 
-const postCreate = (req, res) => {
-  const { username, thumbnailUrl, imageUrl, likes, timestamp, comments } = req.body;
-  const newPost = new Post({ username, thumbnailUrl, imageUrl, likes: 0, timestamp, comments: [] });
-  // console.log("newPost: ", newPost);
-  newPost.save(newPost, (err, savedpost) => {
+const loanCreate = (req, res) => {
+  const { username, currentstatus, timestamp, loanmanager } = req.body;
+  const newLoan = new Loan({ username, currentstatus, timestamp, loanmanager });
+  newLoan.save(newLoan, (err, savedloan) => {
     if (err) {
       console.log("err: ", err);
       res.status(500).json(err);
       return;
     }
-    res.json(savedpost);
+    res.json(savedloan);
   })
 };
 
-const postsGetAll = (req, res) => {
-  Post.find({})
-    .then(posts => {
-      res.json(posts)
+const loansGetAll = (req, res) => {
+  Loan.find({})
+    .then(loans => {
+      res.json(loans)
     })
     .catch(err => res.status(422).json(err));
 };
 
-// const postGetById = (req, res) => {
+// const loanGetById = (req, res) => {
 //   const { id } = req.params;
-//   Post.findById(id)
+//   Loan.findById(id)
 //     .populate('username comments.username', 'username')
 //     .exec()
 //       .then((singlePost) => {
@@ -34,53 +33,53 @@ const postsGetAll = (req, res) => {
 //         .catch(err => res.status(422).json(err));
 // };
 
-const postAddComment = (req, res) => {
-  const { id, username, text } = req.body;
-  const comment = { username, text };
-  // find a single post
-  // grab comments array, add our comment to it.
-  // save post
-  Post.findById(id)
-    .then(post => {
-      if (post === null) throw new Error();
-      const comments = post.comments;
-      comments.push(comment);
-      post.save(post, (err, savedpost) => {
-        if (err) {
-          res.status(500).json(err);
-          return;
-        }
-        res.json(savedpost);
-      })
-    }).catch(err => res.status(422).json({ error: 'No Post!' }));
-};
+// const loanAddComment = (req, res) => {
+//   const { id, username, text } = req.body;
+//   const comment = { username, text };
+//   // find a single Loan
+//   // grab comments array, add our comment to it.
+//   // save Loan
+//   Loan.findById(id)
+//     .then(Loan => {
+//       if (Loan === null) throw new Error();
+//       const comments = Loan.comments;
+//       comments.push(comment);
+//       Loan.save(Loan, (err, savedloan) => {
+//         if (err) {
+//           res.status(500).json(err);
+//           return;
+//         }
+//         res.json(savedloan);
+//       })
+//     }).catch(err => res.status(422).json({ error: 'No Loan!' }));
+// };
 
-const postAddLike = (req, res) => {
-  const { id } = req.body;
-  // find a post with the "id"
-  // grab likes count, add 1 like to it.
-  // save post
-  Post.findById(id)
-    .then(post => {
-      if (post === null) {
-        console.log("null post for " + id);
-        throw new Error();
-      }
-      ++post.likes;
-      post.save(post, (err, savedpost) => {
-        if (err) {
-          res.status(500).json(err);
-          return;
-        }
-        res.json(savedpost);
-      })
-    }).catch(err => res.status(422).json({ error: 'No Post!' }));
-};
+// const loanAddLike = (req, res) => {
+//   const { id } = req.body;
+//   // find a Loan with the "id"
+//   // grab likes count, add 1 like to it.
+//   // save Loan
+//   Loan.findById(id)
+//     .then(Loan => {
+//       if (Loan === null) {
+//         console.log("null Loan for " + id);
+//         throw new Error();
+//       }
+//       ++Loan.likes;
+//       Loan.save(Loan, (err, savedloan) => {
+//         if (err) {
+//           res.status(500).json(err);
+//           return;
+//         }
+//         res.json(savedloan);
+//       })
+//     }).catch(err => res.status(422).json({ error: 'No Loan!' }));
+// };
 
 module.exports = {
-  postCreate,
-  postsGetAll,
-  //postGetById,
-  postAddComment,
-  postAddLike,
+  loanCreate,
+  loansGetAll,
+  //loanGetById,
+  // loanAddComment,
+  // loanAddLike,
 };
