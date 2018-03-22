@@ -1,19 +1,19 @@
 const mongoose = require('mongoose');
 
 const LoanSchema = new mongoose.Schema({
-  username: {
+  userId: {
     type: String,
     required: true
   },
-  currentstatus: {
+  currentStatus: {
     type: String,
     required: true
   },
-  loanmanager: {
+  loanManager: {
     type: String,
     required: true
   },
-  timestamp: {
+  timeStamp: {
     type: String,
     required: true
   },

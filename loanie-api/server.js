@@ -18,7 +18,7 @@ const corsOptions = {
 };
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/loanie', { useMongoClient: true });
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/loanie');
 
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());

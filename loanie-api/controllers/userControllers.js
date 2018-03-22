@@ -30,6 +30,10 @@ const userLogin = (req, res) => {
     .catch(err => res.status(422).json({ error: err.message }));
 };
 
+this.state = {
+  events: []
+};
+
 const usersGetAll = (req, res) => {
   User.find({})
     .then(users => {

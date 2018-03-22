@@ -1,8 +1,8 @@
 const Loan = require('../models/loanModels');
 
 const loanCreate = (req, res) => {
-  const { username, currentstatus, timestamp, loanmanager } = req.body;
-  const newLoan = new Loan({ username, currentstatus, timestamp, loanmanager });
+  const { username, currentStatus, timestamp, loanManager } = req.body;
+  const newLoan = new Loan({ username, currentStatus, timestamp, loanManager });
   newLoan.save(newLoan, (err, savedloan) => {
     if (err) {
       console.log("err: ", err);
