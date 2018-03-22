@@ -1,11 +1,11 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Loanie App",
+  "name": "Create React App loanie-view",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "https://cdn2.iconfinder.com/data/icons/crystalproject/crystal_project_256x256/apps/agt_home.png",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "png"
     }
   ],
   "start_url": "./index.html",
