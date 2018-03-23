@@ -20,3 +20,9 @@ const LoanStatusSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('LoanStatus', LoanStatusSchema);
+
+// {
+//   type: Date,
+//   // `Date.now()` returns the current unix timestamp as a number
+//   default: Date.now
+// }
