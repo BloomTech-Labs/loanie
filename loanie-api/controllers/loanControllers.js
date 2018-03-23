@@ -22,6 +22,30 @@ const loansGetAll = (req, res) => {
     .catch(err => res.status(422).json(err));
 };
 
+const loansGetAllByClientName = (req, res) => {
+  console.log("get by client name");
+  const { userId } = req.body;
+  console.log("userId:", userId);
+  Loan.find({})
+    .where("userId")
+    .equals(userId)
+    .then(loans => {
+      res.json(loans);
+    })
+    .catch(err => res.status(422).json(err));
+};
+
+// const loansGetAllByManagerName = (req, res) => {
+//   const { username } = req.body;
+//   User.find({})
+//     .where("username")
+//     .equals()
+//     .then(users => {
+//       res.json(users);
+//     })
+//     .catch(err => res.status(422).json(err));
+// };
+
 const loanGetById = (req, res) => {
   console.log("get one");
   console.log(req);
@@ -93,4 +117,5 @@ module.exports = {
   loanGetById,
   loanEdit,
   loanDelete,
+  loansGetAllByClientName,
 };
