@@ -8,12 +8,12 @@ const routes = require("./routes/routes");
 const port = process.env.PORT || 3030;
 const server = express();
 
-const corsOptions = {
-  origin: "*",
-  methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-};
+// const corsOptions = {
+//   origin: "*",
+//   methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+//   preflightContinue: false,
+//   optionsSuccessStatus: 204,
+// };
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/loanie");
@@ -21,7 +21,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/loanie");
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 
-server.use(cors());
+// server.use(cors());
 
 server.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
