@@ -6,7 +6,8 @@ const STATUS_USER_ERROR = 422;
 
 const userCreate = (req, res) => {
   const {
-    username,
+    firstName,
+    lastName,
     password,
     userType,
     email,
@@ -16,7 +17,8 @@ const userCreate = (req, res) => {
     subscriptionEndDate,
   } = req.body;
   const newUser = new User({
-    username,
+    firstName,
+    lastName,
     password,
     userType,
     email,
@@ -35,9 +37,9 @@ const userCreate = (req, res) => {
 };
 
 const userLogin = (req, res) => {
-  const { username, password } = req.body;
-  User.findOne({ username, password })
-    .select("username")
+  const { email, password } = req.body;
+  User.findOne({ email, password })
+    .select("email")
     .exec()
     .then(user => {
       if (user === null) {
@@ -90,7 +92,8 @@ const userGetById = (req, res) => {
 const userEdit = (req, res) => {
   console.log("loan edit");
   const {
-    username,
+    firstName,
+    lastName,
     password,
     userType,
     email,
@@ -106,7 +109,8 @@ const userEdit = (req, res) => {
   User.findById(id)
     .then(User => {
       if (User === null) throw new Error();
-      if (username) User.username = username;
+      if (firstName) User.firstName = firstName;
+      if (lastName) User.lastName = lastName;
       if (password) User.password = password;
       if (userType) User.userType = userType;
       if (email) User.email = email;
