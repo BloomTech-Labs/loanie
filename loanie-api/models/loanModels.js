@@ -1,22 +1,22 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const LoanSchema = new mongoose.Schema({
-  username: {
+  userId: {
     type: String,
-    required: true
+    required: true,
   },
-  currentstatus: {
+  currentStatus: {
     type: String,
-    required: true
+    required: true,
   },
-  loanmanager: {
+  loanManager: {
     type: String,
-    required: true
+    required: true,
   },
-  timestamp: {
+  timeStamp: {
     type: String,
-    required: true
+    required: true,
   },
 });
 
-module.exports = mongoose.model('Loan', LoanSchema);
+module.exports = mongoose.model("Loan", LoanSchema);

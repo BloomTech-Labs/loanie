@@ -1,15 +1,19 @@
 const mongoose = require('mongoose');
 
 const LoanStatusSchema = new mongoose.Schema({
-  currentstatus: {
+  loanId: {
+    type: String,
+    required: true
+  }
+  currentStatus: {
     type: String,
     required: true
   },
-  starttimestamp: {
+  startTimestamp: {
     type: String,
     required: true
   },
-  endtimestamp: {
+  endTimestamp: {
     type: String,
     required: true
   },

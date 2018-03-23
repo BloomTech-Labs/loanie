@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const User = require('../models/userModels');
+const User = require("../models/userModels");
 
 const STATUS_USER_ERROR = 422;
 
@@ -19,7 +19,7 @@ const userCreate = (req, res) => {
 const userLogin = (req, res) => {
   const { username, password } = req.body;
   User.findOne({ username, password })
-    .select('username')
+    .select("username")
     .exec()
     .then(user => {
       if (user === null) {
@@ -30,10 +30,14 @@ const userLogin = (req, res) => {
     .catch(err => res.status(422).json({ error: err.message }));
 };
 
+this.state = {
+  events: [],
+};
+
 const usersGetAll = (req, res) => {
   User.find({})
     .then(users => {
-      res.json(users)
+      res.json(users);
     })
     .catch(err => res.status(422).json(err));
 };
@@ -41,5 +45,5 @@ const usersGetAll = (req, res) => {
 module.exports = {
   userLogin,
   userCreate,
-  usersGetAll
+  usersGetAll,
 };
