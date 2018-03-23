@@ -71,8 +71,7 @@ const loanEdit = (req, res) => {
 const loanDelete = (req, res) => {
   console.log("loan delete");
   // find a single Loan
-  // edit loan details
-  // save Loan
+  // delete loan
   const { id } = req.params;
   Loan.findByIdAndRemove(id)
     .then(Loan => {

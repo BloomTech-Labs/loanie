@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
   },
   subscriptionEndDate: {
-    type: Date,
+    type: String,
     required: true,
   },
   password: {

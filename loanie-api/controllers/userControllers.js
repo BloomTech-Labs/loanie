@@ -5,8 +5,26 @@ const User = require("../models/userModels");
 const STATUS_USER_ERROR = 422;
 
 const userCreate = (req, res) => {
-  const { username, password } = req.body;
-  const newUser = new User({ username, password });
+  const {
+    username,
+    password,
+    userType,
+    email,
+    mobilePhone,
+    acceptTexts,
+    acceptEmails,
+    subscriptionEndDate,
+  } = req.body;
+  const newUser = new User({
+    username,
+    password,
+    userType,
+    email,
+    mobilePhone,
+    acceptTexts,
+    acceptEmails,
+    subscriptionEndDate,
+  });
   newUser.save((err, savedUser) => {
     if (err) {
       res.status(500).json(JSON.stringify(err));
