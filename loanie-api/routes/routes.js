@@ -15,5 +15,6 @@ module.exports = app => {
   app
     .route("/user/:id")
     .get(userControllers.userGetById)
+    .post(userControllers.userEdit)
     .delete(userControllers.userDelete);
 };

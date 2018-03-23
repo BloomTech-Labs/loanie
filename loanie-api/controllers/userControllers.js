@@ -87,39 +87,43 @@ const userGetById = (req, res) => {
     .catch(err => res.status(422).json({ error: "No User!" }));
 };
 
-// const loanEdit = (req, res) => {
-//   console.log("loan edit");
-//   const { userId, currentStatus, loanManager } = req.body;
-//   // find a single Loan
-//   // edit loan details
-//   // save Loan
-//   const { id } = req.params;
-//   Loan.findById(id)
-//     .then(Loan => {
-//       if (Loan === null) throw new Error();
-//       console.log(
-//         "id:",
-//         id,
-//         "userId:",
-//         userId,
-//         "currentStatus:",
-//         currentStatus,
-//         "loanManager:",
-//         loanManager
-//       );
-//       if (userId) Loan.userId = userId;
-//       if (currentStatus) Loan.currentStatus = currentStatus;
-//       if (loanManager) Loan.loanManager = loanManager;
-//       Loan.save(Loan, (err, savedloan) => {
-//         if (err) {
-//           res.status(500).json(err);
-//           return;
-//         }
-//         res.json(savedloan);
-//       });
-//     })
-//     .catch(err => res.status(422).json({ error: "No Loan!" }));
-// };
+const userEdit = (req, res) => {
+  console.log("loan edit");
+  const {
+    username,
+    password,
+    userType,
+    email,
+    mobilePhone,
+    acceptTexts,
+    acceptEmails,
+    subscriptionEndDate,
+  } = req.body;
+  // find a single User
+  // edit user details
+  // save User
+  const { id } = req.params;
+  User.findById(id)
+    .then(User => {
+      if (User === null) throw new Error();
+      if (username) User.username = username;
+      if (password) User.password = password;
+      if (userType) User.userType = userType;
+      if (email) User.email = email;
+      if (mobilePhone) User.mobilePhone = mobilePhone;
+      if (acceptTexts) User.acceptTexts = acceptTexts;
+      if (acceptEmails) User.acceptEmails = acceptEmails;
+      if (subscriptionEndDate) User.subscriptionEndDate = subscriptionEndDate;
+      User.save(User, (err, saveduser) => {
+        if (err) {
+          res.status(500).json(err);
+          return;
+        }
+        res.json(saveduser);
+      });
+    })
+    .catch(err => res.status(422).json({ error: "No Loan!" }));
+};
 
 module.exports = {
   userLogin,
@@ -127,4 +131,5 @@ module.exports = {
   usersGetAll,
   userDelete,
   userGetById,
+  userEdit,
 };
