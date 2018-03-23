@@ -9,7 +9,8 @@ module.exports = app => {
   app
     .route("/loan/:id")
     .get(loanControllers.loanGetById)
-    .post(loanControllers.loanEdit);
+    .post(loanControllers.loanEdit)
+    .delete(loanControllers.loanDelete);
 
   app.route("/newuser").post(userControllers.userCreate);
   app.route("/login").post(userControllers.userLogin);

@@ -68,31 +68,30 @@ const loanEdit = (req, res) => {
     .catch(err => res.status(422).json({ error: "No Loan!" }));
 };
 
-// const loanAddLike = (req, res) => {
-//   const { id } = req.body;
-//   // find a Loan with the "id"
-//   // grab likes count, add 1 like to it.
-//   // save Loan
-//   Loan.findById(id)
-//     .then(Loan => {
-//       if (Loan === null) {
-//         console.log("null Loan for " + id);
-//         throw new Error();
-//       }
-//       ++Loan.likes;
-//       Loan.save(Loan, (err, savedloan) => {
-//         if (err) {
-//           res.status(500).json(err);
-//           return;
-//         }
-//         res.json(savedloan);
-//       })
-//     }).catch(err => res.status(422).json({ error: 'No Loan!' }));
-// };
+const loanDelete = (req, res) => {
+  console.log("loan delete");
+  // find a single Loan
+  // edit loan details
+  // save Loan
+  const { id } = req.params;
+  Loan.findByIdAndRemove(id)
+    .then(Loan => {
+      if (Loan === null) throw new Error();
+      Loan.save(Loan, (err, savedloan) => {
+        if (err) {
+          res.status(500).json(err);
+          return;
+        }
+        res.json("Loan has been completely deleted!");
+      });
+    })
+    .catch(err => res.status(422).json({ error: "No Loan!" }));
+};
 
 module.exports = {
   loanCreate,
   loansGetAll,
   loanGetById,
   loanEdit,
+  loanDelete,
 };
