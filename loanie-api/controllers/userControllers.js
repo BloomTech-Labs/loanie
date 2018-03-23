@@ -48,10 +48,6 @@ const userLogin = (req, res) => {
     .catch(err => res.status(422).json({ error: err.message }));
 };
 
-this.state = {
-  events: [],
-};
-
 const usersGetAll = (req, res) => {
   User.find({})
     .then(users => {
@@ -60,8 +56,28 @@ const usersGetAll = (req, res) => {
     .catch(err => res.status(422).json(err));
 };
 
+const userDelete = (req, res) => {
+  console.log("user delete");
+  // find a single User account
+  // delete user account
+  const { id } = req.params;
+  User.findByIdAndRemove(id)
+    .then(User => {
+      if (User === null) throw new Error();
+      User.save(User, (err, saveduser) => {
+        if (err) {
+          res.status(500).json(err);
+          return;
+        }
+        res.json("User has been completely deleted!");
+      });
+    })
+    .catch(err => res.status(422).json({ error: "No User!" }));
+};
+
 module.exports = {
   userLogin,
   userCreate,
   usersGetAll,
+  userDelete,
 };
