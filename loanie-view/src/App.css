@@ -1,28 +1,137 @@
-.App {
-  text-align: center;
-}
+  .App {
+    display: flex;
+    flex-direction: column;
+    background-image: url("https://images.unsplash.com/photo-1455275505851-8e604db9675a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fce33a59b5a12987d31d3b767f4e6e25&auto=format&fit=crop&w=2000&q=80");
+    background-size: 100% 130%;
+    background-repeat: no-repeat;
+  }
+  .App-image-container {
+    height:50%;
+    text-align: center;
+  }
+  .App-frontpage-image {
+    margin-top: 30px;
+    width: 40%;
+    height: 40%;
+  }
+  .App-signin-container {
+    margin-top: 2%;
+    text-align: right;
+  }
+  .App-signin-item {
+    font-size: 25px;
+    margin-right: 1%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  .App-signup-item {
+    font-size: 25px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  .App-title-container {
+    text-align: left;
+  }
+  .App-title-item {
+    font-size: 50px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+  }
+  .App-text-container {
+    text-align: center;
+    height: 100%;
+  }
+  .App-text-item {
+    margin-top: 5%;
+    padding-top: 5%;
+    font-weight: bolder;
+    font-size: 30px;
+    margin-bottom: 2%;
+  }
+  .button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    width:15%;
+    cursor: pointer;
+    margin-bottom: 40%;
+  }
+  .button1 {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+  }
+  .button1:hover {
+    background-color: forestgreen; 
+    color: white;
+  }
+  .button-container{
+    text-align: center;
+    height: 25%;
+  }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
+  @media all and (max-width: 767px) {
+    .App {
+      background-size: 100% 130%;
+    }
+    .App-text-item {
+      font-size: 15px;
+    }
+    .App-signin-container {
+      height:10%;
+      text-align: right;
+    }
+    .App-signin-item {
+      font-size: 15px;
+      margin-right: 1%;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .App-signup-item {
+      font-size: 15px;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .App-text-container {
+      text-align: center;
+      height: 100%;
+      margin-top: 20%;
+    }
+    .App-title-item {
+      font-size: 30px;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      color: white;
+    }
+    .button {
+      padding: 5px 12px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 8px;
+      width:25%;
+      cursor: pointer;
+      margin-bottom: 40%;
+    }
+  }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
+  @media all and (max-width: 1500px) {
+    .App-signin-container {
+      margin-top: 2%;
+      height:20%;
+      text-align: right;
+    }
+  }
+  @media all and (max-width: 1500px) {
+    .App-signin-container {
+      margin-top: 2%;
+      height:20%;
+      text-align: right;
+    }
+  }
 
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+  
+  @media all and (max-width: 1000px) {
+    .App-signin-container {
+      margin-top: 3%;
+      height:20%;
+      text-align: right;
+    }
+  }

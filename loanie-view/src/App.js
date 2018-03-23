@@ -1,21 +1,19 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Navbar from './Navbar';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+function App() {
+  return (
+    <div className="App">
+      <Navbar />
+      <div className="App-text-container">
+        <p className="App-text-item"> Make your home purchases and mortgages easy and simple!</p>
       </div>
-    );
-  }
+      <div className="button-container">
+        <button className="button1 button "> Buy Now </button>
+      </div>
+    </div>
+  );
 }
 
 export default App;
