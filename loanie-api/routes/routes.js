@@ -6,7 +6,10 @@ module.exports = app => {
   // app.route('/likes').post(loanControllers.postAddLike);
   // app.route('/comment').post(loanControllers.postAddComment);
   app.route("/newloan").post(loanControllers.loanCreate);
-  app.route("/loan/:id").get(loanControllers.loanGetById);
+  app
+    .route("/loan/:id")
+    .get(loanControllers.loanGetById)
+    .post(loanControllers.loanEdit);
 
   app.route("/newuser").post(userControllers.userCreate);
   app.route("/login").post(userControllers.userLogin);

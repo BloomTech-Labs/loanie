@@ -27,8 +27,6 @@ const loanGetById = (req, res) => {
   console.log(req);
   const { id } = req.params;
   Loan.findById(id)
-    // .populate("userId", "userId")
-    // .exec()
     .then(singleLoan => {
       if (singleLoan === null) throw new Error();
       res.json(singleLoan);
@@ -36,26 +34,39 @@ const loanGetById = (req, res) => {
     .catch(err => res.status(422).json(err));
 };
 
-// const loanAddComment = (req, res) => {
-//   const { id, username, text } = req.body;
-//   const comment = { username, text };
-//   // find a single Loan
-//   // grab comments array, add our comment to it.
-//   // save Loan
-//   Loan.findById(id)
-//     .then(Loan => {
-//       if (Loan === null) throw new Error();
-//       const comments = Loan.comments;
-//       comments.push(comment);
-//       Loan.save(Loan, (err, savedloan) => {
-//         if (err) {
-//           res.status(500).json(err);
-//           return;
-//         }
-//         res.json(savedloan);
-//       })
-//     }).catch(err => res.status(422).json({ error: 'No Loan!' }));
-// };
+const loanEdit = (req, res) => {
+  console.log("loan edit");
+  const { userId, currentStatus, loanManager } = req.body;
+  // find a single Loan
+  // edit loan details
+  // save Loan
+  const { id } = req.params;
+  Loan.findById(id)
+    .then(Loan => {
+      if (Loan === null) throw new Error();
+      console.log(
+        "id:",
+        id,
+        "userId:",
+        userId,
+        "currentStatus:",
+        currentStatus,
+        "loanManager:",
+        loanManager
+      );
+      if (userId) Loan.userId = userId;
+      if (currentStatus) Loan.currentStatus = currentStatus;
+      if (loanManager) Loan.loanManager = loanManager;
+      Loan.save(Loan, (err, savedloan) => {
+        if (err) {
+          res.status(500).json(err);
+          return;
+        }
+        res.json(savedloan);
+      });
+    })
+    .catch(err => res.status(422).json({ error: "No Loan!" }));
+};
 
 // const loanAddLike = (req, res) => {
 //   const { id } = req.body;
@@ -83,6 +94,5 @@ module.exports = {
   loanCreate,
   loansGetAll,
   loanGetById,
-  // loanAddComment,
-  // loanAddLike,
+  loanEdit,
 };
