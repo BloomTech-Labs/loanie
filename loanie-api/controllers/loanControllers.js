@@ -23,9 +23,7 @@ const loansGetAll = (req, res) => {
 };
 
 const loansGetAllByClientName = (req, res) => {
-  console.log("get by client name");
   const { userId } = req.body;
-  console.log("userId:", userId);
   Loan.find({})
     .where("userId")
     .equals(userId)
@@ -35,16 +33,17 @@ const loansGetAllByClientName = (req, res) => {
     .catch(err => res.status(422).json(err));
 };
 
-// const loansGetAllByManagerName = (req, res) => {
-//   const { username } = req.body;
-//   User.find({})
-//     .where("username")
-//     .equals()
-//     .then(users => {
-//       res.json(users);
-//     })
-//     .catch(err => res.status(422).json(err));
-// };
+const loansGetAllByManagerName = (req, res) => {
+  console.log("get by manager name");
+  const { loanManager } = req.body;
+  Loan.find({})
+    .where("loanManager")
+    .equals(loanManager)
+    .then(loans => {
+      res.json(loans);
+    })
+    .catch(err => res.status(422).json(err));
+};
 
 const loanGetById = (req, res) => {
   console.log("get one");
@@ -93,7 +92,6 @@ const loanEdit = (req, res) => {
 };
 
 const loanDelete = (req, res) => {
-  console.log("loan delete");
   // find a single Loan
   // delete loan
   const { id } = req.params;
@@ -118,4 +116,5 @@ module.exports = {
   loanEdit,
   loanDelete,
   loansGetAllByClientName,
+  loansGetAllByManagerName,
 };

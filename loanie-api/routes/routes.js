@@ -4,7 +4,8 @@ const loanControllers = require("../controllers/loanControllers");
 module.exports = app => {
   app.route("/loans").get(loanControllers.loansGetAll);
   app.route("/newloan").post(loanControllers.loanCreate);
-  app.route("/getloan").post(loanControllers.loansGetAllByClientName);
+  app.route("/getclientloans").post(loanControllers.loansGetAllByClientName);
+  app.route("/getmanagerloans").post(loanControllers.loansGetAllByManagerName);
   app
     .route("/loan/:id")
     .get(loanControllers.loanGetById)
