@@ -12,5 +12,8 @@ module.exports = app => {
   app.route("/newuser").post(userControllers.userCreate);
   app.route("/login").post(userControllers.userLogin);
   app.route("/users").get(userControllers.usersGetAll);
-  app.route("/user/:id").delete(userControllers.userDelete);
+  app
+    .route("/user/:id")
+    .get(userControllers.userGetById)
+    .delete(userControllers.userDelete);
 };

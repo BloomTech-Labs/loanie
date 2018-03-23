@@ -75,9 +75,56 @@ const userDelete = (req, res) => {
     .catch(err => res.status(422).json({ error: "No User!" }));
 };
 
+const userGetById = (req, res) => {
+  // find a single User
+  const { id } = req.params;
+  console.log("id", id);
+  User.findById(id)
+    .then(User => {
+      if (User === null) throw new Error();
+      else res.json(User);
+    })
+    .catch(err => res.status(422).json({ error: "No User!" }));
+};
+
+// const loanEdit = (req, res) => {
+//   console.log("loan edit");
+//   const { userId, currentStatus, loanManager } = req.body;
+//   // find a single Loan
+//   // edit loan details
+//   // save Loan
+//   const { id } = req.params;
+//   Loan.findById(id)
+//     .then(Loan => {
+//       if (Loan === null) throw new Error();
+//       console.log(
+//         "id:",
+//         id,
+//         "userId:",
+//         userId,
+//         "currentStatus:",
+//         currentStatus,
+//         "loanManager:",
+//         loanManager
+//       );
+//       if (userId) Loan.userId = userId;
+//       if (currentStatus) Loan.currentStatus = currentStatus;
+//       if (loanManager) Loan.loanManager = loanManager;
+//       Loan.save(Loan, (err, savedloan) => {
+//         if (err) {
+//           res.status(500).json(err);
+//           return;
+//         }
+//         res.json(savedloan);
+//       });
+//     })
+//     .catch(err => res.status(422).json({ error: "No Loan!" }));
+// };
+
 module.exports = {
   userLogin,
   userCreate,
   usersGetAll,
   userDelete,
+  userGetById,
 };
