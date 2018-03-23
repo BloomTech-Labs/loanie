@@ -1,8 +1,8 @@
 const Loan = require("../models/loanModels");
 
 const loanCreate = (req, res) => {
-  const { username, currentStatus, timestamp, loanManager } = req.body;
-  const newLoan = new Loan({ username, currentStatus, timestamp, loanManager });
+  const { userId, currentStatus, timestamp, loanManager } = req.body;
+  const newLoan = new Loan({ userId, currentStatus, timestamp, loanManager });
   newLoan.save(newLoan, (err, savedloan) => {
     if (err) {
       console.log("err: ", err);
@@ -14,6 +14,7 @@ const loanCreate = (req, res) => {
 };
 
 const loansGetAll = (req, res) => {
+  console.log("get all");
   Loan.find({})
     .then(loans => {
       res.json(loans);
@@ -21,17 +22,19 @@ const loansGetAll = (req, res) => {
     .catch(err => res.status(422).json(err));
 };
 
-// const loanGetById = (req, res) => {
-//   const { id } = req.params;
-//   Loan.findById(id)
-//     .populate('username comments.username', 'username')
-//     .exec()
-//       .then((singlePost) => {
-//         if (singlePost === null) throw new Error();
-//         res.json(singlePost);
-//       })
-//         .catch(err => res.status(422).json(err));
-// };
+const loanGetById = (req, res) => {
+  console.log("get one");
+  console.log(req);
+  const { id } = req.params;
+  Loan.findById(id)
+    // .populate("userId", "userId")
+    // .exec()
+    .then(singleLoan => {
+      if (singleLoan === null) throw new Error();
+      res.json(singleLoan);
+    })
+    .catch(err => res.status(422).json(err));
+};
 
 // const loanAddComment = (req, res) => {
 //   const { id, username, text } = req.body;
@@ -79,7 +82,7 @@ const loansGetAll = (req, res) => {
 module.exports = {
   loanCreate,
   loansGetAll,
-  //loanGetById,
+  loanGetById,
   // loanAddComment,
   // loanAddLike,
 };
