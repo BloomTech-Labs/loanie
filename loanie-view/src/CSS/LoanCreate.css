@@ -1,0 +1,14 @@
+.LoanCreate {
+  display: flex;
+  flex-direction: column;
+}
+
+.LoanCreate-title-container {
+  margin-top: 10em;
+  margin-left: 20em;
+}
+
+.LoanCreate-form-container {
+  margin-left:20em;
+  margin-top: 1em;
+}

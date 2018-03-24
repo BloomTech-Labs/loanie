@@ -1,0 +1,9 @@
+.Billing {
+  display: flex;
+  flex-direction: column;
+}
+
+.Billing-title-containter {
+  margin-top: 10em;
+  margin-left: 20em;
+}

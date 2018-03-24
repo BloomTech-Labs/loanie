@@ -1,0 +1,11 @@
+.Login {
+  display: flex;
+  flex-direction: column;
+}
+.Login-header-container {
+  margin-top:10%;
+}
+.Loanlist-title-containter {
+  margin-top: 10%;
+  text-align: center;
+}
