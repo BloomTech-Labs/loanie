@@ -62,9 +62,10 @@ export default class PurchasePage extends Component {
       <div className="PurchasePage">
         <NavBar />
         <div className="PurchasePage-title-container">
-          <h1> Manager Account Creation Page</h1>
+          <h1> Purchase Loanie here today! </h1>
         </div>
-        <div>
+        <br />
+        <div className="PurchasePage-form-container">
           <form>
             <fieldset>
               <legend>Personal information:</legend>
