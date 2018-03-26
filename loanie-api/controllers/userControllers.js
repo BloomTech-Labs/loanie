@@ -50,6 +50,12 @@ const userLogin = (req, res) => {
     .catch(err => res.status(422).json({ error: err.message }));
 };
 
+const userToken = (req, res) => {
+  const { token } = req.body;
+  console.log(token);
+  res.json("Authenticated!");
+};
+
 const usersGetAll = (req, res) => {
   User.find({})
     .then(users => {
@@ -136,4 +142,5 @@ module.exports = {
   userDelete,
   userGetById,
   userEdit,
+  userToken,
 };

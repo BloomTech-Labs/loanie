@@ -1,5 +1,6 @@
 import React from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import axios from 'axios';
 import '../CSS/AccountLogin.css';
 
 const firebase = require('firebase');
@@ -31,10 +32,28 @@ const uiConfig = {
   // tosUrl: '<your-tos-url>',
 };
 
+function sendToken(idToken) {
+  console.log('sending token!');
+  const token = { token: idToken };
+  axios
+    .post('http://localhost:3030/auth', token)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
 export default function AccountLogin() {
   return (
     <div>
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+      <StyledFirebaseAuth
+        uiConfig={uiConfig}
+        firebaseAuth={firebase.auth().onAuthStateChanged((user) => {
+          console.log('got the ID!!', user.uid);
+          sendToken(user.uid);
+        })}
+      />
     </div>
   );
 }
