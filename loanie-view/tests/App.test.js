@@ -7,7 +7,7 @@ const assert = chai.assert;
 describe('App', () => {
   describe('loginStat', () => {
     it('should be of type boolean', () => {
-      expect()
-    })
-  })
+      expect(data.loginState).to.be.a('boolean');
+    });
+  });
 });
