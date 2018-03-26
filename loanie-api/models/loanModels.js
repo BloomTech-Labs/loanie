@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 // This table stores current status of all loans. There should always be exactly 1 row
-// for a loan in this table. userId and loanManagerId columns are forgeing keys that refer
+// for a loan in this table. ClientId and loanManagerId columns are forgeing keys that refer
 // to the unqique id of a user in User model.
 const LoanSchema = new mongoose.Schema({
-  userId: {
+  clientId: {
     type: String,
     required: true,
   },

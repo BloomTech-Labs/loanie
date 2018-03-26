@@ -9,7 +9,7 @@ module.exports = app => {
   // Creates a new loan. Creates a new row for the loan in Loan collection. 
   app.route("/newloan").post(loanControllers.loanCreate);
 
-  // Returns all loans for the given userId.
+  // Returns all loans for the given clientId.
   app.route("/getclientloans").post(loanControllers.loansGetAllByClientId);
 
   // Returns all loans for the given loanManagerId.

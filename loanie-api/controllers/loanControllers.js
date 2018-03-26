@@ -4,21 +4,21 @@ const Loan = require("../models/loanModels");
 const User = require("../models/userModels");
 
 const loanCreate = (req, res) => {
-  const { userId, currentStatus, timestamp, loanManagerId } = req.body;
+  const { clientId, currentStatus, timestamp, loanManagerId } = req.body;
 
-  // Verify that there are rows corresponding to userId and loanManagerId in User collection.
+  // Verify that there are rows corresponding to clientId and loanManagerId in User collection.
   // Only after that, create new loan.
   User.find({
     '_id': { $in: [
-        mongoose.Types.ObjectId(userId),
+        mongoose.Types.ObjectId(clientId),
         mongoose.Types.ObjectId(loanManagerId)
     ]}
   })
   .then(loans => {
     if (loans.length !== 2) {
-      res.status(422).json("userId or loanManagerId not found in User collection.");
+      res.status(422).json("clientId or loanManagerId not found in User collection.");
     } else {
-      const newLoan = new Loan({ userId, currentStatus, timestamp, loanManagerId });
+      const newLoan = new Loan({ clientId, currentStatus, timestamp, loanManagerId });
       newLoan.save(newLoan, (err, savedloan) => {
         if (err) {
           console.log("err: ", err);
@@ -42,8 +42,8 @@ const loansGetAll = (req, res) => {
 };
 
 const loansGetAllByClientId = (req, res) => {
-  const { userId } = req.body;
-  Loan.find({ userId })
+  const { clientId } = req.body;
+  Loan.find({ clientId })
     .then(loans => {
       res.json(loans);
     })
@@ -74,7 +74,7 @@ const loanGetById = (req, res) => {
 
 const loanEdit = (req, res) => {
   console.log("loan edit");
-  const { userId, currentStatus, loanManagerId } = req.body;
+  const { clientId, currentStatus, loanManagerId } = req.body;
   // find a single Loan
   // edit loan details
   // save Loan
@@ -85,14 +85,14 @@ const loanEdit = (req, res) => {
       console.log(
         "id:",
         id,
-        "userId:",
-        userId,
+        "clientId:",
+        clientId,
         "currentStatus:",
         currentStatus,
         "loanManagerId:",
         loanManagerId
       );
-      if (userId) Loan.userId = userId;
+      if (clientId) Loan.clientId = clientId;
       if (currentStatus) Loan.currentStatus = currentStatus;
       if (loanManagerId) Loan.loanManagerId = loanManagerId;
       Loan.save(Loan, (err, savedloan) => {
