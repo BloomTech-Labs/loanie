@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar';
-import '../CSS/AccountCreate.css';
+import '../CSS/AccountLogin.css';
 
 export default class AccountLogin extends Component {
   constructor() {
@@ -27,22 +27,31 @@ export default class AccountLogin extends Component {
   }
   render() {
     return (
-      <div className="Login">
+      <div className="container AccountLogin">
         <Navbar />
         <div>
-          <h1 className="Login-header-container"> Welcome to Account Login Page</h1>
-        </div>
-        <div>
-          <form>
+          <form className="form-horizontal">
             <fieldset>
-              <legend>Personal information:</legend>
-              Username:<br />
-              <input type="text" name="username" onChange={this.handleUsernameChange} /><br /><br />
-              Password:<br />
-              <input type="text" name="password" onChange={this.handlePasswordChange} /><br /><br />
+              <div className="Account-title-containter">
+                <legend className>Sign in</legend>
+              </div>
+              <div className="form-group">
+                <label className="control-label col-sm-2" htmlFor="username">Username:</label>
+                <div className="col-sm-8">
+                  <input type="text" className="form-control " name="username" placeholder="Enter username" onChange={this.handleUsernameChange} />
+                </div>
+              </div>
+              <div className="form-group" >
+                <label className="control-label col-sm-2" htmlFor="username">Password:</label>
+                <div className="col-sm-8">
+                  <input type="text" className="form-control" name="username" placeholder="Enter password" onChange={this.handlePasswordChange} />
+                </div>
+              </div>
             </fieldset>
           </form>
-          <button onClick={this.handleUserLogin}>Submit</button>
+          <div className="Account-button-container">
+            <button className="Account-button" onClick={this.handleUserLogin}>Submit</button>
+          </div>
         </div>
       </div>
     );

@@ -45,12 +45,6 @@ export default class Billing extends Component {
                 <legend>Billing information:</legend>
                 Credit Card:<br />
                 <input type="text" name="creditname" onChange={this.handleUsernameChange} /><br /><br />
-                Credit Card:
-                <select>
-                  <option value="new">New Purchase</option>
-                  <option value="refinance">Refinance</option>
-                  <option value="Constuction">Construction</option>
-                </select>
                 Credit Card Number:<br />
                 <input type="text" name="creditnumber" onChange={this.handleCreditCardNumber} /><br /><br />
                 Expiration Date:<br />
