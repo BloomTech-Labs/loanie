@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+// This table stores profile details of all users. There should always be exactly 1 row
+// for a user in this table.
 const UserSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -16,6 +18,7 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     require: true,
+    unique: true,
   },
   mobilePhone: {
     type: Number,
