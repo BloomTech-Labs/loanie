@@ -8,14 +8,25 @@ export default class LoanList extends Component {
   constructor() {
     super();
     this.state = {
-      username: 'billy',
+      authenticated: false,
     };
     this.selectLoan = this.selectLoan.bind(this);
   }
+  componentWillMount() {
+    if (this.state.authenticated === false) window.location = '/login_user';
+  }
+
   selectLoan() {
     console.log(this.state.username);
   }
   render() {
+    if (this.state.authenticated === false) {
+      return (
+        <div>
+          <h1> Please Login</h1>
+        </div>
+      );
+    }
     return (
       <div className="Loanlist">
         <Navbar />
@@ -24,7 +35,11 @@ export default class LoanList extends Component {
         </div>
         <div className="Loanlist-image-container">
           <Link to="/create_loan">
-            <img className="Loanlist-image-item" src="https://cdn.pixabay.com/photo/2012/04/02/15/48/sign-24805_960_720.png" alt="plus_sign" />
+            <img
+              className="Loanlist-image-item"
+              src="https://cdn.pixabay.com/photo/2012/04/02/15/48/sign-24805_960_720.png"
+              alt="plus_sign"
+            />
           </Link>
         </div>
         <SideBarNav />
