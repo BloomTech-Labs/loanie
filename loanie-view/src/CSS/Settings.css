@@ -1,0 +1,11 @@
+.Settings {
+  display: flex;
+  flex-direction: column;
+}
+.Settings-title-containter {
+  margin-top: 10em;
+  margin-left: 50em;
+}
+.Settings-form-container {
+  margin-left: 300px;
+}
