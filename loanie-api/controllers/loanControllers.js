@@ -1,16 +1,35 @@
+const mongoose = require("mongoose");
+
 const Loan = require("../models/loanModels");
+const User = require("../models/userModels");
 
 const loanCreate = (req, res) => {
-  const { userId, currentStatus, timestamp, loanManager } = req.body;
-  const newLoan = new Loan({ userId, currentStatus, timestamp, loanManager });
-  newLoan.save(newLoan, (err, savedloan) => {
-    if (err) {
-      console.log("err: ", err);
-      res.status(500).json(err);
-      return;
+  const { clientId, currentStatus, timestamp, loanManagerId } = req.body;
+
+  // Verify that there are rows corresponding to clientId and loanManagerId in User collection.
+  // Only after that, create new loan.
+  User.find({
+    '_id': { $in: [
+        mongoose.Types.ObjectId(clientId),
+        mongoose.Types.ObjectId(loanManagerId)
+    ]}
+  })
+  .then(loans => {
+    if (loans.length !== 2) {
+      res.status(422).json("clientId or loanManagerId not found in User collection.");
+    } else {
+      const newLoan = new Loan({ clientId, currentStatus, timestamp, loanManagerId });
+      newLoan.save(newLoan, (err, savedloan) => {
+        if (err) {
+          console.log("err: ", err);
+          res.status(500).json(err);
+          return;
+        }
+        res.json(savedloan);
+      });
     }
-    res.json(savedloan);
-  });
+  })
+  .catch(err => res.status(422).json(err));
 };
 
 const loansGetAll = (req, res) => {
@@ -22,23 +41,19 @@ const loansGetAll = (req, res) => {
     .catch(err => res.status(422).json(err));
 };
 
-const loansGetAllByClientName = (req, res) => {
-  const { userId } = req.body;
-  Loan.find({})
-    .where("userId")
-    .equals(userId)
+const loansGetAllByClientId = (req, res) => {
+  const { clientId } = req.body;
+  Loan.find({ clientId })
     .then(loans => {
       res.json(loans);
     })
     .catch(err => res.status(422).json(err));
 };
 
-const loansGetAllByManagerName = (req, res) => {
-  console.log("get by manager name");
-  const { loanManager } = req.body;
-  Loan.find({})
-    .where("loanManager")
-    .equals(loanManager)
+const loansGetAllByManagerId = (req, res) => {
+  console.log("get by manager id");
+  const { loanManagerId } = req.body;
+  Loan.find({ loanManagerId })
     .then(loans => {
       res.json(loans);
     })
@@ -59,7 +74,7 @@ const loanGetById = (req, res) => {
 
 const loanEdit = (req, res) => {
   console.log("loan edit");
-  const { userId, currentStatus, loanManager } = req.body;
+  const { clientId, currentStatus, loanManagerId } = req.body;
   // find a single Loan
   // edit loan details
   // save Loan
@@ -70,16 +85,16 @@ const loanEdit = (req, res) => {
       console.log(
         "id:",
         id,
-        "userId:",
-        userId,
+        "clientId:",
+        clientId,
         "currentStatus:",
         currentStatus,
-        "loanManager:",
-        loanManager
+        "loanManagerId:",
+        loanManagerId
       );
-      if (userId) Loan.userId = userId;
+      if (clientId) Loan.clientId = clientId;
       if (currentStatus) Loan.currentStatus = currentStatus;
-      if (loanManager) Loan.loanManager = loanManager;
+      if (loanManagerId) Loan.loanManagerId = loanManagerId;
       Loan.save(Loan, (err, savedloan) => {
         if (err) {
           res.status(500).json(err);
@@ -115,6 +130,6 @@ module.exports = {
   loanGetById,
   loanEdit,
   loanDelete,
-  loansGetAllByClientName,
-  loansGetAllByManagerName,
+  loansGetAllByClientId,
+  loansGetAllByManagerId,
 };
