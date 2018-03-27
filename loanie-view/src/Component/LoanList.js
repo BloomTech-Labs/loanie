@@ -8,7 +8,7 @@ export default class LoanList extends Component {
   constructor() {
     super();
     this.state = {
-      authenticated: false,
+      authenticated: null,
     };
     this.selectLoan = this.selectLoan.bind(this);
   }
@@ -20,7 +20,7 @@ export default class LoanList extends Component {
     console.log(this.state.username);
   }
   render() {
-    if (this.state.authenticated === false) {
+    if (this.state.authenticated === null) {
       return (
         <div>
           <h1> Please Login</h1>

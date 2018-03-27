@@ -12,8 +12,10 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-firebaseui": "^1.1.9",
+    "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.1"
+    "react-scripts": "1.1.1",
+    "redux": "^3.7.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,9 +33,6 @@
     "ignore-styles": "^5.0.1"
   },
   "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ]
+    "presets": ["es2015", "react"]
   }
 }
