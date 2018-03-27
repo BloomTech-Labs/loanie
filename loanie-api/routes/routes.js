@@ -3,10 +3,10 @@ const loanControllers = require("../controllers/loanControllers");
 
 module.exports = app => {
   // Returns all loans in the database. This is just for manual debugging,
-  // frontend should never need to user it.  
+  // frontend should never need to user it.
   app.route("/loans").get(loanControllers.loansGetAll);
 
-  // Creates a new loan. Creates a new row for the loan in Loan collection. 
+  // Creates a new loan. Creates a new row for the loan in Loan collection.
   app.route("/newloan").post(loanControllers.loanCreate);
 
   // Returns all loans for the given clientId.
@@ -31,11 +31,15 @@ module.exports = app => {
   // Returns all users in the database. This is just for manual debugging,
   // frontend should never need to user it.
   app.route("/users").get(userControllers.usersGetAll);
-  
+
   // Performs get/post/delete operations on the given user.
   app
     .route("/user/:id")
     .get(userControllers.userGetById)
     .post(userControllers.userEdit)
     .delete(userControllers.userDelete);
+
+  // Recieve client token after authentication
+
+  app.route("/auth").post(userControllers.userToken);
 };

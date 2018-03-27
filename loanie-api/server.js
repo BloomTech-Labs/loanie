@@ -8,6 +8,8 @@ const routes = require("./routes/routes");
 const port = process.env.PORT || 3030;
 const server = express();
 
+// let token = token;
+
 // const corsOptions = {
 //   origin: "*",
 //   methods: "GET, HEAD, PUT, PATCH, POST, DELETE",

@@ -1,59 +1,90 @@
-import React, { Component } from 'react';
-import Navbar from './Navbar';
-import '../CSS/AccountLogin.css';
+import React, { Component } from "react";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import axios from "axios";
+import { connect } from "react-redux";
+import { changeTokenId } from "../Actions";
+import "../CSS/AccountLogin.css";
 
-export default class AccountLogin extends Component {
-  constructor() {
-    super();
-    this.state = {
-      username: '',
-      password: '',
-    };
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleUserLogin = this.handleUserLogin.bind(this);
+const firebase = require("firebase");
+// const firebaseui = require('firebaseui');
+
+// Initialize Firebase
+const config = {
+  apiKey: "AIzaSyBUytt2TnjQ7Zso0GqnhQPctglDlcVqfdw",
+  authDomain: "loanie-web.firebaseapp.com",
+  databaseURL: "https://loanie-web.firebaseio.com",
+  projectId: "loanie-web",
+  storageBucket: "loanie-web.appspot.com",
+  messagingSenderId: "817227528608",
+};
+firebase.initializeApp(config);
+
+// Initialize the FirebaseUI Widget using Firebase.
+// const ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+const uiConfig = {
+  // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+  signInFlow: "popup",
+  signInSuccessUrl: "/loan_list",
+  signInOptions: [
+    // Leave the lines as is for the providers you want to offer your users.
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+  ],
+  // credentialHelper: firebase.auth.CredentialHelper.NONE,
+  // Terms of service url.
+  // tosUrl: '<your-tos-url>',
+};
+
+class AccountLogin extends Component {
+  constructor(props) {
+    super(props);
+    // this.sendToken = this.sendToken.bind(this);
   }
-  handleUsernameChange(event) {
-    this.setState({ username: event.target.value });
-    console.log(this.state.username);
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      console.log("got the ID!!", user.uid);
+      this.sendToken(user.uid);
+    });
   }
-  handlePasswordChange(event) {
-    this.setState({ password: event.target.value });
-    console.log(this.state.password);
+
+  sendToken(tokenId) {
+    console.log("Inside sendToken(), this.props: ", this.props);
+
+    // Change token in Redux state.
+    this.props.dispatch(changeTokenId(tokenId));
+
+    console.log("sending token to server!");
+    const token = { token: tokenId };
+    axios
+      .post("http://localhost:3030/auth", token)
+      .then(res => {
+        console.log("Response from server: ", res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
-  handleUserLogin() {
-    this.setState({ username: 'test' });
-    window.location = '/loan_list';
-  }
+
   render() {
+    console.log("Inside render(), this.props: ", this.props);
+    // console.log('TOKEN ID:', this.props.tokenId);
     return (
-      <div className="container AccountLogin">
-        <Navbar />
-        <div>
-          <form className="form-horizontal">
-            <fieldset>
-              <div className="Account-title-containter">
-                <legend className>Sign in</legend>
-              </div>
-              <div className="form-group">
-                <label className="control-label col-sm-2" htmlFor="username">Username:</label>
-                <div className="col-sm-8">
-                  <input type="text" className="form-control " name="username" placeholder="Enter username" onChange={this.handleUsernameChange} />
-                </div>
-              </div>
-              <div className="form-group" >
-                <label className="control-label col-sm-2" htmlFor="username">Password:</label>
-                <div className="col-sm-8">
-                  <input type="text" className="form-control" name="username" placeholder="Enter password" onChange={this.handlePasswordChange} />
-                </div>
-              </div>
-            </fieldset>
-          </form>
-          <div className="Account-button-container">
-            <button className="Account-button" onClick={this.handleUserLogin}>Submit</button>
-          </div>
-        </div>
+      <div>
+        <StyledFirebaseAuth
+          uiConfig={uiConfig}
+          firebaseAuth={firebase.auth()}
+        />
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    tokenId: state.tokenId,
+  };
+};
+
+export default connect(mapStateToProps)(AccountLogin);
