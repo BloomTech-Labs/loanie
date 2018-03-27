@@ -15,7 +15,9 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-persist": "^5.9.1",
+    "redux-promise": "^0.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,6 +35,9 @@
     "ignore-styles": "^5.0.1"
   },
   "babel": {
-    "presets": ["es2015", "react"]
+    "presets": [
+      "es2015",
+      "react"
+    ]
   }
 }

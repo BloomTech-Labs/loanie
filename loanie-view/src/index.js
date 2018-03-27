@@ -1,30 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import './index.css';
-import App from './App';
-import AccountCreation from './Component/AccountCreation';
-import AccountLogin from './Component/AccountLogin';
-import LoanList from './Component/LoanList';
-import Settings from './Component/Settings';
-import LoanCreate from './Component/LoanCreate';
-import Billing from './Component/Billing';
-import ClosedLoans from './Component/ClosedLoans';
-import MyLoans from './Component/MyLoans';
-import BorrowerSettings from './Component/BorrowerSettings';
-import PurchasePage from './Component/PurchasePage';
-import registerServiceWorker from './registerServiceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import ReduxPromise from "redux-promise";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import "./index.css";
+import App from "./App";
+import AccountCreation from "./Component/AccountCreation";
+import AccountLogin from "./Component/AccountLogin";
+import LoanList from "./Component/LoanList";
+import Settings from "./Component/Settings";
+import LoanCreate from "./Component/LoanCreate";
+import Billing from "./Component/Billing";
+import ClosedLoans from "./Component/ClosedLoans";
+import MyLoans from "./Component/MyLoans";
+import BorrowerSettings from "./Component/BorrowerSettings";
+import PurchasePage from "./Component/PurchasePage";
+import registerServiceWorker from "./registerServiceWorker";
+import rootReducers from "./Reducers";
 
-import reducers from './Reducers';
-
-const defaultState = {
-  tokenId: null,
-};
+const configureStore = applyMiddleware(ReduxPromise)(createStore);
+const store = configureStore(
+  rootReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
-  <Provider store={createStore(reducers, defaultState)}>
+  <Provider store={store}>
     <Router>
       <div>
         <Route exact path="/" component={App} />
@@ -41,6 +43,6 @@ ReactDOM.render(
       </div>
     </Router>
   </Provider>,
-  document.getElementById('root'),
+  document.getElementById("root")
 );
 registerServiceWorker();

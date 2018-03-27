@@ -1,25 +1,24 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import Navbar from './Navbar';
-import SideBarNav from './SideBarNav';
-import '../CSS/LoanList.css';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import Navbar from "./Navbar";
+import SideBarNav from "./SideBarNav";
+import "../CSS/LoanList.css";
 
-export default class LoanList extends Component {
-  constructor() {
-    super();
-    this.state = {
-      authenticated: null,
-    };
+class LoanList extends Component {
+  constructor(props) {
+    super(props);
     this.selectLoan = this.selectLoan.bind(this);
   }
   componentWillMount() {
-    if (this.state.authenticated === false) window.location = '/login_user';
+    //if (this.props.tokenId === '') window.location = '/login_user';
   }
 
   selectLoan() {
     console.log(this.state.username);
   }
   render() {
+    console.log("this.props", this.props);
     if (this.state.authenticated === null) {
       return (
         <div>
@@ -47,3 +46,9 @@ export default class LoanList extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  tokenId: state.tokenId,
+});
+
+export default connect(mapStateToProps)(LoanList);

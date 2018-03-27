@@ -1,12 +1,11 @@
-// import { CHANGE_TOKEN_ID } from '../Actions';
+import { CHANGE_TOKEN_ID } from "../Actions";
 
-export default function tokenIdReducer(id = '', action) {
+export default function tokenIdReducer(state = "", action) {
   switch (action.type) {
-    case 'CHANGE_TOKEN_ID':
-      return Object.assign({}, id, {
-        tokenId: action.tokenId,
-      });
+    case CHANGE_TOKEN_ID:
+      return action.tokenId;
+
     default:
-      return id;
+      return state;
   }
 }
