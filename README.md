@@ -1,4 +1,5 @@
 # loanie
+Loanie is a really great project and I'm proud to be a part of it <3/ Ryan Holdaway
 
 # LandScape
   1. The CSS for the landscape uses flexbox
