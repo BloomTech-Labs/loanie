@@ -62,7 +62,7 @@ class Billing extends Component {
     // tokenize, since there's only one in this group.
     this.props.stripe.createToken({ name: 'Jenny Rosen' }).then(({ token }) => {
       this.setState({ stripeToken: token });
-      console.log('Received Stripe token:', token);
+      console.log('Created Stripe token:', token);
       this.sendStripeToken();
     });
   };
