@@ -11,14 +11,13 @@ class LoanList extends Component {
     this.state = {
       tokenId: sessionStorage.getItem('tokenId'),
     };
-    this.selectLoan = this.selectLoan.bind(this);
   }
 
   componentWillMount() {
     // if (this.props.tokenId === '') window.location = '/login_user';
   }
 
-  selectLoan() {
+  selectLoan = () => {
     console.log(this.state.username);
   }
   render() {

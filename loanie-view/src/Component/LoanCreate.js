@@ -17,51 +17,42 @@ export default class LaonCreate extends Component {
       coMiddleName: '',
       coEmail: '',
     };
-    this.submitNewLoan = this.submitNewLoan.bind(this);
-    this.handleLoanNameChange = this.handleLoanNameChange.bind(this);
-    this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
-    this.handleMiddleNameChange = this.handleMiddleNameChange.bind(this);
-    this.handleLastNameChange = this.handleLastNameChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleCoMiddleNameChange = this.handleCoMiddleNameChange.bind(this);
-    this.handleCoLastNameChange = this.handleCoLastNameChange.bind(this);
-    this.handleCoEmailChange = this.handleCoEmailChange.bind(this);
   }
-  handleLoanNameChange(event) {
+  handleLoanNameChange = (event) => {
     this.setState({ loanName: event.target.value });
   }
-  handleFirstNameChange(event) {
+  handleFirstNameChange = (event) => {
     this.setState({ firstName: event.target.value });
     console.log(this.state.firstName);
   }
 
-  handleMiddleNameChange(event) {
+  handleMiddleNameChange = (event) => {
     this.setState({ middleName: event.target.value });
     console.log(this.state.middleName);
   }
 
-  handleLastNameChange(event) {
+  handleLastNameChange = (event) => {
     this.setState({ middleName: event.target.value });
     console.log(this.state.lastName);
   }
-  handleEmailChange(event) {
+  handleEmailChange = (event) => {
     this.setState({ email: event.target.value });
     console.log(this.state.email);
   }
-  handleCoFirstNameChange(event) {
+  handleCoFirstNameChange = (event) => {
     this.setState({ coFirstName: event.target.value });
     console.log(this.state.coFirstName);
   }
-  handleCoMiddleNameChange(event) {
+  handleCoMiddleNameChange = (event) => {
     this.setState({ coMiddleName: event.target.value });
     console.log(this.state.coMiddleName);
   }
 
-  handleCoLastNameChange(event) {
+  handleCoLastNameChange = (event) => {
     this.setState({ coLastName: event.target.value });
     console.log(this.state.coLastName);
   }
-  handleCoEmailChange(event) {
+  handleCoEmailChange = (event) => {
     this.setState({ coEmail: event.target.value });
     console.log(this.state.coEmail);
   }
