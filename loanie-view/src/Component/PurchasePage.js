@@ -14,46 +14,38 @@ export default class PurchasePage extends Component {
       password: '',
       credentials: '',
     };
-    this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
-    this.handleMiddleNameChange = this.handleMiddleNameChange.bind(this);
-    this.handleLastNameChange = this.handleLastNameChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleCredentialChange = this.handleCredentialChange.bind(this);
-    this.selectGoBack = this.selectGoBack.bind(this);
   }
-  handleFirstNameChange(event) {
+  handleFirstNameChange = (event) => {
     this.setState({ firstName: event.target.value });
     console.log(this.state.firstName);
   }
 
-  handleMiddleNameChange(event) {
+  handleMiddleNameChange = (event) => {
     this.setState({ middleName: event.target.value });
     console.log(this.state.middleName);
   }
 
-  handleLastNameChange(event) {
+  handleLastNameChange = (event) => {
     this.setState({ middleName: event.target.value });
     console.log(this.state.lastName);
   }
-  handleEmailChange(event) {
+  handleEmailChange = (event) => {
     this.setState({ email: event.target.value });
     console.log(this.state.email);
   }
-  handleUsernameChange(event) {
+  handleUsernameChange = (event) => {
     this.setState({ username: event.target.value });
     console.log(this.state.username);
   }
-  handlePasswordChange(event) {
+  handlePasswordChange = (event) => {
     this.setState({ password: event.target.value });
     console.log(this.state.password);
   }
-  handleCredentialChange(event) {
+  handleCredentialChange = (event) => {
     this.setState({ credentials: event.target.value });
     console.log(this.state.credentials);
   }
-  selectGoBack() {
+  selectGoBack = () => {
     this.setState({ username: '' });
     window.location = '/';
   }

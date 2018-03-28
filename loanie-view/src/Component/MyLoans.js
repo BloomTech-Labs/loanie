@@ -9,9 +9,8 @@ export default class MyLoans extends Component {
     this.state = {
       username: 'billy',
     };
-    this.selectLoan = this.selectLoan.bind(this);
   }
-  selectLoan() {
+  selectLoan = () => {
     console.log(this.state.username);
   }
   render() {

@@ -22,7 +22,7 @@ import rootReducers from './Reducers';
 const configureStore = applyMiddleware(ReduxPromise)(createStore);
 const store = configureStore(
   rootReducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 
 ReactDOM.render(
