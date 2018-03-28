@@ -5,7 +5,7 @@ import './Stripe.css';
 
 export default function StripeWrapper() {
   return (
-    <StripeProvider apiKey="pk_test_12345">
+    <StripeProvider apiKey="pk_test_THjqroLR8k7aGkq38ZhAiLC9">
       <MyStoreCheckout />
     </StripeProvider>
   );
