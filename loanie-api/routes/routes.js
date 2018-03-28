@@ -42,4 +42,5 @@ module.exports = app => {
   // Recieve client token after authentication
 
   app.route("/auth").post(userControllers.userToken);
+  app.route("/stripe").post(userControllers.stripeToken);
 };

@@ -56,6 +56,13 @@ const userToken = (req, res) => {
   res.json("Authenticated!");
 };
 
+const stripeToken = (req, res) => {
+  const { stripeToken, loanPlan } = req.body;
+  console.log("stripeToken", stripeToken);
+  console.log("plan", loanPlan);
+  res.json("Stripe Token Received!");
+};
+
 const usersGetAll = (req, res) => {
   User.find({})
     .then(users => {
@@ -143,4 +150,5 @@ module.exports = {
   userGetById,
   userEdit,
   userToken,
+  stripeToken,
 };

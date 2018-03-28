@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
+import axios from 'axios';
 import Navbar from './Navbar';
 import SideBarNav from './SideBarNav';
 
@@ -9,6 +10,7 @@ class Billing extends Component {
   constructor() {
     super();
     this.state = {
+      stripeToken: '',
       username: 'billy',
       creditCardNumber: '',
       creditCardExperation: '',
@@ -18,6 +20,23 @@ class Billing extends Component {
     this.submitBillingInfo = this.submitBillingInfo.bind(this);
     this.handleOneYPlanSelection = this.handleOneYPlanSelection.bind(this);
     this.handleOneLPlanSelection = this.handleOneLPlanSelection.bind(this);
+    this.sendStripeToken = this.sendStripeToken.bind(this);
+  }
+  sendStripeToken() {
+    console.log('sending stripe token to server!');
+    console.log('loanPlan on state', this.state.loanPlan);
+    const body = {
+      purchase: this.state.loanPlan,
+      stripeToken: this.state.stripeToken,
+    };
+    axios
+      .post('http://localhost:3030/stripe', body)
+      .then((res) => {
+        console.log('Response from server: ', res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   submitBillingInfo() {
     console.log(this.state.username);
@@ -36,18 +55,16 @@ class Billing extends Component {
     console.log(this.state.loanPlan);
   }
   handleSubmit = (ev) => {
-    console.log('props in submit', this.props);
     // We don't want to let default form submission happen here, which would refresh the page.
     ev.preventDefault();
 
     // Within the context of `Elements`, this call to createToken knows which Element to
     // tokenize, since there's only one in this group.
     this.props.stripe.createToken({ name: 'Jenny Rosen' }).then(({ token }) => {
+      this.setState({ stripeToken: token });
       console.log('Received Stripe token:', token);
+      this.sendStripeToken();
     });
-
-    // However, this line of code will do the same thing:
-    // this.props.stripe.createToken({type: 'card', name: 'Jenny Rosen'});
   };
   render() {
     return (
