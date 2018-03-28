@@ -26,7 +26,7 @@ class Billing extends Component {
     console.log('sending stripe token to server!');
     console.log('loanPlan on state', this.state.loanPlan);
     const body = {
-      purchase: this.state.loanPlan,
+      loanPlan: this.state.loanPlan,
       stripeToken: this.state.stripeToken,
     };
     axios
@@ -47,11 +47,11 @@ class Billing extends Component {
     console.log(this.state.creditCardNumber);
   }
   handleOneYPlanSelection() {
-    this.setState({ loanPlan: '1 Year Subscription' });
+    this.setState({ loanPlan: 'Full Year Subscription' });
     console.log(this.state.loanPlan);
   }
   handleOneLPlanSelection() {
-    this.setState({ loanPlan: '1 Loan' });
+    this.setState({ loanPlan: 'Single Loan' });
     console.log(this.state.loanPlan);
   }
   handleSubmit = (ev) => {
@@ -78,13 +78,13 @@ class Billing extends Component {
                 <input
                   type="checkbox"
                   name="creditname"
-                  onChange={this.handleOneYPlanSelection}
+                  onChange={this.handleOneYPlanSelection.bind(this)}
                 />{' '}
                 Full Year Subscription - $99.99<br />
                 <input
                   type="checkbox"
                   name="creditname"
-                  onChange={this.handleOneLPlanSelection}
+                  onChange={this.handleOneLPlanSelection.bind(this)}
                 />{' '}
                 Single Loan - $9.99<br />
                 <br />
