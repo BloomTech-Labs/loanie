@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
-import Navbar from './Navbar';
-import SideBarNav from './SideBarNav';
-import '../CSS/Billing.css';
+import React, { Component } from "react";
+import Navbar from "./Navbar";
+import SideBarNav from "./SideBarNav";
+import { CardElement } from "react-stripe-elements";
+
+import "../CSS/Billing.css";
 
 export default class Billing extends Component {
   constructor() {
     super();
     this.state = {
-      username: 'billy',
-      creditCardNumber: '',
-      creditCardExperation: '',
-      loanPlan: '',
+      username: "billy",
+      creditCardNumber: "",
+      creditCardExperation: "",
+      loanPlan: "",
     };
     this.handleCreditCardNumber = this.handleCreditCardNumber.bind(this);
     this.submitBillingInfo = this.submitBillingInfo.bind(this);
@@ -26,11 +28,11 @@ export default class Billing extends Component {
     console.log(this.state.creditCardNumber);
   }
   handleOneYPlanSelection() {
-    this.setState({ loanPlan: '1 Year Subscription' });
+    this.setState({ loanPlan: "1 Year Subscription" });
     console.log(this.state.loanPlan);
   }
   handleOneLPlanSelection() {
-    this.setState({ loanPlan: '1 Loan' });
+    this.setState({ loanPlan: "1 Loan" });
     console.log(this.state.loanPlan);
   }
   render() {
@@ -38,26 +40,24 @@ export default class Billing extends Component {
       <div className="Billing">
         <Navbar />
         <div className="Billing-title-containter">
-          <h1> Billing</h1>
           <div className="Billing-form-container">
             <form>
               <fieldset>
-                <legend>Billing information:</legend>
-                Credit Card:<br />
-                <input type="text" name="creditname" onChange={this.handleUsernameChange} /><br /><br />
-                Credit Card Number:<br />
-                <input type="text" name="creditnumber" onChange={this.handleCreditCardNumber} /><br /><br />
-                Expiration Date:<br />
-                <input type="date" name="expDate" onChange={this.handlePasswordChange} /><br /><br />
+                <legend>Select a Plan:</legend>
+                <input
+                  type="checkbox"
+                  name="creditname"
+                  onChange={this.handleOneYPlanSelection}
+                />: 1 Year Subscription - $99.99<br />
+                <input
+                  type="checkbox"
+                  name="creditname"
+                  onChange={this.handleOneLPlanSelection}
+                />: 1 Loan - $9.99
               </fieldset>
             </form>
-            <form>
-              <fieldset>
-                <legend>Select Plan:</legend>
-                <input type="checkbox" name="creditname" onChange={this.handleOneYPlanSelection} />: 1 Year Subscription - $99.99<br />
-                <input type="checkbox" name="creditname" onChange={this.handleOneLPlanSelection} />: 1 Loan - $9.99<br /><br />
-              </fieldset>
-            </form>
+            <p>Pay with a Credit/Debit Card</p>
+            <CardElement />
             <button onClick={this.submitBillingInfo}>Submit</button>
           </div>
         </div>
