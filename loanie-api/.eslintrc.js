@@ -3,13 +3,14 @@ module.exports = {
     es6: true,
     node: true,
   },
-  extends: 'airbnb',
+  extends: "airbnb",
   parserOptions: {
-    sourceType: 'module',
+    sourceType: "module",
   },
   rules: {
-    indent: ['error', 2]
-    quotes: ['error', 'double'],
-    semi: ['error', 'always'],
+    indent: ["error", 2],
+    "linebreak-style": ["error", "windows"],
+    quotes: ["error", "double"],
+    semi: ["error", "always"],
   },
 };

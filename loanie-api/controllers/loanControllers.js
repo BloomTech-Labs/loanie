@@ -4,38 +4,44 @@ const Loan = require("../models/loanModels");
 const User = require("../models/userModels");
 
 const loanCreate = (req, res) => {
-  const { clientId, currentStatus, timestamp, loanManagerId } = req.body;
+  const {
+    clientId, currentStatus, timestamp, loanManagerId,
+  } = req.body;
 
   // Verify that there are rows corresponding to clientId and loanManagerId in User collection.
   // Only after that, create new loan.
   User.find({
-    '_id': { $in: [
-        mongoose.Types.ObjectId(clientId),
-        mongoose.Types.ObjectId(loanManagerId)
-    ]}
+    _id: {
+      $in: [mongoose.Types.ObjectId(clientId), mongoose.Types.ObjectId(loanManagerId)],
+    },
   })
-  .then(loans => {
-    if (loans.length !== 2) {
-      res.status(422).json("clientId or loanManagerId not found in User collection.");
-    } else {
-      const newLoan = new Loan({ clientId, currentStatus, timestamp, loanManagerId });
-      newLoan.save(newLoan, (err, savedloan) => {
-        if (err) {
-          console.log("err: ", err);
-          res.status(500).json(err);
-          return;
-        }
-        res.json(savedloan);
-      });
-    }
-  })
-  .catch(err => res.status(422).json(err));
+    .then((loans) => {
+      if (loans.length !== 2) {
+        res.status(422).json("clientId or loanManagerId not found in User collection.");
+      } else {
+        const newLoan = new Loan({
+          clientId,
+          currentStatus,
+          timestamp,
+          loanManagerId,
+        });
+        newLoan.save(newLoan, (err, savedloan) => {
+          if (err) {
+            console.log("err: ", err);
+            res.status(500).json(err);
+            return;
+          }
+          res.json(savedloan);
+        });
+      }
+    })
+    .catch(err => res.status(422).json(err));
 };
 
 const loansGetAll = (req, res) => {
   console.log("get all");
   Loan.find({})
-    .then(loans => {
+    .then((loans) => {
       res.json(loans);
     })
     .catch(err => res.status(422).json(err));
@@ -44,7 +50,7 @@ const loansGetAll = (req, res) => {
 const loansGetAllByClientId = (req, res) => {
   const { clientId } = req.body;
   Loan.find({ clientId })
-    .then(loans => {
+    .then((loans) => {
       res.json(loans);
     })
     .catch(err => res.status(422).json(err));
@@ -54,7 +60,7 @@ const loansGetAllByManagerId = (req, res) => {
   console.log("get by manager id");
   const { loanManagerId } = req.body;
   Loan.find({ loanManagerId })
-    .then(loans => {
+    .then((loans) => {
       res.json(loans);
     })
     .catch(err => res.status(422).json(err));
@@ -65,7 +71,7 @@ const loanGetById = (req, res) => {
   console.log(req);
   const { id } = req.params;
   Loan.findById(id)
-    .then(singleLoan => {
+    .then((singleLoan) => {
       if (singleLoan === null) throw new Error();
       res.json(singleLoan);
     })
@@ -80,7 +86,7 @@ const loanEdit = (req, res) => {
   // save Loan
   const { id } = req.params;
   Loan.findById(id)
-    .then(Loan => {
+    .then(() => {
       if (Loan === null) throw new Error();
       console.log(
         "id:",
@@ -90,7 +96,7 @@ const loanEdit = (req, res) => {
         "currentStatus:",
         currentStatus,
         "loanManagerId:",
-        loanManagerId
+        loanManagerId,
       );
       if (clientId) Loan.clientId = clientId;
       if (currentStatus) Loan.currentStatus = currentStatus;
@@ -103,7 +109,7 @@ const loanEdit = (req, res) => {
         res.json(savedloan);
       });
     })
-    .catch(err => res.status(422).json({ error: "No Loan!" }));
+    .catch(err => res.status(422).json({ error: "No Loan!", err }));
 };
 
 const loanDelete = (req, res) => {
@@ -111,17 +117,17 @@ const loanDelete = (req, res) => {
   // delete loan
   const { id } = req.params;
   Loan.findByIdAndRemove(id)
-    .then(Loan => {
-      if (Loan === null) throw new Error();
-      Loan.save(Loan, (err, savedloan) => {
+    .then((loan) => {
+      if (loan === null) throw new Error();
+      Loan.save(loan, (err, savedloan) => {
         if (err) {
           res.status(500).json(err);
-          return;
+          return savedloan;
         }
-        res.json("Loan has been completely deleted!");
+        return res.json("Loan has been completely deleted!");
       });
     })
-    .catch(err => res.status(422).json({ error: "No Loan!" }));
+    .catch(err => res.status(422).json({ error: "No Loan!", err }));
 };
 
 module.exports = {
