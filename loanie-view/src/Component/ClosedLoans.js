@@ -9,8 +9,9 @@ export default class Settings extends Component {
     this.state = {
       username: 'billy',
     };
+    this.submitNewLoan = this.submitNewLoan.bind(this);
   }
-  submitNewLoan = () => {
+  submitNewLoan() {
     console.log(this.state.username);
   }
   render() {
@@ -19,7 +20,7 @@ export default class Settings extends Component {
         <Navbar />
         <div className="Loanlist-title-containter">
           <h1>Closed Loans</h1>
-          <h1> There are no closed Loans </h1>
+          <h2> There are no closed Loans </h2>
         </div>
         <SidebarNav />
       </div>

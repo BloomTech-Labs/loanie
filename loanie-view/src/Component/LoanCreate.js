@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 import SidebarNav from './SidebarNav';
 import '../CSS/LoanCreate.css';
 
-export default class LaonCreate extends Component {
+export default class LoanCreate extends Component {
   constructor() {
     super();
     this.state = {
