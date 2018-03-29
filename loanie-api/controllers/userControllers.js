@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
-
 const User = require("../models/userModels");
+const stripe = require("stripe")("sk_test_NLhlfyaCgqopGcpBvhkDdHBd");
+// const mongoose = require("mongoose");
 
-const STATUS_USER_ERROR = 422;
+// const STATUS_USER_ERROR = 422;
 
 const userCreate = (req, res) => {
   const {
@@ -41,7 +41,7 @@ const userLogin = (req, res) => {
   User.findOne({ email, password })
     .select("email")
     .exec()
-    .then(user => {
+    .then((user) => {
       if (user === null) {
         throw new Error();
       }
@@ -58,7 +58,7 @@ const userToken = (req, res) => {
 
 const usersGetAll = (req, res) => {
   User.find({})
-    .then(users => {
+    .then((users) => {
       res.json(users);
     })
     .catch(err => res.status(422).json(err));
@@ -70,9 +70,9 @@ const userDelete = (req, res) => {
   // delete user account
   const { id } = req.params;
   User.findByIdAndRemove(id)
-    .then(User => {
-      if (User === null) throw new Error();
-      User.save(User, (err, saveduser) => {
+    .then((user) => {
+      if (user === null) throw new Error();
+      User.save(user, (err) => {
         if (err) {
           res.status(500).json(err);
           return;
@@ -80,7 +80,7 @@ const userDelete = (req, res) => {
         res.json("User has been completely deleted!");
       });
     })
-    .catch(err => res.status(422).json({ error: "No User!" }));
+    .catch(err => res.status(422).json({ error: "No User!", err }));
 };
 
 const userGetById = (req, res) => {
@@ -88,11 +88,11 @@ const userGetById = (req, res) => {
   const { id } = req.params;
   console.log("id", id);
   User.findById(id)
-    .then(User => {
-      if (User === null) throw new Error();
-      else res.json(User);
+    .then((user) => {
+      if (user === null) throw new Error();
+      else res.json(user);
     })
-    .catch(err => res.status(422).json({ error: "No User!" }));
+    .catch(err => res.status(422).json({ error: "No User!", err }));
 };
 
 const userEdit = (req, res) => {
@@ -113,7 +113,7 @@ const userEdit = (req, res) => {
   // save User
   const { id } = req.params;
   User.findById(id)
-    .then(User => {
+    .then(() => {
       if (User === null) throw new Error();
       if (firstName) User.firstName = firstName;
       if (lastName) User.lastName = lastName;
@@ -132,7 +132,41 @@ const userEdit = (req, res) => {
         res.json(saveduser);
       });
     })
-    .catch(err => res.status(422).json({ error: "No Loan!" }));
+    .catch(err => res.status(422).json({ error: "No Loan!", err }));
+};
+
+// Stripe
+
+const stripeTransaction = (req, res) => {
+  let cost = 0;
+  const { stripeToken, loanPlan } = req.body;
+  // const mdata = {
+  //   name: stripeToken.card.name,
+  //   plan: loanPlan,
+  //   brand: stripeToken.card.brand,
+  //   last4: stripeToken.card.last4,
+  // };
+  if (loanPlan === "Single Loan") cost = 9.99;
+  else if (loanPlan === "Full Year Subscription") cost = 99.99;
+  else return res.json("error: No plan selected.");
+  const int = Math.round(cost * 100);
+  console.log("stripeToken", stripeToken);
+  console.log("plan", loanPlan);
+  console.log("cost integer", int);
+  return stripe.charges.create(
+    {
+      amount: int,
+      currency: "usd",
+      description: "loanie purchase",
+      // metadata: mdata,
+      source: stripeToken.id,
+    },
+    (err, charge) => {
+      if (err) return res.status(400).json(err);
+      return res.status(200).json(charge);
+    },
+  );
+  // res.json("Stripe Token Received!");
 };
 
 module.exports = {
@@ -143,4 +177,5 @@ module.exports = {
   userGetById,
   userEdit,
   userToken,
+  stripeTransaction,
 };
