@@ -39,7 +39,7 @@ class Billing extends Component {
 
   submitBillingInfo() {
     console.log(this.state.username);
-    // console.log(this.state.creditCardExperation);
+    console.log(this.state.creditCardExperation);
   }
 
   handleCreditCardNumber(event) {
