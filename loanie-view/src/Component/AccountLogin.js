@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import axios from 'axios';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 // import { changeTokenId } from '../Actions';
 import '../CSS/AccountLogin.css';
 
@@ -36,7 +36,7 @@ const uiConfig = {
   // tosUrl: '<your-tos-url>',
 };
 
-class AccountLogin extends Component {
+export default class AccountLogin extends Component {
   constructor(props) {
     super(props);
     this.sendToken = this.sendToken.bind(this);
@@ -81,8 +81,8 @@ class AccountLogin extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  tokenId: state.tokenId,
-});
+// const mapStateToProps = state => ({
+//   tokenId: state.tokenId,
+// });
 
-export default connect(mapStateToProps)(AccountLogin);
+// export default connect(mapStateToProps)(AccountLogin);
