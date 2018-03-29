@@ -39,7 +39,7 @@ class Billing extends Component {
 
   submitBillingInfo() {
     console.log(this.state.username);
-    console.log(this.state.creditCardExperation);
+    // console.log(this.state.creditCardExperation);
   }
 
   handleCreditCardNumber(event) {
@@ -54,12 +54,12 @@ class Billing extends Component {
   handleOneYPlanSelection = () => {
     this.setState({ loanPlan: 'Full Year Subscription' });
     console.log(this.state.loanPlan);
-  }
+  };
 
   handleOneLPlanSelection = () => {
     this.setState({ loanPlan: 'Single Loan' });
     console.log(this.state.loanPlan);
-  }
+  };
 
   handleSubmit = (e) => {
     // We don't want to let default form submission happen here, which would refresh the page.
