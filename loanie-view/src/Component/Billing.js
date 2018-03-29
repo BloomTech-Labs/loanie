@@ -11,7 +11,7 @@ class Billing extends Component {
     super();
     this.state = {
       stripeToken: '',
-      username: 'billy',
+      name: '',
       creditCardNumber: '',
       creditCardExperation: '',
       loanPlan: '',
@@ -20,6 +20,7 @@ class Billing extends Component {
     this.submitBillingInfo = this.submitBillingInfo.bind(this);
     this.handleOneYPlanSelection = this.handleOneYPlanSelection.bind(this);
     this.handleOneLPlanSelection = this.handleOneLPlanSelection.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
     this.sendStripeToken = this.sendStripeToken.bind(this);
   }
   sendStripeToken() {
@@ -38,34 +39,44 @@ class Billing extends Component {
         console.log(err);
       });
   }
+
   submitBillingInfo() {
     console.log(this.state.username);
     console.log(this.state.creditCardExperation);
   }
+
   handleCreditCardNumber(event) {
     this.setState({ creditCardNumber: event.target.value });
     console.log(this.state.creditCardNumber);
   }
+
+  handleNameChange(e) {
+    this.setState({ name: e.target.value });
+  }
+
   handleOneYPlanSelection() {
     this.setState({ loanPlan: 'Full Year Subscription' });
     console.log(this.state.loanPlan);
   }
+
   handleOneLPlanSelection() {
     this.setState({ loanPlan: 'Single Loan' });
     console.log(this.state.loanPlan);
   }
-  handleSubmit = (ev) => {
+
+  handleSubmit = (e) => {
     // We don't want to let default form submission happen here, which would refresh the page.
-    ev.preventDefault();
+    e.preventDefault();
 
     // Within the context of `Elements`, this call to createToken knows which Element to
     // tokenize, since there's only one in this group.
-    this.props.stripe.createToken({ name: 'Jenny Rosen' }).then(({ token }) => {
+    this.props.stripe.createToken({ name: this.state.name }).then(({ token }) => {
       this.setState({ stripeToken: token });
       console.log('Created Stripe token:', token);
       this.sendStripeToken();
     });
   };
+
   render() {
     return (
       <div className="Billing">
@@ -77,19 +88,21 @@ class Billing extends Component {
                 <legend>Select a Plan:</legend>
                 <input
                   type="checkbox"
-                  name="creditname"
+                  name="loanPlan"
                   onChange={this.handleOneYPlanSelection.bind(this)}
                 />{' '}
                 Full Year Subscription - $99.99<br />
                 <input
                   type="checkbox"
-                  name="creditname"
+                  name="loanPlan"
                   onChange={this.handleOneLPlanSelection.bind(this)}
                 />{' '}
                 Single Loan - $9.99<br />
                 <br />
+                <legend>Credit/Debit Card Details: </legend>
+                Name as it appears on card:{' '}
+                <input type="text" name="name" onChange={this.handleNameChange.bind(this)} />
               </fieldset>
-              <p>Pay with a Credit/Debit Card</p>
               <CardElement />
               <button onClick={this.submitBillingInfo}>Submit</button>
             </form>

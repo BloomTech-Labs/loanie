@@ -56,13 +56,6 @@ const userToken = (req, res) => {
   res.json("Authenticated!");
 };
 
-const stripeToken = (req, res) => {
-  const { stripeToken, loanPlan } = req.body;
-  console.log("stripeToken", stripeToken);
-  console.log("plan", loanPlan);
-  res.json("Stripe Token Received!");
-};
-
 const usersGetAll = (req, res) => {
   User.find({})
     .then(users => {
@@ -140,6 +133,41 @@ const userEdit = (req, res) => {
       });
     })
     .catch(err => res.status(422).json({ error: "No Loan!" }));
+};
+
+// Stripe
+
+const stripeToken = (req, res) => {
+  var stripe = require("stripe")("sk_test_NLhlfyaCgqopGcpBvhkDdHBd");
+  let cost = 0;
+  const { stripeToken, loanPlan } = req.body;
+  const mdata = {
+    name: stripeToken.card.name,
+    plan: loanPlan,
+    brand: stripeToken.card.brand,
+    last4: stripeToken.card.last4,
+  };
+  if (loanPlan === "Single Loan") cost = 9.99;
+  else if (loanPlan === "Full Year Subscription") cost = 99.99;
+  else return res.json("error: No plan selected.");
+  let int = Math.round(cost * 100);
+  console.log("stripeToken", stripeToken);
+  console.log("plan", loanPlan);
+  console.log("cost integer", int);
+  stripe.charges.create(
+    {
+      amount: int,
+      currency: "usd",
+      description: "loanie purchase",
+      // metadata: mdata,
+      source: stripeToken.id,
+    },
+    function(err, charge) {
+      if (err) return res.status(400).json(err);
+      else res.status(200).json(charge);
+    }
+  );
+  // res.json("Stripe Token Received!");
 };
 
 module.exports = {
