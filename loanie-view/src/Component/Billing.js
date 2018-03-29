@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar';
-import SideBarNav from './SideBarNav';
+import SidebarNav from './SidebarNav';
 import '../CSS/Billing.css';
 
 export default class Billing extends Component {
@@ -61,7 +61,7 @@ export default class Billing extends Component {
             <button onClick={this.submitBillingInfo}>Submit</button>
           </div>
         </div>
-        <SideBarNav />
+        <SidebarNav />
       </div>
     );
   }

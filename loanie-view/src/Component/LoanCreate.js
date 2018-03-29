@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar';
-import SideBarNav from './SideBarNav';
+import SidebarNav from './SidebarNav';
 import '../CSS/LoanCreate.css';
 
 export default class LaonCreate extends Component {
@@ -101,7 +101,7 @@ export default class LaonCreate extends Component {
           <br /><br />
           <button onClick={this.submitManagerAccountInfo}>Submit</button>
         </div>
-        <SideBarNav />
+        <SidebarNav />
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar';
-import SideBarNav from './SideBarNav';
+import SidebarNav from './SidebarNav';
 import '../CSS/Settings.css';
 
 export default class Settings extends Component {
@@ -38,8 +38,8 @@ export default class Settings extends Component {
               <button>Edit</button><br /><br />
             </fieldset>
           </form>
+          <SidebarNav />
         </div>
-        <SideBarNav />
       </div>
     );
   }

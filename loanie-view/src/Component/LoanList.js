@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
 import Navbar from './Navbar';
-import SideBarNav from './SideBarNav';
+import SidebarNav from './SidebarNav';
 import '../CSS/LoanList.css';
 
 class LoanList extends Component {
@@ -47,7 +47,7 @@ class LoanList extends Component {
             />
           </Link>
         </div>
-        <SideBarNav />
+        <SidebarNav />
       </div>
     );
   }
