@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
+import axios from 'axios';
 import { firebase } from './Firebase';
 import Navbar from './Navbar';
-import axios from 'axios';
 import '../CSS/AccountCreate.css';
 
 const uiConfig = {
@@ -60,13 +60,17 @@ export default class AccountCreation extends Component {
   };
 
   submitManagerAccountInfo = () => {
-    this.setState({ userType: '' });
+    this.sendToDB();
     window.location = '/loan_list';
+  };
+
+  handlePasswordChange = (event) => {
+    this.setState({ password: event.target.value });
   };
 
   handleInputChange = (telNumber, selectedCountry) => {
     console.log('input changed. number: ', telNumber, 'selected country: ', selectedCountry);
-    this.setState({ phone: telNumber, country: selectedCountry });
+    this.setState({ phone: telNumber });
   };
 
   handleInputBlur = (telNumber, selectedCountry) => {
@@ -97,6 +101,7 @@ export default class AccountCreation extends Component {
       mobilePhone: this.state.phone,
       acceptTexts: this.state.acceptText,
       acceptEmails: this.state.acceptEmail,
+      password: this.state.password,
     };
     console.log('sending to db:', userInfo);
     axios
@@ -123,7 +128,7 @@ export default class AccountCreation extends Component {
         <div className="Login">
           <Navbar />
           <div className="Login-header-container">
-            <h1> Manager Account Creation Page</h1>
+            <h1> Loan Officer Account Creation</h1>
           </div>
           <div>
             <form>
@@ -131,6 +136,15 @@ export default class AccountCreation extends Component {
                 <legend>Additional information:</legend>
                 Credentials(optional):{' '}
                 <input type="text" name="password" onChange={this.handlePasswordChange} />
+                <br />
+                <br />
+                Mobile Phone:{' '}
+                <ReactTelephoneInput
+                  defaultCountry="us"
+                  flagsImagePath=".\Images\flags.png"
+                  onChange={this.handleInputChange}
+                  onBlur={this.handleInputBlur}
+                />
                 <br />
                 <br />
                 <button onClick={this.submitManagerAccountInfo}>Submit</button>
@@ -146,16 +160,16 @@ export default class AccountCreation extends Component {
         <div className="Login">
           <Navbar />
           <div className="Login-header-container">
-            <h1> Standard Account Creation Page</h1>
+            <h1> Client Account Creation</h1>
           </div>
           <div>
             <form>
               <fieldset>
-                <legend>Personal information:</legend>
+                <legend>Additional information:</legend>
                 Mobile Phone:{' '}
                 <ReactTelephoneInput
                   defaultCountry="us"
-                  flagsImagePath="./Images/flags.png"
+                  flagsImagePath="\Images\flags.png"
                   onChange={this.handleInputChange}
                   onBlur={this.handleInputBlur}
                 />
