@@ -4,14 +4,14 @@ module.exports = {
     node: true,
     jest: true
   },
-  extends: 'airbnb',
+  extends: "airbnb",
   parserOptions: {
-    sourceType: 'module',
+    sourceType: "module",
   },
   rules: {
-    "indent": ["error", 2],
-    'linebreak-style': ['error', 'windows'],
-    quotes: ['error', 'double'],
-    semi: ['error', 'always'],
+    indent: ["error", 2],
+    "linebreak-style": ["error", "windows"],
+    quotes: ["error", "double"],
+    semi: ["error", "always"],
   },
 };

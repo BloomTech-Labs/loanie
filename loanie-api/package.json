@@ -16,7 +16,8 @@
     "mongodb": "^3.0.4",
     "mongoose": "^5.0.7",
     "nodemon": "^1.17.2",
-    "request": "^2.85.0"
+    "request": "^2.85.0",
+    "stripe": "^5.6.1"
   },
   "devDependencies": {
     "ajv": "^6.3.0",

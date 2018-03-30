@@ -57,6 +57,7 @@
     width:15%;
     cursor: pointer;
     margin-bottom: 40%;
+    height: 80%;
   }
   .button1 {
     -webkit-transition-duration: 0.4s; /* Safari */
