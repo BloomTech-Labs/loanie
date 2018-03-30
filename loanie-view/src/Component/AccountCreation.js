@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
 import { firebase } from './Firebase';
 import Navbar from './Navbar';
 import axios from 'axios';
@@ -17,9 +18,12 @@ const uiConfig = {
     signInSuccess: () => {
       firebase.auth().onAuthStateChanged((user) => {
         console.log('got the ID!!', user.uid);
+
+        // persist signup data so additional info can be added and sent to backend
         sessionStorage.setItem('tokenId', user.uid);
+        sessionStorage.setItem('email', user.email);
+        sessionStorage.setItem('name', user.displayName);
       });
-      console.log(firebase.auth.UserInfo.email);
       window.location = '/new_account';
     },
   },
@@ -32,10 +36,7 @@ export default class AccountCreation extends Component {
   constructor() {
     super();
     this.state = {
-      username: '',
-      password: '',
       userType: '',
-      tokenId: sessionStorage.getItem('tokenId'),
     };
   }
 
@@ -62,7 +63,7 @@ export default class AccountCreation extends Component {
   };
 
   submitClientAccountInfo = () => {
-    this.setState({ userType: '' });
+    this.sendToDB();
     window.location = '/my_loans';
   };
 
@@ -71,8 +72,40 @@ export default class AccountCreation extends Component {
     window.location = '/loan_list';
   };
 
+  handleInputChange = (telNumber, selectedCountry) => {
+    console.log('input changed. number: ', telNumber, 'selected country: ', selectedCountry);
+    this.setState({ phone: telNumber, country: selectedCountry });
+  };
+
+  handleInputBlur = (telNumber, selectedCountry) => {
+    console.log(
+      'Focus off the ReactTelephoneInput component. Tel number entered is: ',
+      telNumber,
+      ' selected country is: ',
+      selectedCountry,
+    );
+  };
+
+  sendToDB = () => {
+    const userInfo = {
+      name: sessionStorage.getItem('name'),
+      email: sessionStorage.getItem('email'),
+      token: sessionStorage.getItem('tokenId'),
+      phone: this.state.phone,
+      country: this.state.country,
+    };
+    axios
+      .post('http://localhost:3030/create', userInfo)
+      .then((res) => {
+        console.log('Response from server: ', res);
+      })
+      .catch((err) => {
+        console.log('Login Failed!', err);
+      });
+  };
+
   render() {
-    const token = this.state.tokenId;
+    const token = sessionStorage.getItem('tokenId');
     if (token === null || token === undefined || token === '') {
       return (
         <div>
@@ -91,17 +124,6 @@ export default class AccountCreation extends Component {
             <form>
               <fieldset>
                 <legend>Personal information:</legend>
-                First Name:{' '}
-                <input type="text" name="firstname" onChange={this.handleUsernameChange} />
-                Middle Name:{' '}
-                <input type="text" name="middlename" onChange={this.handleUsernameChange} />
-                Last Name:{' '}
-                <input type="text" name="middlename" onChange={this.handleUsernameChange} />
-                <br />
-                <br />
-                Username: <input type="text" name="username" onChange={this.handleUsernameChange} />
-                <br />
-                <br />
                 Credentials(optional):{' '}
                 <input type="text" name="password" onChange={this.handlePasswordChange} />
                 <br />
@@ -125,15 +147,13 @@ export default class AccountCreation extends Component {
             <form>
               <fieldset>
                 <legend>Personal information:</legend>
-                First Name:{' '}
-                <input type="text" name="firstname" onChange={this.handleUsernameChange} />
-                Middle Name:{' '}
-                <input type="text" name="middlename" onChange={this.handleUsernameChange} />
-                Last Name:{' '}
-                <input type="text" name="middlename" onChange={this.handleUsernameChange} />
-                <br />
-                <br />
-                Username: <input type="text" name="username" onChange={this.handleUsernameChange} />
+                Mobile Phone:{' '}
+                <ReactTelephoneInput
+                  defaultCountry="us"
+                  flagsImagePath="./Images/flags.png"
+                  onChange={this.handleInputChange}
+                  onBlur={this.handleInputBlur}
+                />
                 <br />
                 <br />
                 <button onClick={this.submitClientAccountInfo}>Submit</button>

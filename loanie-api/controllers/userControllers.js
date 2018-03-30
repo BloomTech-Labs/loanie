@@ -36,6 +36,22 @@ const userCreate = (req, res) => {
   });
 };
 
+const create = (req, res) => {
+  const { name, email, token } = req.body;
+  const newUser = new User({
+    name,
+    email,
+    token,
+  });
+  newUser.save((err, savedUser) => {
+    if (err) {
+      res.status(500).json(JSON.stringify(err));
+      return;
+    }
+    res.json(savedUser);
+  });
+};
+
 const userLogin = (req, res) => {
   const { email, password } = req.body;
   User.findOne({ email, password })
@@ -178,4 +194,5 @@ module.exports = {
   userEdit,
   userToken,
   stripeTransaction,
+  create,
 };
