@@ -19,7 +19,7 @@ class LoanList extends Component {
 
   selectLoan = () => {
     console.log(this.state.username);
-  }
+  };
   render() {
     // getter
     const token = this.state.tokenId;
