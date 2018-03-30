@@ -1,7 +1,7 @@
 // const postData = require('./application-data.js');
 const express = require("express");
 const bodyParser = require("body-parser");
-const cors = require("cors");
+// const cors = require("cors");
 const mongoose = require("mongoose");
 const routes = require("./routes/routes");
 
@@ -29,7 +29,7 @@ server.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept",
   );
   next();
 });

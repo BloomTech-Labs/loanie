@@ -32,7 +32,7 @@ const userCreate = (req, res) => {
       res.status(500).json(JSON.stringify(err));
       return;
     }
-    res.json(savedUser);
+    res.status(200).json(savedUser);
   });
 };
 
@@ -59,7 +59,7 @@ const userToken = (req, res) => {
 const usersGetAll = (req, res) => {
   User.find({})
     .then(users => {
-      res.json(users);
+      res.status(200).json(users);
     })
     .catch(err => res.status(422).json(err));
 };
