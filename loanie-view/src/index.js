@@ -18,7 +18,6 @@ import MyLoans from './Component/MyLoans';
 import BorrowerSettings from './Component/BorrowerSettings';
 import PurchasePage from './Component/PurchasePage';
 import PasswordReset from './Component/PasswordReset';
-import PasswordCode from './Component/PasswordCode';
 import registerServiceWorker from './registerServiceWorker';
 // import rootReducers from './Reducers';
 
@@ -43,7 +42,6 @@ ReactDOM.render(
       <Route path="/user_settings" component={BorrowerSettings} />
       <Route path="/purchase_loanie" component={PurchasePage} />
       <Route path="/password_reset" component={PasswordReset} />
-      <Route path="/password_code" component={PasswordCode} />
     </div>
   </Router>,
   document.getElementById('root'),

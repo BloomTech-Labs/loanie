@@ -7,6 +7,7 @@ export default class MyLoans extends Component {
     super();
     this.state = {
       email: '',
+      sent: false,
     };
   }
 
@@ -16,30 +17,37 @@ export default class MyLoans extends Component {
   };
 
   submitPasswordReset = () => {
-    // const actionCodeSettings = {
-    //   url: `https://www.example.com/?email=${firebase.auth().currentUser.email}`,
-    //   handleCodeInApp: true,
-    // };
     console.log('submit reset request');
     firebase
       .auth()
       .sendPasswordResetEmail(this.state.email)
-      .then(res => console.log(res))
+      .then(() => console.log(this.state.email))
       .catch(error => console.log(error));
-    window.location = '/password_code';
+    this.setState({
+      sent: !this.state.sent,
+    });
   };
 
   render() {
+    if (!this.state.sent) {
+      return (
+        <form>
+          <fieldset>
+            <legend>Reset your password</legend>
+            Enter your email: <input type="text" name="email" onChange={this.handleEmailInput} />
+            <br />
+            <br />
+            <button onClick={this.submitPasswordReset}>Submit</button>
+          </fieldset>
+        </form>
+      );
+    }
     return (
-      <form>
-        <fieldset>
-          <legend>Reset your password</legend>
-          Enter your email: <input type="text" name="email" onChange={this.handleEmailInput} />
-          <br />
-          <br />
-          <button onClick={this.submitPasswordReset}>Submit</button>
-        </fieldset>
-      </form>
+      <div>
+        <h1>Please check your email for a password recovery link.</h1>
+        <br />
+        <br />
+      </div>
     );
   }
 }
