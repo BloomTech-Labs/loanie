@@ -18,9 +18,6 @@ class Billing extends Component {
     };
     this.handleCreditCardNumber = this.handleCreditCardNumber.bind(this);
     this.submitBillingInfo = this.submitBillingInfo.bind(this);
-    this.handleOneYPlanSelection = this.handleOneYPlanSelection.bind(this);
-    this.handleOneLPlanSelection = this.handleOneLPlanSelection.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
     this.sendStripeToken = this.sendStripeToken.bind(this);
   }
   sendStripeToken() {
@@ -50,19 +47,19 @@ class Billing extends Component {
     console.log(this.state.creditCardNumber);
   }
 
-  handleNameChange(e) {
+  handleNameChange = (e) => {
     this.setState({ name: e.target.value });
-  }
+  };
 
-  handleOneYPlanSelection() {
+  handleOneYPlanSelection = () => {
     this.setState({ loanPlan: 'Full Year Subscription' });
     console.log(this.state.loanPlan);
-  }
+  };
 
-  handleOneLPlanSelection() {
+  handleOneLPlanSelection = () => {
     this.setState({ loanPlan: 'Single Loan' });
     console.log(this.state.loanPlan);
-  }
+  };
 
   handleSubmit = (e) => {
     // We don't want to let default form submission happen here, which would refresh the page.
@@ -89,19 +86,19 @@ class Billing extends Component {
                 <input
                   type="checkbox"
                   name="loanPlan"
-                  onChange={this.handleOneYPlanSelection.bind(this)}
+                  onChange={this.handleOneYPlanSelection}
                 />{' '}
                 Full Year Subscription - $99.99<br />
                 <input
                   type="checkbox"
                   name="loanPlan"
-                  onChange={this.handleOneLPlanSelection.bind(this)}
+                  onChange={this.handleOneLPlanSelection}
                 />{' '}
                 Single Loan - $9.99<br />
                 <br />
                 <legend>Credit/Debit Card Details: </legend>
                 Name as it appears on card:{' '}
-                <input type="text" name="name" onChange={this.handleNameChange.bind(this)} />
+                <input type="text" name="name" onChange={this.handleNameChange} />
               </fieldset>
               <CardElement />
               <button onClick={this.submitBillingInfo}>Submit</button>
