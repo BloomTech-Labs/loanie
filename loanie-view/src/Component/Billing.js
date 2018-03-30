@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import Navbar from './Navbar';
-import SideBarNav from './SideBarNav';
-
+import SidebarNav from './SidebarNav';
 import '../CSS/Billing.css';
 
 class Billing extends Component {
+  // have to use camel case method proptypes not the one from import
+  propTypes = {
+    stripe: PropTypes.func,
+    createToken: PropTypes.func,
+  };
   constructor() {
     super();
     this.state = {
@@ -105,7 +110,7 @@ class Billing extends Component {
             </form>
           </div>
         </div>
-        <SideBarNav />
+        <SidebarNav />
       </div>
     );
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from './Navbar';
 import '../CSS/AccountCreate.css';
 
-export default class AccountCreation extends Component {
+class AccountCreation extends Component {
   constructor() {
     super();
     this.state = {
@@ -10,29 +10,36 @@ export default class AccountCreation extends Component {
       password: '',
       userType: '',
     };
+    this.handleUsernameChange = this.handleUsernameChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.selectStandardUser = this.selectStandardUser.bind(this);
+    this.selectManagerUser = this.selectManagerUser.bind(this);
+    this.selectGoBack = this.selectGoBack.bind(this);
+    this.submitClientAccountInfo = this.submitClientAccountInfo.bind(this);
+    this.submitManagerAccountInfo = this.submitManagerAccountInfo.bind(this);
   }
-  handleUsernameChange = (event) => {
+  handleUsernameChange(event) {
     this.setState({ username: event.target.value });
     console.log(this.state.username);
   }
-  handlePasswordChange = (event) => {
+  handlePasswordChange(event) {
     this.setState({ password: event.target.value });
     console.log(this.state.password);
   }
-  selectStandardUser = () => {
+  selectStandardUser() {
     this.setState({ userType: 'standardUser' });
   }
-  selectManagerUser = () => {
+  selectManagerUser() {
     this.setState({ userType: 'managerUser' });
   }
-  selectGoBack = () => {
+  selectGoBack() {
     this.setState({ userType: '' });
   }
-  submitClientAccountInfo = () => {
+  submitClientAccountInfo() {
     this.setState({ userType: '' });
     window.location = '/my_loans';
   }
-  submitManagerAccountInfo = () => {
+  submitManagerAccountInfo() {
     this.setState({ userType: '' });
     window.location = '/loan_list';
   }
@@ -105,3 +112,4 @@ export default class AccountCreation extends Component {
     );
   }
 }
+export default AccountCreation;
