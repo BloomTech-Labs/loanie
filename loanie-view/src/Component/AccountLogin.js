@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import axios from 'axios';
@@ -56,7 +56,7 @@ export default function AccountLogin() {
   return (
     <div>
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-      <Link to="/password_reset">Forgot Password?</Link>
+      <Link to="/password_code">Forgot Password?</Link>
     </div>
   );
 }
