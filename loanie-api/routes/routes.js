@@ -24,7 +24,6 @@ module.exports = (app) => {
 
   // Creates a new user. Creates a new row for the user in User collection.
   app.route("/newuser").post(userControllers.userCreate);
-  app.route("/create").post(userControllers.create);
 
   // Checks log in credentials for a user.
   app.route("/login").post(userControllers.userLogin);

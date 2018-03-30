@@ -37,18 +37,10 @@ export default class AccountCreation extends Component {
     super();
     this.state = {
       userType: '',
+      acceptText: false,
+      acceptEmail: false,
     };
   }
-
-  handleUsernameChange = (event) => {
-    this.setState({ username: event.target.value });
-    console.log(this.state.username);
-  };
-
-  handlePasswordChange = (event) => {
-    this.setState({ password: event.target.value });
-    console.log(this.state.password);
-  };
 
   selectStandardUser = () => {
     this.setState({ userType: 'standardUser' });
@@ -86,16 +78,29 @@ export default class AccountCreation extends Component {
     );
   };
 
+  handleTextAlerts = () => {
+    this.setState({ acceptText: !this.state.acceptText });
+    console.log(!this.state.acceptText);
+  };
+
+  handleEmailAlerts = () => {
+    this.setState({ acceptEmail: !this.state.acceptEmail });
+    console.log(!this.state.acceptEmail);
+  };
+
   sendToDB = () => {
     const userInfo = {
       name: sessionStorage.getItem('name'),
+      userType: this.state.userType,
       email: sessionStorage.getItem('email'),
       token: sessionStorage.getItem('tokenId'),
-      phone: this.state.phone,
-      country: this.state.country,
+      mobilePhone: this.state.phone,
+      acceptTexts: this.state.acceptText,
+      acceptEmails: this.state.acceptEmail,
     };
+    console.log('sending to db:', userInfo);
     axios
-      .post('http://localhost:3030/create', userInfo)
+      .post('http://localhost:3030/newuser', userInfo)
       .then((res) => {
         console.log('Response from server: ', res);
       })
@@ -123,7 +128,7 @@ export default class AccountCreation extends Component {
           <div>
             <form>
               <fieldset>
-                <legend>Personal information:</legend>
+                <legend>Additional information:</legend>
                 Credentials(optional):{' '}
                 <input type="text" name="password" onChange={this.handlePasswordChange} />
                 <br />
@@ -155,6 +160,11 @@ export default class AccountCreation extends Component {
                   onBlur={this.handleInputBlur}
                 />
                 <br />
+                <br />
+                <input type="checkbox" name="acceptText" onChange={this.handleTextAlerts} /> I would
+                like to recieve TEXT notifications about my loan<br />
+                <input type="checkbox" name="acceptEmail" onChange={this.handleEmailAlerts} /> I
+                would like to recieve EMAIL notifications about my loan<br />
                 <br />
                 <button onClick={this.submitClientAccountInfo}>Submit</button>
               </fieldset>

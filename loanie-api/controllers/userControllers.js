@@ -6,49 +6,29 @@ const stripe = require("stripe")("sk_test_NLhlfyaCgqopGcpBvhkDdHBd");
 
 const userCreate = (req, res) => {
   const {
-    firstName,
-    lastName,
-    password,
+    name,
     userType,
     email,
     mobilePhone,
     acceptTexts,
     acceptEmails,
-    subscriptionEndDate,
   } = req.body;
   const newUser = new User({
-    firstName,
-    lastName,
-    password,
+    name,
     userType,
     email,
     mobilePhone,
     acceptTexts,
     acceptEmails,
-    subscriptionEndDate,
   });
   newUser.save((err, savedUser) => {
     if (err) {
       res.status(500).json(JSON.stringify(err));
+      console.log(err);
       return;
     }
-    res.json(savedUser);
-  });
-};
-
-const create = (req, res) => {
-  const { name, email, token } = req.body;
-  const newUser = new User({
-    name,
-    email,
-    token,
-  });
-  newUser.save((err, savedUser) => {
-    if (err) {
-      res.status(500).json(JSON.stringify(err));
-      return;
-    }
-    res.json(savedUser);
+    console.log(savedUser);
+    res.status(200).json(savedUser);
   });
 };
 
@@ -194,5 +174,4 @@ module.exports = {
   userEdit,
   userToken,
   stripeTransaction,
-  create,
 };

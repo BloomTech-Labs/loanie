@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { firebase } from './Firebase';
 import axios from 'axios';
+import { firebase } from './Firebase';
 // import { connect } from 'react-redux';
 // import { changeTokenId } from '../Actions';
 import '../CSS/AccountLogin.css';
