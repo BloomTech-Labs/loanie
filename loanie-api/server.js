@@ -1,4 +1,3 @@
-// const postData = require('./application-data.js');
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -33,6 +32,9 @@ server.use((req, res, next) => {
   );
   next();
 });
+
+// Reads and set value in .env file
+require('dotenv').config();
 
 routes(server);
 

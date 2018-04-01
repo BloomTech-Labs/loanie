@@ -88,16 +88,16 @@ const loanEdit = (req, res) => {
   Loan.findById(id)
     .then(() => {
       if (Loan === null) throw new Error();
-      console.log(
-        "id:",
-        id,
-        "clientId:",
-        clientId,
-        "currentStatus:",
-        currentStatus,
-        "loanManagerId:",
-        loanManagerId,
-      );
+      // console.log(
+      //   "id:",
+      //   id,
+      //   "clientId:",
+      //   clientId,
+      //   "currentStatus:",
+      //   currentStatus,
+      //   "loanManagerId:",
+      //   loanManagerId,
+      // );
       if (clientId) Loan.clientId = clientId;
       if (currentStatus) Loan.currentStatus = currentStatus;
       if (loanManagerId) Loan.loanManagerId = loanManagerId;
