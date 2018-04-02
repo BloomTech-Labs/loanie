@@ -52,7 +52,7 @@ const userToken = (req, res) => {
 const usersGetAll = (req, res) => {
   User.find({})
     .then((users) => {
-      res.json(users);
+      res.status(200).json(users);
     })
     .catch(err => res.status(422).json(err));
 };

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
 import Navbar from './Navbar';
-import SideBarNav from './SideBarNav';
+import SidebarNav from './SideBarNav';
 import '../CSS/LoanList.css';
 
 class LoanList extends Component {
@@ -35,6 +35,7 @@ class LoanList extends Component {
     }
     return (
       <div className="Loanlist">
+        <SidebarNav />
         <Navbar />
         <div className="Loanlist-title-containter">
           <h1> Add a new Loan</h1>
@@ -48,7 +49,6 @@ class LoanList extends Component {
             />
           </Link>
         </div>
-        <SideBarNav />
       </div>
     );
   }

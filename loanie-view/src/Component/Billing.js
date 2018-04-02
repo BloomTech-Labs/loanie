@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import Navbar from './Navbar';
-import SideBarNav from './SideBarNav';
-
+import SidebarNav from './SideBarNav';
 import '../CSS/Billing.css';
 
 class Billing extends Component {
+  // have to use camel case method proptypes not the one from import
+  propTypes = {
+    stripe: PropTypes.func,
+    createToken: PropTypes.func,
+  };
   constructor() {
     super();
     this.state = {
@@ -15,6 +20,7 @@ class Billing extends Component {
       creditCardNumber: '',
       creditCardExperation: '',
       loanPlan: '',
+      tokenId: sessionStorage.getItem('tokenId'),
     };
     this.handleCreditCardNumber = this.handleCreditCardNumber.bind(this);
     this.submitBillingInfo = this.submitBillingInfo.bind(this);
@@ -75,6 +81,18 @@ class Billing extends Component {
   };
 
   render() {
+    // render getter
+    const token = this.state.tokenId;
+    console.log(sessionStorage.getItem('tokenId'));
+    console.log('state tokenId:', token);
+    if (token === null || token === undefined || token === '') {
+      window.location = '/login_user';
+      return (
+        <div>
+          <h1> Please Login</h1>
+        </div>
+      );
+    }
     return (
       <div className="Billing">
         <Navbar />
@@ -105,7 +123,7 @@ class Billing extends Component {
             </form>
           </div>
         </div>
-        <SideBarNav />
+        <SidebarNav />
       </div>
     );
   }
