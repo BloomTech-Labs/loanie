@@ -17,6 +17,7 @@ const readUsers = () => {
 const populateUsers = () => {
   const users = readUsers();
   for (user in users) {
+    // Note, _id should have 24 hex characters.
     user._id = new mongoose.Types.ObjectId(user._id);
   }
   const promises = users.map(p => new User(p).save());
