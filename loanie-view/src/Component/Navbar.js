@@ -7,13 +7,8 @@ export default class NavBar extends Component {
   constructor() {
     super();
     this.state = {
-      loginState: false,
       tokenId: sessionStorage.getItem('tokenId'),
     };
-  }
-
-  componentDidMount() {
-    console.log(this.state.loginState);
   }
 
   logout = () => {
