@@ -8,7 +8,6 @@ mongoose.connect("mongodb://localhost/loanie");
 // for a loan in this table. ClientId and loanManagerId columns are forgeing keys that refer
 // to the unqique id of a user in User model.
 const AssignmentSchema = new mongoose.Schema({
-  required: false,
   text: String,
   author: {
     type: Schema.Types.ObjectId,
@@ -34,6 +33,10 @@ const LoanSchema = new mongoose.Schema({
     required: true,
   },
   assignments: [AssignmentSchema],
+  openLoan: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Loan", LoanSchema);
