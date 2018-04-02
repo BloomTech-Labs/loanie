@@ -123,7 +123,6 @@ const userEdit = (req, res) => {
 };
 
 // Stripe
-
 const stripeTransaction = (req, res) => {
   let cost = 0;
   const { stripeToken, loanPlan } = req.body;
