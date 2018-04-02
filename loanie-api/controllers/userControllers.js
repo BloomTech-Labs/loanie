@@ -6,32 +6,28 @@ const stripe = require("stripe")("sk_test_NLhlfyaCgqopGcpBvhkDdHBd");
 
 const userCreate = (req, res) => {
   const {
-    firstName,
-    lastName,
-    password,
-    userType,
-    email,
-    mobilePhone,
-    acceptTexts,
-    acceptEmails,
-    subscriptionEndDate,
+    name, userType, email, mobilePhone, acceptTexts, acceptEmails,
   } = req.body;
   const newUser = new User({
-    firstName,
-    lastName,
-    password,
+    name,
     userType,
     email,
     mobilePhone,
     acceptTexts,
     acceptEmails,
-    subscriptionEndDate,
+    // password, // used to validate loan officer
   });
+  console.log("Request Body:", req.body);
   newUser.save((err, savedUser) => {
     if (err) {
       res.status(500).json(JSON.stringify(err));
+      console.log(err);
       return;
     }
+<<<<<<< HEAD
+=======
+    console.log(savedUser);
+>>>>>>> c21c4ad3ec5d133c7d4eee39a08fcf9f3d5afe78
     res.status(200).json(savedUser);
   });
 };
@@ -98,15 +94,12 @@ const userGetById = (req, res) => {
 const userEdit = (req, res) => {
   console.log("loan edit");
   const {
-    firstName,
-    lastName,
-    password,
+    name,
     userType,
     email,
     mobilePhone,
     acceptTexts,
     acceptEmails,
-    subscriptionEndDate,
   } = req.body;
   // find a single User
   // edit user details
@@ -115,15 +108,12 @@ const userEdit = (req, res) => {
   User.findById(id)
     .then(() => {
       if (User === null) throw new Error();
-      if (firstName) User.firstName = firstName;
-      if (lastName) User.lastName = lastName;
-      if (password) User.password = password;
+      if (name) User.name = name;
       if (userType) User.userType = userType;
       if (email) User.email = email;
       if (mobilePhone) User.mobilePhone = mobilePhone;
       if (acceptTexts) User.acceptTexts = acceptTexts;
       if (acceptEmails) User.acceptEmails = acceptEmails;
-      if (subscriptionEndDate) User.subscriptionEndDate = subscriptionEndDate;
       User.save(User, (err, saveduser) => {
         if (err) {
           res.status(500).json(err);
@@ -136,7 +126,6 @@ const userEdit = (req, res) => {
 };
 
 // Stripe
-
 const stripeTransaction = (req, res) => {
   let cost = 0;
   const { stripeToken, loanPlan } = req.body;
@@ -164,7 +153,7 @@ const stripeTransaction = (req, res) => {
     (err, charge) => {
       if (err) return res.status(400).json(err);
       return res.status(200).json(charge);
-    },
+    }
   );
   // res.json("Stripe Token Received!");
 };
