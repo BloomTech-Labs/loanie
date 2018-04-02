@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavBar from './Navbar';
+import Navbar from './Navbar';
 import '../CSS/PurchasePage.css';
 
 export default class PurchasePage extends Component {
@@ -52,7 +52,7 @@ export default class PurchasePage extends Component {
   render() {
     return (
       <div className="PurchasePage">
-        <NavBar />
+        <Navbar />
         <div className="PurchasePage-title-container">
           <h1> Purchase Loanie here today! </h1>
         </div>
