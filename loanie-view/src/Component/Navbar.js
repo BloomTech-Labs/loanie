@@ -59,7 +59,7 @@ export default class NavBar extends Component {
           </div>
           <ul className="App-signin-container">
             <li>
-              <Link className="App-signin-item" OnClick={this.logout()} to="/login_user">
+              <Link className="App-signin-item" onClick={this.logout} to="/login_user">
                 Sign Out
               </Link>
               <Link className="App-signup-item" to="/new_account">

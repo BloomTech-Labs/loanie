@@ -91,12 +91,7 @@ const userGetById = (req, res) => {
 const userEdit = (req, res) => {
   console.log("loan edit");
   const {
-    name,
-    userType,
-    email,
-    mobilePhone,
-    acceptTexts,
-    acceptEmails,
+    name, userType, email, mobilePhone, acceptTexts, acceptEmails,
   } = req.body;
   // find a single User
   // edit user details
