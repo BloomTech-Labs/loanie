@@ -24,8 +24,8 @@ const sendEmailNotification = (req, res) => {
     } else {
       console.log('Yay! Our templated email has been sent');
       res.json("Email notification sent!");
-    }
-  });
+		}
+	});
 };
 
 const sendSmsNotification = (req, res) => {
