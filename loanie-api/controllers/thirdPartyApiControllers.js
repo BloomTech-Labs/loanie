@@ -14,7 +14,7 @@ const sendEmailNotification = (req, res) => {
 	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 	const msg = {
 		to: email,
-		from: 'baheti.rash123@gmail.com',
+		from: 'loaniecs4@gmail.com',
 		subject: 'Sending with SendGrid is Fun',
 		text,
 	};
@@ -47,7 +47,7 @@ const sendSmsNotification = (req, res) => {
 	client.messages.create({
 	    body: text,
 	    to: mobilePhone,  // Text this number
-	    from: '+16504828839' // From a valid Twilio number
+	    from: '+18315349385' // From a valid Twilio number
 	})
 	.then((message) => {
 		console.log(message.sid);
