@@ -11,9 +11,11 @@ export default class NavBar extends Component {
       tokenId: sessionStorage.getItem('tokenId'),
     };
   }
+
   componentDidMount() {
     console.log(this.state.loginState);
   }
+
   logout = () => {
     firebase
       .auth()
@@ -26,6 +28,7 @@ export default class NavBar extends Component {
       });
     sessionStorage.removeItem('tokenId');
   };
+
   render() {
     const token = this.state.tokenId;
     if (token === null || token === undefined || token === '') {
