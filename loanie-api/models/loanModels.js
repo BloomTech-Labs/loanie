@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+mongoose.connect('mongodb://localhost/loanie');
 
 // This table stores current status of all loans. There should always be exactly 1 row
 // for a loan in this table. ClientId and loanManagerId columns are forgeing keys that refer

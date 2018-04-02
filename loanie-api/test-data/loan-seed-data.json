@@ -1,0 +1,26 @@
+[
+	{
+		"clientId": "000000000000000000000003",
+		"currentStatus": "1",
+		"loanManagerId": "000000000000000000000001",
+		"timestamp": "11-07-2016"
+	},
+	{
+		"clientId": "000000000000000000000004",
+		"currentStatus": "1",
+		"loanManagerId": "000000000000000000000001",
+		"timestamp": "10-20-2017"
+	},
+	{
+		"clientId": "000000000000000000000006",
+		"currentStatus": "1",
+		"loanManagerId": "000000000000000000000005",
+		"timestamp": "08-11-2018"
+	},
+	{
+		"clientId": "000000000000000000000006",
+		"currentStatus": "1",
+		"loanManagerId": "000000000000000000000002",
+		"timestamp": "01-23-2016"
+	}
+]
