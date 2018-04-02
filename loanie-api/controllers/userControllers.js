@@ -94,12 +94,7 @@ const userGetById = (req, res) => {
 const userEdit = (req, res) => {
   console.log("loan edit");
   const {
-    name,
-    userType,
-    email,
-    mobilePhone,
-    acceptTexts,
-    acceptEmails,
+    name, userType, email, mobilePhone, acceptTexts, acceptEmails,
   } = req.body;
   // find a single User
   // edit user details
@@ -153,7 +148,7 @@ const stripeTransaction = (req, res) => {
     (err, charge) => {
       if (err) return res.status(400).json(err);
       return res.status(200).json(charge);
-    }
+    },
   );
   // res.json("Stripe Token Received!");
 };

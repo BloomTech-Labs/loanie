@@ -8,6 +8,7 @@ export default class MyLoans extends Component {
     super();
     this.state = {
       username: 'billy',
+      tokenId: sessionStorage.getItem('tokenId'),
     };
     this.selectLoan = this.selectLoan.bind(this);
   }
@@ -15,6 +16,18 @@ export default class MyLoans extends Component {
     console.log(this.state.username);
   }
   render() {
+    // render getter
+    const token = this.state.tokenId;
+    console.log(sessionStorage.getItem('tokenId'));
+    console.log('state tokenId:', token);
+    if (token === null || token === undefined || token === '') {
+      window.location = '/login_user';
+      return (
+        <div>
+          <h1> Please Login</h1>
+        </div>
+      );
+    }
     return (
       <div className="Loanlist">
         <Navbar />
