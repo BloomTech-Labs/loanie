@@ -15,6 +15,7 @@ class Billing extends Component {
       creditCardNumber: '',
       creditCardExperation: '',
       loanPlan: '',
+      tokenId: sessionStorage.getItem('tokenId'),
     };
     this.handleCreditCardNumber = this.handleCreditCardNumber.bind(this);
     this.submitBillingInfo = this.submitBillingInfo.bind(this);
@@ -75,6 +76,18 @@ class Billing extends Component {
   };
 
   render() {
+    // render getter
+    const token = this.state.tokenId;
+    console.log(sessionStorage.getItem('tokenId'));
+    console.log('state tokenId:', token);
+    if (token === null || token === undefined || token === '') {
+      window.location = '/login_user';
+      return (
+        <div>
+          <h1> Please Login</h1>
+        </div>
+      );
+    }
     return (
       <div className="Billing">
         <Navbar />

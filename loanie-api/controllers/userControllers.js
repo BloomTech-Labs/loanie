@@ -150,7 +150,7 @@ const stripeTransaction = (req, res) => {
     (err, charge) => {
       if (err) return res.status(400).json(err);
       return res.status(200).json(charge);
-    }
+    },
   );
   // res.json("Stripe Token Received!");
 };
