@@ -1,5 +1,6 @@
 const userControllers = require("../controllers/userControllers");
 const loanControllers = require("../controllers/loanControllers");
+const thirdPartyApiControllers = require("../controllers/thirdPartyApiControllers");
 
 module.exports = (app) => {
   // Returns all loans in the database. This is just for manual debugging,
@@ -40,7 +41,12 @@ module.exports = (app) => {
     .delete(userControllers.userDelete);
 
   // Recieve client token after authentication
-
   app.route("/auth").post(userControllers.userToken);
   app.route("/stripe").post(userControllers.stripeTransaction);
+
+  // Send email notification to the user
+  app.route("/sendemail").post(thirdPartyApiControllers.sendEmailNotification);
+
+  // Send sms notification to the user
+  app.route("/sendsms").post(thirdPartyApiControllers.sendSmsNotification);
 };
