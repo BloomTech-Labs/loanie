@@ -7,9 +7,10 @@ import { firebase } from './Firebase';
 // import { changeTokenId } from '../Actions';
 import '../CSS/AccountLogin.css';
 
-const sendToken = (tokenId) => {
+const sendToken = (tokenId, sendEmail) => {
   // setter
   sessionStorage.setItem('tokenId', tokenId);
+  sessionStorage.setItem('email', sendEmail);
 
   console.log('Inside sendToken(), this.props: ', this.props);
 
@@ -17,9 +18,9 @@ const sendToken = (tokenId) => {
   // this.props.dispatch(changeTokenId(tokenId));
 
   console.log('sending token to server!');
-  const token = { token: tokenId };
+  const data = { token: tokenId, email: sendEmail };
   axios
-    .post('http://localhost:3030/auth', token)
+    .post('http://localhost:3030/auth', data)
     .then((res) => {
       console.log('Response from server: ', res);
     })
@@ -41,7 +42,7 @@ const uiConfig = {
     signInSuccess: () => {
       firebase.auth().onAuthStateChanged((user) => {
         console.log('got the ID!!', user.uid);
-        sendToken(user.uid);
+        sendToken(user.uid, user.email);
       });
     },
   },

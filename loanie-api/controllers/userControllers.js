@@ -44,9 +44,24 @@ const userLogin = (req, res) => {
 };
 
 const userToken = (req, res) => {
-  const { token } = req.body;
-  console.log(token);
-  res.json("Authenticated!");
+  const { token, email } = req.body;
+  console.log(token, email);
+  User.findOne({ email })
+    .then((user) => {
+      if (user.length !== 1) {
+        res.status(422).json("there was an error locating a user with that email");
+      } else {
+        if (token) User.UID = token;
+        User.save(User, (err) => {
+          if (err) {
+            res.status(500).json(err);
+            return;
+          }
+          res.status(200).json("Successful!");
+        });
+      }
+    })
+    .catch(err => res.status(422).json({ error: "User not found!", err }));
 };
 
 const usersGetAll = (req, res) => {
@@ -89,7 +104,7 @@ const userGetById = (req, res) => {
 };
 
 const userEdit = (req, res) => {
-  console.log("loan edit");
+  console.log("user edit");
   const {
     name, userType, email, mobilePhone, acceptTexts, acceptEmails,
   } = req.body;
@@ -114,7 +129,7 @@ const userEdit = (req, res) => {
         res.json(saveduser);
       });
     })
-    .catch(err => res.status(422).json({ error: "No Loan!", err }));
+    .catch(err => res.status(422).json({ error: "User not found!", err }));
 };
 
 // Stripe

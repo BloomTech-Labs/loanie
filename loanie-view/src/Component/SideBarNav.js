@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { slide as Menu } from 'react-burger-menu';
 
 const styles = {
@@ -36,18 +36,33 @@ const styles = {
   },
 };
 
-export default function SideBarNav() {
-  return (
-    <Menu styles={styles}>
-      <a id="home" className="menu-item" href="/loan_list">
-        Open Loans
-      </a>
-      <a id="about" className="menu-item" href="/closed_loans">
-        Closed
-      </a>
-      <a id="contact" className="menu-item" href="/billing">
-        Billing
-      </a>
-    </Menu>
-  );
+export default class SideBarNav extends Component {
+  constructor() {
+    super();
+    this.state = {
+      email: 'johnexample@email.com',
+      phoneNumber: '123-456-7890',
+      displayName: 'John',
+      password: '**************',
+      tokenId: sessionStorage.getItem('tokenId'),
+    };
+  }
+  render() {
+    return (
+      <Menu styles={styles}>
+        <a id="home" className="menu-item" href="/loan_list">
+          Open Loans
+        </a>
+        <a id="about" className="menu-item" href="/closed_loans">
+          Closed
+        </a>
+        <a id="contact" className="menu-item" href="/billing">
+          Billing
+        </a>
+        <a id="contact" className="menu-item" href="/settings">
+          Settings
+        </a>
+      </Menu>
+    );
+  }
 }

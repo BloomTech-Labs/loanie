@@ -32,7 +32,7 @@ const uiConfig = {
   // tosUrl: '<your-tos-url>',
 };
 
-class AccountCreation extends Component {
+export default class AccountCreation extends Component {
   constructor() {
     super();
     this.state = {
@@ -40,13 +40,6 @@ class AccountCreation extends Component {
       acceptText: false,
       acceptEmail: false,
     };
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.selectStandardUser = this.selectStandardUser.bind(this);
-    this.selectManagerUser = this.selectManagerUser.bind(this);
-    this.selectGoBack = this.selectGoBack.bind(this);
-    this.submitClientAccountInfo = this.submitClientAccountInfo.bind(this);
-    this.submitManagerAccountInfo = this.submitManagerAccountInfo.bind(this);
   }
 
   selectStandardUser = () => {
@@ -68,7 +61,6 @@ class AccountCreation extends Component {
 
   submitManagerAccountInfo = () => {
     this.sendToDB();
-    window.location = '/loan_list';
   };
 
   handlePasswordChange = (event) => {
@@ -209,4 +201,3 @@ class AccountCreation extends Component {
     );
   }
 }
-export default AccountCreation;
