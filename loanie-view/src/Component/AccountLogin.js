@@ -59,9 +59,11 @@ export default function AccountLogin() {
   // console.log('TOKEN ID:', this.props.tokenId);
 
   return (
-    <div>
+    <div className="Account-title-containter">
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-      <Link to="/password_reset">Forgot Password?</Link>
+      <div className="Account-text-containter">
+        <Link to="/password_reset">Forgot Password?</Link>
+      </div>
     </div>
   );
 }
