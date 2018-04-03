@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar';
-import SidebarNav from './SidebarNav';
+import SidebarNav from './SideBarNav';
 import '../CSS/LoanCreate.css';
 
 export default class LoanCreate extends Component {

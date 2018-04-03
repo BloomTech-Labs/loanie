@@ -3,7 +3,7 @@ import { CardElement, injectStripe } from 'react-stripe-elements';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Navbar from './Navbar';
-import SidebarNav from './SidebarNav';
+import SidebarNav from './SideBarNav';
 import '../CSS/Billing.css';
 
 class Billing extends Component {

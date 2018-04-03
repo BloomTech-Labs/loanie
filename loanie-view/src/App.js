@@ -23,7 +23,10 @@ class App extends Component {
           <p className="App-text-item"> Make your home purchases and mortgages easy and simple!</p>
         </div>
         <div className="button-container">
-          <button className="button1 button" onClick={this.handlePurhase}> Buy Now </button>
+          <button className="button1 button" onClick={this.handlePurhase}>
+            {' '}
+            Buy Now{' '}
+          </button>
         </div>
       </div>
     );
