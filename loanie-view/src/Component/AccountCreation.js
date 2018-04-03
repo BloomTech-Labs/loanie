@@ -61,6 +61,7 @@ export default class AccountCreation extends Component {
 
   submitManagerAccountInfo = () => {
     this.sendToDB();
+    window.location = '/loan_list';
   };
 
   handlePasswordChange = (event) => {
@@ -102,6 +103,7 @@ export default class AccountCreation extends Component {
       acceptEmails: this.state.acceptEmail,
       password: this.state.password,
     };
+    sessionStorage.setItem('userType', this.state.userType);
     console.log('sending to db:', userInfo);
     axios
       .post('http://localhost:3030/newuser', userInfo)

@@ -6,7 +6,7 @@ const stripe = require("stripe")("sk_test_NLhlfyaCgqopGcpBvhkDdHBd");
 
 const userCreate = (req, res) => {
   const {
-    name, userType, email, mobilePhone, acceptTexts, acceptEmails,
+    name, userType, email, mobilePhone, acceptTexts, acceptEmails, token,
   } = req.body;
   const newUser = new User({
     name,
@@ -15,6 +15,7 @@ const userCreate = (req, res) => {
     mobilePhone,
     acceptTexts,
     acceptEmails,
+    UID: token,
     // password, // used to validate loan officer
   });
   console.log("Request Body:", req.body);
@@ -48,18 +49,14 @@ const userToken = (req, res) => {
   console.log(token, email);
   User.findOne({ email })
     .then((user) => {
-      if (user.length !== 1) {
-        res.status(422).json("there was an error locating a user with that email");
-      } else {
-        if (token) User.UID = token;
-        User.save(User, (err) => {
-          if (err) {
-            res.status(500).json(err);
-            return;
-          }
-          res.status(200).json("Successful!");
-        });
-      }
+      if (token) User.UID = token;
+      User.save(user, (err) => {
+        if (err) {
+          res.status(500).json(err);
+          return;
+        }
+        res.status(200).json(user);
+      });
     })
     .catch(err => res.status(422).json({ error: "User not found!", err }));
 };

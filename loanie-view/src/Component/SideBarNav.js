@@ -40,26 +40,40 @@ export default class SideBarNav extends Component {
   constructor() {
     super();
     this.state = {
-      email: 'johnexample@email.com',
-      phoneNumber: '123-456-7890',
-      displayName: 'John',
-      password: '**************',
-      tokenId: sessionStorage.getItem('tokenId'),
+      userType: sessionStorage.getItem('userType'),
     };
   }
   render() {
+    if (this.state.userType === 'managerUser') {
+      return (
+        <Menu styles={styles}>
+          <a id="home" className="menu-item" href="/loan_list">
+            Open Loans
+          </a>
+          <a id="about" className="menu-item" href="/closed_loans">
+            Closed
+          </a>
+          <a id="contact" className="menu-item" href="/billing">
+            Billing
+          </a>
+          <a id="settings" className="menu-item" href="/settings">
+            Settings
+          </a>
+        </Menu>
+      );
+    }
     return (
       <Menu styles={styles}>
-        <a id="home" className="menu-item" href="/loan_list">
-          Open Loans
+        <a id="home" className="menu-item" href="/">
+          Home
         </a>
-        <a id="about" className="menu-item" href="/closed_loans">
-          Closed
+        <a id="about" className="menu-item" href="/my_loans">
+          My Loans
         </a>
         <a id="contact" className="menu-item" href="/billing">
           Billing
         </a>
-        <a id="contact" className="menu-item" href="/settings">
+        <a id="settings" className="menu-item" href="/user_settings">
           Settings
         </a>
       </Menu>
