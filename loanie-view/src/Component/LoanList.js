@@ -49,13 +49,9 @@ class LoanList extends Component {
             />
           </Link>
         </div>
+      </div>
     );
   }
 }
 
-// const mapStateToProps = state => ({
-//   tokenId: state.tokenId,
-// });
-
-// export default connect(mapStateToProps)(LoanList);
 export default LoanList;
