@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function SideBar() {
+export default function SidebarNav() {
   return (
     <div className="sidenav-container">
       <a href="/loan_list">Open Loans</a>

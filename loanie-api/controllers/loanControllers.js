@@ -31,7 +31,7 @@ const loanCreate = (req, res) => {
             res.status(500).json(err);
             return;
           }
-          res.json(savedloan);
+          res.status(200).json(savedloan);
         });
       }
     })
@@ -42,7 +42,7 @@ const loansGetAll = (req, res) => {
   console.log("get all");
   Loan.find({})
     .then((loans) => {
-      res.json(loans);
+      res.status(200).json(loans);
     })
     .catch(err => res.status(422).json(err));
 };
