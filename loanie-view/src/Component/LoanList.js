@@ -49,7 +49,6 @@ class LoanList extends Component {
             />
           </Link>
         </div>
-      </div>
     );
   }
 }
