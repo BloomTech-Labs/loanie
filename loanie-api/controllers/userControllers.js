@@ -24,7 +24,10 @@ const userCreate = (req, res) => {
       console.log(err);
       return;
     }
+<<<<<<< HEAD
+=======
     console.log(savedUser);
+>>>>>>> c21c4ad3ec5d133c7d4eee39a08fcf9f3d5afe78
     res.status(200).json(savedUser);
   });
 };
@@ -52,7 +55,7 @@ const userToken = (req, res) => {
 const usersGetAll = (req, res) => {
   User.find({})
     .then((users) => {
-      res.json(users);
+      res.status(200).json(users);
     })
     .catch(err => res.status(422).json(err));
 };
@@ -91,12 +94,7 @@ const userGetById = (req, res) => {
 const userEdit = (req, res) => {
   console.log("loan edit");
   const {
-    name,
-    userType,
-    email,
-    mobilePhone,
-    acceptTexts,
-    acceptEmails,
+    name, userType, email, mobilePhone, acceptTexts, acceptEmails,
   } = req.body;
   // find a single User
   // edit user details
@@ -150,7 +148,7 @@ const stripeTransaction = (req, res) => {
     (err, charge) => {
       if (err) return res.status(400).json(err);
       return res.status(200).json(charge);
-    }
+    },
   );
   // res.json("Stripe Token Received!");
 };

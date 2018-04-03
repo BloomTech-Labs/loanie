@@ -56,7 +56,7 @@ export default function AccountLogin() {
   return (
     <div>
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-      <Link to="/password_code">Forgot Password?</Link>
+      <Link to="/password_reset">Forgot Password?</Link>
     </div>
   );
 }
