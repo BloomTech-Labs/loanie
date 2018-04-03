@@ -31,6 +31,7 @@
     text-align: left;
   }
   .App-title-item {
+    margin-left: 1.6em;
     font-size: 50px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: white;
@@ -70,6 +71,9 @@
   .button-container{
     text-align: center;
     height: 25%;
+  }
+  .navbar-header {
+    margin-left: 50px;
   }
 
   @media all and (max-width: 767px) {

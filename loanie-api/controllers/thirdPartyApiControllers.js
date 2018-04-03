@@ -31,29 +31,30 @@ const sendEmailNotification = (req, res) => {
 };
 
 const sendSmsNotification = (req, res) => {
-	const { name, mobilePhone, text } = req.body;
-	const newUser = new User({
-	  name,
-	  mobilePhone,
-	  text
-	});
-	console.log("Request Body:", req.body);
+  const { name, mobilePhone, text } = req.body;
+  const newUser = new User({
+    name,
+    mobilePhone,
+    text,
+  });
+  console.log("Request Body:", req.body);
 
-	const accountSid = process.env.TWILIO_ACCOUNT_SID; // Your Account SID from www.twilio.com/console
-	const authToken = process.env.TWILIO_AUTH_TOKEN;   // Your Auth Token from www.twilio.com/console
-	const twilio = require('twilio');
-	const client = new twilio(accountSid, authToken);
+  const accountSid = process.env.TWILIO_ACCOUNT_SID; // Your Account SID from www.twilio.com/console
+  const authToken = process.env.TWILIO_AUTH_TOKEN; // Your Auth Token from www.twilio.com/console
+  const twilio = require("twilio");
+  const client = new twilio(accountSid, authToken);
 
-	client.messages.create({
-	    body: text,
-	    to: mobilePhone,  // Text this number
-	    from: '+18315349385' // From a valid Twilio number
-	})
-	.then((message) => {
-		console.log(message.sid);
-		res.json("SMS notification sent!");
-	})
-	.catch(err => console.log(err));
+  client.messages
+    .create({
+      body: text,
+      to: mobilePhone, // Text this number
+      from: "+16504828839", // From a valid Twilio number
+    })
+    .then((message) => {
+      console.log(message.sid);
+      res.json("SMS notification sent!");
+    })
+    .catch(err => console.log(err));
 };
 
 module.exports = {
