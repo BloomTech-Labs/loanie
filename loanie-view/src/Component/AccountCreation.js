@@ -189,17 +189,21 @@ export default class AccountCreation extends Component {
         </div>
       );
     }
-    return (
-      <div>
-        <Navbar />
-        <div className="Login-header-container">
-          <h1> Select User Type </h1>
-        </div>
+    if (!sessionStorage.getItem('userType')) {
+      return (
         <div>
-          <button onClick={this.selectStandardUser}>Client</button>
-          <button onClick={this.selectManagerUser}>Loan Officer</button>
+          <Navbar />
+          <div className="Login-header-container">
+            <h1> Select User Type </h1>
+          </div>
+          <div>
+            <button onClick={this.selectStandardUser}>Client</button>
+            <button onClick={this.selectManagerUser}>Loan Officer</button>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
+    if (sessionStorage.getItem('userType') === 'managerUser') window.location = '/loan_list';
+    else window.location = '/my_loans';
   }
 }
