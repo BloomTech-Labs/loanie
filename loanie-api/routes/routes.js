@@ -37,12 +37,14 @@ module.exports = (app) => {
   // frontend should never need to user it.
   app.route("/users").get(userControllers.usersGetAll);
 
-  // Performs get/post/delete operations on the given user.
+  // Performs get/delete operations on the given user.
   app
-    .route("/user/:id")
-    .get(userControllers.userGetById)
-    .post(userControllers.userEdit)
+    .route("/user")
+    .post(userControllers.userGetByUID)
     .delete(userControllers.userDelete);
+
+  // Performs edit operations on the given user.
+  app.route("/edituser").post(userControllers.userEdit);
 
   // Recieve client token after authentication
   app.route("/auth").post(userControllers.userToken);
