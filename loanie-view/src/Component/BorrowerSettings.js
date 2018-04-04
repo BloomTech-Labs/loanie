@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
+import * as firebase from 'firebase';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import '../CSS/Settings.css';
@@ -10,23 +11,37 @@ export default class BorrowerSettings extends Component {
     super();
     this.state = {
       name: '',
+      originalEmail: '',
       email: '',
       phoneNumber: '',
       acceptTexts: null,
       acceptEmails: null,
       tokenId: sessionStorage.getItem('tokenId'),
+      password: '',
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    // const { credential } = sessionStorage.getItem('credential');
+    // console.log('credential', credential);
+    // firebase
+    //   .auth()
+    //   .reauthenticateWithCredential(credential)
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+    console.log(this.state.tokenId);
     const body = {
       token: this.state.tokenId,
     };
+
     axios
       .post('http://localhost:3030/user', body)
       .then((res) => {
         this.setState({
           name: res.data.name,
+          originalEmail: res.data.email,
           email: res.data.email,
           phoneNumber: res.data.mobilePhone,
           acceptTexts: res.data.acceptTexts,
@@ -48,8 +63,59 @@ export default class BorrowerSettings extends Component {
   };
 
   submitChanges = () => {
+    console.log('sending to DB');
     this.sendToDB();
-    window.location = '/my_loans';
+    // window.location = '/my_loans';
+  };
+
+  sendToDB = () => {
+    // check to see if email changed
+    if (this.state.email !== this.state.originalEmail) {
+      firebase
+        .signInAndRetrieveDataWithEmailAndPassword(this.state.originalEmail, this.state.password)
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorCode === 'auth/wrong-password') {
+            console.log('Wrong password.');
+          } else {
+            console.log(errorMessage);
+          }
+          console.log(error);
+        });
+
+      firebase
+        .auth()
+        .updateEmail(this.state.email)
+        .then(() => {
+          this.send();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      this.send();
+    }
+  };
+
+  send = () => {
+    const userInfo = {
+      name: this.state.name,
+      email: this.state.email,
+      mobilePhone: this.state.phoneNumber,
+      acceptTexts: this.state.acceptTexts,
+      acceptEmails: this.state.acceptEmails,
+      token: this.state.tokenId,
+    };
+    console.log('sending to db:', userInfo);
+    axios
+      .post('http://localhost:3030/edituser', userInfo)
+      .then((res) => {
+        console.log('Success response: ', res);
+      })
+      .catch((err) => {
+        console.log('Failed to make changes to user!', err);
+      });
   };
 
   handleEmailChange = (event) => {
@@ -58,6 +124,10 @@ export default class BorrowerSettings extends Component {
 
   handleNameChange = (event) => {
     this.setState({ name: event.target.value });
+  };
+
+  handlePasswordChange = (event) => {
+    this.setState({ password: event.target.value });
   };
 
   handlePhoneChange = (telNumber, selectedCountry) => {
@@ -79,6 +149,7 @@ export default class BorrowerSettings extends Component {
     const token = this.state.tokenId;
     console.log(sessionStorage.getItem('tokenId'));
     console.log('state tokenId:', token);
+    console.log('response: ', sessionStorage.getItem('res'));
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (
@@ -108,13 +179,17 @@ export default class BorrowerSettings extends Component {
               <br />
               <br />
               <div>
-                <h4>Email:</h4>{' '}
+                <h4>Email:</h4>
                 <input
                   type="text"
                   name="email"
-                  value={this.state.email || ''}
+                  value={this.state.email}
                   onChange={this.handleEmailChange}
                 />
+              </div>
+              <div>
+                <h4>Your current password is required to change email:</h4>
+                <input type="password" name="password" onChange={this.handlePasswordChange} />
               </div>
               <br />
               <br />
@@ -123,7 +198,7 @@ export default class BorrowerSettings extends Component {
                 <ReactTelephoneInput
                   defaultCountry="us"
                   flagsImagePath=".\Images\flags.png"
-                  initialValue={this.state.phoneNumber || ''}
+                  value={this.state.phoneNumber}
                   onChange={this.handlePhoneChange}
                   onBlur={this.handleInputBlur}
                 />
@@ -151,7 +226,7 @@ export default class BorrowerSettings extends Component {
               </div>
               <br />
               <br />
-              <button onClick={this.submitChanges}>Submit</button>
+              <button onClick={this.sendToDB}>Submit</button>
               <br />
               <br />
             </fieldset>

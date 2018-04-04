@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import axios from 'axios';
-import { firebase } from './Firebase';
+import firebase from './Firebase';
 // import { connect } from 'react-redux';
 // import { changeTokenId } from '../Actions';
 import '../CSS/AccountLogin.css';
@@ -18,7 +18,10 @@ const sendToken = (tokenId, sendEmail) => {
   // this.props.dispatch(changeTokenId(tokenId));
 
   console.log('sending token to server!');
-  const data = { token: tokenId, email: sendEmail };
+  const data = {
+    token: tokenId,
+    email: sendEmail,
+  };
   let userType = '';
   axios
     .post('http://localhost:3030/auth', data)
@@ -43,9 +46,12 @@ const uiConfig = {
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
   ],
   callbacks: {
-    signInSuccess: () => {
+    signInSuccess: (credential) => {
       firebase.auth().onAuthStateChanged((user) => {
+        sessionStorage.setItem('credential', credential);
         console.log('got the ID!!', user.uid);
+        console.log('firebase user', user);
+
         sendToken(user.uid, user.email);
       });
     },

@@ -49,7 +49,7 @@ const userToken = (req, res) => {
   console.log(token, email);
   User.findOne({ email })
     .then((user) => {
-      if (token) User.UID = token;
+      if (token) user.UID = token;
       User.save(user, (err) => {
         if (err) {
           res.status(500).json(err);
@@ -110,21 +110,25 @@ const userEdit = (req, res) => {
   // edit user details
   // save User
   console.log(token);
-  User.findOne({ token })
-    .then(() => {
-      if (User === null) throw new Error();
-      if (name) User.name = name;
-      if (userType) User.userType = userType;
-      if (email) User.email = email;
-      if (mobilePhone) User.mobilePhone = mobilePhone;
-      if (acceptTexts) User.acceptTexts = acceptTexts;
-      if (acceptEmails) User.acceptEmails = acceptEmails;
-      User.save(User, (err, saveduser) => {
+  console.log("req.body", req.body);
+  User.findOne({ UID: token })
+    .then((user) => {
+      console.log("user", user);
+      if (user === null) throw new Error();
+      if (name) user.name = name;
+      if (userType) user.userType = userType;
+      if (email) user.email = email;
+      if (mobilePhone) user.mobilePhone = mobilePhone;
+      if (acceptTexts) user.acceptTexts = acceptTexts;
+      if (acceptEmails) user.acceptEmails = acceptEmails;
+      user.save(user, (err, saveduser) => {
         if (err) {
+          console.log("error", err);
           res.status(500).json(err);
           return;
         }
-        res.json(saveduser);
+        console.log("success", saveduser);
+        res.status(200).json(saveduser);
       });
     })
     .catch(err => res.status(422).json({ error: "User not found!", err }));
