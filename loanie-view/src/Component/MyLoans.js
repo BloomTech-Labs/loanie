@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
-import '../CSS/LoanList.css';
+import '../CSS/MyLoans.css';
 
 export default class MyLoans extends Component {
   constructor() {
     super();
     this.state = {
       username: 'billy',
+      loanList: 'myLoan',
+      currentPhase: 'Phase 3',
+      currentAssignent: 'assignment 3',
     };
     this.selectLoan = this.selectLoan.bind(this);
   }
@@ -15,6 +19,24 @@ export default class MyLoans extends Component {
     console.log(this.state.username);
   }
   render() {
+    if (this.state.loanList !== '') {
+      return (
+        <div className="MyLoans">
+          <Navbar />
+          <div className="MyLoans-link-container">
+            <Link to="my_loan">
+              <h1>Loan 1</h1>
+            </Link>
+            <p>Current Phase: {this.state.currentPhase}</p>
+            <p>Current Assignment: {this.state.currentAssignent}</p>
+            <Link to="my_loan">
+              <h3>See Details</h3>
+            </Link>
+          </div>
+          <ClientSideNav />
+        </div>
+      );
+    }
     return (
       <div className="Loanlist">
         <Navbar />

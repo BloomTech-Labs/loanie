@@ -16,7 +16,7 @@ export default class Navbar extends Component {
     return (
       <nav className="navbar navbar-inverse navbar-fixed-top">
         <div className="container-fluid">
-          <div className="navbar-header">
+          <div className="navbar-header App-title-container">
             <Link to="/"><h1 className="App-title-item" >Loanie</h1></Link>
           </div>
           <ul className="App-signin-container">

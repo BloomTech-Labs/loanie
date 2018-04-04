@@ -6,9 +6,6 @@ import { firebase } from './Firebase';
 import Navbar from './Navbar';
 import '../CSS/AccountCreate.css';
 
-<<<<<<< HEAD
-class AccountCreation extends Component {
-=======
 const uiConfig = {
   // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
   signInFlow: 'popup',
@@ -36,7 +33,6 @@ const uiConfig = {
 };
 
 export default class AccountCreation extends Component {
->>>>>>> c21c4ad3ec5d133c7d4eee39a08fcf9f3d5afe78
   constructor() {
     super();
     this.state = {
@@ -52,7 +48,6 @@ export default class AccountCreation extends Component {
     this.submitClientAccountInfo = this.submitClientAccountInfo.bind(this);
     this.submitManagerAccountInfo = this.submitManagerAccountInfo.bind(this);
   }
-<<<<<<< HEAD
   handleUsernameChange(event) {
     this.setState({ username: event.target.value });
     console.log(this.state.username);
@@ -76,31 +71,8 @@ export default class AccountCreation extends Component {
   }
   submitManagerAccountInfo() {
     this.setState({ userType: '' });
-=======
-
-  selectStandardUser = () => {
-    this.setState({ userType: 'standardUser' });
-  };
-
-  selectManagerUser = () => {
-    this.setState({ userType: 'managerUser' });
-  };
-
-  selectGoBack = () => {
-    this.setState({ userType: '' });
-  };
-
-  submitClientAccountInfo = () => {
-    this.sendToDB();
-    window.location = '/my_loans';
-  };
-
-  submitManagerAccountInfo = () => {
-    this.sendToDB();
->>>>>>> c21c4ad3ec5d133c7d4eee39a08fcf9f3d5afe78
     window.location = '/loan_list';
-  };
-
+  }
   handlePasswordChange = (event) => {
     this.setState({ password: event.target.value });
   };
@@ -239,4 +211,4 @@ export default class AccountCreation extends Component {
     );
   }
 }
-export default AccountCreation;
+

@@ -21,9 +21,6 @@ class Billing extends Component {
       creditCardExperation: '',
       loanPlan: '',
     };
-    this.handleCreditCardNumber = this.handleCreditCardNumber.bind(this);
-    this.submitBillingInfo = this.submitBillingInfo.bind(this);
-    this.sendStripeToken = this.sendStripeToken.bind(this);
   }
   sendStripeToken() {
     console.log('sending stripe token to server!');

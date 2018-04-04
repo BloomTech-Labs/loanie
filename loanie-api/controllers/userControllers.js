@@ -24,10 +24,7 @@ const userCreate = (req, res) => {
       console.log(err);
       return;
     }
-<<<<<<< HEAD
-=======
     console.log(savedUser);
->>>>>>> c21c4ad3ec5d133c7d4eee39a08fcf9f3d5afe78
     res.status(200).json(savedUser);
   });
 };
@@ -153,7 +150,7 @@ const stripeTransaction = (req, res) => {
     (err, charge) => {
       if (err) return res.status(400).json(err);
       return res.status(200).json(charge);
-    }
+    },
   );
   // res.json("Stripe Token Received!");
 };
