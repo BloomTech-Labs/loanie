@@ -3,6 +3,8 @@ import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import '../CSS/Settings.css';
 
+// test SSH
+
 export default class Settings extends Component {
   constructor() {
     super();
