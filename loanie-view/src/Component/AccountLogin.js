@@ -26,15 +26,15 @@ const sendToken = (tokenId, sendEmail) => {
   axios
     .post('http://localhost:3030/auth', data)
     .then((res) => {
-      userType = res.userType;
+      userType = res.data.userType;
+      sessionStorage.setItem('userType', userType);
+      if (userType === 'managerUser') window.location = '/loan_list';
+      else window.location = '/my_loans';
       console.log('Response from server: ', res);
     })
     .catch((err) => {
       console.log('Login Failed!', err);
     });
-  sessionStorage.setItem('userType', userType);
-  if (userType === 'managerUser') window.location = '/loan_list';
-  else window.location = '/my_loans';
 };
 
 const uiConfig = {

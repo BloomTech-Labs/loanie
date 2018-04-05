@@ -70,9 +70,6 @@ export default class SideBarNav extends Component {
         <a id="about" className="menu-item" href="/my_loans">
           My Loans
         </a>
-        <a id="contact" className="menu-item" href="/billing">
-          Billing
-        </a>
         <a id="settings" className="menu-item" href="/user_settings">
           Settings
         </a>
