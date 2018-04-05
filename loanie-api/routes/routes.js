@@ -23,6 +23,10 @@ module.exports = (app) => {
     .post(loanControllers.loanEdit)
     .delete(loanControllers.loanDelete);
 
+  app.route("/assignment").post(loanControllers.loanCreateAssignment);
+  app.route("/assignmentedit").post(loanControllers.loanEditAssignment);
+  app.route("/assignementdelete").post(loanControllers.loanDeleteAssignment);
+
   // Creates a new user. Creates a new row for the user in User collection.
   app.route("/newuser").post(userControllers.userCreate);
 
@@ -48,5 +52,6 @@ module.exports = (app) => {
   app.route("/sendemail").post(thirdPartyApiControllers.sendEmailNotification);
 
   // Send sms notification to the user
+  // hey
   app.route("/sendsms").post(thirdPartyApiControllers.sendSmsNotification);
 };

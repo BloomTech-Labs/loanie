@@ -32,7 +32,7 @@ const uiConfig = {
   // tosUrl: '<your-tos-url>',
 };
 
-export default class AccountCreation extends Component {
+class AccountCreation extends Component {
   constructor() {
     super();
     this.state = {
@@ -40,37 +40,27 @@ export default class AccountCreation extends Component {
       acceptText: false,
       acceptEmail: false,
     };
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.selectStandardUser = this.selectStandardUser.bind(this);
-    this.selectManagerUser = this.selectManagerUser.bind(this);
-    this.selectGoBack = this.selectGoBack.bind(this);
-    this.submitClientAccountInfo = this.submitClientAccountInfo.bind(this);
-    this.submitManagerAccountInfo = this.submitManagerAccountInfo.bind(this);
   }
-  handleUsernameChange(event) {
-    this.setState({ username: event.target.value });
-    console.log(this.state.username);
-  }
-  handlePasswordChange(event) {
-    this.setState({ password: event.target.value });
-    console.log(this.state.password);
-  }
-  selectStandardUser() {
+
+  selectStandardUser = () => {
     this.setState({ userType: 'standardUser' });
-  }
-  selectManagerUser() {
+  };
+
+  selectManagerUser = () => {
     this.setState({ userType: 'managerUser' });
-  }
-  selectGoBack() {
+  };
+
+  selectGoBack = () => {
     this.setState({ userType: '' });
-  }
-  submitClientAccountInfo() {
-    this.setState({ userType: '' });
+  };
+
+  submitClientAccountInfo = () => {
+    this.sendToDB();
     window.location = '/my_loans';
-  }
-  submitManagerAccountInfo() {
-    this.setState({ userType: '' });
+  };
+
+  submitManagerAccountInfo = () => {
+    this.sendToDB();
     window.location = '/loan_list';
   }
   handlePasswordChange = (event) => {
@@ -112,6 +102,7 @@ export default class AccountCreation extends Component {
       acceptEmails: this.state.acceptEmail,
       password: this.state.password,
     };
+    sessionStorage.setItem('userType', this.state.userType);
     console.log('sending to db:', userInfo);
     axios
       .post('http://localhost:3030/newuser', userInfo)
@@ -197,18 +188,35 @@ export default class AccountCreation extends Component {
         </div>
       );
     }
+    if (!sessionStorage.getItem('userType')) {
+      return (
+        <div>
+          <Navbar />
+          <div className="Login-header-container">
+            <h1> Select User Type </h1>
+          </div>
+          <div>
+            <button onClick={this.selectStandardUser}>Client</button>
+            <button onClick={this.selectManagerUser}>Loan Officer</button>
+          </div>
+        </div>
+      );
+    }
+    if (sessionStorage.getItem('userType') === 'managerUser') {
+      window.location = '/loan_list';
+      return (
+        <div>
+          <h1> Logged In </h1>
+        </div>
+      );
+    }
+    window.location = '/my_loans';
     return (
       <div>
-        <Navbar />
-        <div className="Login-header-container">
-          <h1> Select User Type </h1>
-        </div>
-        <div>
-          <button onClick={this.selectStandardUser}>Client</button>
-          <button onClick={this.selectManagerUser}>Loan Officer</button>
-        </div>
+        <h1> Logged In </h1>
       </div>
     );
   }
 }
 
+export default AccountCreation;

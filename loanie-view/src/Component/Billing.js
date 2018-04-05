@@ -3,7 +3,7 @@ import { CardElement, injectStripe } from 'react-stripe-elements';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Navbar from './Navbar';
-import SidebarNav from './SidebarNav';
+import SidebarNav from './SideBarNav';
 import '../CSS/Billing.css';
 
 class Billing extends Component {
@@ -20,6 +20,7 @@ class Billing extends Component {
       creditCardNumber: '',
       creditCardExperation: '',
       loanPlan: '',
+      tokenId: sessionStorage.getItem('tokenId'),
     };
   }
   sendStripeToken() {
@@ -77,6 +78,18 @@ class Billing extends Component {
   };
 
   render() {
+    // render getter
+    const token = this.state.tokenId;
+    console.log(sessionStorage.getItem('tokenId'));
+    console.log('state tokenId:', token);
+    if (token === null || token === undefined || token === '') {
+      window.location = '/login_user';
+      return (
+        <div>
+          <h1> Please Login</h1>
+        </div>
+      );
+    }
     return (
       <div className="Billing">
         <Navbar />

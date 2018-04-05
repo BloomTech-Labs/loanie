@@ -7,9 +7,10 @@ import { firebase } from './Firebase';
 // import { changeTokenId } from '../Actions';
 import '../CSS/AccountLogin.css';
 
-const sendToken = (tokenId) => {
+const sendToken = (tokenId, sendEmail) => {
   // setter
   sessionStorage.setItem('tokenId', tokenId);
+  sessionStorage.setItem('email', sendEmail);
 
   console.log('Inside sendToken(), this.props: ', this.props);
 
@@ -17,16 +18,20 @@ const sendToken = (tokenId) => {
   // this.props.dispatch(changeTokenId(tokenId));
 
   console.log('sending token to server!');
-  const token = { token: tokenId };
+  const data = { token: tokenId, email: sendEmail };
+  let userType = '';
   axios
-    .post('http://localhost:3030/auth', token)
+    .post('http://localhost:3030/auth', data)
     .then((res) => {
+      userType = res.userType;
       console.log('Response from server: ', res);
     })
     .catch((err) => {
       console.log('Login Failed!', err);
     });
-  window.location = '/loan_list';
+  sessionStorage.setItem('userType', userType);
+  if (userType === 'managerUser') window.location = '/loan_list';
+  else window.location = '/my_loans';
 };
 
 const uiConfig = {
@@ -41,7 +46,7 @@ const uiConfig = {
     signInSuccess: () => {
       firebase.auth().onAuthStateChanged((user) => {
         console.log('got the ID!!', user.uid);
-        sendToken(user.uid);
+        sendToken(user.uid, user.email);
       });
     },
   },
@@ -54,9 +59,11 @@ export default function AccountLogin() {
   // console.log('TOKEN ID:', this.props.tokenId);
 
   return (
-    <div>
+    <div className="Account-title-containter">
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-      <Link to="/password_reset">Forgot Password?</Link>
+      <div className="Account-text-containter">
+        <Link to="/password_reset">Forgot Password?</Link>
+      </div>
     </div>
   );
 }

@@ -9,7 +9,9 @@
   margin-top: 10em;
   text-align: center;
 }
-
+.Account-text-containter {
+  text-align: center;
+}
 .Account-button-container {
   text-align: center;
 }

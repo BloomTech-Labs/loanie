@@ -27,6 +27,9 @@ const UserSchema = new mongoose.Schema({
   acceptEmails: {
     type: Boolean,
   },
+  UID: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);
