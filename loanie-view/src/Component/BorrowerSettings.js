@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
-import * as firebase from 'firebase';
+import firebase from './Firebase';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import '../CSS/Settings.css';

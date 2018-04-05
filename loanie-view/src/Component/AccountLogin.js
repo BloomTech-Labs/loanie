@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import axios from 'axios';
+import Navbar from './Navbar';
 import firebase from './Firebase';
 // import { connect } from 'react-redux';
 // import { changeTokenId } from '../Actions';
@@ -65,10 +66,13 @@ export default function AccountLogin() {
   // console.log('TOKEN ID:', this.props.tokenId);
 
   return (
-    <div className="Account-title-containter">
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-      <div className="Account-text-containter">
-        <Link to="/password_reset">Forgot Password?</Link>
+    <div>
+      <Navbar />
+      <div className="Account-title-containter">
+        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+        <div className="Account-text-containter">
+          <Link to="/password_reset">Forgot Password?</Link>
+        </div>
       </div>
     </div>
   );
