@@ -29,14 +29,12 @@ const sendToken = (tokenId, sendEmail) => {
       const usertype = res.data.userType;
       sessionStorage.setItem('userType', usertype);
       console.log('Response from server: ', res);
+      if (usertype === 'managerUser') window.location = '/loan_list';
+      else window.location = '/my_loans';
     })
     .catch((err) => {
       console.log('Login Failed!', err);
     });
-  const userType = sessionStorage.getItem('userType');
-  console.log('const userType:', userType, 'usertype session:', sessionStorage.getItem('userType'));
-  if (userType === 'managerUser') window.location = '/loan_list';
-  else window.location = '/my_loans';
 };
 
 const uiConfig = {
