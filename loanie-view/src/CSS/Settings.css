@@ -3,9 +3,12 @@
   flex-direction: column;
 }
 .Settings-title-containter {
-  margin-top: 10em;
   margin-left: 50em;
 }
 .Settings-form-container {
   margin-left: 300px;
+}
+.BreadCrumb {
+  margin-top: 6em;
+  margin-left: 1.2em;
 }
