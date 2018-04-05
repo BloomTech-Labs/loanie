@@ -9,20 +9,18 @@ export default class LoanCreate extends Component {
   constructor() {
     super();
     this.state = {
-      loanName: '',
-      amount: '',
+      tokenId: sessionStorage.getItem('tokenId'),
       managerName: '',
       managerEmail: '',
-      coFirstName: '',
-      coLastName: '',
-      coMiddleName: '',
-      coEmail: '',
-      tokenId: sessionStorage.getItem('tokenId'),
+      phoneNumber: '',
       loanManagerId: '',
+      clientEmail: '',
+      loanType: 'fha',
+      amount: '',
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const body = {
       token: this.state.tokenId,
     };
@@ -30,6 +28,7 @@ export default class LoanCreate extends Component {
     axios
       .post('http://localhost:3030/user', body)
       .then((res) => {
+        console.log('res name', res.data.name);
         this.setState({
           managerName: res.data.name,
           managerEmail: res.data.email,
@@ -43,47 +42,64 @@ export default class LoanCreate extends Component {
       });
   }
 
-  handleLoanNameChange = (event) => {
-    this.setState({ loanName: event.target.value });
-  };
   handleAmountChange = (event) => {
     this.setState({ amount: event.target.value });
     console.log(this.state.amount);
   };
 
-  handleMiddleNameChange = (event) => {
-    this.setState({ middleName: event.target.value });
-    console.log(this.state.middleName);
-  };
-
-  handleLastNameChange = (event) => {
-    this.setState({ middleName: event.target.value });
-    console.log(this.state.lastName);
-  };
   handleEmailChange = (event) => {
-    this.setState({ email: event.target.value });
+    this.setState({ clientEmail: event.target.value });
     console.log(this.state.email);
   };
-  handleCoFirstNameChange = (event) => {
-    this.setState({ coFirstName: event.target.value });
-    console.log(this.state.coFirstName);
-  };
-  handleCoMiddleNameChange = (event) => {
-    this.setState({ coMiddleName: event.target.value });
-    console.log(this.state.coMiddleName);
+
+  sendNewLoanEmail() {
+    const body = {
+      managerName: this.state.managerName,
+      managerEmail: this.state.managerEmail,
+      phoneNumber: this.state.phoneNumber,
+      clientEmail: this.state.clientEmail,
+    };
+
+    axios
+      .post('http://localhost:3030/newloanemail', body)
+      .then((res) => {
+        console.log('Success! Response from server: ', res);
+        window.location = '/loan_list';
+      })
+      .catch((err) => {
+        console.log('Loan creation failed.', err);
+      });
+  }
+
+  sendNewLoanDB() {
+    console.log('state', this.state);
+
+    const body = {
+      loanManagerId: this.state.loanManagerId,
+      clientEmail: this.state.clientEmail,
+      loanType: this.state.loanType,
+      amount: this.state.amount,
+    };
+    axios
+      .post('http://localhost:3030/newloan', body)
+      .then((res) => {
+        console.log('Success! Response from server: ', res);
+        this.sendNewLoanEmail();
+      })
+      .catch((err) => {
+        console.log('Loan creation failed.', err);
+      });
+  }
+
+  submitNewLoan = () => {
+    this.sendNewLoanDB();
   };
 
-  handleCoLastNameChange = (event) => {
-    this.setState({ coLastName: event.target.value });
-    console.log(this.state.coLastName);
+  handleDropDown = (e) => {
+    console.log(e.target.value);
+    this.setState({ loanType: e.target.value });
   };
-  handleCoEmailChange = (event) => {
-    this.setState({ coEmail: event.target.value });
-    console.log(this.state.coEmail);
-  };
-  submitNewLoan() {
-    console.log(this.state.loanName);
-  }
+
   render() {
     // render getter
     const token = this.state.tokenId;
@@ -121,7 +137,7 @@ export default class LoanCreate extends Component {
             <fieldset>
               <legend>Borrower information:</legend>
               Loan Type:
-              <select>
+              <select value="fha" onChange={this.handleDropDown}>
                 <option value="fha">FHA</option>
                 <option value="usda">USDA</option>
                 <option value="va">VA</option>
@@ -139,7 +155,7 @@ export default class LoanCreate extends Component {
               <br />
             </fieldset>
           </form>
-          <button onClick={this.submitManagerAccountInfo}>Submit</button>
+          <button onClick={this.submitNewLoan}>Submit</button>
         </div>
         <SidebarNav />
       </div>

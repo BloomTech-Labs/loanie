@@ -1,42 +1,26 @@
-const mongoose = require("mongoose");
-
 const Loan = require("../models/loanModels");
-const User = require("../models/userModels");
 
 const loanCreate = (req, res) => {
   const {
-    clientId, currentStatus, timestamp, loanManagerId,
+    clientEmail, loanManagerId, amount, loanType,
   } = req.body;
 
-  // Verify that there are rows corresponding to clientId and loanManagerId in User collection.
-  // Only after that, create new loan.
-  User.find({
-    _id: {
-      $in: [mongoose.Types.ObjectId(clientId), mongoose.Types.ObjectId(loanManagerId)],
-    },
-  })
-    .then((loans) => {
-      if (loans.length !== 2) {
-        res.status(422).json("clientId or loanManagerId not found in User collection.");
-        throw new Error();
-      } else {
-        const newLoan = new Loan({
-          clientId,
-          currentStatus,
-          timestamp,
-          loanManagerId,
-        });
-        newLoan.save(newLoan, (err, savedloan) => {
-          if (err) {
-            console.log("err: ", err);
-            res.status(500).json(err);
-            return;
-          }
-          res.status(200).json(savedloan);
-        });
-      }
-    })
-    .catch(err => res.status(422).json(err));
+  console.log("Request Body:", req.body);
+  const newLoan = new Loan({
+    clientEmail,
+    loanManagerId,
+    amount,
+    loanType,
+  });
+  newLoan.save(newLoan, (err, savedloan) => {
+    if (err) {
+      console.log("err: ", err);
+      res.status(500).json(err);
+      return;
+    }
+    console.log(savedloan);
+    res.status(200).json(savedloan);
+  });
 };
 
 const loansGetAll = (req, res) => {
