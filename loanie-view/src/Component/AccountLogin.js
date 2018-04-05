@@ -23,18 +23,18 @@ const sendToken = (tokenId, sendEmail) => {
     token: tokenId,
     email: sendEmail,
   };
-  let userType = '';
+  let usertype = '';
   axios
     .post('http://localhost:3030/auth', data)
     .then((res) => {
-      userType = res.userType;
+      usertype = res.userType;
       console.log('Response from server: ', res);
     })
     .catch((err) => {
       console.log('Login Failed!', err);
     });
-  sessionStorage.setItem('userType', userType);
-  if (userType === 'managerUser') window.location = '/loan_list';
+  sessionStorage.setItem('userType', usertype);
+  if (usertype === 'managerUser') window.location = '/loan_list';
   else window.location = '/my_loans';
 };
 
