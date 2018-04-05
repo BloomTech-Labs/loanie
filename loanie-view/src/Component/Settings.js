@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import axios from 'axios';
 
 import Navbar from './Navbar';
@@ -138,6 +139,19 @@ export default class Settings extends Component {
     return (
       <div className="Settings">
         <Navbar />
+        <div className="BreadCrumb">
+          <Breadcrumb>
+            <BreadcrumbItem tag="a" href="/">
+              Home
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem tag="a" href="/loan_list">
+              Loans
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem active>Settings</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
         <div className="Settings-title-containter">
           <h1>Settings</h1>
         </div>
