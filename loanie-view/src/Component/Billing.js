@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import axios from 'axios';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
@@ -96,6 +97,15 @@ class Billing extends Component {
     return (
       <div className="Billing">
         <Navbar />
+        <div className="BreadCrumb">
+          <Breadcrumb>
+            <BreadcrumbItem tag="a" href="/">
+              Home
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem active>Billing</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
         <div className="Billing-title-containter">
           <div className="Billing-form-container">
             <form onSubmit={this.handleSubmit}>
