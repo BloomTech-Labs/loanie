@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from './Navbar';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import '../CSS/MyLoans.css';
+import '../CSS/LoanList.css';
 
 export default class MyLoans extends Component {
   constructor() {
@@ -73,6 +74,15 @@ export default class MyLoans extends Component {
     if (this.state.loanList !== '') {
       return (
         <div className="MyLoans">
+          <div className="BreadCrumb">
+            <Breadcrumb>
+              <BreadcrumbItem tag="a" href="/">
+                Home
+              </BreadcrumbItem>
+              {' > '}
+              <BreadcrumbItem active>Loans</BreadcrumbItem>
+            </Breadcrumb>
+          </div>
           <Navbar />
           <div className="MyLoans-link-container">
             <Link to="my_loan">
