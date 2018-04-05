@@ -18,6 +18,7 @@ const loanCreate = (req, res) => {
     .then((loans) => {
       if (loans.length !== 2) {
         res.status(422).json("clientId or loanManagerId not found in User collection.");
+        throw new Error();
       } else {
         const newLoan = new Loan({
           clientId,

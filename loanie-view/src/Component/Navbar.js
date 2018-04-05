@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { firebase } from './Firebase';
+import firebase from './Firebase';
 import SideBarNav from './SideBarNav';
 import '../App.css';
 

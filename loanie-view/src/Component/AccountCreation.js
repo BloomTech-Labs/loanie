@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
 import axios from 'axios';
-import { firebase } from './Firebase';
+import firebase from './Firebase';
 import Navbar from './Navbar';
 import '../CSS/AccountCreate.css';
 

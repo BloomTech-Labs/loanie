@@ -44,9 +44,6 @@
     "jasmine": "^3.1.0"
   },
   "babel": {
-    "presets": [
-      "env",
-      "react"
-    ]
+    "presets": ["env", "react"]
   }
 }
