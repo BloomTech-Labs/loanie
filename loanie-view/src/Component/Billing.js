@@ -81,6 +81,13 @@ class Billing extends Component {
     });
   };
 
+  getBillingRoute = () => {
+    if (sessionStorage.getItem('userType') === 'managerUser') {
+      return '/loan_list';
+    }
+    return '/my_loans';
+  };
+
   render() {
     // render getter
     const token = this.state.tokenId;
@@ -101,6 +108,10 @@ class Billing extends Component {
           <Breadcrumb>
             <BreadcrumbItem tag="a" href="/">
               Home
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem tag="a" href={this.getBillingRoute()}>
+              Loans
             </BreadcrumbItem>
             {' > '}
             <BreadcrumbItem active>Billing</BreadcrumbItem>
