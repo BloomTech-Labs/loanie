@@ -1,5 +1,5 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
+const firebase = require('firebase/app');
+require('firebase/auth');
 
 // Initialize Firebase
 
@@ -16,6 +16,4 @@ const config = {
 // Initialize FirebaseUI Widget using Firebase
 if (!firebase.apps.length ? firebase.initializeApp(config) : firebase.app());
 
-const auth = firebase.auth();
-
-export { firebase, auth };
+export default firebase;

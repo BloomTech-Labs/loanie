@@ -43,9 +43,6 @@
     "ignore-styles": "^5.0.1"
   },
   "babel": {
-    "presets": [
-      "env",
-      "react"
-    ]
+    "presets": ["env", "react"]
   }
 }
