@@ -3,24 +3,56 @@
 		"clientId": "000000000000000000000003",
 		"currentStatus": "1",
 		"loanManagerId": "000000000000000000000001",
-		"timestamp": "11-07-2016"
+		"timestamp": "11-07-2016",
+		"openLoan" : false
 	},
 	{
 		"clientId": "000000000000000000000004",
-		"currentStatus": "1",
+		"currentStatus": "2",
 		"loanManagerId": "000000000000000000000001",
-		"timestamp": "10-20-2017"
+		"timestamp": "10-20-2017",
+		"openLoan" : false
 	},
 	{
 		"clientId": "000000000000000000000006",
-		"currentStatus": "1",
+		"currentStatus": "3",
 		"loanManagerId": "000000000000000000000005",
-		"timestamp": "08-11-2018"
+		"timestamp": "08-11-2018",
+		"openLoan" : false
 	},
 	{
 		"clientId": "000000000000000000000006",
 		"currentStatus": "1",
 		"loanManagerId": "000000000000000000000002",
-		"timestamp": "01-23-2016"
+		"timestamp": "01-23-2016",
+		"openLoan" : false
+	},
+	{
+		"clientId": "000000000000000000000003",
+		"currentStatus": "4",
+		"loanManagerId": "000000000000000000000002",
+		"timestamp": "01-23-2016",
+		"openLoan" : true
+	},
+	{
+		"clientId": "000000000000000000000004",
+		"currentStatus": "4",
+		"loanManagerId": "000000000000000000000002",
+		"timestamp": "01-23-2016",
+		"openLoan" : true
+	},
+	{
+		"clientId": "000000000000000000000003",
+		"currentStatus": "4",
+		"loanManagerId": "000000000000000000000001",
+		"timestamp": "01-23-2016",
+		"openLoan" : true
+	},
+	{
+		"clientId": "000000000000000000000006",
+		"currentStatus": "1",
+		"loanManagerId": "000000000000000000000001",
+		"timestamp": "01-23-2016",
+		"openLoan" : true
 	}
 ]

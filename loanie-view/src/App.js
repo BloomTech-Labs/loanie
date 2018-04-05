@@ -8,9 +8,9 @@ class App extends Component {
     this.state = {
       loginState: false,
     };
-    this.handlePurhase = this.handlePurhase.bind(this);
+    this.handlePurchase = this.handlePurchase.bind(this);
   }
-  handlePurhase() {
+  handlePurchase() {
     this.setState({ loginState: true });
     console.log(this.state.loginState);
     window.location = '/purchase_loanie';
@@ -23,7 +23,7 @@ class App extends Component {
           <p className="App-text-item"> Make your home purchases and mortgages easy and simple!</p>
         </div>
         <div className="button-container">
-          <button className="button1 button" onClick={this.handlePurhase}>
+          <button className="button1 button" onClick={this.handlePurchase}>
             {' '}
             Buy Now{' '}
           </button>
