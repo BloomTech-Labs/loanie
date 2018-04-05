@@ -49,14 +49,8 @@ const userToken = (req, res) => {
   console.log(token, email);
   User.findOne({ email })
     .then((user) => {
-      if (token) user.UID = token;
-      User.save(user, (err) => {
-        if (err) {
-          res.status(500).json(err);
-          return;
-        }
-        res.status(200).json(user);
-      });
+      console.log("sending response");
+      res.status(200).json(user);
     })
     .catch(err => res.status(422).json({ error: "User not found!", err }));
 };

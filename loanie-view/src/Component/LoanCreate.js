@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import axios from 'axios';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import '../CSS/LoanCreate.css';
@@ -10,16 +11,38 @@ export default class LoanCreate extends Component {
     this.state = {
       loanName: '',
       amount: '',
-      middleName: '',
-      lastName: '',
-      email: '',
+      managerName: '',
+      managerEmail: '',
       coFirstName: '',
       coLastName: '',
       coMiddleName: '',
       coEmail: '',
       tokenId: sessionStorage.getItem('tokenId'),
+      loanManagerId: '',
     };
   }
+
+  componentDidMount() {
+    const body = {
+      token: this.state.tokenId,
+    };
+
+    axios
+      .post('http://localhost:3030/user', body)
+      .then((res) => {
+        this.setState({
+          managerName: res.data.name,
+          managerEmail: res.data.email,
+          phoneNumber: res.data.mobilePhone,
+          loanManagerId: res.data._id,
+        });
+        console.log('Response from server: ', res);
+      })
+      .catch((err) => {
+        console.log('Unable to fetch user data.', err);
+      });
+  }
+
   handleLoanNameChange = (event) => {
     this.setState({ loanName: event.target.value });
   };
@@ -99,6 +122,10 @@ export default class LoanCreate extends Component {
               <legend>Borrower information:</legend>
               Loan Type:
               <select>
+                <option value="fha">FHA</option>
+                <option value="usda">USDA</option>
+                <option value="va">VA</option>
+                <option value="conventional">Conventional</option>
                 <option value="new">New Purchase</option>
                 <option value="refinance">Refinance</option>
                 <option value="Constuction">Construction</option>
@@ -106,37 +133,12 @@ export default class LoanCreate extends Component {
               <br />
               <br />
               Loan Amount: <input type="text" name="amount" onChange={this.handleAmountChange} />
-              Middle Name:{' '}
-              <input type="text" name="middlename" onChange={this.handleMiddleNameChange} />
-              Last Name:{' '}
-              <input type="text" name="middlename" onChange={this.handleLastNameChange} />
               <br />
               <br />
               Borrower Email: <input type="text" name="email" onChange={this.handleEmailChange} />
               <br />
-              <br />
             </fieldset>
           </form>
-          <br />
-          <br />
-          <form>
-            <fieldset>
-              <legend>Co-Borrower information (if applicable):</legend>
-              First Name:{' '}
-              <input type="text" name="firstname" onChange={this.handleCoUsernameChange} />
-              Middle Name:{' '}
-              <input type="text" name="middlename" onChange={this.handleCoUsernameChange} />
-              Last Name:{' '}
-              <input type="text" name="middlename" onChange={this.handleCoUsernameChange} />
-              <br />
-              <br />
-              Email: <input type="text" name="email" onChange={this.handleCoUsernameChange} />
-              <br />
-              <br />
-            </fieldset>
-          </form>
-          <br />
-          <br />
           <button onClick={this.submitManagerAccountInfo}>Submit</button>
         </div>
         <SidebarNav />

@@ -13,7 +13,7 @@ const sendToken = (tokenId, sendEmail) => {
   sessionStorage.setItem('tokenId', tokenId);
   sessionStorage.setItem('email', sendEmail);
 
-  console.log('Inside sendToken(), this.props: ', this.props);
+  // console.log('Inside sendToken(), this.props: ', this.props);
 
   // Change token in Redux state.
   // this.props.dispatch(changeTokenId(tokenId));
@@ -23,18 +23,19 @@ const sendToken = (tokenId, sendEmail) => {
     token: tokenId,
     email: sendEmail,
   };
-  let usertype = '';
   axios
     .post('http://localhost:3030/auth', data)
     .then((res) => {
-      usertype = res.userType;
+      const usertype = res.data.userType;
+      sessionStorage.setItem('userType', usertype);
       console.log('Response from server: ', res);
     })
     .catch((err) => {
       console.log('Login Failed!', err);
     });
-  sessionStorage.setItem('userType', usertype);
-  if (usertype === 'managerUser') window.location = '/loan_list';
+  const userType = sessionStorage.getItem('userType');
+  console.log('const userType:', userType, 'usertype session:', sessionStorage.getItem('userType'));
+  if (userType === 'managerUser') window.location = '/loan_list';
   else window.location = '/my_loans';
 };
 
