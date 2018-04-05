@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
-import * as firebase from 'firebase';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import firebase from './Firebase';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
+
 import '../CSS/Settings.css';
 
 export default class BorrowerSettings extends Component {
@@ -160,6 +162,19 @@ export default class BorrowerSettings extends Component {
     }
     return (
       <div className="Settings">
+        <div className="BreadCrumb">
+          <Breadcrumb>
+            <BreadcrumbItem tag="a" href="/">
+              Home
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem tag="a" href="/my_loans">
+              Loans
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem active>Settings</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
         <div className="Settings-title-containter">
           <h1>Settings</h1>
         </div>

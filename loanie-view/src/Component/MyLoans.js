@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Navbar';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import ClientSideNav from './ClientSideNav';
 import '../CSS/MyLoans.css';
 
@@ -89,10 +90,19 @@ export default class MyLoans extends Component {
     }
     return (
       <div className="Loanlist">
+        <div className="BreadCrumb">
+          <Breadcrumb>
+            <BreadcrumbItem tag="a" href="/">
+              Home
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem active>Loans</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
         <Navbar />
         <div className="Loanlist-title-containter">
           <h1>My Loans</h1>
-          <h2 >You currently do not have any active loans.</h2>
+          <h2>You currently do not have any active loans.</h2>
         </div>
         <ClientSideNav />
       </div>

@@ -119,7 +119,10 @@ class AccountCreation extends Component {
     if (token === null || token === undefined || token === '') {
       return (
         <div>
-          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+          <Navbar />
+          <div className="Account-title-containter">
+            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+          </div>
         </div>
       );
     }

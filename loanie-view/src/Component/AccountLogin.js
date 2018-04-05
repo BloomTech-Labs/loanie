@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import axios from 'axios';
+import Navbar from './Navbar';
 import firebase from './Firebase';
 // import { connect } from 'react-redux';
 // import { changeTokenId } from '../Actions';
@@ -22,11 +23,11 @@ const sendToken = (tokenId, sendEmail) => {
     token: tokenId,
     email: sendEmail,
   };
-  let userType = '';
+
   axios
     .post('http://localhost:3030/auth', data)
     .then((res) => {
-      userType = res.data.userType;
+      const userType = res.data.userType;
       sessionStorage.setItem('userType', userType);
       if (userType === 'managerUser') window.location = '/loan_list';
       else window.location = '/my_loans';
@@ -65,10 +66,13 @@ export default function AccountLogin() {
   // console.log('TOKEN ID:', this.props.tokenId);
 
   return (
-    <div className="Account-title-containter">
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-      <div className="Account-text-containter">
-        <Link to="/password_reset">Forgot Password?</Link>
+    <div>
+      <Navbar />
+      <div className="Account-title-containter">
+        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+        <div className="Account-text-containter">
+          <Link to="/password_reset">Forgot Password?</Link>
+        </div>
       </div>
     </div>
   );
