@@ -27,6 +27,14 @@ class Billing extends Component {
     this.submitBillingInfo = this.submitBillingInfo.bind(this);
     this.sendStripeToken = this.sendStripeToken.bind(this);
   }
+
+  getBillingRoute = () => {
+    if (sessionStorage.getItem('userType') === 'managerUser') {
+      return '/loan_list';
+    }
+    return '/my_loans';
+  };
+
   sendStripeToken() {
     console.log('sending stripe token to server!');
     console.log('loanPlan on state', this.state.loanPlan);
@@ -79,13 +87,6 @@ class Billing extends Component {
       console.log('Created Stripe token:', token);
       this.sendStripeToken();
     });
-  };
-
-  getBillingRoute = () => {
-    if (sessionStorage.getItem('userType') === 'managerUser') {
-      return '/loan_list';
-    }
-    return '/my_loans';
   };
 
   render() {
