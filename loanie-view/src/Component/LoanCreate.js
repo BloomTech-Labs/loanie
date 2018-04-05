@@ -9,7 +9,7 @@ export default class LoanCreate extends Component {
     super();
     this.state = {
       loanName: '',
-      firstName: '',
+      amount: '',
       middleName: '',
       lastName: '',
       email: '',
@@ -23,9 +23,9 @@ export default class LoanCreate extends Component {
   handleLoanNameChange = (event) => {
     this.setState({ loanName: event.target.value });
   };
-  handleFirstNameChange = (event) => {
-    this.setState({ firstName: event.target.value });
-    console.log(this.state.firstName);
+  handleAmountChange = (event) => {
+    this.setState({ amount: event.target.value });
+    console.log(this.state.amount);
   };
 
   handleMiddleNameChange = (event) => {
@@ -97,23 +97,22 @@ export default class LoanCreate extends Component {
           <form>
             <fieldset>
               <legend>Borrower information:</legend>
-              First Name:{' '}
-              <input type="text" name="firstname" onChange={this.handleFirstNameChange} />
-              Middle Name:{' '}
-              <input type="text" name="middlename" onChange={this.handleMiddleNameChange} />
-              Last Name:{' '}
-              <input type="text" name="middlename" onChange={this.handleLastNameChange} />
-              <br />
-              <br />
-              Email: <input type="text" name="email" onChange={this.handleEmailChange} />
-              <br />
-              <br />
               Loan Type:
               <select>
                 <option value="new">New Purchase</option>
                 <option value="refinance">Refinance</option>
                 <option value="Constuction">Construction</option>
               </select>
+              <br />
+              <br />
+              Loan Amount: <input type="text" name="amount" onChange={this.handleAmountChange} />
+              Middle Name:{' '}
+              <input type="text" name="middlename" onChange={this.handleMiddleNameChange} />
+              Last Name:{' '}
+              <input type="text" name="middlename" onChange={this.handleLastNameChange} />
+              <br />
+              <br />
+              Borrower Email: <input type="text" name="email" onChange={this.handleEmailChange} />
               <br />
               <br />
             </fieldset>
