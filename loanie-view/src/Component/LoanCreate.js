@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import '../CSS/LoanCreate.css';
@@ -76,6 +77,19 @@ export default class LoanCreate extends Component {
     return (
       <div className="LoanCreate">
         <Navbar />
+        <div className="BreadCrumb">
+          <Breadcrumb>
+            <BreadcrumbItem tag="a" href="/">
+              Home
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem tag="a" href="/loan_list">
+              Loans
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem active>Loan Creation</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
         <div className="LoanCreate-title-container">
           <h1>Create new Loan</h1>
         </div>
