@@ -61,7 +61,7 @@ export default class OpenLoans extends Component {
 	}
 
 	render() {
-    const loans = this.handleGetAllClosedLoans();
+    const loans = this.handleGetAllOpenLoans();
     if(loans.length === 0) {
       return(
         <div className="card-columns">
@@ -92,8 +92,10 @@ export default class OpenLoans extends Component {
           <div className="card-body">
             <ul className="list-unstyled">
               <li>Hey</li>
-              <li>Client Id: {loan.clientId}</li>
+              <li>Client Email: {loan.clientEmail}</li>
               <li>Current Status: {loan.currentStatus}</li>
+              <br />
+              <br />
             </ul>
           </div>
         </div>);
