@@ -1,26 +1,62 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import axios from 'axios';
-import { getManagerLoans } from '../Actions';
+// import { getManagerLoans } from '../Actions';
 import '../CSS/OpenAndClosedLoans.css';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
-class OpenLoans extends Component {
+export default class OpenLoans extends Component {
 	constructor () {
 		super();
 		this.state = {
 			tokenId: sessionStorage.getItem('tokenId'),
+			loanManagerId: "",
+			loans: [],
 		};
 	}
 
 	componentDidMount() {
+		const body = {
+      token: this.state.tokenId
+    };
+
+    axios
+      .post('http://localhost:3030/user', body)
+      .then((res) => {
+        console.log('res name', res.data.name);
+        this.setState({loanManagerId: res.data._id});
+        console.log('loanManagerId from open lona: ', res.data._id);
+        console.log('Response from server: ', res);
+        this.handleGetOpenLoans();
+      })
+      .catch((err) => {
+        console.log('Unable to fetch user data.', err);
+      });
+
 		// console.log("User email: ", this.props.userLoginDetails.email);
 		// console.log("this.props.userLoginDetails: ", this.props.userLoginDetails);
-		// this.props.dispatch(getManagerLoans(this.props.userLoginDetails._id));
+		// this.props.dispatch(getManagerLoans("000000000000000000000001"));
+	}
+
+	handleGetOpenLoans = () => {
+		const bodya = {
+				loanManagerId: this.state.loanManagerId,
+			};
+
+			console.log("loanManagerId from bodya: ", bodya.loanManagerId);
+			axios
+			.post('http://localhost:3030/getmanagerloans', bodya)
+			.then((res) => {
+				this.setState({loans: res.data});
+			console.log('loans', res);
+			})
+			.catch((err) => {
+			console.log('Unable to fetch loan data.', err);
+			})
 	}
 
 	handleGetAllOpenLoans = () => {
-		const openLoans = this.props.loansBySingleManager.filter(loan => parseInt(loan.currentStatus) < 4);
+		const openLoans =  this.state.loans.filter(loan => parseInt(loan.currentStatus) < 4);
 		return openLoans;
 	}
 
@@ -51,11 +87,11 @@ class OpenLoans extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-  return {
-    loansBySingleManager: state.loans,
-    userLoginDetails: state.userLoginDetails,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     loansBySingleManager: state.loans,
+//     //userLoginDetails: state.userLoginDetails,
+//   };
+// };
 
-export default connect(mapStateToProps)(OpenLoans);
+ // connect(mapStateToProps)(OpenLoans);

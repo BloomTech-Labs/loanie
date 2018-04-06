@@ -193,7 +193,6 @@ module.exports = {
   userCreate,
   usersGetAll,
   userDelete,
-  userGetById,
   userGetByEmail,
   userGetByUID,
   userEdit,

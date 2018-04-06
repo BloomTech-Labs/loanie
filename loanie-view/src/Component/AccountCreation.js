@@ -17,7 +17,7 @@ const uiConfig = {
   callbacks: {
     signInSuccess: () => {
       firebase.auth().onAuthStateChanged((user) => {
-        console.log('got the ID!!!!!', user.uid);
+        console.log('got the ID!!', user.uid);
 
         // persist signup data so additional info can be added and sent to backend
         sessionStorage.setItem('tokenId', user.uid);
@@ -32,7 +32,6 @@ const uiConfig = {
   // tosUrl: '<your-tos-url>',
 };
 
-export default class AccountCreation extends Component {
 class AccountCreation extends Component {
   constructor() {
     super();
@@ -221,7 +220,6 @@ class AccountCreation extends Component {
       </div>
     );
   }
-}
 }
 
 export default AccountCreation;

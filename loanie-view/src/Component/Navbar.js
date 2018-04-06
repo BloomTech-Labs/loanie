@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { firebase } from './Firebase';
-import { connect } from 'react-redux';
 import firebase from './Firebase';
+// import { connect } from 'react-redux';
 import SideBarNav from './SideBarNav';
-import { getUserLoginDetails } from '../Actions';
+// import { getUserLoginDetails } from '../Actions';
 import '../App.css';
 
-class Navbar extends Component {
+export default class Navbar extends Component {
   constructor() {
     super();
     this.state = {
@@ -27,7 +26,7 @@ class Navbar extends Component {
       });
     sessionStorage.removeItem('tokenId');
     // Clear userLoginDetails stored in Redux state.
-    this.props.dispatch(getUserLoginDetails({}));
+    // this.props.dispatch(getUserLoginDetails({}));
   };
 
   render() {
@@ -76,4 +75,4 @@ class Navbar extends Component {
   }
 }
 
-export default connect()(Navbar);
+ // connect()(Navbar);

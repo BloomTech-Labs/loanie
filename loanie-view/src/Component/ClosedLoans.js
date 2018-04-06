@@ -1,22 +1,61 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getManagerLoans } from '../Actions';
+import axios from 'axios';
+// import { connect } from 'react-redux';
+// import { getManagerLoans } from '../Actions';
 import '../CSS/OpenAndClosedLoans.css';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
-class ClosedLoans extends Component {
+export default class ClosedLoans extends Component {
+  constructor () {
+    super();
+    this.state = {
+      tokenId: sessionStorage.getItem('tokenId'),
+      loanManagerId: "",
+      loans: [],
+    };
+    }
+
   componentDidMount() {
-    this.props.dispatch(getManagerLoans(""));
+    const body = {
+      token: this.state.tokenId,
+    };
+
+    axios
+      .post('http://localhost:3030/user', body)
+      .then((res) => {
+        console.log('res name', res.data.name);
+        this.setState({
+          loanManagerId: res.data._id,
+        });
+        console.log('Response from server: ', res);
+        this.handleGetClosedLoans()
+      })
+      .catch((err) => {
+        console.log('Unable to fetch user data.', err);
+      });
+    // this.props.dispatch(getManagerLoans("000000000000000000000001"));
   }
-<<<<<<< HEAD
+
+  handleGetClosedLoans = () => {
+    const bodya = {
+        loanManagerId: this.state.loanManagerId,
+      };
+
+      console.log("loanManagerId from bodya: ", bodya.loanManagerId);
+      axios
+      .post('http://localhost:3030/getmanagerloans', bodya)
+      .then((res) => {
+        this.setState({loans: res.data});
+        console.log('loans', res);
+      })
+      .catch((err) => {
+        console.log('Unable to fetch loan data.', err);
+      })
+  }
 
   handleGetAllClosedLoans = () => {
-    const closedLoans = this.props.loansBySingleManager.filter(loan => parseInt(loan.currentStatus) === 4);
+    const closedLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus) === 4);
     return closedLoans;
-=======
-  submitNewLoan() {
-    console.log(this.state.username);
->>>>>>> 14a68d708255417b8aee6f06873cd46035a58ae7
   }
 
   render() {
@@ -46,10 +85,10 @@ class ClosedLoans extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    loansBySingleManager: state.loans
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     loansBySingleManager: state.loans
+//   };
+// };
 
-export default connect(mapStateToProps)(ClosedLoans);
+ // connect(mapStateToProps)(ClosedLoans);

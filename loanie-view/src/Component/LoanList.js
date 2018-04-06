@@ -62,10 +62,4 @@ export default class LoanList extends Component {
       </div>
     );
   }
-<<<<<<< HEAD
 }
-=======
-}
-
-export default LoanList;
->>>>>>> 14a68d708255417b8aee6f06873cd46035a58ae7
