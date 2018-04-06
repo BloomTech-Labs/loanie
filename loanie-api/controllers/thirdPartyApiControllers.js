@@ -1,4 +1,5 @@
 const User = require("../models/userModels");
+const sgMail = require("@sendgrid/mail");
 
 const sendEmailNotification = (req, res) => {
 	const { name, email, text } = req.body;
@@ -34,6 +35,35 @@ const sendEmailNotification = (req, res) => {
 	        res.json("Email notification sent!");
 	    }
 	});
+};
+
+const sendNewLoanEmail = (req, res) => {
+  console.log("send new loan email");
+  const name = "Valued Client";
+  const link = "https://loanie.herokuapp.com/";
+  const {
+    managerName, managerEmail, phoneNumber, clientEmail,
+  } = req.body;
+  const text = `Hi ${name}! Your loan officer, ${managerName}, would like to cordially invite you to use a new cutting edge mortgage communication tool called Loanie! Your loan information is waiting for you, all you have to do is sign up at ${link} . If you have any trouble or questions you can contact ${managerName} by phone at ${phoneNumber} or by email at ${managerEmail} .`;
+
+  console.log("Request Body:", req.body);
+
+  const sendgridKey = process.env.SENDGRID_API_KEY || "default_sendgrid_key";
+  sgMail.setApiKey(sendgridKey);
+  const msg = {
+    to: clientEmail,
+    from: process.env.SENDGRID_EMAIL_FROM,
+    subject: "Your loan process has begun!",
+    text,
+  };
+  sgMail.send(msg, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Email sent successfully!");
+      res.json("Email notification sent!");
+    }
+  });
 };
 
 const sendSmsNotification = (req, res) => {
@@ -89,4 +119,5 @@ const sendSmsNotification = (req, res) => {
 module.exports = {
   sendEmailNotification,
   sendSmsNotification,
+  sendNewLoanEmail,
 };
