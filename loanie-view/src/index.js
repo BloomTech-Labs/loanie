@@ -11,7 +11,7 @@ import AccountLogin from './Component/AccountLogin';
 import LoanList from './Component/LoanList';
 import Settings from './Component/Settings';
 import LoanCreate from './Component/LoanCreate';
-// import Billing from "./Component/Billing";
+import EditLoan from './Component/EditLoan';
 import StripeWrapper from './Component/StripeBilling/StripeWrapper';
 import ClosedLoans from './Component/ClosedLoans';
 import MyLoans from './Component/MyLoans';
@@ -42,6 +42,7 @@ ReactDOM.render(
       <Route path="/user_settings" component={BorrowerSettings} />
       <Route path="/purchase_loanie" component={PurchasePage} />
       <Route path="/password_reset" component={PasswordReset} />
+      <Route path="/edit_loan" component={EditLoan} />
     </div>
   </Router>,
   document.getElementById('root'),
