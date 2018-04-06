@@ -44,6 +44,9 @@ module.exports = (app) => {
     .post(userControllers.userEdit)
     .delete(userControllers.userDelete);
 
+  // Performs get operations on the given user.
+  app.route("/userbyemail").post(userControllers.userGetByEmail);
+
   // Recieve client token after authentication
   app.route("/auth").post(userControllers.userToken);
   app.route("/stripe").post(userControllers.stripeTransaction);

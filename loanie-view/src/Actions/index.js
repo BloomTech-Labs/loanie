@@ -1,17 +1,22 @@
 import axios from 'axios';
 
-export const CHANGE_TOKEN_ID = 'CHANGE_TOKEN_ID';
+export const GET_USER_LOGIN_DETAILS = 'GET_USER_LOGIN_DETAILS';
 export const GET_MANAGER_LOANS = 'GET_MANAGER_LOANS';
 
-export const changeTokenId = tokenId => ({
-  type: CHANGE_TOKEN_ID,
-  tokenId,
-});
+export const getUserLoginDetails = (userLoginDetails) => {
+	const getUserByEmailEndpoint = 'http://localhost:3030/userbyemail';
+	console.log("sendind email: ", userLoginDetails.email);
+	const getUserByEmailResponse = axios.post(getUserByEmailEndpoint, {"email": userLoginDetails.email});
+	return {
+	  type: GET_USER_LOGIN_DETAILS,
+	  payload: getUserByEmailResponse,
+	  userLoginDetails
+	};
+};
 
 export const getManagerLoans = (managerId) => {
 	const getManagerLoansEndpoint = 'http://localhost:3030/getmanagerloans';
-	const getManagerLoansResponse = axios.post(getManagerLoansEndpoint, 
-		{"loanManagerId": managerId});
+	const getManagerLoansResponse = axios.post(getManagerLoansEndpoint, {"loanManagerId": managerId});
 	return {
 		type: GET_MANAGER_LOANS,
 		payload: getManagerLoansResponse

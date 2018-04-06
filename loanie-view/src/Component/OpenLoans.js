@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { getManagerLoans } from '../Actions';
 import '../CSS/OpenAndClosedLoans.css';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 class OpenLoans extends Component {
+	constructor () {
+		super();
+		this.state = {
+			tokenId: sessionStorage.getItem('tokenId'),
+		};
+	}
+
 	componentDidMount() {
-		this.props.dispatch(getManagerLoans("000000000000000000000001"));
+		// console.log("User email: ", this.props.userLoginDetails.email);
+		// console.log("this.props.userLoginDetails: ", this.props.userLoginDetails);
+		// this.props.dispatch(getManagerLoans(this.props.userLoginDetails._id));
 	}
 
 	handleGetAllOpenLoans = () => {
@@ -43,7 +53,8 @@ class OpenLoans extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    loansBySingleManager: state.loans
+    loansBySingleManager: state.loans,
+    userLoginDetails: state.userLoginDetails,
   };
 };
 

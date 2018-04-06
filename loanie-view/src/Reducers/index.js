@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import tokenIdReducer from './tokenIdReducer';
+import userLoginReducer from './userLoginReducer';
 import { loansReducer } from './loansReducer'
 
 const rootReducer = combineReducers({
-  tokenId: tokenIdReducer,
+  userLoginDetails: userLoginReducer,
   loans: loansReducer,
 });
 

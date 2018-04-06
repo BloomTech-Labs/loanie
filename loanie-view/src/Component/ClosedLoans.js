@@ -6,7 +6,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 class ClosedLoans extends Component {
   componentDidMount() {
-    this.props.dispatch(getManagerLoans("000000000000000000000001"));
+    this.props.dispatch(getManagerLoans(""));
   }
 
   handleGetAllClosedLoans = () => {

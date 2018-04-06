@@ -100,6 +100,24 @@ const userGetById = (req, res) => {
     .catch(err => res.status(422).json({ error: "No User!", err }));
 };
 
+const userGetByEmail = (req, res) => {
+  // find a single User
+  const { email } = req.body;
+  console.log("email in the controller:", email);
+  User.findOne({email})
+    .then((user) => {
+      if (user === null) {
+        console.log("No User: ", email);
+        res.status(422).json({ error: "No User!", err });
+      }
+      else {
+        console.log("Returning user: ", JSON.stringify(user));
+        res.status(200).json(user);
+      }
+    })
+    .catch(err => res.status(422).json({ error: "No User!", err }));
+};
+
 const userEdit = (req, res) => {
   console.log("user edit");
   const {
@@ -168,6 +186,7 @@ module.exports = {
   usersGetAll,
   userDelete,
   userGetById,
+  userGetByEmail,
   userEdit,
   userToken,
   stripeTransaction,

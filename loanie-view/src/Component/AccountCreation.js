@@ -17,7 +17,7 @@ const uiConfig = {
   callbacks: {
     signInSuccess: () => {
       firebase.auth().onAuthStateChanged((user) => {
-        console.log('got the ID!!', user.uid);
+        console.log('got the ID!!!!!', user.uid);
 
         // persist signup data so additional info can be added and sent to backend
         sessionStorage.setItem('tokenId', user.uid);

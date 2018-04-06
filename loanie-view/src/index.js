@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxPromise from 'redux-promise';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -21,11 +21,21 @@ import PasswordReset from './Component/PasswordReset';
 import registerServiceWorker from './registerServiceWorker';
 import rootReducers from './Reducers';
 
-const configureStore = applyMiddleware(ReduxPromise)(createStore);
-const store = configureStore(
+const persistedState = sessionStorage.getItem('reduxState') ? JSON.parse(sessionStorage.getItem('reduxState')) : {}
+const store = createStore(
   rootReducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
+  persistedState,
+  //compose(
+    applyMiddleware(ReduxPromise)
+    //,
+    //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  //)
+)
+
+store.subscribe(() => {
+  // Persist Redux state
+  sessionStorage.setItem('reduxState', JSON.stringify(store.getState()));
+})
 
 ReactDOM.render(
   <Provider store={store}>
