@@ -198,7 +198,7 @@ export default class Settings extends Component {
               <button onClick={this.sendToDB}>Submit</button>
             </fieldset>
           </form>
-          <SidebarNav />
+
         </div>
       </div>
     );

@@ -49,12 +49,15 @@ const userToken = (req, res) => {
   console.log(token, email);
   User.findOne({ email })
     .then((user) => {
+      console.log(user);
       if (token) user.UID = token;
-      User.save(user, (err) => {
+      user.save(user, (err) => {
         if (err) {
           res.status(500).json(err);
           return;
         }
+        console.log('hello');
+        console.log(user);
         res.status(200).json(user);
       });
     })

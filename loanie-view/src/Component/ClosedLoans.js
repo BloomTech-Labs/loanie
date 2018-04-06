@@ -14,7 +14,8 @@ export default class Settings extends Component {
   }
   submitNewLoan() {
     console.log(this.state.username);
-  };
+  }
+
   render() {
     // render getter
     const token = this.state.tokenId;

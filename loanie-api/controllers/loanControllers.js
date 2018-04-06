@@ -5,7 +5,7 @@ const User = require("../models/userModels");
 
 const loanCreate = (req, res) => {
   const {
-    clientId, currentStatus, timestamp, loanManagerId,
+    clientId, currentStatus, timestamp, loanManagerId, openLoan, assignments,
   } = req.body;
 
   // Verify that there are rows corresponding to clientId and loanManagerId in User collection.
@@ -25,6 +25,8 @@ const loanCreate = (req, res) => {
           currentStatus,
           timestamp,
           loanManagerId,
+          assignments,
+          openLoan,
         });
         newLoan.save(newLoan, (err, savedloan) => {
           if (err) {
