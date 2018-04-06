@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import firebase from './Firebase';
+// import { connect } from 'react-redux';
 import SideBarNav from './SideBarNav';
+// import { getUserLoginDetails } from '../Actions';
 import '../App.css';
 
 export default class Navbar extends Component {
@@ -23,6 +25,8 @@ export default class Navbar extends Component {
         console.log('error signing out', error);
       });
     sessionStorage.removeItem('tokenId');
+    // Clear userLoginDetails stored in Redux state.
+    // this.props.dispatch(getUserLoginDetails({}));
   };
 
   render() {
@@ -70,3 +74,5 @@ export default class Navbar extends Component {
     );
   }
 }
+
+ // connect()(Navbar);

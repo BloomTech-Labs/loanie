@@ -6,7 +6,7 @@ import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import '../CSS/LoanList.css';
 
-class LoanList extends Component {
+export default class LoanList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -63,5 +63,3 @@ class LoanList extends Component {
     );
   }
 }
-
-export default LoanList;
