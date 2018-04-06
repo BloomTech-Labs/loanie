@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import axios from 'axios';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import '../CSS/LoanCreate.css';
@@ -8,59 +9,97 @@ export default class LoanCreate extends Component {
   constructor() {
     super();
     this.state = {
-      loanName: '',
-      firstName: '',
-      middleName: '',
-      lastName: '',
-      email: '',
-      coFirstName: '',
-      coLastName: '',
-      coMiddleName: '',
-      coEmail: '',
       tokenId: sessionStorage.getItem('tokenId'),
+      managerName: '',
+      managerEmail: '',
+      phoneNumber: '',
+      loanManagerId: '',
+      clientEmail: '',
+      loanType: 'fha',
+      amount: '',
     };
   }
-  handleLoanNameChange = (event) => {
-    this.setState({ loanName: event.target.value });
-  };
-  handleFirstNameChange = (event) => {
-    this.setState({ firstName: event.target.value });
-    console.log(this.state.firstName);
+
+  componentWillMount() {
+    const body = {
+      token: this.state.tokenId,
+    };
+
+    axios
+      .post('http://localhost:3030/user', body)
+      .then((res) => {
+        console.log('res name', res.data.name);
+        this.setState({
+          managerName: res.data.name,
+          managerEmail: res.data.email,
+          phoneNumber: res.data.mobilePhone,
+          loanManagerId: res.data._id,
+        });
+        console.log('Response from server: ', res);
+      })
+      .catch((err) => {
+        console.log('Unable to fetch user data.', err);
+      });
+  }
+
+  handleAmountChange = (event) => {
+    this.setState({ amount: event.target.value });
+    console.log(this.state.amount);
   };
 
-  handleMiddleNameChange = (event) => {
-    this.setState({ middleName: event.target.value });
-    console.log(this.state.middleName);
-  };
-
-  handleLastNameChange = (event) => {
-    this.setState({ middleName: event.target.value });
-    console.log(this.state.lastName);
-  };
   handleEmailChange = (event) => {
-    this.setState({ email: event.target.value });
+    this.setState({ clientEmail: event.target.value });
     console.log(this.state.email);
   };
-  handleCoFirstNameChange = (event) => {
-    this.setState({ coFirstName: event.target.value });
-    console.log(this.state.coFirstName);
-  };
-  handleCoMiddleNameChange = (event) => {
-    this.setState({ coMiddleName: event.target.value });
-    console.log(this.state.coMiddleName);
+
+  sendNewLoanEmail() {
+    const body = {
+      managerName: this.state.managerName,
+      managerEmail: this.state.managerEmail,
+      phoneNumber: this.state.phoneNumber,
+      clientEmail: this.state.clientEmail,
+    };
+
+    axios
+      .post('http://localhost:3030/newloanemail', body)
+      .then((res) => {
+        console.log('Success! Response from server: ', res);
+        window.location = '/loan_list';
+      })
+      .catch((err) => {
+        console.log('Loan creation failed.', err);
+      });
+  }
+
+  sendNewLoanDB() {
+    console.log('state', this.state);
+
+    const body = {
+      loanManagerId: this.state.loanManagerId,
+      clientEmail: this.state.clientEmail,
+      loanType: this.state.loanType,
+      amount: this.state.amount,
+    };
+    axios
+      .post('http://localhost:3030/newloan', body)
+      .then((res) => {
+        console.log('Success! Response from server: ', res);
+        this.sendNewLoanEmail();
+      })
+      .catch((err) => {
+        console.log('Loan creation failed.', err);
+      });
+  }
+
+  submitNewLoan = () => {
+    this.sendNewLoanDB();
   };
 
-  handleCoLastNameChange = (event) => {
-    this.setState({ coLastName: event.target.value });
-    console.log(this.state.coLastName);
+  handleDropDown = (e) => {
+    console.log(e.target.value);
+    this.setState({ loanType: e.target.value });
   };
-  handleCoEmailChange = (event) => {
-    this.setState({ coEmail: event.target.value });
-    console.log(this.state.coEmail);
-  };
-  submitNewLoan() {
-    console.log(this.state.loanName);
-  }
+
   render() {
     // render getter
     const token = this.state.tokenId;
@@ -97,48 +136,26 @@ export default class LoanCreate extends Component {
           <form>
             <fieldset>
               <legend>Borrower information:</legend>
-              First Name:{' '}
-              <input type="text" name="firstname" onChange={this.handleFirstNameChange} />
-              Middle Name:{' '}
-              <input type="text" name="middlename" onChange={this.handleMiddleNameChange} />
-              Last Name:{' '}
-              <input type="text" name="middlename" onChange={this.handleLastNameChange} />
-              <br />
-              <br />
-              Email: <input type="text" name="email" onChange={this.handleEmailChange} />
-              <br />
-              <br />
               Loan Type:
-              <select>
+              <select value="fha" onChange={this.handleDropDown}>
+                <option value="fha">FHA</option>
+                <option value="usda">USDA</option>
+                <option value="va">VA</option>
+                <option value="conventional">Conventional</option>
                 <option value="new">New Purchase</option>
                 <option value="refinance">Refinance</option>
                 <option value="Constuction">Construction</option>
               </select>
               <br />
               <br />
-            </fieldset>
-          </form>
-          <br />
-          <br />
-          <form>
-            <fieldset>
-              <legend>Co-Borrower information (if applicable):</legend>
-              First Name:{' '}
-              <input type="text" name="firstname" onChange={this.handleCoUsernameChange} />
-              Middle Name:{' '}
-              <input type="text" name="middlename" onChange={this.handleCoUsernameChange} />
-              Last Name:{' '}
-              <input type="text" name="middlename" onChange={this.handleCoUsernameChange} />
+              Loan Amount: <input type="text" name="amount" onChange={this.handleAmountChange} />
               <br />
               <br />
-              Email: <input type="text" name="email" onChange={this.handleCoUsernameChange} />
-              <br />
+              Borrower Email: <input type="text" name="email" onChange={this.handleEmailChange} />
               <br />
             </fieldset>
           </form>
-          <br />
-          <br />
-          <button onClick={this.submitManagerAccountInfo}>Submit</button>
+          <button onClick={this.submitNewLoan}>Submit</button>
         </div>
         <SidebarNav />
       </div>

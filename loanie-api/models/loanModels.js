@@ -13,15 +13,28 @@ const AssignmentSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  complete: {
+    type: Boolean,
+    require: true,
+    defualt: false,
+  },
 });
 
 const LoanSchema = new mongoose.Schema({
-  clientId: {
+  clientEmail: {
+    type: String,
+    required: true,
+  },
+  amount: {
+    type: String,
+  },
+  loanType: {
     type: String,
     required: true,
   },
   currentStatus: {
     type: String,
+    default: "1",
     required: true,
   },
   loanManagerId: {
@@ -29,7 +42,8 @@ const LoanSchema = new mongoose.Schema({
     required: true,
   },
   timestamp: {
-    type: String,
+    type: Date,
+    default: Date.now,
     required: true,
   },
   assignments: [{
@@ -37,6 +51,7 @@ const LoanSchema = new mongoose.Schema({
   }],
   openLoan: {
     type: Boolean,
+    default: true,
     required: true,
   },
 });
