@@ -16,10 +16,9 @@ const AssignmentSchema = new mongoose.Schema({
   complete: {
     type: Boolean,
     require: true,
-    defualt: false,
+    default: false,
   },
 });
-
 const LoanSchema = new mongoose.Schema({
   clientEmail: {
     type: String,
@@ -46,9 +45,7 @@ const LoanSchema = new mongoose.Schema({
     default: Date.now,
     required: true,
   },
-  assignments: [{
-    type: String,
-  }],
+  assignments: [AssignmentSchema],
   openLoan: {
     type: Boolean,
     default: true,

@@ -32,10 +32,11 @@ const loansGetAll = (req, res) => {
     .catch(err => res.status(422).json(err));
 };
 
-const loansGetAllByClientId = (req, res) => {
-  const { clientId } = req.body;
-  Loan.find({ clientId })
+const loansGetAllByClientEmail = (req, res) => {
+  const { clientEmail } = req.body;
+  Loan.find({ email: clientEmail })
     .then((loans) => {
+      console.log(loans);
       res.json(loans);
     })
     .catch(err => res.status(422).json(err));
@@ -54,7 +55,7 @@ const loansGetAllByManagerId = (req, res) => {
 
 const loanGetById = (req, res) => {
   console.log("get one");
-  console.log(req);
+  // console.log(req);
   const { id } = req.params;
   Loan.findById(id)
     .then((singleLoan) => {
@@ -189,7 +190,7 @@ module.exports = {
   loanGetById,
   loanEdit,
   loanDelete,
-  loansGetAllByClientId,
+  loansGetAllByClientEmail,
   loansGetAllByManagerId,
   loanEditAssignment,
   loanDeleteAssignment,

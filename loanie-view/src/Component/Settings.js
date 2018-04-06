@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import axios from 'axios';
-
 import Navbar from './Navbar';
-import SidebarNav from './SideBarNav';
 import firebase from './Firebase';
 
 import '../CSS/Settings.css';

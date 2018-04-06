@@ -20,6 +20,7 @@ import PurchasePage from './Component/PurchasePage';
 import PasswordReset from './Component/PasswordReset';
 import ClientSelectedLoan from './Component/ClientSelectedLoan';
 import registerServiceWorker from './registerServiceWorker';
+import ManagerSideLoan from './Component/ManagerSideLoan';
 // import rootReducers from './Reducers';
 
 // const configureStore = applyMiddleware(ReduxPromise)(createStore);
@@ -41,7 +42,8 @@ ReactDOM.render(
       <Route path="/billing" component={StripeWrapper} />
       <Route path="/settings" component={Settings} />
       <Route path="/my_loans" component={MyLoans} />
-      <Route path="/my_loan" component={ClientSelectedLoan} />
+      <Route path="/my_loan/:loanID" component={ClientSelectedLoan} />
+      <Route path="/manager_loans" component={ManagerSideLoan} />
       <Route path="/user_settings" component={BorrowerSettings} />
       <Route path="/purchase_loanie" component={PurchasePage} />
       <Route path="/password_reset" component={PasswordReset} />
