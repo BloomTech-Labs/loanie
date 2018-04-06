@@ -60,6 +60,13 @@ export default class ClosedLoans extends Component {
 
   render() {
     const loans = this.handleGetAllClosedLoans();
+    if(loans.length === 0) {
+      return(
+        <div className="card-columns">
+          <h2> No closed loans! </h2>
+        </div>
+      );
+    }
     const cards = [];
     loans.forEach((loan, index) => {
       cards.push(
