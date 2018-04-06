@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 // import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
-import '../CSS/LoanList.css';
+import '../CSS/EditLoan.css';
 
 class LoanList extends Component {
   constructor(props) {
@@ -27,7 +26,7 @@ class LoanList extends Component {
     axios
       .get(`http://localhost:3030/loan/${id}`)
       .then((res) => {
-        console.log('res name', res.data.name);
+        console.log('res clientemail', res.data.clientEmail);
         this.setState({
           clientEmail: res.data.clientEmail,
           amount: res.data.amount,
@@ -44,9 +43,74 @@ class LoanList extends Component {
       });
   }
 
-  selectLoan = () => {
-    console.log(this.state.username);
+  handleAmountChange = (event) => {
+    this.setState({ amount: event.target.value });
+    console.log(this.state.amount);
   };
+
+  handleEmailChange = (event) => {
+    this.setState({ clientEmail: event.target.value });
+    console.log(this.state.email);
+  };
+
+  handleDropDownType = (e) => {
+    console.log(e.target.value);
+    this.setState({ loanType: e.target.value });
+  };
+
+  handleDropDownOpen = (e) => {
+    console.log(e.target.value);
+    this.setState({ openLoan: e.target.value });
+  };
+
+  handleDropDownPhase = (e) => {
+    console.log(e.target.value);
+    this.setState({ loanType: e.target.value });
+  };
+
+  submitEditedLoan() {
+    console.log('state', this.state);
+
+    const body = {
+      currentStatus: this.state.currentStatus,
+      openLoan: this.state.openLoan,
+      clientEmail: this.state.clientEmail,
+      loanType: this.state.loanType,
+      amount: this.state.amount,
+    };
+    axios
+      .post('http://localhost:3030/newloan', body)
+      .then(() => {
+        console.log('Loan edited successfully!');
+        this.sendNewLoanEmail();
+      })
+      .catch((err) => {
+        console.log('Loan creation failed.', err);
+      });
+  }
+
+  submitAddAssignment() {
+    console.log('state', this.state);
+    // assignments: [
+    //   {
+    //     text: this.state.assignmentText,
+    //     author: this.state.managerEmail,
+    //     complete: this.state.assignmentComplete,
+    //   },
+    // ];
+  }
+
+  mapAssignments = ({ assignments }) => {
+    return (<div>
+      {assignments.map(assign => (
+        <div className="assignment" key={this.state.assign._id}>
+          {assign.text}
+        </div>
+    ))}
+    </div>
+    );
+  };
+
   render() {
     // getter
     const token = this.state.tokenId;
@@ -60,8 +124,9 @@ class LoanList extends Component {
         </div>
       );
     }
+
     return (
-      <div className="Loanlist">
+      <div className="EditLoan">
         <SidebarNav />
         <Navbar />
         <div className="BreadCrumb">
@@ -77,13 +142,13 @@ class LoanList extends Component {
             <BreadcrumbItem active>Edit Loan</BreadcrumbItem>
           </Breadcrumb>
         </div>
-        <div className="Loanlist-title-containter">
+        <div className="EditLoan-title-container">
           <h1>Edit Loan</h1>
         </div>
-        <div className="LoanCreate-form-container">
+        <div className="EditLoan-form-container">
           <form>
             <fieldset>
-              <legend>Confirm Client Email Before Editing: ${this.state.clientEmail}</legend>
+              <legend>Confirm Client Email Before Editing: {this.state.clientEmail} </legend>
               Edit Loan Type:
               <select value={this.state.loanType} onChange={this.handleDropDownType}>
                 <option value="fha">FHA</option>
@@ -95,8 +160,8 @@ class LoanList extends Component {
                 <option value="Constuction">Construction</option>
               </select>
               <br />
-							<br />
-							Edit Phase:
+              <br />
+              Edit Phase:
               <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -104,22 +169,29 @@ class LoanList extends Component {
                 <option value="4">4</option>
               </select>
               <br />
-							<br />
-							Edit Loan Open Status:
+              <br />
+              Edit Loan Open Status:
               <select value={this.state.openLoan} onChange={this.handleDropDownOpen}>
                 <option value="true">True</option>
                 <option value="flase">Flase</option>
               </select>
               <br />
               <br />
-              Edit Loan Amount: <input type="text" name="amount" value={this.state.amount || ''} onChange={this.handleAmountChange} />
+              Edit Loan Amount:{' '}
+              <input
+                type="text"
+                name="amount"
+                value={this.state.amount || ''}
+                onChange={this.handleAmountChange}
+              />
               <br />
               <br />
-              Assignments
+              Assignments:
+              <mapAssignments />
               <br />
             </fieldset>
           </form>
-          <button onClick={this.submitNewLoan}>Submit</button>
+          <button onClick={this.submitEditedLoan}>Submit</button>
         </div>
       </div>
     );

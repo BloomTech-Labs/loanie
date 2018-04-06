@@ -53,12 +53,12 @@ const loansGetAllByManagerId = (req, res) => {
 
 const loanGetById = (req, res) => {
   console.log("get one");
-  console.log(req);
+  console.log(req.params);
   const { id } = req.params;
   Loan.findById(id)
     .then((singleLoan) => {
       if (singleLoan === null) throw new Error();
-      res.json(singleLoan);
+      res.status(200).json(singleLoan);
     })
     .catch(err => res.status(422).json(err));
 };

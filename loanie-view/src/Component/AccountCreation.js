@@ -62,8 +62,7 @@ class AccountCreation extends Component {
   submitManagerAccountInfo = () => {
     this.sendToDB();
     window.location = '/loan_list';
-  };
-
+  }
   handlePasswordChange = (event) => {
     this.setState({ password: event.target.value });
   };
@@ -222,4 +221,5 @@ class AccountCreation extends Component {
     );
   }
 }
+
 export default AccountCreation;

@@ -23,9 +23,6 @@ class Billing extends Component {
       loanPlan: '',
       tokenId: sessionStorage.getItem('tokenId'),
     };
-    this.handleCreditCardNumber = this.handleCreditCardNumber.bind(this);
-    this.submitBillingInfo = this.submitBillingInfo.bind(this);
-    this.sendStripeToken = this.sendStripeToken.bind(this);
   }
 
   getBillingRoute = () => {

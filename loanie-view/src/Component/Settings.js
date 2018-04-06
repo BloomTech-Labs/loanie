@@ -79,7 +79,7 @@ export default class Settings extends Component {
     }
   };
 
-  send = () => {
+  send() {
     const userInfo = {
       name: this.state.name,
       email: this.state.email,
@@ -95,7 +95,7 @@ export default class Settings extends Component {
       .catch((err) => {
         console.log('Failed to make changes to user!', err);
       });
-  };
+  }
 
   handleEmailChange = (event) => {
     this.setState({ email: event.target.value });
@@ -139,6 +139,7 @@ export default class Settings extends Component {
     return (
       <div className="Settings">
         <Navbar />
+        <SidebarNav />
         <div className="BreadCrumb">
           <Breadcrumb>
             <BreadcrumbItem tag="a" href="/">
@@ -198,7 +199,6 @@ export default class Settings extends Component {
               <button onClick={this.sendToDB}>Submit</button>
             </fieldset>
           </form>
-          <SidebarNav />
         </div>
       </div>
     );
