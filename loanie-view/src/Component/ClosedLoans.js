@@ -1,43 +1,133 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Navbar from './Navbar';
-import SidebarNav from './SideBarNav';
-import '../CSS/LoanList.css';
+import SideBarNav from './SideBarNav';
+// import { connect } from 'react-redux';
+// import { getManagerLoans } from '../Actions';
+import '../CSS/OpenAndClosedLoans.css';
+// import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
-export default class Settings extends Component {
-  constructor() {
+export default class ClosedLoans extends Component {
+  constructor () {
     super();
     this.state = {
-      username: 'billy',
       tokenId: sessionStorage.getItem('tokenId'),
+      loanManagerId: "",
+      loans: [],
     };
-    this.submitNewLoan = this.submitNewLoan.bind(this);
+    }
+
+  componentDidMount() {
+    const body = {
+      token: this.state.tokenId,
+    };
+
+    axios
+      .post('http://localhost:3030/user', body)
+      .then((res) => {
+        console.log('res name', res.data.name);
+        this.setState({
+          loanManagerId: res.data._id,
+        });
+        console.log('Response from server: ', res);
+        this.handleGetClosedLoans()
+      })
+      .catch((err) => {
+        console.log('Unable to fetch user data.', err);
+      });
+    // this.props.dispatch(getManagerLoans("000000000000000000000001"));
   }
-  submitNewLoan() {
-    console.log(this.state.username);
+
+  handleGetClosedLoans = () => {
+    const bodya = {
+        loanManagerId: this.state.loanManagerId,
+      };
+
+      console.log("loanManagerId from bodya: ", bodya.loanManagerId);
+      axios
+      .post('http://localhost:3030/getmanagerloans', bodya)
+      .then((res) => {
+        this.setState({loans: res.data});
+        console.log('loans', res);
+      })
+      .catch((err) => {
+        console.log('Unable to fetch loan data.', err);
+      })
+  }
+
+  handleGetAllClosedLoans = () => {
+    const closedLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus) === 4);
+    return closedLoans;
   }
 
   render() {
-    // render getter
-    const token = this.state.tokenId;
-    console.log(sessionStorage.getItem('tokenId'));
-    console.log('state tokenId:', token);
-    if (token === null || token === undefined || token === '') {
-      window.location = '/login_user';
-      return (
-        <div>
-          <h1> Please Login</h1>
-        </div>
-      );
-    }
-    return (
-      <div className="Loanlist">
-        <Navbar />
-        <div className="Loanlist-title-containter">
-          <h1>Closed Loans</h1>
-          <h2> There are no closed Loans </h2>
-        </div>
-        <SidebarNav />
-      </div>
+      const loans = this.handleGetAllClosedLoans();
+      if(loans.length === 0) {
+        return(
+          <div className="card-columns">
+            <Navbar />
+            <SideBarNav />
+            <div className="BreadCrumb">
+              <Breadcrumb>
+                <BreadcrumbItem tag="a" href="/">
+                  Home
+                </BreadcrumbItem>
+                {' > '}
+                <BreadcrumbItem active>Loans</BreadcrumbItem>
+              </Breadcrumb>
+            </div>
+            <div className="ClosedLoans-header">
+              <h2> No closed loans! </h2>
+            </div>
+          </div>
+        );
+      }
+    const cards = [];
+    loans.forEach((loan, index) => {
+      cards.push(
+        <div key={index} className="card box-shadow">
+          <div className="card-header">
+            <h4 className="my-0">Loan {index + 1}</h4>
+          </div>
+          <div className="card-body">
+            <ul className="list-unstyled">
+              <li>Hey</li>
+              <li>Client Id: {loan.clientId}</li>
+              <li>Current Status: {loan.currentStatus}</li>
+            </ul>
+          </div>
+        </div>);
+    });
+
+    return(
+      <div>
+            <Navbar />
+            <div className="BreadCrumb">
+              <Breadcrumb>
+                <BreadcrumbItem tag="a" href="/">
+                  Home
+                </BreadcrumbItem>
+                {' > '}
+                <BreadcrumbItem active>Loans</BreadcrumbItem>
+              </Breadcrumb>
+              <div className="ClosedLoans-header">
+              <h2> No closed loans! </h2>
+              </div>
+              <SideBarNav />
+              </div>
+              <div className="card-columns">
+              {cards}
+              </div>
+              </div>
     );
   }
 }
+
+// const mapStateToProps = (state) => {
+//   return {
+//     loansBySingleManager: state.loans
+//   };
+// };
+
+ // connect(mapStateToProps)(ClosedLoans);

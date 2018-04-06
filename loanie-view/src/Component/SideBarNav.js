@@ -47,8 +47,11 @@ export default class SideBarNav extends Component {
     if (this.state.userType === 'managerUser') {
       return (
         <Menu styles={styles}>
-          <a className="menu-item" href="/loan_list">
+          <a className="menu-item" href="/open_loans">
             Open Loans
+          </a>
+          <a className="menu-item" href="/loan_list">
+            Create Loans
           </a>
           <a className="menu-item" href="/closed_loans">
             Closed

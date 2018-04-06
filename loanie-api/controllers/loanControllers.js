@@ -44,6 +44,7 @@ const loansGetAllByClientId = (req, res) => {
 const loansGetAllByManagerId = (req, res) => {
   console.log("get by manager id");
   const { loanManagerId } = req.body;
+  console.log("loanManagerId: ", loanManagerId);
   Loan.find({ loanManagerId })
     .then((loans) => {
       res.status(200).json(loans);
