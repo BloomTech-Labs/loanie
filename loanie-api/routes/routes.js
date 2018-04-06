@@ -54,6 +54,5 @@ module.exports = (app) => {
   app.route("/sendemail").post(thirdPartyApiControllers.sendEmailNotification);
 
   // Send sms notification to the user
-  // hey
   app.route("/sendsms").post(thirdPartyApiControllers.sendSmsNotification);
 };
