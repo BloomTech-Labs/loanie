@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
+const Scheme = mongoose.Schema;
 
 mongoose.connect("mongodb://localhost/loanie");
 
@@ -10,7 +10,7 @@ mongoose.connect("mongodb://localhost/loanie");
 const AssignmentSchema = new mongoose.Schema({
   text: String,
   author: {
-    type: Schema.Types.ObjectId,
+    type: Scheme.Types.ObjectId,
     ref: "User",
   },
   complete: {
