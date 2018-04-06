@@ -41,7 +41,7 @@ ReactDOM.render(
       <Route path="/billing" component={StripeWrapper} />
       <Route path="/settings" component={Settings} />
       <Route path="/my_loans" component={MyLoans} />
-      <Route path="/my_loan" component={ClientSelectedLoan} />
+      <Route path="/my_loan/:loanID" component={ClientSelectedLoan} />
       <Route path="/manager_loans" component={ManagerSideLoan} />
       <Route path="/user_settings" component={BorrowerSettings} />
       <Route path="/purchase_loanie" component={PurchasePage} />

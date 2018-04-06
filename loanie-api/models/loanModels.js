@@ -16,7 +16,7 @@ const AssignmentSchema = new mongoose.Schema({
   complete: {
     type: Boolean,
     require: true,
-    defualt: false,
+    default: false,
   },
 });
 const LoanSchema = new mongoose.Schema({

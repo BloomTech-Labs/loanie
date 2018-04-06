@@ -239,11 +239,7 @@ export default class BorrowerSettings extends Component {
                 />{' '}
                 I would like to recieve EMAIL notifications about my loan
               </div>
-              <br />
-              <br />
               <button onClick={this.sendToDB}>Submit</button>
-              <br />
-              <br />
             </fieldset>
           </form>
         </div>

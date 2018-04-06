@@ -10,8 +10,8 @@ module.exports = (app) => {
   // Creates a new loan. Creates a new row for the loan in Loan collection.
   app.route("/newloan").post(loanControllers.loanCreate);
 
-  // Returns all loans for the given clientId.
-  app.route("/getclientloans").post(loanControllers.loansGetAllByClientId);
+  // Returns all loans for the given client email.
+  app.route("/getclientloans").post(loanControllers.loansGetAllByClientEmail);
 
   // Returns all loans for the given loanManagerId.
   app.route("/getmanagerloans").post(loanControllers.loansGetAllByManagerId);
@@ -53,7 +53,8 @@ module.exports = (app) => {
   // Send email notification to the user
   app.route("/sendemail").post(thirdPartyApiControllers.sendEmailNotification);
 
+  // Send New Loan Email to Client
+  app.route("/newloanemail").post(thirdPartyApiControllers.sendNewLoanEmail);
   // Send sms notification to the user
-  // hey
   app.route("/sendsms").post(thirdPartyApiControllers.sendSmsNotification);
 };
