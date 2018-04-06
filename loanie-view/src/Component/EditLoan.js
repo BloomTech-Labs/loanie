@@ -101,13 +101,14 @@ class LoanList extends Component {
   }
 
   mapAssignments = ({ assignments }) => {
-    return (<div>
-      {assignments.map(assign => (
-        <div className="assignment" key={this.state.assign._id}>
-          {assign.text}
-        </div>
-    ))}
-    </div>
+    return (
+      <div>
+        {assignments.map(assign => (
+          <div className="assignment" key={this.state.assign.id}>
+            {assign.text}
+          </div>
+        ))}
+      </div>
     );
   };
 

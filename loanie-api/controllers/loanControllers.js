@@ -46,7 +46,7 @@ const loansGetAllByManagerId = (req, res) => {
   const { loanManagerId } = req.body;
   Loan.find({ loanManagerId })
     .then((loans) => {
-      res.json(loans);
+      res.status(200).json(loans);
     })
     .catch(err => res.status(422).json(err));
 };
@@ -99,15 +99,15 @@ const loanEdit = (req, res) => {
 
 // find by loan id and add new assignment to array
 const loanCreateAssignment = (req, res) => {
-  console.log("create loan assignement");
-  const { loanId, assignment } = req.body;
-  console.log(loanId, assignment);
+  console.log("create loan assignment");
+  const { loanId, assignments } = req.body;
+  console.log(loanId, assignments);
   // find a single Loan
   // create loan assignment
   // save Loan
   Loan.findByIdAndUpdate(
     loanId,
-    { $push: { assignments: assignment } },
+    { $push: { assignments } },
     { safe: true, upsert: true },
     (err, doc) => {
       if (err) {
