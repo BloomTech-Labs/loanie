@@ -28,7 +28,7 @@ export default class ManagerSideLoan extends Component {
       .post('http://localhost:3030/user', body)
       .then((res) => {
         console.log(res);
-        console.log('hello');        
+        console.log('hello');   
         const userID = res.data.UID;
         const user = res.data.name;
         axios
