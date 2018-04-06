@@ -43,6 +43,9 @@ module.exports = (app) => {
     .post(userControllers.userGetByUID)
     .delete(userControllers.userDelete);
 
+  // Performs get operations on the given user.
+  app.route("/userbyemail").post(userControllers.userGetByEmail);
+
   // Performs edit operations on the given user.
   app.route("/edituser").post(userControllers.userEdit);
 

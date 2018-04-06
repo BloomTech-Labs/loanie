@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Navbar from './Navbar';
+import OpenLoans from './OpenLoans';
+import ClosedLoans from './ClosedLoans';
 import ClientSideNav from './ClientSideNav';
 import '../CSS/MyLoans.css';
 import '../CSS/LoanList.css';
@@ -118,6 +120,11 @@ export default class MyLoans extends Component {
         </div>
         <Navbar />
         <div className="Loanlist-title-containter">
+          <h1>Open Loans</h1>
+          <OpenLoans />
+          <br/>
+          <h1>Closed Loans</h1>
+          <ClosedLoans />
           <h1>My Loans</h1>
           <h2>You currently do not have any active loans.</h2>
         </div>
