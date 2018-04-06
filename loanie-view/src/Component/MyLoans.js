@@ -21,15 +21,18 @@ export default class MyLoans extends Component {
     this.selectLoan = this.selectLoan.bind(this);
   }
   componentDidMount() {
-    console.log(this.state.userType);
-    console.log('hello');
-    console.log(this.state.tokenId);
+  //  console.log(this.state.userType);
+  //  console.log('hello');
+ //   console.log(this.state.tokenId);
     const body = { token: this.state.tokenId };
     axios
       .post('http://localhost:3030/user', body)
       .then((res) => {
-        console.log(res);
-        const userID = res.data.UID;
+      //  console.log(res.data.id);
+    //    console.log('hello');        
+        const userID = res.data.id;
+        console.log(res.data.id);
+        console.log('dafwe')
         const user = res.data.name;
         axios
           .post('http://localhost:3030/getclientloans', userID)

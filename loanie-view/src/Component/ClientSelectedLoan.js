@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import ProgressBar from './ProgressBar';
 import PhaseContent from './PhaseContent';
+
 import '../CSS/MyLoans.css';
 
 export default class ClientSelectedLoan extends Component {
@@ -17,16 +20,35 @@ export default class ClientSelectedLoan extends Component {
       type: 'New Purchase',
       tokenId: sessionStorage.getItem('tokenId'),
     };
-    this.selectLoan = this.selectLoan.bind(this);
   }
-  selectLoan() {
-    console.log(this.state.username);
+  componentDidMount() {
+    const body = { token: this.state.tokenId };
+    axios
+      .post('http://localhost:3030/user', body)
+      .then((res) => {
+       console.log(res.data._id);
+       // console.log('hello');        
+        const userID = res.data._id;
+        const user = res.data.name;
+        axios
+          .post('http://localhost:3030/getclientloans', userID)
+          .then((loandata) => {
+            const currentPhase = loandata.data.currentStatus;
+            this.setState({ borrower: user, currentPhase });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   render() {
     // getter
     const token = this.state.tokenId;
-    console.log(sessionStorage.getItem('tokenId'));
-    console.log('state tokenId:', token);
+ //   console.log(sessionStorage.getItem('tokenId'));
+   // console.log('state tokenId:', token);
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (
@@ -38,6 +60,15 @@ export default class ClientSelectedLoan extends Component {
     return (
       <div>
         <Navbar />
+        <div className="BreadCrumb">
+          <Breadcrumb>
+            <BreadcrumbItem tag="a" href="/">
+              Home
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem active>Loans</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
         <div className="MyLoans-title-container">
           <h1><b>Loan Progress</b></h1>
         </div>
@@ -72,9 +103,9 @@ export default class ClientSelectedLoan extends Component {
             <br /><p> If you have any questions call Bob Officer: <br />1-800-000-000</p>
           </div>
           <div className="MyLoans-text-container">
-            <textbox className="MyLoans-text-item">
+            <div className="MyLoans-text-item">
               <PhaseContent />
-            </textbox>
+            </div>
           </div>
         </div>
         <ClientSideNav />
