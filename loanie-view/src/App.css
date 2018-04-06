@@ -5,8 +5,12 @@
     background-size: 100% 130%;
     background-repeat: no-repeat;
   }
+  .App-title-container {
+    
+  }
   .App-image-container {
     height:50%;
+
     text-align: center;
   }
   .App-frontpage-image {
@@ -31,7 +35,9 @@
     text-align: left;
   }
   .App-title-item {
+    margin-left: 1.6em;
     font-size: 50px;
+    margin-left: 2em;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: white;
   }
@@ -57,6 +63,7 @@
     width:15%;
     cursor: pointer;
     margin-bottom: 40%;
+    height: 80%;
   }
   .button1 {
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -69,6 +76,9 @@
   .button-container{
     text-align: center;
     height: 25%;
+  }
+  .navbar-header {
+    margin-left: 50px;
   }
 
   @media all and (max-width: 767px) {

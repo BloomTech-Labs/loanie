@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
 import axios from 'axios';
-import { firebase } from './Firebase';
+import firebase from './Firebase';
 import Navbar from './Navbar';
 import '../CSS/AccountCreate.css';
 
@@ -32,7 +32,7 @@ const uiConfig = {
   // tosUrl: '<your-tos-url>',
 };
 
-export default class AccountCreation extends Component {
+class AccountCreation extends Component {
   constructor() {
     super();
     this.state = {
@@ -62,8 +62,7 @@ export default class AccountCreation extends Component {
   submitManagerAccountInfo = () => {
     this.sendToDB();
     window.location = '/loan_list';
-  };
-
+  }
   handlePasswordChange = (event) => {
     this.setState({ password: event.target.value });
   };
@@ -103,6 +102,7 @@ export default class AccountCreation extends Component {
       acceptEmails: this.state.acceptEmail,
       password: this.state.password,
     };
+    sessionStorage.setItem('userType', this.state.userType);
     console.log('sending to db:', userInfo);
     axios
       .post('http://localhost:3030/newuser', userInfo)
@@ -119,7 +119,10 @@ export default class AccountCreation extends Component {
     if (token === null || token === undefined || token === '') {
       return (
         <div>
-          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+          <Navbar />
+          <div className="Account-title-containter">
+            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+          </div>
         </div>
       );
     }
@@ -188,17 +191,35 @@ export default class AccountCreation extends Component {
         </div>
       );
     }
+    if (!sessionStorage.getItem('userType')) {
+      return (
+        <div>
+          <Navbar />
+          <div className="Login-header-container">
+            <h1> Select User Type </h1>
+          </div>
+          <div>
+            <button onClick={this.selectStandardUser}>Client</button>
+            <button onClick={this.selectManagerUser}>Loan Officer</button>
+          </div>
+        </div>
+      );
+    }
+    if (sessionStorage.getItem('userType') === 'managerUser') {
+      window.location = '/loan_list';
+      return (
+        <div>
+          <h1> Logged In </h1>
+        </div>
+      );
+    }
+    window.location = '/my_loans';
     return (
       <div>
-        <Navbar />
-        <div className="Login-header-container">
-          <h1> Select User Type </h1>
-        </div>
-        <div>
-          <button onClick={this.selectStandardUser}>Client</button>
-          <button onClick={this.selectManagerUser}>Loan Officer</button>
-        </div>
+        <h1> Logged In </h1>
       </div>
     );
   }
 }
+
+export default AccountCreation;

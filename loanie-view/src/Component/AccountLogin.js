@@ -2,14 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import axios from 'axios';
-import { firebase } from './Firebase';
+import Navbar from './Navbar';
+import firebase from './Firebase';
 // import { connect } from 'react-redux';
 // import { changeTokenId } from '../Actions';
 import '../CSS/AccountLogin.css';
 
-const sendToken = (tokenId) => {
+const sendToken = (tokenId, sendEmail) => {
   // setter
   sessionStorage.setItem('tokenId', tokenId);
+  sessionStorage.setItem('email', sendEmail);
 
   console.log('Inside sendToken(), this.props: ', this.props);
 
@@ -17,16 +19,23 @@ const sendToken = (tokenId) => {
   // this.props.dispatch(changeTokenId(tokenId));
 
   console.log('sending token to server!');
-  const token = { token: tokenId };
+  const data = {
+    token: tokenId,
+    email: sendEmail,
+  };
+
   axios
-    .post('http://localhost:3030/auth', token)
+    .post('http://localhost:3030/auth', data)
     .then((res) => {
+      const userType = res.data.userType;
+      sessionStorage.setItem('userType', userType);
+      if (userType === 'managerUser') window.location = '/loan_list';
+      else window.location = '/my_loans';
       console.log('Response from server: ', res);
     })
     .catch((err) => {
       console.log('Login Failed!', err);
     });
-  window.location = '/loan_list';
 };
 
 const uiConfig = {
@@ -38,10 +47,13 @@ const uiConfig = {
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
   ],
   callbacks: {
-    signInSuccess: () => {
+    signInSuccess: (credential) => {
       firebase.auth().onAuthStateChanged((user) => {
+        sessionStorage.setItem('credential', credential);
         console.log('got the ID!!', user.uid);
-        sendToken(user.uid);
+        console.log('firebase user', user);
+
+        sendToken(user.uid, user.email);
       });
     },
   },
@@ -55,8 +67,13 @@ export default function AccountLogin() {
 
   return (
     <div>
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-      <Link to="/password_code">Forgot Password?</Link>
+      <Navbar />
+      <div className="Account-title-containter">
+        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+        <div className="Account-text-containter">
+          <Link to="/password_reset">Forgot Password?</Link>
+        </div>
+      </div>
     </div>
   );
 }

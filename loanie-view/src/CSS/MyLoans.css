@@ -1,0 +1,57 @@
+.MyLoans {
+  display: flex;
+  flex-direction: column;
+}
+.MyLoans-link-container {
+  margin-top: 2em;
+  margin-left: 5em;
+  padding-left: 1em;
+  border: 5px solid black;
+  width: 18em;
+  height: 18em;
+}
+.MyLoans-title-container {
+  margin-top: 10em;
+  margin-left: 47em;
+}
+
+.MyLoans-container {
+  display:flex;
+}
+
+.MyLoans-borrower-container {
+  margin-left: 20em;
+  
+}
+
+.Myloans-progress-container {
+  margin-left: 10em;
+}
+
+.MyLoans-content-container {
+  display: flex;
+}
+.MyLoans-p1-item {
+  text-align: left;
+}
+.MyLoans-assignment-container {
+  width: 18em;
+  margin-top: 2em;
+  margin-left: 5em;
+  order: 2;
+  text-align: center;
+}
+
+.MyLoans-text-container{
+  margin-top: 2em;
+  margin-left: 20em;
+  order: 1;
+  width: 45em;
+}
+.MyLoans-text-item {
+  height: 30em;
+}
+.BreadCrumb {
+  margin-top: 6em;
+  margin-left: 1.2em;
+}

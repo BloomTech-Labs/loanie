@@ -4,6 +4,10 @@
 }
 
 .Billing-title-containter {
-  margin-top: 10em;
   margin-left: 20em;
+}
+
+.BreadCrumb {
+  margin-top: 6em;
+  margin-left: 1.2em;
 }

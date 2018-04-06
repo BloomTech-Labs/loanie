@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import axios from 'axios';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import PropTypes from 'prop-types';
 import Navbar from './Navbar';
-import SideBarNav from './SideBarNav';
-
+import SidebarNav from './SideBarNav';
 import '../CSS/Billing.css';
 
 class Billing extends Component {
+  // have to use camel case method proptypes not the one from import
+  propTypes = {
+    stripe: PropTypes.func,
+    createToken: PropTypes.func,
+  };
   constructor() {
     super();
     this.state = {
@@ -15,11 +21,17 @@ class Billing extends Component {
       creditCardNumber: '',
       creditCardExperation: '',
       loanPlan: '',
+      tokenId: sessionStorage.getItem('tokenId'),
     };
-    this.handleCreditCardNumber = this.handleCreditCardNumber.bind(this);
-    this.submitBillingInfo = this.submitBillingInfo.bind(this);
-    this.sendStripeToken = this.sendStripeToken.bind(this);
   }
+
+  getBillingRoute = () => {
+    if (sessionStorage.getItem('userType') === 'managerUser') {
+      return '/loan_list';
+    }
+    return '/my_loans';
+  };
+
   sendStripeToken() {
     console.log('sending stripe token to server!');
     console.log('loanPlan on state', this.state.loanPlan);
@@ -75,9 +87,34 @@ class Billing extends Component {
   };
 
   render() {
+    // render getter
+    const token = this.state.tokenId;
+    console.log(sessionStorage.getItem('tokenId'));
+    console.log('state tokenId:', token);
+    if (token === null || token === undefined || token === '') {
+      window.location = '/login_user';
+      return (
+        <div>
+          <h1> Please Login</h1>
+        </div>
+      );
+    }
     return (
       <div className="Billing">
         <Navbar />
+        <div className="BreadCrumb">
+          <Breadcrumb>
+            <BreadcrumbItem tag="a" href="/">
+              Home
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem tag="a" href={this.getBillingRoute()}>
+              Loans
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem active>Billing</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
         <div className="Billing-title-containter">
           <div className="Billing-form-container">
             <form onSubmit={this.handleSubmit}>
@@ -105,7 +142,7 @@ class Billing extends Component {
             </form>
           </div>
         </div>
-        <SideBarNav />
+        <SidebarNav />
       </div>
     );
   }

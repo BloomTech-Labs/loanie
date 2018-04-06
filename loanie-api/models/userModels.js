@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost/loanie');
+
+mongoose.connect("mongodb://localhost/loanie");
 
 // This table stores profile details of all users. There should always be exactly 1 row
 // for a user in this table.
@@ -25,6 +26,9 @@ const UserSchema = new mongoose.Schema({
   },
   acceptEmails: {
     type: Boolean,
+  },
+  UID: {
+    type: String,
   },
 });
 

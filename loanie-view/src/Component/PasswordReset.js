@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { firebase } from './Firebase';
+import firebase from './Firebase';
 import '../CSS/LoanList.css';
 
 export default class MyLoans extends Component {
@@ -21,7 +21,10 @@ export default class MyLoans extends Component {
     firebase
       .auth()
       .sendPasswordResetEmail(this.state.email)
-      .then(() => console.log(this.state.email))
+      .then(() => {
+        window.location = '/';
+        console.log(this.state.email);
+      })
       .catch(error => console.log(error));
     this.setState({
       sent: !this.state.sent,
@@ -44,7 +47,7 @@ export default class MyLoans extends Component {
     }
     return (
       <div>
-        <h1>Please check your email for a password recovery link.</h1>
+        <h1>Recovery email sent..</h1>
         <br />
         <br />
       </div>

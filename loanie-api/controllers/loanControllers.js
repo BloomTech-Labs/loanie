@@ -5,7 +5,7 @@ const User = require("../models/userModels");
 
 const loanCreate = (req, res) => {
   const {
-    clientId, currentStatus, timestamp, loanManagerId,
+    clientId, currentStatus, timestamp, loanManagerId, openLoan, assignments,
   } = req.body;
 
   // Verify that there are rows corresponding to clientId and loanManagerId in User collection.
@@ -18,12 +18,15 @@ const loanCreate = (req, res) => {
     .then((loans) => {
       if (loans.length !== 2) {
         res.status(422).json("clientId or loanManagerId not found in User collection.");
+        throw new Error();
       } else {
         const newLoan = new Loan({
           clientId,
           currentStatus,
           timestamp,
           loanManagerId,
+          assignments,
+          openLoan,
         });
         newLoan.save(newLoan, (err, savedloan) => {
           if (err) {
@@ -31,7 +34,7 @@ const loanCreate = (req, res) => {
             res.status(500).json(err);
             return;
           }
-          res.json(savedloan);
+          res.status(200).json(savedloan);
         });
       }
     })
@@ -42,7 +45,7 @@ const loansGetAll = (req, res) => {
   console.log("get all");
   Loan.find({})
     .then((loans) => {
-      res.json(loans);
+      res.status(200).json(loans);
     })
     .catch(err => res.status(422).json(err));
 };
@@ -112,6 +115,73 @@ const loanEdit = (req, res) => {
     .catch(err => res.status(422).json({ error: "No Loan!", err }));
 };
 
+// find by loan id and add new assignment to array
+const loanCreateAssignment = (req, res) => {
+  console.log("create loan assignement");
+  const { loanId, assignment } = req.body;
+  console.log(loanId, assignment);
+  // find a single Loan
+  // create loan assignment
+  // save Loan
+  Loan.findByIdAndUpdate(
+    loanId,
+    { $push: { assignments: assignment } },
+    { safe: true, upsert: true },
+    (err, doc) => {
+      if (err) {
+        res.status(500).json(err);
+        console.log(err);
+      } else {
+        res.status(200).json(doc);
+      }
+    },
+  );
+};
+
+// find by loan id and add edit assignment in array
+const loanEditAssignment = (req, res) => {
+  console.log("edit loan assignement");
+  const { loanId, assignmentId, assignment } = req.body;
+  console.log(loanId, assignmentId, assignment);
+  // find a single Loan
+  // edit loan assignment
+  Loan.findByIdAndUpdate(
+    loanId,
+    { $push: { assignments: { _id: assignmentId, text: assignment } } },
+    { safe: true, upsert: true },
+    (err, doc) => {
+      if (err) {
+        res.status(500).json(err);
+        console.log(err);
+      } else {
+        res.status(200).json(doc);
+      }
+    },
+  );
+};
+
+// find by loan id and remove item in array
+const loanDeleteAssignment = (req, res) => {
+  console.log("edit loan assignement");
+  const { loanId, assignmentId } = req.body;
+  console.log(loanId, assignmentId);
+  // find a single Loan
+  // delete loan assignment
+  Loan.findByIdAndUpdate(
+    loanId,
+    { $pull: { assignments: { _id: assignmentId } } },
+    { safe: true, upsert: true },
+    (err, doc) => {
+      if (err) {
+        res.status(500).json(err);
+        console.log(err);
+      } else {
+        res.status(200).json(doc);
+      }
+    },
+  );
+};
+
 const loanDelete = (req, res) => {
   // find a single Loan
   // delete loan
@@ -138,4 +208,7 @@ module.exports = {
   loanDelete,
   loansGetAllByClientId,
   loansGetAllByManagerId,
+  loanEditAssignment,
+  loanDeleteAssignment,
+  loanCreateAssignment,
 };

@@ -59,4 +59,4 @@ const sendSmsNotification = (req, res) => {
 module.exports = {
   sendEmailNotification,
   sendSmsNotification,
-}
+};

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 // import { connect } from 'react-redux';
 import Navbar from './Navbar';
-import SideBarNav from './SideBarNav';
+import SidebarNav from './SideBarNav';
 import '../CSS/LoanList.css';
 
 class LoanList extends Component {
@@ -35,7 +36,17 @@ class LoanList extends Component {
     }
     return (
       <div className="Loanlist">
+        <SidebarNav />
         <Navbar />
+        <div className="BreadCrumb">
+          <Breadcrumb>
+            <BreadcrumbItem tag="a" href="/">
+              Home
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem active>Loans</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
         <div className="Loanlist-title-containter">
           <h1> Add a new Loan</h1>
         </div>
@@ -48,15 +59,9 @@ class LoanList extends Component {
             />
           </Link>
         </div>
-        <SideBarNav />
       </div>
     );
   }
 }
 
-// const mapStateToProps = state => ({
-//   tokenId: state.tokenId,
-// });
-
-// export default connect(mapStateToProps)(LoanList);
 export default LoanList;

@@ -23,6 +23,10 @@ module.exports = (app) => {
     .post(loanControllers.loanEdit)
     .delete(loanControllers.loanDelete);
 
+  app.route("/assignment").post(loanControllers.loanCreateAssignment);
+  app.route("/assignmentedit").post(loanControllers.loanEditAssignment);
+  app.route("/assignementdelete").post(loanControllers.loanDeleteAssignment);
+
   // Creates a new user. Creates a new row for the user in User collection.
   app.route("/newuser").post(userControllers.userCreate);
 
@@ -33,12 +37,14 @@ module.exports = (app) => {
   // frontend should never need to user it.
   app.route("/users").get(userControllers.usersGetAll);
 
-  // Performs get/post/delete operations on the given user.
+  // Performs get/delete operations on the given user.
   app
-    .route("/user/:id")
-    .get(userControllers.userGetById)
-    .post(userControllers.userEdit)
+    .route("/user")
+    .post(userControllers.userGetByUID)
     .delete(userControllers.userDelete);
+
+  // Performs edit operations on the given user.
+  app.route("/edituser").post(userControllers.userEdit);
 
   // Recieve client token after authentication
   app.route("/auth").post(userControllers.userToken);
