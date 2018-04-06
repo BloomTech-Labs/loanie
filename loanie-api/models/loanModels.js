@@ -46,7 +46,9 @@ const LoanSchema = new mongoose.Schema({
     default: Date.now,
     required: true,
   },
-  assignments: [AssignmentSchema],
+  assignments: [{
+    type: String,
+  }],
   openLoan: {
     type: Boolean,
     default: true,
