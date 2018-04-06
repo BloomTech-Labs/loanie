@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 // import { connect } from 'react-redux';
 import Navbar from './Navbar';
@@ -11,11 +12,36 @@ export default class LoanList extends Component {
     super(props);
     this.state = {
       tokenId: sessionStorage.getItem('tokenId'),
+      loanList: [],
     };
   }
 
   componentWillMount() {
     // if (this.props.tokenId === '') window.location = '/login_user';
+    console.log(this.state.userType);
+    console.log('hello');
+    console.log(this.state.tokenId);
+    const body = { token: this.state.tokenId };
+    axios
+      .post('http://localhost:3030/user', body)
+      .then((res) => {
+        console.log(res);
+        console.log(res.data.id);
+        const managerID = { loanManagerId: res.data.id };
+        axios
+          .post('http://localhost:3030/getmanagerloans', managerID)
+          .then((loandata) => {
+            const loanArr = loandata.data;
+            console.log(loandata);
+            this.setState({ loanList: loanArr });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   selectLoan = () => {
@@ -31,6 +57,33 @@ export default class LoanList extends Component {
       return (
         <div>
           <h1> Please Login</h1>
+        </div>
+      );
+    }
+    if (this.state.loanList.length > 0) {
+      return (
+        <div className="MyLoans">
+          <div className="BreadCrumb">
+            <Breadcrumb>
+              <BreadcrumbItem tag="a" href="/">
+                Home
+              </BreadcrumbItem>
+              {' > '}
+              <BreadcrumbItem active>Loans</BreadcrumbItem>
+            </Breadcrumb>
+          </div>
+          <Navbar />
+          <div className="MyLoans-link-container">
+            <Link to="manager_loans">
+              <h1>Loan 1</h1>
+            </Link>
+            <p>Current Phase: {this.state.currentPhase}</p>
+            <p>Current Assignment: {this.state.currentAssignent}</p>
+            <Link to="manager_loans">
+              <h3>See Details</h3>
+            </Link>
+          </div>
+          <SidebarNav />
         </div>
       );
     }

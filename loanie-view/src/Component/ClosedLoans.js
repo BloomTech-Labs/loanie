@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import Navbar from './Navbar';
-import SideBarNav from './SideBarNav';
 // import { connect } from 'react-redux';
 // import { getManagerLoans } from '../Actions';
+import Navbar from './Navbar';
+import SideBarNav from './SideBarNav';
 import '../CSS/OpenAndClosedLoans.css';
 // import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
@@ -62,27 +62,27 @@ export default class ClosedLoans extends Component {
   }
 
   render() {
-      const loans = this.handleGetAllClosedLoans();
-      if(loans.length === 0) {
-        return(
-          <div className="card-columns">
-            <Navbar />
-            <SideBarNav />
-            <div className="BreadCrumb">
-              <Breadcrumb>
-                <BreadcrumbItem tag="a" href="/">
-                  Home
-                </BreadcrumbItem>
-                {' > '}
-                <BreadcrumbItem active>Loans</BreadcrumbItem>
-              </Breadcrumb>
-            </div>
-            <div className="ClosedLoans-header">
-              <h2> No closed loans! </h2>
-            </div>
+    const loans = this.handleGetAllClosedLoans();
+    if(loans.length === 0) {
+      return(
+        <div className="card-columns">
+          <Navbar />
+          <div className="BreadCrumb">
+            <Breadcrumb>
+              <BreadcrumbItem tag="a" href="/">
+                Home
+              </BreadcrumbItem>
+              {' > '}
+              <BreadcrumbItem active>Loans</BreadcrumbItem>
+            </Breadcrumb>
           </div>
-        );
-      }
+          <div className="ClosedLoans-header">
+            <h2> No closed loans! </h2>
+          </div>
+          <SideBarNav />
+        </div>
+      );
+    }
     const cards = [];
     loans.forEach((loan, index) => {
       cards.push(

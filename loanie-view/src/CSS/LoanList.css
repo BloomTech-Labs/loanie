@@ -2,6 +2,22 @@
   display: flex;
   flex-direction: column;
 }
+.LoanList-borrower-container {
+  margin-top: 7em;
+  margin-left: 15em;
+}
+.LoanList-progress-container {
+  flex-direction: row;
+  margin-left: 40em;
+}
+.LoanList-phasecard-item {
+  margin-left: 10em;
+  width: 25em;
+  border: 2px solid black;
+}
+.LoanList-phasecard-container {
+  flex-direction: row;
+}
 .sidenav-container {
   height: 100%;
   width: 200px;
