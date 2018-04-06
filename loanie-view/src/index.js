@@ -18,6 +18,7 @@ import MyLoans from './Component/MyLoans';
 import BorrowerSettings from './Component/BorrowerSettings';
 import PurchasePage from './Component/PurchasePage';
 import PasswordReset from './Component/PasswordReset';
+import ClientSelectedLoan from './Component/ClientSelectedLoan';
 import registerServiceWorker from './registerServiceWorker';
 import rootReducers from './Reducers';
 
@@ -38,6 +39,7 @@ store.subscribe(() => {
 })
 
 ReactDOM.render(
+<<<<<<< HEAD
   <Provider store={store}>
     <Router>
       <div>
@@ -57,5 +59,25 @@ ReactDOM.render(
     </Router>
   </Provider>,
   document.getElementById('root')
+=======
+  <Router>
+    <div>
+      <Route exact path="/" component={App} />
+      <Route path="/new_account" component={AccountCreation} />
+      <Route path="/login_user" component={AccountLogin} />
+      <Route path="/loan_list" component={LoanList} />
+      <Route path="/create_loan" component={LoanCreate} />
+      <Route path="/closed_loans" component={ClosedLoans} />
+      <Route path="/billing" component={StripeWrapper} />
+      <Route path="/settings" component={Settings} />
+      <Route path="/my_loans" component={MyLoans} />
+      <Route path="/my_loan" component={ClientSelectedLoan} />
+      <Route path="/user_settings" component={BorrowerSettings} />
+      <Route path="/purchase_loanie" component={PurchasePage} />
+      <Route path="/password_reset" component={PasswordReset} />
+    </div>
+  </Router>,
+  document.getElementById('root'),
+>>>>>>> 14a68d708255417b8aee6f06873cd46035a58ae7
 );
 registerServiceWorker();

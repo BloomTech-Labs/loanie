@@ -8,10 +8,15 @@ class ClosedLoans extends Component {
   componentDidMount() {
     this.props.dispatch(getManagerLoans(""));
   }
+<<<<<<< HEAD
 
   handleGetAllClosedLoans = () => {
     const closedLoans = this.props.loansBySingleManager.filter(loan => parseInt(loan.currentStatus) === 4);
     return closedLoans;
+=======
+  submitNewLoan() {
+    console.log(this.state.username);
+>>>>>>> 14a68d708255417b8aee6f06873cd46035a58ae7
   }
 
   render() {

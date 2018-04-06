@@ -13,6 +13,7 @@ module.exports = {
     "browser":true,
     "es6": true,
     "jest": true,
+    "jasmine": true,
   },
   "rules": {
     "no-underscore-dangle": ["error", { "allow": ["__REDUX_DEVTOOLS_EXTENSION__"] }],

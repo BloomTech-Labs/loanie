@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { firebase } from './Firebase';
 import { connect } from 'react-redux';
+import firebase from './Firebase';
 import SideBarNav from './SideBarNav';
 import { getUserLoginDetails } from '../Actions';
 import '../App.css';

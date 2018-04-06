@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { firebase } from './Firebase';
+import firebase from './Firebase';
 import '../CSS/LoanList.css';
 
 export default class MyLoans extends Component {

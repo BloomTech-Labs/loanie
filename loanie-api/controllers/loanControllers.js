@@ -5,7 +5,7 @@ const User = require("../models/userModels");
 
 const loanCreate = (req, res) => {
   const {
-    clientId, currentStatus, timestamp, loanManagerId,
+    clientId, currentStatus, timestamp, loanManagerId, openLoan, assignments,
   } = req.body;
 
   // Verify that there are rows corresponding to clientId and loanManagerId in User collection.
@@ -18,12 +18,15 @@ const loanCreate = (req, res) => {
     .then((loans) => {
       if (loans.length !== 2) {
         res.status(422).json("clientId or loanManagerId not found in User collection.");
+        throw new Error();
       } else {
         const newLoan = new Loan({
           clientId,
           currentStatus,
           timestamp,
           loanManagerId,
+          assignments,
+          openLoan,
         });
         newLoan.save(newLoan, (err, savedloan) => {
           if (err) {

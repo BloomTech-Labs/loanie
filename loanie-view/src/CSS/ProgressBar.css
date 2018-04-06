@@ -1,0 +1,25 @@
+.ProgressBar {
+  display: flex;
+  flex-direction: column;
+  width: 25em;
+}
+
+.ProgressBar-style {
+  text-align: center;
+
+}
+
+.ProgressBar-phase-container {
+  display:flex;
+  flex-direction: row;
+  text-align: left;
+}
+
+.ProgressBar-container {
+  width: 50em;
+  text-align: center;
+}
+
+.ProgressBar-phase-item {
+  margin-left: 12em;
+}

@@ -5,8 +5,12 @@
     background-size: 100% 130%;
     background-repeat: no-repeat;
   }
+  .App-title-container {
+    
+  }
   .App-image-container {
     height:50%;
+
     text-align: center;
   }
   .App-frontpage-image {
@@ -33,6 +37,7 @@
   .App-title-item {
     margin-left: 1.6em;
     font-size: 50px;
+    margin-left: 2em;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: white;
   }

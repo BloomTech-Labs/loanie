@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 // import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
@@ -37,6 +38,15 @@ export default class LoanList extends Component {
       <div className="Loanlist">
         <SidebarNav />
         <Navbar />
+        <div className="BreadCrumb">
+          <Breadcrumb>
+            <BreadcrumbItem tag="a" href="/">
+              Home
+            </BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem active>Loans</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
         <div className="Loanlist-title-containter">
           <h1> Add a new Loan</h1>
         </div>
@@ -52,4 +62,10 @@ export default class LoanList extends Component {
       </div>
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+
+export default LoanList;
+>>>>>>> 14a68d708255417b8aee6f06873cd46035a58ae7

@@ -32,7 +32,9 @@ const LoanSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  assignments: [AssignmentSchema],
+  assignments: [{
+    type: String,
+  }],
   openLoan: {
     type: Boolean,
     required: true,
