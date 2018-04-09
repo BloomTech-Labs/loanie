@@ -2,39 +2,31 @@ const User = require("../models/userModels");
 const sgMail = require("@sendgrid/mail");
 
 const sendEmailNotification = (req, res) => {
-	const { name, email, text } = req.body;
-	const newUser = new User({
-	  name,
-	  email,
-	  text
-	});
-	console.log("Request Body:", req.body);
+  const { name, email, text } = req.body;
+  const newUser = new User({
+    name,
+    email,
+    text,
+  });
+  console.log("Request Body:", req.body);
 
-	const sgMail = require('@sendgrid/mail');
+  const sgMail = require('@sendgrid/mail');
   const sendgrid_key = process.env.SENDGRID_API_KEY || "default_sendgrid_key";
-	sgMail.setApiKey(sendgrid_key);
-	const msg = {
-		to: email,
-		from: process.env.SENDGRID_EMAIL_FROM,
-		subject: 'Sending with SendGrid is Fun',
-		text,
-	};
-	sgMail.send(msg, function(err, response) {
-    if(err) {
-    	console.log(err);
+  sgMail.setApiKey(sendgrid_key);
+  const msg = {
+    to: email,
+    from: process.env.SENDGRID_EMAIL_FROM,
+    subject: 'Sending with SendGrid is Fun',
+    text,
+  };
+  sgMail.send(msg, (err, response) => {
+    if (err) {
+      console.log(err);
     } else {
-        console.log('Yay! Our templated email has been sent');
-        res.json("Email notification sent!");
+      console.log('Yay! Our templated email has been sent');
+      res.json("Email notification sent!");
     }
-	    if(err) {
-	    	console.log(err);
-	    }
-
-	    else {
-	        console.log('Yay! Our templated email has been sent');
-	        res.json("Email notification sent!");
-	    }
-	});
+  });
 };
 
 const sendNewLoanEmail = (req, res) => {
