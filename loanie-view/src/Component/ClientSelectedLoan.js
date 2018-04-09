@@ -42,14 +42,14 @@ export default class ClientSelectedLoan extends Component {
               this.state.assignments.push(val.text);
               this.state.checked.push(val.complete);
               console.log(loandata.data.currentStatus);
+              this.setState({
+                borrower: userName,
+                amount: loandata.data.amount,
+                phase: loandata.data.currentStatus,
+                type: loandata.data.loanType,
+              });
+              return val;
             });
-            this.setState({
-              borrower: userName,
-              amount: loandata.data.amount,
-              phase: loandata.data.currentStatus,
-              type: loandata.data.loanType,
-            });
-            // console.log(this.state.phase);
           })
           .catch((err) => {
             console.log(err);
@@ -59,6 +59,7 @@ export default class ClientSelectedLoan extends Component {
         console.log(err);
       });
   }
+
   render() {
     // getter
     const token = this.state.tokenId;

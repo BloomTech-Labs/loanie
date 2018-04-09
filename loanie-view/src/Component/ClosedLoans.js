@@ -41,8 +41,8 @@ export default class ClosedLoans extends Component {
 
   handleGetClosedLoans = () => {
     const bodya = {
-        loanManagerId: this.state.loanManagerId,
-      };
+      loanManagerId: this.state.loanManagerId,
+    };
 
       console.log("loanManagerId from bodya: ", bodya.loanManagerId);
       axios
@@ -57,14 +57,14 @@ export default class ClosedLoans extends Component {
   }
 
   handleGetAllClosedLoans = () => {
-    const closedLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus) === 4);
+    const closedLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus, 0) === 4);
     return closedLoans;
   }
 
   render() {
     const loans = this.handleGetAllClosedLoans();
-    if(loans.length === 0) {
-      return(
+    if (loans.length === 0) {
+      return (
         <div className="card-columns">
           <Navbar />
           <div className="BreadCrumb">
@@ -100,9 +100,10 @@ export default class ClosedLoans extends Component {
         </div>);
     });
 
-    return(
+    return (
       <div>
             <Navbar />
+            <SideBarNav />
             <div className="BreadCrumb">
               <Breadcrumb>
                 <BreadcrumbItem tag="a" href="/">
@@ -114,7 +115,6 @@ export default class ClosedLoans extends Component {
               <div className="ClosedLoans-header">
               <h2> No closed loans! </h2>
               </div>
-              <SideBarNav />
               </div>
               <div className="card-columns">
               {cards}

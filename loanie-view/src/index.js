@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 // import { Provider } from 'react-redux';
 // import ReduxPromise from 'redux-promise';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+// import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import App from './App';
 import AccountCreation from './Component/AccountCreation';

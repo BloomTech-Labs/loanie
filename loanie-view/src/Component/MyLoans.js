@@ -23,13 +23,13 @@ export default class MyLoans extends Component {
     this.selectLoan = this.selectLoan.bind(this);
   }
   componentDidMount() {
-  //  console.log(this.state.userType);
-  //  console.log('hello');
-  //   console.log(this.state.tokenId);
+    //  console.log(this.state.userType);
+    //  console.log('hello');
+    //   console.log(this.state.tokenId);
     const body = { token: this.state.tokenId };
     axios
       .post('http://localhost:3030/user', body)
-      .then((res) => {     
+      .then((res) => {
         const userEmail = res.data.email;
         // console.log('hello');
         // console.log(res.data.email);
@@ -38,7 +38,7 @@ export default class MyLoans extends Component {
           .then((loandata) => {
             console.log(loandata.data);
             this.setState({ loanList: loandata.data });
-          //  console.log(this.state.loanList);
+            //  console.log(this.state.loanList);
           })
           .catch((err) => {
             console.log(err);
@@ -88,19 +88,17 @@ export default class MyLoans extends Component {
           </div>
           <Navbar />
           <div className="MyLoans-link-container">
-            {this.state.loanList.map((val, index) => {
-              return (
-                <div className="MyLoans-loancard">
-                  <Link to={`my_loan/${val._id}`}>
-                    <h1>Loan {index + 1}</h1>
-                  </Link>
-                  <p>Current Phase: Phase {val.currentStatus}</p>
-                  <Link to={`my_loan/${val._id}`}>
-                    <h3>See Details</h3>
-                  </Link>
-                </div>
-              );
-            })}
+            {this.state.loanList.map((val, index) => (
+              <div className="MyLoans-loancard">
+                <Link to={`my_loan/${val._id}`}>
+                  <h1>Loan {index + 1}</h1>
+                </Link>
+                <p>Current Phase: Phase {val.currentStatus}</p>
+                <Link to={`my_loan/${val._id}`}>
+                  <h3>See Details</h3>
+                </Link>
+              </div>
+            ))}
           </div>
           <ClientSideNav />
         </div>
@@ -121,7 +119,7 @@ export default class MyLoans extends Component {
         <div className="Loanlist-title-containter">
           <h1>Open Loans</h1>
           <OpenLoans />
-          <br/>
+          <br />
           <h1>Closed Loans</h1>
           <ClosedLoans />
           <h1>My Loans</h1>
