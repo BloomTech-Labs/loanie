@@ -2,3 +2,11 @@
   box-shadow: 0 .25rem .75rem
   rgba(0, 0, 0, .05);
 }
+
+.NoClosedLoans-header {
+  margin-left: 2em;
+}
+
+.NoOpenLoans-header {
+  margin-left: 2em;
+}

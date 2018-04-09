@@ -48,10 +48,13 @@ export default class SideBarNav extends Component {
       return (
         <Menu styles={styles}>
           <a id="home" className="menu-item" href="/loan_list">
+            Loan List
+          </a>
+          <a id="home" className="menu-item" href="/open_loans">
             Open Loans
           </a>
           <a id="about" className="menu-item" href="/closed_loans">
-            Closed
+            Closed Loans
           </a>
           <a id="contact" className="menu-item" href="/billing">
             Billing
