@@ -80,7 +80,8 @@ export default class OpenLoans extends Component {
       cards.push(<div>
         <Card>
           <CardHeader>
-            <h1>Loan {index + 1}</h1><Link to={`edit_loan/${loan._id}`}>Edit</Link>
+            <h1>Loan {index + 1}</h1><Link to={`edit_loan/${loan._id}`}>Edit</Link>{' | '}
+            <Link to={`add_assignment/${loan._id}`}>New Assignment</Link>
           </CardHeader>
           <CardBody>
             <ul className="list-unstyled">
@@ -112,7 +113,6 @@ export default class OpenLoans extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem active>Open Loans</BreadcrumbItem>
           </Breadcrumb>
         </div>

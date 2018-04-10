@@ -65,7 +65,7 @@ class EditLoan extends Component {
 
   handleDropDownPhase = (e) => {
     console.log(e.target.value);
-    this.setState({ loanType: e.target.value });
+    this.setState({ currentStatus: e.target.value });
   };
 
   submitEditedLoan() {
