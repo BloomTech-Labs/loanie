@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Navbar from './Navbar';
-import OpenLoans from './OpenLoans';
-import ClosedLoans from './ClosedLoans';
 import ClientSideNav from './ClientSideNav';
 import '../CSS/MyLoans.css';
 import '../CSS/LoanList.css';
@@ -21,9 +19,9 @@ export default class MyLoans extends Component {
     this.selectLoan = this.selectLoan.bind(this);
   }
   componentDidMount() {
-  // console.log(this.state.userType);
-  // console.log('hello');
-  // console.log(this.state.tokenId);
+    // console.log(this.state.userType);
+    // console.log('hello');
+    // console.log(this.state.tokenId);
     const body = { token: this.state.tokenId };
     axios
       .post('http://localhost:3030/user', body)
@@ -36,7 +34,7 @@ export default class MyLoans extends Component {
           .then((loandata) => {
             console.log(loandata.data);
             this.setState({ loanList: loandata.data });
-          //  console.log(this.state.loanList);
+            //  console.log(this.state.loanList);
           })
           .catch((err) => {
             console.log(err);
@@ -53,8 +51,6 @@ export default class MyLoans extends Component {
     // render getter
     const token = this.state.tokenId;
     const user = this.state.userType;
-    let loanCounter = 0;
-    let maxLoans = 4;
     // console.log(sessionStorage.getItem('tokenId'));
     // console.log('state tokenId:', token);
     // console.log(this.state.username);
@@ -82,7 +78,6 @@ export default class MyLoans extends Component {
               <BreadcrumbItem tag="a" href="/">
                 Home
               </BreadcrumbItem>
-              {' > '}
               <BreadcrumbItem active>Loans</BreadcrumbItem>
             </Breadcrumb>
           </div>
@@ -166,7 +161,6 @@ export default class MyLoans extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem active>Loans</BreadcrumbItem>
           </Breadcrumb>
         </div>

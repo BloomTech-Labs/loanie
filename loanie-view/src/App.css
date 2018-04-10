@@ -5,9 +5,12 @@
     background-size: 100% 130%;
     background-repeat: no-repeat;
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9909a34cc4e035e3581ef6066a42ee4685062cf8
   .App-image-container {
     height:50%;
-
     text-align: center;
   }
   .App-frontpage-image {
@@ -16,16 +19,17 @@
     height: 40%;
   }
   .App-signin-container {
-    margin-top: 2%;
+    margin-top: 1%;
     text-align: right;
   }
   .App-signin-item {
-    font-size: 25px;
-    margin-right: 1%;
+    font-size: 20px;
+    margin-right: 2%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
   .App-signup-item {
     font-size: 25px;
+    margin-right: 1em;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
   .App-title-container {
@@ -86,11 +90,11 @@
       font-size: 15px;
     }
     .App-signin-container {
-      height:10%;
-      text-align: right;
+      height: 10%;
+      text-align: center;
     }
     .App-signin-item {
-      font-size: 15px;
+      font-size: 25px;
       margin-right: 1%;
       font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
@@ -104,7 +108,6 @@
       margin-top: 20%;
     }
     .App-title-item {
-      font-size: 30px;
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       color: white;
     }
@@ -122,14 +125,13 @@
   @media all and (max-width: 1500px) {
     .App-signin-container {
       margin-top: 2%;
-      height:20%;
+      height: 20%;
       text-align: right;
     }
   }
   @media all and (max-width: 1500px) {
     .App-signin-container {
       margin-top: 2%;
-      height:20%;
       text-align: right;
     }
   }
@@ -138,7 +140,6 @@
   @media all and (max-width: 1000px) {
     .App-signin-container {
       margin-top: 3%;
-      height:20%;
       text-align: right;
     }
   }

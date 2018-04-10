@@ -56,7 +56,7 @@ const userToken = (req, res) => {
           res.status(500).json(err);
           return;
         }
-        console.log('hello');
+        console.log("hello");
         console.log(user);
         res.status(200).json(user);
       });
@@ -108,13 +108,12 @@ const userGetByEmail = (req, res) => {
   // find a single User
   const { email } = req.body;
   console.log("email in the controller:", email);
-  User.findOne({email})
-    .then((user) => {
+  User.findOne({ email })
+    .then((user, err) => {
       if (user === null) {
         console.log("No User: ", email);
         res.status(422).json({ error: "No User!", err });
-      }
-      else {
+      } else {
         console.log("Returning user: ", JSON.stringify(user));
         res.status(200).json(user);
       }

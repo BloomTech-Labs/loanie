@@ -3,6 +3,7 @@ import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import axios from 'axios';
 import Navbar from './Navbar';
+import SideBarNav from './SideBarNav';
 import firebase from './Firebase';
 
 import '../CSS/Settings.css';
@@ -77,7 +78,7 @@ export default class Settings extends Component {
     }
   };
 
-  send = () => {
+  send() {
     const userInfo = {
       name: this.state.name,
       email: this.state.email,
@@ -93,7 +94,7 @@ export default class Settings extends Component {
       .catch((err) => {
         console.log('Failed to make changes to user!', err);
       });
-  };
+  }
 
   handleEmailChange = (event) => {
     this.setState({ email: event.target.value });
@@ -137,16 +138,15 @@ export default class Settings extends Component {
     return (
       <div className="Settings">
         <Navbar />
+        <SideBarNav />
         <div className="BreadCrumb">
           <Breadcrumb>
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem tag="a" href="/loan_list">
               Loans
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem active>Settings</BreadcrumbItem>
           </Breadcrumb>
         </div>
@@ -196,7 +196,6 @@ export default class Settings extends Component {
               <button onClick={this.sendToDB}>Submit</button>
             </fieldset>
           </form>
-
         </div>
       </div>
     );
