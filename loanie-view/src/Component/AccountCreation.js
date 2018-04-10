@@ -40,6 +40,7 @@ class AccountCreation extends Component {
       acceptText: false,
       acceptEmail: false,
     };
+    console.log(this.state);
   }
 
   selectStandardUser = () => {
@@ -62,7 +63,7 @@ class AccountCreation extends Component {
   submitManagerAccountInfo = () => {
     this.sendToDB();
     window.location = '/loan_list';
-  }
+  };
   handlePasswordChange = (event) => {
     this.setState({ password: event.target.value });
   };
@@ -110,7 +111,7 @@ class AccountCreation extends Component {
         console.log('Response from server: ', res);
       })
       .catch((err) => {
-        console.log('Login Failed!', err);
+        console.log('Creation Failed!', err);
       });
   };
 

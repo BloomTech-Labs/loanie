@@ -26,9 +26,6 @@ export default class LoanList extends Component {
       .post('http://localhost:3030/user', body)
       .then((res) => {
         console.log(res);
-        console.log('hello');        
-        const userID = res.data.id;
-        const user = res.data.name;
         console.log(res.data.id);
         const managerID = { loanManagerId: res.data.id };
         axios
@@ -65,28 +62,32 @@ export default class LoanList extends Component {
     }
     if (this.state.loanList.length > 0) {
       return (
-        <div className="MyLoans">
-          <div className="BreadCrumb">
-            <Breadcrumb>
-              <BreadcrumbItem tag="a" href="/">
-                Home
-              </BreadcrumbItem>
-              {' > '}
-              <BreadcrumbItem active>Loans</BreadcrumbItem>
-            </Breadcrumb>
+        <div>
+          <div>
+            <Navbar />
+            <SidebarNav />
+            <div className="Loanlist">
+              <div className="BreadCrumb">
+                <Breadcrumb>
+                  <BreadcrumbItem tag="a" href="/">
+                    Home
+                  </BreadcrumbItem>
+                  {' > '}
+                  <BreadcrumbItem active>Loans</BreadcrumbItem>
+                </Breadcrumb>
+              </div>
+              <div className="Loanlist-link-container">
+                <Link to="manager_loans">
+                  <h1>Loan 1</h1>
+                </Link>
+                <p>Current Phase: {this.state.currentPhase}</p>
+                <p>Current Assignment: {this.state.currentAssignent}</p>
+                <Link to="manager_loans">
+                  <h3>See Details</h3>
+                </Link>
+              </div>
+            </div>
           </div>
-          <Navbar />
-          <div className="MyLoans-link-container">
-            <Link to="manager_loans">
-              <h1>Loan 1</h1>
-            </Link>
-            <p>Current Phase: {this.state.currentPhase}</p>
-            <p>Current Assignment: {this.state.currentAssignent}</p>
-            <Link to="manager_loans">
-              <h3>See Details</h3>
-            </Link>
-          </div>
-          <SidebarNav />
         </div>
       );
     }

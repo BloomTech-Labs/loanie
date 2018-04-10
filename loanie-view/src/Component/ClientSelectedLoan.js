@@ -42,13 +42,14 @@ export default class ClientSelectedLoan extends Component {
               this.state.assignments.push(val.text);
               this.state.checked.push(val.complete);
               console.log(loandata.data.currentStatus);
+              this.setState({
+                borrower: userName,
+                amount: loandata.data.amount,
+                phase: loandata.data.currentStatus,
+                type: loandata.data.loanType,
+              });
+              return val;
             });
-            this.setState({ borrower: userName,
-              amount: loandata.data.amount,
-              phase: loandata.data.currentStatus,
-              type: loandata.data.loanType,
-            });
-            // console.log(this.state.phase);
           })
           .catch((err) => {
             console.log(err);
@@ -58,12 +59,13 @@ export default class ClientSelectedLoan extends Component {
         console.log(err);
       });
   }
+
   render() {
     // getter
     const token = this.state.tokenId;
     // console.log(sessionStorage.getItem('tokenId'));
     // console.log('state tokenId:', token);
-     console.log(this.state.phase);
+    console.log(this.state.phase);
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (
@@ -85,14 +87,28 @@ export default class ClientSelectedLoan extends Component {
           </Breadcrumb>
         </div>
         <div className="MyLoans-title-container">
-          <h1><b>Loan Progress</b></h1>
+          <h1>
+            <b>Loan Progress</b>
+          </h1>
         </div>
         <div className="MyLoans-container">
           <div className="MyLoans-borrower-container">
-            <p><b>Borrower: </b>{this.state.borrower}</p>
-            <p><b>Co-Borrower: </b>{this.state.coBorrower}</p>
-            <p><b>Type: </b>{this.state.type}</p>
-            <p><b>Amount: </b>{this.state.amount}</p>
+            <p>
+              <b>Borrower: </b>
+              {this.state.borrower}
+            </p>
+            <p>
+              <b>Co-Borrower: </b>
+              {this.state.coBorrower}
+            </p>
+            <p>
+              <b>Type: </b>
+              {this.state.type}
+            </p>
+            <p>
+              <b>Amount: </b>
+              {this.state.amount}
+            </p>
           </div>
           <div className="Myloans-progress-container">
             <ProgressBar />
@@ -108,15 +124,23 @@ export default class ClientSelectedLoan extends Component {
               {this.state.assignments.map((val, index) => {
                 if (this.state.checked[index] !== false) {
                   return (
-                    <p>{val} <input type="checkbox" disabled="disabled" checked /></p>
+                    <p>
+                      {val} <input type="checkbox" disabled="disabled" checked />
+                    </p>
                   );
                 }
                 return (
-                  <p>{val} <input type="checkbox" disabled="disabled" /></p>
+                  <p>
+                    {val} <input type="checkbox" disabled="disabled" />
+                  </p>
                 );
               })}
             </div>
-            <br /><p> If you have any questions call Bob Officer: <br />1-800-000-000</p>
+            <br />
+            <p>
+              {' '}
+              If you have any questions call Bob Officer: <br />1-800-000-000
+            </p>
           </div>
           <div className="MyLoans-text-container">
             <div className="MyLoans-text-item">
