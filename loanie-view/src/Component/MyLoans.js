@@ -82,7 +82,6 @@ export default class MyLoans extends Component {
               <BreadcrumbItem tag="a" href="/">
                 Home
               </BreadcrumbItem>
-              {' > '}
               <BreadcrumbItem active>Loans</BreadcrumbItem>
             </Breadcrumb>
           </div>
@@ -111,7 +110,6 @@ export default class MyLoans extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem active>Loans</BreadcrumbItem>
           </Breadcrumb>
         </div>

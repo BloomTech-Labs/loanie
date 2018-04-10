@@ -122,11 +122,9 @@ export default class LoanCreate extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem tag="a" href="/loan_list">
               Loans
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem active>Loan Creation</BreadcrumbItem>
           </Breadcrumb>
         </div>

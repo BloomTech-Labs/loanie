@@ -100,17 +100,15 @@ class LoanList extends Component {
     // ];
   }
 
-  mapAssignments = ({ assignments }) => {
-    return (
-      <div>
-        {assignments.map(assign => (
-          <div className="assignment" key={this.state.assign.id}>
-            {assign.text}
-          </div>
+  mapAssignments = ({ assignments }) => (
+    <div>
+      {assignments.map(assign => (
+        <div className="assignment" key={this.state.assign.id}>
+          {assign.text}
+        </div>
         ))}
-      </div>
-    );
-  };
+    </div>
+  );
 
   render() {
     // getter
@@ -135,11 +133,9 @@ class LoanList extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem tag="a" href="/loan_list">
               Loans
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem active>Edit Loan</BreadcrumbItem>
           </Breadcrumb>
         </div>
