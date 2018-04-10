@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
 import axios from 'axios';
 import {
@@ -78,7 +79,11 @@ export default class OpenLoans extends Component {
     loans.forEach((loan, index) => {
       cards.push(<div>
         <Card>
-          <CardHeader>Loan {index + 1}</CardHeader>
+          <CardHeader>
+            <Link to={`edit_loan/${loan._id}`}>
+                  <h1>Loan {index + 1}</h1>
+            </Link>
+          </CardHeader>
           <CardBody>
             <ul className="list-unstyled">
               <CardText>

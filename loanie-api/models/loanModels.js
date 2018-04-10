@@ -13,6 +13,10 @@ const AssignmentSchema = new mongoose.Schema({
     type: Scheme.Types.ObjectId,
     ref: "User",
   },
+  phase: {
+    type: String,
+    require: true,
+  },
   complete: {
     type: Boolean,
     require: true,

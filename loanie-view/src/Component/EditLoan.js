@@ -7,8 +7,8 @@ import SidebarNav from './SideBarNav';
 import '../CSS/EditLoan.css';
 
 class EditLoan extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       tokenId: sessionStorage.getItem('tokenId'),
       clientEmail: '',
@@ -22,7 +22,8 @@ class EditLoan extends Component {
   }
 
   componentWillMount() {
-    const id = "insert loan id here";
+    const getLoanId = window.location.href;
+    const id = getLoanId.split('/').pop();
     axios
       .get(`http://localhost:3030/loan/${id}`)
       .then((res) => {
@@ -34,7 +35,6 @@ class EditLoan extends Component {
           managerEmail: res.data.email,
           currentStatus: res.data.currentStatus,
           openLoan: res.data.openLoan,
-          assignments: res.data.assignments,
         });
         console.log('Response from server: ', res);
       })
@@ -88,29 +88,6 @@ class EditLoan extends Component {
         console.log('Loan creation failed.', err);
       });
   }
-
-  submitAddAssignment() {
-    console.log('state', this.state);
-    // assignments: [
-    //   {
-    //     text: this.state.assignmentText,
-    //     author: this.state.managerEmail,
-    //     complete: this.state.assignmentComplete,
-    //   },
-    // ];
-  }
-
-  mapAssignments = ({ assignments }) => {
-    return (
-      <div>
-        {assignments.map(assign => (
-          <div className="assignment" key={this.state.assign.id}>
-            {assign.text}
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   render() {
     // getter
@@ -186,9 +163,6 @@ class EditLoan extends Component {
                 onChange={this.handleAmountChange}
               />
               <br />
-              <br />
-              Assignments:
-              <mapAssignments />
               <br />
             </fieldset>
           </form>
