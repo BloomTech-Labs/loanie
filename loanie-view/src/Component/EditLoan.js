@@ -6,7 +6,7 @@ import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import '../CSS/EditLoan.css';
 
-class LoanList extends Component {
+class EditLoan extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,7 +22,7 @@ class LoanList extends Component {
   }
 
   componentWillMount() {
-    const id = this.props.loanId;
+    const id = "insert loan id here";
     axios
       .get(`http://localhost:3030/loan/${id}`)
       .then((res) => {
@@ -199,4 +199,4 @@ class LoanList extends Component {
   }
 }
 
-export default LoanList;
+export default EditLoan;
