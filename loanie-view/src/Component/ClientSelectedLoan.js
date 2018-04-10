@@ -82,7 +82,6 @@ export default class ClientSelectedLoan extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem active>Loans</BreadcrumbItem>
           </Breadcrumb>
         </div>

@@ -107,11 +107,9 @@ class Billing extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem tag="a" href={this.getBillingRoute()}>
               Loans
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem active>Billing</BreadcrumbItem>
           </Breadcrumb>
         </div>

@@ -144,11 +144,9 @@ export default class Settings extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem tag="a" href="/loan_list">
               Loans
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem active>Settings</BreadcrumbItem>
           </Breadcrumb>
         </div>

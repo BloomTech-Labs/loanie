@@ -167,11 +167,9 @@ export default class BorrowerSettings extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem tag="a" href="/my_loans">
               Loans
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem active>Settings</BreadcrumbItem>
           </Breadcrumb>
         </div>

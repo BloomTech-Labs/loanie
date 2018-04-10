@@ -80,9 +80,7 @@ export default class OpenLoans extends Component {
       cards.push(<div>
         <Card>
           <CardHeader>
-            <Link to={`edit_loan/${loan._id}`}>
-                  <h1>Loan {index + 1}</h1>
-            </Link>
+            <h1>Loan {index + 1}</h1><Link to={`edit_loan/${loan._id}`}>Edit</Link>
           </CardHeader>
           <CardBody>
             <ul className="list-unstyled">
