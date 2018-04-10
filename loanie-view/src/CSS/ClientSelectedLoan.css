@@ -1,0 +1,34 @@
+.ClientLoan-title-container {
+  text-align: center;
+}
+.ClientLoan-container {
+  display: flex;
+  flex-direction: row;
+}
+.ClientLoan-borrower-container {
+  margin-left: 15em;
+  margin-top: 1em;
+}
+.ClientLoan-progress-container {
+  margin-left: 10em;
+  margin-top: 1em;
+}
+.ClientLoan-content-container {
+  margin-left: 15em;
+  margin-top: 1em;
+  display: flex;
+  flex-direction: row;
+  width: 71em;
+}
+.ClientLoan-assignment-container {
+  order: 1;
+  text-align: center;
+  margin-left: 5em;
+}
+.ClientLoan-input-container {
+  order: 0;
+  width: 25em;
+}
+.ClientLoan-p1-item {
+  text-align: left;
+}
