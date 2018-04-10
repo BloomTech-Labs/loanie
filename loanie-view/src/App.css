@@ -5,7 +5,10 @@
     background-size: 100% 130%;
     background-repeat: no-repeat;
   }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 9909a34cc4e035e3581ef6066a42ee4685062cf8
   .App-image-container {
     height:50%;
     text-align: center;
@@ -44,7 +47,7 @@
     height: 100%;
   }
   .App-text-item {
-    margin-top: 5%;
+    margin-top: 5em;
     padding-top: 5%;
     font-weight: bolder;
     font-size: 30px;
@@ -58,10 +61,10 @@
     text-align: center;
     text-decoration: none;
     font-size: 16px;
-    width:15%;
+    width:15em;
     cursor: pointer;
     margin-bottom: 40%;
-    height: 80%;
+    height: 5em;
   }
   .button1 {
     -webkit-transition-duration: 0.4s; /* Safari */

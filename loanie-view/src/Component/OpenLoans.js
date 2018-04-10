@@ -15,7 +15,7 @@ import {
 import Navbar from './Navbar';
 import SideBarNav from './SideBarNav';
 import '../CSS/OpenAndClosedLoans.css';
-// import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+// 	import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 export default class OpenLoans extends Component {
   constructor() {

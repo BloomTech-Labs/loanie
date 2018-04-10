@@ -110,7 +110,7 @@ export default class LoanList extends Component {
           <Link to="/create_loan">
             <img
               className="Loanlist-image-item"
-              src="https://cdn.pixabay.com/photo/2012/04/02/15/48/sign-24805_960_720.png"
+              src="https://cdn2.iconfinder.com/data/icons/freecns-cumulus/16/519691-199_CircledPlus-256.png"
               alt="plus_sign"
             />
           </Link>

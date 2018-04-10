@@ -9,14 +9,14 @@ import '../CSS/OpenAndClosedLoans.css';
 // import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 export default class ClosedLoans extends Component {
-  constructor () {
+  constructor() {
     super();
     this.state = {
       tokenId: sessionStorage.getItem('tokenId'),
-      loanManagerId: "",
+      loanManagerId: '',
       loans: [],
     };
-    }
+  }
 
   componentDidMount() {
     const body = {
@@ -48,7 +48,7 @@ export default class ClosedLoans extends Component {
       axios
       .post('http://localhost:3030/getmanagerloans', bodya)
       .then((res) => {
-        this.setState({loans: res.data});
+        this.setState({ loans: res.data });
         console.log('loans', res);
       })
       .catch((err) => {
@@ -101,23 +101,23 @@ export default class ClosedLoans extends Component {
 
     return (
       <div>
-            <Navbar />
-            <SideBarNav />
-            <div className="BreadCrumb">
-              <Breadcrumb>
-                <BreadcrumbItem tag="a" href="/">
-                  Home
-                </BreadcrumbItem>
-                <BreadcrumbItem active>Loans</BreadcrumbItem>
-              </Breadcrumb>
-              <div className="ClosedLoans-header">
-              <h2> No closed loans! </h2>
-              </div>
-              </div>
-              <div className="card-columns">
-              {cards}
-              </div>
-              </div>
+        <Navbar />
+        <SideBarNav />
+        <div className="BreadCrumb">
+          <Breadcrumb>
+            <BreadcrumbItem tag="a" href="/">
+              Home
+            </BreadcrumbItem>
+            <BreadcrumbItem active>Loans</BreadcrumbItem>
+          </Breadcrumb>
+          <div className="ClosedLoans-header">
+            <h2> No closed loans! </h2>
+          </div>
+        </div>
+        <div className="card-columns">
+          {cards}
+        </div>
+      </div>
     );
   }
 }
