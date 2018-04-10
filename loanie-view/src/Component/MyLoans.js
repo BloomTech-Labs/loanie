@@ -167,10 +167,8 @@ export default class MyLoans extends Component {
         <Navbar />
         <div className="Loanlist-title-containter">
           <h1>Open Loans</h1>
-          <OpenLoans />
           <br />
           <h1>Closed Loans</h1>
-          <ClosedLoans />
           <h1>My Loans</h1>
           <h2>You currently do not have any active loans.</h2>
         </div>

@@ -36,7 +36,6 @@ export default class ClientSelectedLoan extends Component {
         axios
           .get(`http://localhost:3030/loan/${getLoanId}`)
           .then((loandata) => {
-<<<<<<< HEAD
             // console.log(loandata.data);
             const assignArr = loandata.data.assignments;
             for (let j = 0; j < assignArr.length; j += 1) {
@@ -49,21 +48,6 @@ export default class ClientSelectedLoan extends Component {
               type: loandata.data.loanType,
             });
             // console.log(this.state.phase);
-=======
-            console.log(loandata.data);
-            loandata.data.assignments.map((val) => {
-              this.state.assignments.push(val.text);
-              this.state.checked.push(val.complete);
-              console.log(loandata.data.currentStatus);
-              this.setState({
-                borrower: userName,
-                amount: loandata.data.amount,
-                phase: loandata.data.currentStatus,
-                type: loandata.data.loanType,
-              });
-              return val;
-            });
->>>>>>> 9909a34cc4e035e3581ef6066a42ee4685062cf8
           })
           .catch((err) => {
             console.log(err);
@@ -79,11 +63,7 @@ export default class ClientSelectedLoan extends Component {
     const token = this.state.tokenId;
     // console.log(sessionStorage.getItem('tokenId'));
     // console.log('state tokenId:', token);
-<<<<<<< HEAD
     // console.log(this.state.phase);
-=======
-    console.log(this.state.phase);
->>>>>>> 9909a34cc4e035e3581ef6066a42ee4685062cf8
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (
@@ -103,7 +83,6 @@ export default class ClientSelectedLoan extends Component {
             <BreadcrumbItem active>Loans</BreadcrumbItem>
           </Breadcrumb>
         </div>
-<<<<<<< HEAD
         <div className="ClientLoan-title-container">
           <h1><b>Loan Progress</b></h1>
         </div>
@@ -113,31 +92,6 @@ export default class ClientSelectedLoan extends Component {
             <p><b>Co-Borrower: </b>{this.state.coBorrower}</p>
             <p><b>Type: </b>{this.state.type}</p>
             <p><b>Amount: </b>{this.state.amount}</p>
-=======
-        <div className="MyLoans-title-container">
-          <h1>
-            <b>Loan Progress</b>
-          </h1>
-        </div>
-        <div className="MyLoans-container">
-          <div className="MyLoans-borrower-container">
-            <p>
-              <b>Borrower: </b>
-              {this.state.borrower}
-            </p>
-            <p>
-              <b>Co-Borrower: </b>
-              {this.state.coBorrower}
-            </p>
-            <p>
-              <b>Type: </b>
-              {this.state.type}
-            </p>
-            <p>
-              <b>Amount: </b>
-              {this.state.amount}
-            </p>
->>>>>>> 9909a34cc4e035e3581ef6066a42ee4685062cf8
           </div>
           <div className="ClientLoan-progress-container">
             <ProgressBar />

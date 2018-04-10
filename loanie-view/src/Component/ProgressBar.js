@@ -6,11 +6,12 @@ export default class ProgressBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      progressValue: null,
+      progressValue: 0,
       currentPhase: '',
     };
   }
   componentDidMount() {
+    console.log(this.state.progressValue);
     // grabs the current url
     let getLoanId = window.location.href;
     // grabs username inside current url
@@ -56,9 +57,7 @@ export default class ProgressBar extends Component {
             className="progress-bar ProgressBar-style progress-bar-success"
             role="progressbar"
             aria-valuenow={this.state.progressValue}
-            aria-valuemin="0"
-            aria-valuemax="100"
-            style={{ width: `${((this.state.progressValue / (100 / 6)) * (75 / 6))}em` }}
+            style={{ width: `${((this.state.progressValue / (100 / 6)) * (68.5 / 6))}em` }}
           >
             Phase {this.state.currentPhase}
           </div>

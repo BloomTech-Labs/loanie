@@ -18,16 +18,6 @@ import '../CSS/OpenAndClosedLoans.css';
 // 	import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 export default class OpenLoans extends Component {
-<<<<<<< HEAD
-	constructor () {
-		super();
-		this.state = {
-			tokenId: sessionStorage.getItem('tokenId'),
-      loanManagerId: "",
-			loans: [],
-		};
-	}
-=======
   constructor() {
     super();
     this.state = {
@@ -36,7 +26,6 @@ export default class OpenLoans extends Component {
       loans: [],
     };
   }
->>>>>>> 9909a34cc4e035e3581ef6066a42ee4685062cf8
 
   componentDidMount() {
     const body = {

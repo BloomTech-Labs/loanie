@@ -26,10 +26,6 @@ export default class LoanList extends Component {
       .post('http://localhost:3030/user', body)
       .then((res) => {
         console.log(res);
-<<<<<<< HEAD
-        console.log('hello');
-=======
->>>>>>> 9909a34cc4e035e3581ef6066a42ee4685062cf8
         console.log(res.data.id);
         const managerID = { loanManagerId: res.data.id };
         axios

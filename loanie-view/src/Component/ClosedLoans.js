@@ -100,30 +100,24 @@ export default class ClosedLoans extends Component {
     });
 
     return (
-<<<<<<< HEAD
-      <div className="card-columns">
-        {cards}
-      </div>
-=======
       <div>
-            <Navbar />
-            <SideBarNav />
-            <div className="BreadCrumb">
-              <Breadcrumb>
-                <BreadcrumbItem tag="a" href="/">
-                  Home
-                </BreadcrumbItem>
-                <BreadcrumbItem active>Loans</BreadcrumbItem>
-              </Breadcrumb>
-              <div className="ClosedLoans-header">
-              <h2> No closed loans! </h2>
-              </div>
-              </div>
-              <div className="card-columns">
-              {cards}
-              </div>
-              </div>
->>>>>>> 9909a34cc4e035e3581ef6066a42ee4685062cf8
+        <Navbar />
+        <SideBarNav />
+        <div className="BreadCrumb">
+          <Breadcrumb>
+            <BreadcrumbItem tag="a" href="/">
+              Home
+            </BreadcrumbItem>
+            <BreadcrumbItem active>Loans</BreadcrumbItem>
+          </Breadcrumb>
+          <div className="ClosedLoans-header">
+            <h2> No closed loans! </h2>
+          </div>
+        </div>
+        <div className="card-columns">
+          {cards}
+        </div>
+      </div>
     );
   }
 }

@@ -1,38 +1,40 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class PhaseContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPhase: 'Phase 2',
+      currentPhase: '',
     };
+  }
+  componentDidMount() {
+    console.log(this.state.progressValue);
+    // grabs the current url
+    let getLoanId = window.location.href;
+    // grabs username inside current url
+    getLoanId = getLoanId.split('/').pop();
+    axios
+      .get(`http://localhost:3030/loan/${getLoanId}`)
+      .then((loandata) => {
+        console.log(loandata.data.currentStatus);
+        this.setState({
+          currentPhase: `Phase ${loandata.data.currentStatus}`,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   render() {
     if (this.state.currentPhase === 'Phase 1') {
       return (
         <div>
           <p>
-          In finance, a loan is the lending of money from one individual, organization or
-          entity to another individual, organization or entity. A loan is a debt provided
-          by an organization or individual to another entity at an interest rate, and
-          evidenced by a promissory note which specifies, among other things, the
-          principal amount of money borrowed, the interest rate the lender is charging,
-          and date of repayment. A loan entails the reallocation of the subject asset(s)
-          for a period of time, between the lender and the borrower.
-          </p>
-          <p>
-            In a loan, the borrower initially receives or borrows an amount of money,
-          called the principal, from the lender, and is obligated to pay back or repay
-          an equal amount of money to the lender at a later time. The loan is generally
-          provided at a cost, referred to as interest on the debt, which provides an
-          incentive for the lender to engage in the loan. In a legal loan, each of
-          these obligations and restrictions is enforced by contract, which can also
-          place the borrower under additional restrictions known as loan covenants.
-          Although this article focuses on monetary loans, in practice any material
-          object might be lent. Acting as a provider of loans is one of the
-          principal tasks for financial institutions such as banks and credit
-          card companies. For other institutions, issuing of debt contracts such
-          as bonds is a typical source of funding.
+          This is the "just getting started" phase. You should meet with your loan 
+          officer to thoroughly review your finances, your needs, the market in your
+          area, and all the other factors to make a plan. Home ownership can be a 
+          journey. Your loan officer will be here every step of the way, and so will we. 
           </p>
         </div>
       );
@@ -40,27 +42,14 @@ export default class PhaseContent extends Component {
       return (
         <div>
           <p>
-          In finance, a loan is the lending of money from one individual, organization or
-          entity to another individual, organization or entity. A loan is a debt provided
-          by an organization or individual to another entity at an interest rate, and
-          evidenced by a promissory note which specifies, among other things, the
-          principal amount of money borrowed, the interest rate the lender is charging,
-          and date of repayment. A loan entails the reallocation of the subject asset(s)
-          for a period of time, between the lender and the borrower.
-          </p>
-          <p>
-            In a loan, the borrower initially receives or borrows an amount of money,
-          called the principal, from the lender, and is obligated to pay back or repay
-          an equal amount of money to the lender at a later time. The loan is generally
-          provided at a cost, referred to as interest on the debt, which provides an
-          incentive for the lender to engage in the loan. In a legal loan, each of
-          these obligations and restrictions is enforced by contract, which can also
-          place the borrower under additional restrictions known as loan covenants.
-          Although this article focuses on monetary loans, in practice any material
-          object might be lent. Acting as a provider of loans is one of the
-          principal tasks for financial institutions such as banks and credit
-          card companies. For other institutions, issuing of debt contracts such
-          as bonds is a typical source of funding.
+          You've started shopping for a home. Maybe you're working with a realtor, maybe
+          you're own your own. Either way, there are some things you should know. You've
+          likely been "prequalified" for a home loan. Its now time to get "preapproved".
+          Any realtor will tell you that offers made by preapproved buyers are taken
+          more seriously -- especially in competitive markets, so its important to sit
+          down with your loan officer, review your financial situation, and get that
+          preapproval. TL:DR; Preapproval comes with verification of
+          debts/income/credit - Pre-qualification is based only on a "best guess".
           </p>
         </div>
       );
@@ -68,27 +57,46 @@ export default class PhaseContent extends Component {
       return (
         <div>
           <p>
-          In finance, a loan is the lending of money from one individual, organization or
-          entity to another individual, organization or entity. A loan is a debt provided
-          by an organization or individual to another entity at an interest rate, and
-          evidenced by a promissory note which specifies, among other things, the
-          principal amount of money borrowed, the interest rate the lender is charging,
-          and date of repayment. A loan entails the reallocation of the subject asset(s)
-          for a period of time, between the lender and the borrower.
+          After we have a property and the offer has been submitted and accepted, its
+          time to go to work. Your loan officer will need to collect a TON of paperwork
+          from you. It is important to know that banks employ teams of professional
+          nit-pickers to review these documents thoroughly, and they will find some things
+          that will require additional documentation. This is a normal part of the
+          process - be sure to provide any and all documentation to your loan officer
+          as quickly as possible.
           </p>
+        </div>
+      );
+    } else if (this.state.currentPhase === 'Phase 4') {
+      return (
+        <div>
           <p>
-            In a loan, the borrower initially receives or borrows an amount of money,
-          called the principal, from the lender, and is obligated to pay back or repay
-          an equal amount of money to the lender at a later time. The loan is generally
-          provided at a cost, referred to as interest on the debt, which provides an
-          incentive for the lender to engage in the loan. In a legal loan, each of
-          these obligations and restrictions is enforced by contract, which can also
-          place the borrower under additional restrictions known as loan covenants.
-          Although this article focuses on monetary loans, in practice any material
-          object might be lent. Acting as a provider of loans is one of the
-          principal tasks for financial institutions such as banks and credit
-          card companies. For other institutions, issuing of debt contracts such
-          as bonds is a typical source of funding.
+          Appraisal on the property is ordered and completed. Regulations require the buyer
+           to pay for the appraisal. A professional appraiser will evaluate your property and
+           compare it to other recent transactions in your market. You're entitled to a copy
+           of this report, so ask for it. You'll likely find it interesting.
+          </p>
+        </div>
+      );
+    }else if (this.state.currentPhase === 'Phase 4') {
+      return (
+        <div>
+          <p>
+          Appraisal on the property is ordered and completed. Regulations require the buyer
+           to pay for the appraisal. A professional appraiser will evaluate your property and
+           compare it to other recent transactions in your market. You're entitled to a copy
+           of this report, so ask for it. You'll likely find it interesting.
+          </p>
+        </div>
+      );
+    } else if (this.state.currentPhase === 'Phase 5') {
+      return (
+        <div>
+          <p>
+          The final disclosure is a lengthy document that contains all the terms of your loan.
+          You should review this document thoroughly. In order to guarantee that you have time
+          to review the document, you must wait at least three days from the time you sign and
+          approve it and the time you close.
           </p>
         </div>
       );
@@ -96,27 +104,9 @@ export default class PhaseContent extends Component {
     return (
       <div>
         <p>
-        In finance, a loan is the lending of money from one individual, organization or
-        entity to another individual, organization or entity. A loan is a debt provided
-        by an organization or individual to another entity at an interest rate, and
-        evidenced by a promissory note which specifies, among other things, the
-        principal amount of money borrowed, the interest rate the lender is charging,
-        and date of repayment. A loan entails the reallocation of the subject asset(s)
-        for a period of time, between the lender and the borrower.
-        </p>
-        <p>
-          In a loan, the borrower initially receives or borrows an amount of money,
-        called the principal, from the lender, and is obligated to pay back or repay
-        an equal amount of money to the lender at a later time. The loan is generally
-        provided at a cost, referred to as interest on the debt, which provides an
-        incentive for the lender to engage in the loan. In a legal loan, each of
-        these obligations and restrictions is enforced by contract, which can also
-        place the borrower under additional restrictions known as loan covenants.
-        Although this article focuses on monetary loans, in practice any material
-        object might be lent. Acting as a provider of loans is one of the
-        principal tasks for financial institutions such as banks and credit
-        card companies. For other institutions, issuing of debt contracts such
-        as bonds is a typical source of funding.
+        You'll arrive at the Title Company and be seated in a conference room and asked to sign
+        a stack of documents related to your mortgage. The title company representative will
+        watching you so feel free to ask questions.
         </p>
       </div>
     );
