@@ -26,9 +26,7 @@ export default class LoanList extends Component {
       .post('http://localhost:3030/user', body)
       .then((res) => {
         console.log(res);
-        console.log('hello');        
-        const userID = res.data.id;
-        const user = res.data.name;
+        console.log('hello');
         console.log(res.data.id);
         const managerID = { loanManagerId: res.data.id };
         axios
@@ -110,7 +108,7 @@ export default class LoanList extends Component {
           <Link to="/create_loan">
             <img
               className="Loanlist-image-item"
-              src="https://cdn.pixabay.com/photo/2012/04/02/15/48/sign-24805_960_720.png"
+              src="https://cdn2.iconfinder.com/data/icons/freecns-cumulus/16/519691-199_CircledPlus-256.png"
               alt="plus_sign"
             />
           </Link>

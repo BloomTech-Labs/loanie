@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import { getManagerLoans } from '../Actions';
 import '../CSS/OpenAndClosedLoans.css';
-// import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+// 	import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 export default class OpenLoans extends Component {
 	constructor () {
 		super();
 		this.state = {
 			tokenId: sessionStorage.getItem('tokenId'),
-			loanManagerId: "",
+      loanManagerId: "",
 			loans: [],
 		};
 	}
@@ -101,4 +101,4 @@ export default class OpenLoans extends Component {
 //   };
 // };
 
- // connect(mapStateToProps)(OpenLoans);
+// connect(mapStateToProps)(OpenLoans);

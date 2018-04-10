@@ -15,25 +15,22 @@ export default class MyLoans extends Component {
     this.state = {
       username: '',
       loanList: [],
-      currentPhase: '',
       userType: sessionStorage.getItem('userType'),
-      currentAssignent: 'assignment 3',
       tokenId: sessionStorage.getItem('tokenId'),
     };
     this.selectLoan = this.selectLoan.bind(this);
   }
   componentDidMount() {
-  //  console.log(this.state.userType);
-  //  console.log('hello');
- //   console.log(this.state.tokenId);
+  // console.log(this.state.userType);
+  // console.log('hello');
+  // console.log(this.state.tokenId);
     const body = { token: this.state.tokenId };
     axios
       .post('http://localhost:3030/user', body)
-      .then((res) => {     
+      .then((res) => {
         const userEmail = res.data.email;
         // console.log('hello');
         // console.log(res.data.email);
-        const user = res.data.email;
         axios
           .post('http://localhost:3030/getclientloans', userEmail)
           .then((loandata) => {
@@ -56,6 +53,8 @@ export default class MyLoans extends Component {
     // render getter
     const token = this.state.tokenId;
     const user = this.state.userType;
+    let loanCounter = 0;
+    let maxLoans = 4;
     // console.log(sessionStorage.getItem('tokenId'));
     // console.log('state tokenId:', token);
     // console.log(this.state.username);
@@ -90,17 +89,70 @@ export default class MyLoans extends Component {
           <Navbar />
           <div className="MyLoans-link-container">
             {this.state.loanList.map((val, index) => {
-              return (
-                <div className="MyLoans-loancard">
-                  <Link to={`my_loan/${val._id}`}>
-                    <h1>Loan {index + 1}</h1>
-                  </Link>
-                  <p>Current Phase: Phase {val.currentStatus}</p>
-                  <Link to={`my_loan/${val._id}`}>
-                    <h3>See Details</h3>
-                  </Link>
-                </div>
-              );
+              if (index <= 4) {
+                return (
+                  <div className="MyLoans-loancard">
+                    <Link to={`my_loan/${val._id}`}>
+                      <h1>Loan {index + 1}</h1>
+                    </Link>
+                    <p>Current Phase: Phase {val.currentStatus}</p>
+                    <Link to={`my_loan/${val._id}`}>
+                      <h3>See Details</h3>
+                    </Link>
+                  </div>
+                );
+              }
+            })}
+          </div>
+          <div className="MyLoans-link-container">
+            {this.state.loanList.map((val, index) => {
+              if (index >= 5 && index < 10) {
+                return (
+                  <div className="MyLoans-loancard">
+                    <Link to={`my_loan/${val._id}`}>
+                      <h1>Loan {index + 1}</h1>
+                    </Link>
+                    <p>Current Phase: Phase {val.currentStatus}</p>
+                    <Link to={`my_loan/${val._id}`}>
+                      <h3>See Details</h3>
+                    </Link>
+                  </div>
+                );
+              }
+            })}
+          </div>
+          <div className="MyLoans-link-container">
+            {this.state.loanList.map((val, index) => {
+              if (index >= 10 && index < 15) {
+                return (
+                  <div className="MyLoans-loancard">
+                    <Link to={`my_loan/${val._id}`}>
+                      <h1>Loan {index + 1}</h1>
+                    </Link>
+                    <p>Current Phase: Phase {val.currentStatus}</p>
+                    <Link to={`my_loan/${val._id}`}>
+                      <h3>See Details</h3>
+                    </Link>
+                  </div>
+                );
+              }
+            })}
+          </div>
+          <div className="MyLoans-link-container">
+            {this.state.loanList.map((val, index) => {
+              if (index >= 15 && index < 20) {
+                return (
+                  <div className="MyLoans-loancard">
+                    <Link to={`my_loan/${val._id}`}>
+                      <h1>Loan {index + 1}</h1>
+                    </Link>
+                    <p>Current Phase: Phase {val.currentStatus}</p>
+                    <Link to={`my_loan/${val._id}`}>
+                      <h3>See Details</h3>
+                    </Link>
+                  </div>
+                );
+              }
             })}
           </div>
           <ClientSideNav />
@@ -122,7 +174,7 @@ export default class MyLoans extends Component {
         <div className="Loanlist-title-containter">
           <h1>Open Loans</h1>
           <OpenLoans />
-          <br/>
+          <br />
           <h1>Closed Loans</h1>
           <ClosedLoans />
           <h1>My Loans</h1>

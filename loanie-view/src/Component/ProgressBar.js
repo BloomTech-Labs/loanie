@@ -19,8 +19,10 @@ export default class ProgressBar extends Component {
       .get(`http://localhost:3030/loan/${getLoanId}`)
       .then((loandata) => {
         console.log(loandata.data.currentStatus);
-        
-        this.setState({ currentPhase: loandata.data.currentStatus, progressValue: Number(loandata.data.currentStatus) * 25 });
+        this.setState({
+          currentPhase: loandata.data.currentStatus,
+          progressValue: Number(loandata.data.currentStatus) * 25,
+        });
       })
       .catch((err) => {
         console.log(err);

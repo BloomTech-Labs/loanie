@@ -41,14 +41,18 @@
 
 .Loanlist-image-container{
   text-align: center;
-  margin-top: 1em;
-}
 
+}
+.Loanlist-image-container img:hover{
+  opacity: 0.7;
+}
 .Loanlist-image-item{
-  width:300px;
-  height:230px;
+  width:10em;
+  height:10em;
 }
-
+Loanlist-image-item:hover {
+  opacity: 0.7;
+}
 .BreadCrumb {
   margin-top: 6em;
   margin-left: 1.2em;

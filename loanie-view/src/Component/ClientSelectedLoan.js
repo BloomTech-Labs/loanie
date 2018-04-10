@@ -43,7 +43,8 @@ export default class ClientSelectedLoan extends Component {
               this.state.checked.push(val.complete);
               console.log(loandata.data.currentStatus);
             });
-            this.setState({ borrower: userName,
+            this.setState({
+              borrower: userName,
               amount: loandata.data.amount,
               phase: loandata.data.currentStatus,
               type: loandata.data.loanType,
@@ -63,7 +64,7 @@ export default class ClientSelectedLoan extends Component {
     const token = this.state.tokenId;
     // console.log(sessionStorage.getItem('tokenId'));
     // console.log('state tokenId:', token);
-     console.log(this.state.phase);
+    console.log(this.state.phase);
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (
