@@ -109,7 +109,7 @@ const loanCreateAssignment = (req, res) => {
   // save Loan
   Loan.findByIdAndUpdate(
     loanId,
-    { $push: assignments },
+    { $push: { assignments } },
     { safe: true, upsert: true },
     (err, doc) => {
       if (err) {

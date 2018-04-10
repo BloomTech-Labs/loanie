@@ -13,15 +13,16 @@ class AddAssignment extends Component {
       tokenId: sessionStorage.getItem('tokenId'),
       assignmentPhase: '1',
       newAssignmentText: '',
-      newAssignment: {},
       clientEmail: '',
       assignments: [],
+      loanId: '',
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const getLoanId = window.location.href;
     const id = getLoanId.split('/').pop();
+    this.setId(id);
     axios
       .get(`http://localhost:3030/loan/${id}`)
       .then((res) => {
@@ -37,20 +38,26 @@ class AddAssignment extends Component {
       });
   }
 
+  setId(id) {
+    this.setState({
+      loanId: id,
+    });
+  }
+
   handleNewAssignment = (event) => {
     this.setState({ newAssignmentText: event.target.value });
     console.log(this.state.newAssignmentText);
   };
 
-  submitNewAssignment() {
-    console.log('sending', this.state.newAssignmentText);
+  submitNewAssignment = () => {
+    const id = this.state.loanId;
     const assignment = {
       text: this.state.newAssignmentText,
       phase: this.state.assignmentPhase,
     };
 
     const body = {
-      loanId: this.state.currentStatus,
+      loanId: id,
       assignments: assignment,
     };
     console.log('body', body);
@@ -58,17 +65,18 @@ class AddAssignment extends Component {
       .post('http://localhost:3030/assignment', body)
       .then(() => {
         console.log('Assignment created successfully!');
+        window.location = '/open_loans';
       })
       .catch((err) => {
-        console.log('Loan creation failed.', err);
+        console.log('Assignment creation failed.', err);
       });
-  }
+  };
 
   MapAssignments() {
     return (
       <div>
         {this.state.assignments.map(assignment => (
-          <div className="assignment" key={this.state.assignment.id}>
+          <div className="assignment" key={assignment._id}>
             <p>Phase: {assignment.phase}</p>
             <p>{assignment.text}</p>
           </div>
@@ -151,9 +159,9 @@ class AddAssignment extends Component {
               <input type="text" name="text" onChange={this.handleNewAssignment} />
               <br />
               <br />
-              <button onClick={this.submitNewAssignment}>Submit</button>
             </fieldset>
           </form>
+          <button onClick={this.submitNewAssignment}>Submit</button>
           Assignments:
           {this.MapAssignments()}
           <br />
