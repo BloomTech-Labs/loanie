@@ -22,13 +22,12 @@ export default class Navbar extends Component {
       .signOut()
       .then(() => {
         console.log('signed out successfully!');
+        sessionStorage.clear();
+        window.location = '/login_user';
       })
       .catch((error) => {
         console.log('error signing out', error);
       });
-    sessionStorage.removeItem('tokenId');
-    // Clear userLoginDetails stored in Redux state.
-    // this.props.dispatch(getUserLoginDetails({}));
   };
 
   render() {
