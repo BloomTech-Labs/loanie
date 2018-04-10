@@ -1,14 +1,33 @@
 import React, { Component } from 'react';
+import axios from 'axios'; 
 import '../CSS/ProgressBar.css';
 
 export default class ProgressBar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      progressValue: 50,
-      currentPhase: 'Phase 2',
+      progressValue: null,
+      currentPhase: '',
     };
   }
+
+  componentDidMount() {
+    // grabs the current url
+    let getLoanId = window.location.href;
+    // grabs username inside current url
+    getLoanId = getLoanId.split('/').pop();
+    axios
+      .get(`http://localhost:3030/loan/${getLoanId}`)
+      .then((loandata) => {
+        console.log(loandata.data.currentStatus);
+        
+        this.setState({ currentPhase: loandata.data.currentStatus, progressValue: Number(loandata.data.currentStatus) * 25 });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   render() {
     return (
       <div className="ProgressBar">
@@ -35,7 +54,7 @@ export default class ProgressBar extends Component {
             aria-valuemax="100"
             style={{ width: `${((this.state.progressValue / 25) * (75 / 4))}em` }}
           >
-            {this.state.currentPhase}
+            Phase {this.state.currentPhase}
           </div>
         </div>
       </div>

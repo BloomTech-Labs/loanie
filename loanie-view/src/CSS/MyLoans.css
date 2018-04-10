@@ -6,10 +6,10 @@
   margin-top: 2em;
   margin-left: 5em;
   padding-left: 1em;
-  border: 5px solid black;
-  width: 18em;
-  height: 18em;
+  display: flex;
+  flex-direction: row; 
 }
+
 .MyLoans-title-container {
   margin-top: 10em;
   margin-left: 47em;
@@ -19,9 +19,16 @@
   display:flex;
 }
 
+.MyLoans-loancard {
+  margin-left: 3em;
+  border: 2px solid black;
+  width: 15em;
+  height: 15em;
+  text-align: center;
+}
+
 .MyLoans-borrower-container {
   margin-left: 20em;
-  
 }
 
 .Myloans-progress-container {

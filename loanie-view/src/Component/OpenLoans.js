@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardTitle, CardText, CardColumns, CardBody } from 'reactstrap';
@@ -75,6 +76,9 @@ export default class OpenLoans extends Component {
               <li>Hey</li>
               <li>Client email: {loan.clientEmail}</li>
               <li>Current Status: {loan.currentStatus}</li>
+              <Link to={`/clientloan/${loan.clientEmail}`}>
+                <h3>See Details</h3>
+              </Link>
             </ul>
           </CardText>
         </CardBody>
