@@ -16,7 +16,7 @@ import {
 import Navbar from './Navbar';
 import SideBarNav from './SideBarNav';
 import '../CSS/OpenAndClosedLoans.css';
-// import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 export default class OpenLoans extends Component {
   constructor() {
@@ -29,16 +29,13 @@ export default class OpenLoans extends Component {
   }
 
   componentDidMount() {
-    const body = {
-      token: this.state.tokenId,
-    };
-
+    const body = { token: this.state.tokenId };
     axios
       .post('http://localhost:3030/user', body)
       .then((res) => {
         console.log('res name', res.data.name);
         this.setState({ loanManagerId: res.data._id });
-        console.log('loanManagerId from open lona: ', res.data._id);
+        console.log('loanManagerId from open loans: ', res.data._id);
         console.log('Response from server: ', res);
         this.handleGetOpenLoans();
       })
@@ -52,13 +49,13 @@ export default class OpenLoans extends Component {
   }
 
   handleGetOpenLoans = () => {
-    const bodya = {
+    const body = {
       loanManagerId: this.state.loanManagerId,
     };
 
-    console.log('loanManagerId from bodya: ', bodya.loanManagerId);
+    console.log('loanManagerId from body: ', body.loanManagerId);
     axios
-      .post('http://localhost:3030/getmanagerloans', bodya)
+      .post('http://localhost:3030/getmanagerloans', body)
       .then((res) => {
         this.setState({ loans: res.data });
         console.log('loans', res);
@@ -66,42 +63,37 @@ export default class OpenLoans extends Component {
       .catch((err) => {
         console.log('Unable to fetch loan data.', err);
       });
-  };
+  }
 
   handleGetAllOpenLoans = () => {
-    const openLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus, 0) < 4);
+    const openLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus, 0) < 6);
     return openLoans;
-  };
+  }
 
   render() {
     const loans = this.handleGetAllOpenLoans();
     const cards = [];
     loans.forEach((loan, index) => {
-      cards.push(<div>
-        <Card>
-          <CardHeader>
-            <h1>Loan {index + 1}</h1><Link to={`edit_loan/${loan._id}`}>Edit</Link>{' | '}
-            <Link to={`add_assignment/${loan._id}`}>New Assignment</Link>
-          </CardHeader>
-          <CardBody>
+      cards.push(<Card>
+        <CardHeader>Loan {index + 1}</CardHeader>
+        <CardBody>
+          <CardText>
             <ul className="list-unstyled">
-              <CardText>
-                <li>Hey</li>
-                <li>Client email: {loan.clientEmail}</li>
-                <li>Current Status: {loan.currentStatus}</li>
-              </CardText>
+              <li>Hey</li>
+              <li>Client email: {loan.clientEmail}</li>
+              <li>Current Status: {loan.currentStatus}</li>
+              <Link to={`my_loan/${loan._id}`}>
+                See Details
+              </Link>
             </ul>
-          </CardBody>
-        </Card>
-      </div>);
+          </CardText>
+        </CardBody>
+      </Card>);
     });
 
-    let noCards = null;
+    const noCards = [];
     if (loans.length === 0) {
-      noCards = [];
-      noCards.push(<div className="NoOpenLoans-header">
-                    <h2> No open loans! </h2>
-                   </div>);
+      noCards.push(<div className="NoOpenLoans-header"><h2> No open loans! </h2></div>);
       noCards.push(<SideBarNav />);
     }
 
@@ -116,7 +108,9 @@ export default class OpenLoans extends Component {
             <BreadcrumbItem active>Open Loans</BreadcrumbItem>
           </Breadcrumb>
         </div>
-        <CardColumns>{cards}</CardColumns>
+        <CardColumns>
+          {cards}
+        </CardColumns>
         {noCards}
       </div>
     );

@@ -1,8 +1,3 @@
-.ProgressBar {
-  display: flex;
-  flex-direction: column;
-  width: 25em;
-}
 
 .ProgressBar-style {
   text-align: center;
@@ -16,10 +11,10 @@
 }
 
 .ProgressBar-container {
-  width: 50em;
+  width: 68.5em;
   text-align: center;
 }
 
 .ProgressBar-phase-item {
-  margin-left: 12em;
+  margin-left: 8em;
 }

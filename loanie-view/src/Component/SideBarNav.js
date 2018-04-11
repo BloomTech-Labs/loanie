@@ -21,7 +21,7 @@ export default class SideBarNav extends Component {
               Create Loans
             </a>
             <a className="menu-items" href="/closed_loans">
-              Closed
+              Closed Loans
             </a>
             <a className="menu-items" href="/billing">
               Billing

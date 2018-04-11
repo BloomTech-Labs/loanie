@@ -5,8 +5,7 @@ import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import ProgressBar from './ProgressBar';
 import PhaseContent from './PhaseContent';
-
-import '../CSS/MyLoans.css';
+import '../CSS/ClientSelectedLoan.css';
 
 export default class ClientSelectedLoan extends Component {
   constructor(props) {
@@ -15,41 +14,40 @@ export default class ClientSelectedLoan extends Component {
       assignments: [],
       checked: [],
       borrower: '',
-      phase: null,
       coBorrower: 'Bob',
       type: 'New Purchase',
       amount: '',
       tokenId: sessionStorage.getItem('tokenId'),
     };
   }
+
   componentDidMount() {
     // grabs the current url
     let getLoanId = window.location.href;
     // grabs username inside current url
     getLoanId = getLoanId.split('/').pop();
-    const body = { token: this.state.tokenId };
-
     axios
-      .post('http://localhost:3030/user', body)
-      .then((res) => {
-        console.log(res.data.name);
-        const userName = res.data.name;
+      .get(`http://localhost:3030/loan/${getLoanId}`)
+      .then((loandata) => {
+        // console.log(loandata.data);
+        const assignArr = loandata.data.assignments;
+        for (let j = 0; j < assignArr.length; j += 1) {
+          this.state.assignments.push(assignArr[j].text);
+          this.state.checked.push(assignArr[j].complete);
+        }
+        this.setState({
+          amount: loandata.data.amount,
+          type: loandata.data.loanType,
+        });
+
+        const request = { email: loandata.data.clientEmail };
+        console.log("request: ", request);
         axios
-          .get(`http://localhost:3030/loan/${getLoanId}`)
-          .then((loandata) => {
-            console.log(loandata.data);
-            loandata.data.assignments.map((val) => {
-              this.state.assignments.push(val.text);
-              this.state.checked.push(val.complete);
-              console.log(loandata.data.currentStatus);
-              this.setState({
-                borrower: userName,
-                amount: loandata.data.amount,
-                phase: loandata.data.currentStatus,
-                type: loandata.data.loanType,
-              });
-              return val;
-            });
+          .post('http://localhost:3030/userbyemail', request)
+          .then((res) => {
+            console.log(res.data.name);
+            const userName = res.data.name;
+            this.setState({borrower: userName});
           })
           .catch((err) => {
             console.log(err);
@@ -63,9 +61,6 @@ export default class ClientSelectedLoan extends Component {
   render() {
     // getter
     const token = this.state.tokenId;
-    // console.log(sessionStorage.getItem('tokenId'));
-    // console.log('state tokenId:', token);
-    console.log(this.state.phase);
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (
@@ -85,38 +80,24 @@ export default class ClientSelectedLoan extends Component {
             <BreadcrumbItem active>Loans</BreadcrumbItem>
           </Breadcrumb>
         </div>
-        <div className="MyLoans-title-container">
-          <h1>
-            <b>Loan Progress</b>
-          </h1>
+        <div className="ClientLoan-title-container">
+          <h1><b>Loan Progress</b></h1>
         </div>
-        <div className="MyLoans-container">
-          <div className="MyLoans-borrower-container">
-            <p>
-              <b>Borrower: </b>
-              {this.state.borrower}
-            </p>
-            <p>
-              <b>Co-Borrower: </b>
-              {this.state.coBorrower}
-            </p>
-            <p>
-              <b>Type: </b>
-              {this.state.type}
-            </p>
-            <p>
-              <b>Amount: </b>
-              {this.state.amount}
-            </p>
+        <div className="ClientLoan-container">
+          <div className="ClientLoan-borrower-container">
+            <p><b>Borrower: </b>{this.state.borrower}</p>
+            <p><b>Co-Borrower: </b>{this.state.coBorrower}</p>
+            <p><b>Type: </b>{this.state.type}</p>
+            <p><b>Amount: </b>{this.state.amount}</p>
           </div>
-          <div className="Myloans-progress-container">
+          <div className="ClientLoan-progress-container">
             <ProgressBar />
           </div>
         </div>
-        <div className="MyLoans-content-container">
-          <div className="MyLoans-assignment-container">
-            <div className="MyLoans-input-container">
-              <div className="MyLoans-p1-item">
+        <div className="ClientLoan-content-container">
+          <div className="ClientLoan-assignment-container">
+            <div className="ClientLoan-input-container">
+              <div className="ClientLoan-p1-item">
                 <p> Your loan officer will update these boxes as they recieve your documents</p>
               </div>
               <br />
@@ -141,8 +122,8 @@ export default class ClientSelectedLoan extends Component {
               If you have any questions call Bob Officer: <br />1-800-000-000
             </p>
           </div>
-          <div className="MyLoans-text-container">
-            <div className="MyLoans-text-item">
+          <div className="ClientLoan-text-container">
+            <div className="ClientLoan-text-item">
               <PhaseContent />
             </div>
           </div>

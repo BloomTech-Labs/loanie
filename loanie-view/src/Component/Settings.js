@@ -44,7 +44,7 @@ export default class Settings extends Component {
 
   submitChanges = () => {
     console.log('sending to DB');
-    this.sendToDB();
+    this.send();
     // window.location = '/my_loans';
   };
 

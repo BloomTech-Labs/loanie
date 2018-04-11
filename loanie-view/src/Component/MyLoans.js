@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Navbar from './Navbar';
-import OpenLoans from './OpenLoans';
-import ClosedLoans from './ClosedLoans';
 import ClientSideNav from './ClientSideNav';
 import '../CSS/MyLoans.css';
 import '../CSS/LoanList.css';
@@ -15,17 +13,15 @@ export default class MyLoans extends Component {
     this.state = {
       username: '',
       loanList: [],
-      currentPhase: '',
       userType: sessionStorage.getItem('userType'),
-      currentAssignent: 'assignment 3',
       tokenId: sessionStorage.getItem('tokenId'),
     };
     this.selectLoan = this.selectLoan.bind(this);
   }
   componentDidMount() {
-    //  console.log(this.state.userType);
-    //  console.log('hello');
-    //   console.log(this.state.tokenId);
+    // console.log(this.state.userType);
+    // console.log('hello');
+    // console.log(this.state.tokenId);
     const body = { token: this.state.tokenId };
     axios
       .post('http://localhost:3030/user', body)
@@ -87,44 +83,76 @@ export default class MyLoans extends Component {
           </div>
           <Navbar />
           <div className="MyLoans-link-container">
-            {this.state.loanList.map((val, index) => (
-              <div className="MyLoans-loancard">
-                <Link to={`my_loan/${val._id}`}>
-                  <h1>Loan {index + 1}</h1>
-                </Link>
-                <p>Current Phase: Phase {val.currentStatus}</p>
-                <Link to={`my_loan/${val._id}`}>
-                  <h3>See Details</h3>
-                </Link>
-              </div>
-            ))}
+            {this.state.loanList.map((val, index) => {
+              if (index <= 4) {
+                return (
+                  <div className="MyLoans-loancard">
+                    <Link to={`my_loan/${val._id}`}>
+                      <h1>Loan {index + 1}</h1>
+                    </Link>
+                    <p>Current Phase: Phase {val.currentStatus}</p>
+                    <Link to={`my_loan/${val._id}`}>
+                      <h3>See Details</h3>
+                    </Link>
+                  </div>
+                );
+              }
+            })}
+          </div>
+          <div className="MyLoans-link-container">
+            {this.state.loanList.map((val, index) => {
+              if (index >= 5 && index < 10) {
+                return (
+                  <div className="MyLoans-loancard">
+                    <Link to={`my_loan/${val._id}`}>
+                      <h1>Loan {index + 1}</h1>
+                    </Link>
+                    <p>Current Phase: Phase {val.currentStatus}</p>
+                    <Link to={`my_loan/${val._id}`}>
+                      <h3>See Details</h3>
+                    </Link>
+                  </div>
+                );
+              }
+            })}
+          </div>
+          <div className="MyLoans-link-container">
+            {this.state.loanList.map((val, index) => {
+              if (index >= 10 && index < 15) {
+                return (
+                  <div className="MyLoans-loancard">
+                    <Link to={`my_loan/${val._id}`}>
+                      <h1>Loan {index + 1}</h1>
+                    </Link>
+                    <p>Current Phase: Phase {val.currentStatus}</p>
+                    <Link to={`my_loan/${val._id}`}>
+                      <h3>See Details</h3>
+                    </Link>
+                  </div>
+                );
+              }
+            })}
+          </div>
+          <div className="MyLoans-link-container">
+            {this.state.loanList.map((val, index) => {
+              if (index >= 15 && index < 20) {
+                return (
+                  <div className="MyLoans-loancard">
+                    <Link to={`my_loan/${val._id}`}>
+                      <h1>Loan {index + 1}</h1>
+                    </Link>
+                    <p>Current Phase: Phase {val.currentStatus}</p>
+                    <Link to={`my_loan/${val._id}`}>
+                      <h3>See Details</h3>
+                    </Link>
+                  </div>
+                );
+              }
+            })}
           </div>
           <ClientSideNav />
         </div>
       );
     }
-    return (
-      <div className="Loanlist">
-        <div className="BreadCrumb">
-          <Breadcrumb>
-            <BreadcrumbItem tag="a" href="/">
-              Home
-            </BreadcrumbItem>
-            <BreadcrumbItem active>Loans</BreadcrumbItem>
-          </Breadcrumb>
-        </div>
-        <Navbar />
-        <div className="Loanlist-title-containter">
-          <h1>Open Loans</h1>
-          <OpenLoans />
-          <br />
-          <h1>Closed Loans</h1>
-          <ClosedLoans />
-          <h1>My Loans</h1>
-          <h2>You currently do not have any active loans.</h2>
-        </div>
-        <ClientSideNav />
-      </div>
-    );
   }
 }
