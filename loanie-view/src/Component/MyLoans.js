@@ -154,26 +154,5 @@ export default class MyLoans extends Component {
         </div>
       );
     }
-    return (
-      <div className="Loanlist">
-        <div className="BreadCrumb">
-          <Breadcrumb>
-            <BreadcrumbItem tag="a" href="/">
-              Home
-            </BreadcrumbItem>
-            <BreadcrumbItem active>Loans</BreadcrumbItem>
-          </Breadcrumb>
-        </div>
-        <Navbar />
-        <div className="Loanlist-title-containter">
-          <h1>Open Loans</h1>
-          <br />
-          <h1>Closed Loans</h1>
-          <h1>My Loans</h1>
-          <h2>You currently do not have any active loans.</h2>
-        </div>
-        <ClientSideNav />
-      </div>
-    );
   }
 }
