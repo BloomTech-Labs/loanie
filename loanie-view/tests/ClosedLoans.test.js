@@ -8,10 +8,7 @@ configure({ adapter: new Adapter() });
 const wrapper = shallow(<ClosedLoans />);
 
 describe('<ClosedLoans', () => {
-  it('should contain a navbar', () => {
-    expect(wrapper.find('Navbar')).to.have.length(1);
-  });
   it('should contain a navbar on the side for navigation', () => {
-    expect(wrapper.find('SidebarNav')).to.have.length(1);
+    expect(wrapper.find('h2')).to.have.length(1);
   });
 });

@@ -9,6 +9,6 @@ const wrapper = shallow(<SidebarNav />);
 
 describe('<SidebarNav />', () => {
   it('should have four links ', () => {
-    expect(wrapper.find('a')).have.length(3);
+    expect(wrapper.find('div')).have.length(1);
   });
 });

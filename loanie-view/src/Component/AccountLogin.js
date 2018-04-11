@@ -32,7 +32,7 @@ const sendToken = (tokenId, sendEmail) => {
       if (usertype === 'managerUser') window.location = '/loan_list';
       else window.location = '/my_loans';
     })
-    .catch((err) => {
+    .catch((err) => { 
       console.log('Login Failed!', err);
     });
 };

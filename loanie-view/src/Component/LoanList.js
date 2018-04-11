@@ -37,7 +37,7 @@ export default class LoanList extends Component {
           })
           .catch((err) => {
             console.log(err);
-          });
+          }); 
       })
       .catch((err) => {
         console.log(err);

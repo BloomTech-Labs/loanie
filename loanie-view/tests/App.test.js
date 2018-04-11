@@ -17,7 +17,4 @@ describe('<App/>', () => {
   it('should have a button in the webpage', () => {
     expect(wrapper.find('button')).to.have.length(1);
   });
-  it('should have a Navbar in the webpage', () => {
-    expect(wrapper.find('Navbar')).to.have.length(1);
-  });
 });

@@ -155,7 +155,7 @@ export default class MyLoans extends Component {
       );
     }
     return (
-      <div className="Loanlist">
+      <div className>
         <div className="BreadCrumb">
           <Breadcrumb>
             <BreadcrumbItem tag="a" href="/">
@@ -165,7 +165,7 @@ export default class MyLoans extends Component {
           </Breadcrumb>
         </div>
         <Navbar />
-        <div className="Loanlist-title-containter">
+        <div>
           <h1>Open Loans</h1>
           <br />
           <h1>Closed Loans</h1>
