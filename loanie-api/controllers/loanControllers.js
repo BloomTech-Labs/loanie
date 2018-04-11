@@ -158,7 +158,7 @@ const loanEditAssignment = (req, res) => {
 
 // find by loan id and remove item in array
 const loanDeleteAssignment = (req, res) => {
-  console.log("edit loan assignement");
+  console.log("edit loan assignment");
   const { loanId, assignmentId } = req.body;
   console.log(loanId, assignmentId);
   // find a single Loan
