@@ -2,7 +2,7 @@ const Loan = require("../models/loanModels");
 
 const loanCreate = (req, res) => {
   const {
-    clientEmail, loanManagerId, amount, loanType,
+    clientEmail, loanManagerId, amount, loanType, assignments,
   } = req.body;
 
   console.log("Request Body:", req.body);
@@ -11,6 +11,7 @@ const loanCreate = (req, res) => {
     loanManagerId,
     amount,
     loanType,
+    assignments,
   });
   newLoan.save(newLoan, (err, savedloan) => {
     if (err) {

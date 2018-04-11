@@ -3,6 +3,7 @@ import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import axios from 'axios';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
+import { assignmentDefaults } from './AssignmentDefaults';
 import '../CSS/LoanCreate.css';
 
 export default class LoanCreate extends Component {
@@ -73,12 +74,13 @@ export default class LoanCreate extends Component {
 
   sendNewLoanDB() {
     console.log('state', this.state);
-
+    console.log(assignmentDefaults());
     const body = {
       loanManagerId: this.state.loanManagerId,
       clientEmail: this.state.clientEmail,
       loanType: this.state.loanType,
       amount: this.state.amount,
+      assignments: assignmentDefaults(),
     };
     axios
       .post('http://localhost:3030/newloan', body)

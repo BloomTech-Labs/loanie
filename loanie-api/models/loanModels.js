@@ -10,8 +10,7 @@ mongoose.connect("mongodb://localhost/loanie");
 const AssignmentSchema = new mongoose.Schema({
   text: String,
   author: {
-    type: Scheme.Types.ObjectId,
-    ref: "User",
+    type: String,
   },
   phase: {
     type: String,
