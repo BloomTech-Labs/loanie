@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 // import { connect } from 'react-redux';
 import Navbar from './Navbar';
@@ -11,11 +12,36 @@ export default class LoanList extends Component {
     super(props);
     this.state = {
       tokenId: sessionStorage.getItem('tokenId'),
+      loanList: [],
     };
   }
 
   componentWillMount() {
     // if (this.props.tokenId === '') window.location = '/login_user';
+    console.log(this.state.userType);
+    console.log('hello');
+    console.log(this.state.tokenId);
+    const body = { token: this.state.tokenId };
+    axios
+      .post('http://localhost:3030/user', body)
+      .then((res) => {
+        console.log(res);
+        console.log(res.data.id);
+        const managerID = { loanManagerId: res.data.id };
+        axios
+          .post('http://localhost:3030/getmanagerloans', managerID)
+          .then((loandata) => {
+            const loanArr = loandata.data;
+            console.log(loandata);
+            this.setState({ loanList: loanArr });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   selectLoan = () => {
@@ -34,6 +60,37 @@ export default class LoanList extends Component {
         </div>
       );
     }
+    if (this.state.loanList.length > 0) {
+      return (
+        <div>
+          <div>
+            <Navbar />
+            <SidebarNav />
+            <div className="Loanlist">
+              <div className="BreadCrumb">
+                <Breadcrumb>
+                  <BreadcrumbItem tag="a" href="/">
+                    Home
+                  </BreadcrumbItem>
+                  {' > '}
+                  <BreadcrumbItem active>Loans</BreadcrumbItem>
+                </Breadcrumb>
+              </div>
+              <div className="Loanlist-link-container">
+                <Link to="manager_loans">
+                  <h1>Loan 1</h1>
+                </Link>
+                <p>Current Phase: {this.state.currentPhase}</p>
+                <p>Current Assignment: {this.state.currentAssignent}</p>
+                <Link to="manager_loans">
+                  <h3>See Details</h3>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="Loanlist">
         <SidebarNav />
@@ -43,7 +100,6 @@ export default class LoanList extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem active>Loans</BreadcrumbItem>
           </Breadcrumb>
         </div>
@@ -54,7 +110,7 @@ export default class LoanList extends Component {
           <Link to="/create_loan">
             <img
               className="Loanlist-image-item"
-              src="https://cdn.pixabay.com/photo/2012/04/02/15/48/sign-24805_960_720.png"
+              src="https://cdn2.iconfinder.com/data/icons/freecns-cumulus/16/519691-199_CircledPlus-256.png"
               alt="plus_sign"
             />
           </Link>

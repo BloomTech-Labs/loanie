@@ -26,13 +26,20 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "mocha --compilers js:babel-core/register tests/*.js --require ignore-styles",
+    "test": "jest",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "<rootDir>/__mocks__/styleMock.js"
+    },
+    "setupTestFrameworkScriptFile": "mock-local-storage"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "enzyme": "^3.3.0",
@@ -43,7 +50,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "ignore-styles": "^5.0.1",
-    "jasmine": "^3.1.0"
+    "mock-local-storage": "^1.0.5"
   },
   "babel": {
     "presets": [

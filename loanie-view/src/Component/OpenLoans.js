@@ -2,12 +2,21 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
 import axios from 'axios';
-import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardTitle, CardText, CardColumns, CardBody } from 'reactstrap';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardText,
+  CardColumns,
+  CardBody,
+} from 'reactstrap';
 // import { getManagerLoans } from '../Actions';
 import Navbar from './Navbar';
 import SideBarNav from './SideBarNav';
 import '../CSS/OpenAndClosedLoans.css';
-// import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+// 	import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 export default class OpenLoans extends Component {
   constructor() {

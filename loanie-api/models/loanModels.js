@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
+const Scheme = mongoose.Schema;
 
 mongoose.connect("mongodb://localhost/loanie");
 
@@ -10,16 +10,15 @@ mongoose.connect("mongodb://localhost/loanie");
 const AssignmentSchema = new mongoose.Schema({
   text: String,
   author: {
-    type: Schema.Types.ObjectId,
+    type: Scheme.Types.ObjectId,
     ref: "User",
   },
   complete: {
     type: Boolean,
     require: true,
-    defualt: false,
+    default: false,
   },
 });
-
 const LoanSchema = new mongoose.Schema({
   clientEmail: {
     type: String,
@@ -46,9 +45,7 @@ const LoanSchema = new mongoose.Schema({
     default: Date.now,
     required: true,
   },
-  assignments: [{
-    type: String,
-  }],
+  assignments: [AssignmentSchema],
   openLoan: {
     type: Boolean,
     default: true,

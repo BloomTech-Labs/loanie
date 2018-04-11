@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 // import { Provider } from 'react-redux';
 // import ReduxPromise from 'redux-promise';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+// import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import App from './App';
 import AccountCreation from './Component/AccountCreation';
@@ -11,6 +12,7 @@ import AccountLogin from './Component/AccountLogin';
 import LoanList from './Component/LoanList';
 import Settings from './Component/Settings';
 import LoanCreate from './Component/LoanCreate';
+import EditLoan from './Component/EditLoan';
 import StripeWrapper from './Component/StripeBilling/StripeWrapper';
 import OpenLoans from './Component/OpenLoans';
 import ClosedLoans from './Component/ClosedLoans';
@@ -21,6 +23,7 @@ import PasswordReset from './Component/PasswordReset';
 import ClientSelectedLoan from './Component/ClientSelectedLoan';
 import ClientLoan from './Component/ClientLoan';
 import registerServiceWorker from './registerServiceWorker';
+
 // import rootReducers from './Reducers';
 
 // const configureStore = applyMiddleware(ReduxPromise)(createStore);
@@ -44,9 +47,11 @@ ReactDOM.render(
       <Route path="/my_loans" component={MyLoans} />
       <Route path="/my_loan" component={ClientSelectedLoan} />
       <Route path="/clientloan/:clientEmail" component={ClientLoan} />
+      <Route path="/my_loan/:loanID" component={ClientSelectedLoan} />
       <Route path="/user_settings" component={BorrowerSettings} />
       <Route path="/purchase_loanie" component={PurchasePage} />
       <Route path="/password_reset" component={PasswordReset} />
+      <Route path="/edit_loan" component={EditLoan} />
     </div>
   </Router>,
   document.getElementById('root'),

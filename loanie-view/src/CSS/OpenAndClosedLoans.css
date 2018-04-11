@@ -3,10 +3,11 @@
   rgba(0, 0, 0, .05);
 }
 
-.NoClosedLoans-header {
-  margin-left: 2em;
+.BreadCrumb {
+  margin-top: 6em;
+  margin-left: 1.2em;
 }
 
-.NoOpenLoans-header {
+.ClosedLoans-header {
   margin-left: 2em;
 }

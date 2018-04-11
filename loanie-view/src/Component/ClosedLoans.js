@@ -9,14 +9,14 @@ import '../CSS/OpenAndClosedLoans.css';
 // import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 export default class ClosedLoans extends Component {
-  constructor () {
+  constructor() {
     super();
     this.state = {
       tokenId: sessionStorage.getItem('tokenId'),
       loanManagerId: "",
       loans: [],
     };
-    }
+  }
 
   componentDidMount() {
     const body = {
@@ -41,8 +41,8 @@ export default class ClosedLoans extends Component {
 
   handleGetClosedLoans = () => {
     const bodya = {
-        loanManagerId: this.state.loanManagerId,
-      };
+      loanManagerId: this.state.loanManagerId,
+    };
 
       console.log("loanManagerId from bodya: ", bodya.loanManagerId);
       axios
@@ -57,7 +57,7 @@ export default class ClosedLoans extends Component {
   }
 
   handleGetAllClosedLoans = () => {
-    const closedLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus) === 4);
+    const closedLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus, 0) === 4);
     return closedLoans;
   }
 
@@ -106,7 +106,7 @@ export default class ClosedLoans extends Component {
         </div>
         {noCards}
       </div>
-    );
+      );
   }
 }
 

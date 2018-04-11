@@ -64,7 +64,7 @@ export default class LoanCreate extends Component {
       .post('http://localhost:3030/newloanemail', body)
       .then((res) => {
         console.log('Success! Response from server: ', res);
-        window.location = '/loan_list';
+        window.location = '/open_loans';
       })
       .catch((err) => {
         console.log('Loan creation failed.', err);
@@ -116,16 +116,15 @@ export default class LoanCreate extends Component {
     return (
       <div className="LoanCreate">
         <Navbar />
+        <SidebarNav />
         <div className="BreadCrumb">
           <Breadcrumb>
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem tag="a" href="/loan_list">
               Loans
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem active>Loan Creation</BreadcrumbItem>
           </Breadcrumb>
         </div>
@@ -157,7 +156,6 @@ export default class LoanCreate extends Component {
           </form>
           <button onClick={this.submitNewLoan}>Submit</button>
         </div>
-        <SidebarNav />
       </div>
     );
   }

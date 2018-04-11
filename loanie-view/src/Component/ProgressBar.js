@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import axios from 'axios'; 
+import axios from 'axios';
 import '../CSS/ProgressBar.css';
 
 export default class ProgressBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      progressValue: null,
+      progressValue: 0,
       currentPhase: '',
     };
   }
-
   componentDidMount() {
+    console.log(this.state.progressValue);
     // grabs the current url
     let getLoanId = window.location.href;
     // grabs username inside current url
@@ -20,14 +20,15 @@ export default class ProgressBar extends Component {
       .get(`http://localhost:3030/loan/${getLoanId}`)
       .then((loandata) => {
         console.log(loandata.data.currentStatus);
-        
-        this.setState({ currentPhase: loandata.data.currentStatus, progressValue: Number(loandata.data.currentStatus) * 25 });
+        this.setState({
+          currentPhase: loandata.data.currentStatus,
+          progressValue: Number(loandata.data.currentStatus) * (100 / 6),
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   }
-
   render() {
     return (
       <div className="ProgressBar">
@@ -44,15 +45,19 @@ export default class ProgressBar extends Component {
           <div className="ProgressBar-phase-item">
             <p><b>4</b></p>
           </div>
+          <div className="ProgressBar-phase-item">
+            <p><b>5</b></p>
+          </div>
+          <div className="ProgressBar-phase-item">
+            <p><b>6</b></p>
+          </div>
         </div>
         <div className="progress ProgressBar-container">
           <div
             className="progress-bar ProgressBar-style progress-bar-success"
             role="progressbar"
             aria-valuenow={this.state.progressValue}
-            aria-valuemin="0"
-            aria-valuemax="100"
-            style={{ width: `${((this.state.progressValue / 25) * (75 / 4))}em` }}
+            style={{ width: `${((this.state.progressValue / (100 / 6)) * (68.5 / 6))}em` }}
           >
             Phase {this.state.currentPhase}
           </div>
