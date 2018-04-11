@@ -21,7 +21,6 @@ import BorrowerSettings from './Component/BorrowerSettings';
 import PurchasePage from './Component/PurchasePage';
 import PasswordReset from './Component/PasswordReset';
 import ClientSelectedLoan from './Component/ClientSelectedLoan';
-import ClientLoan from './Component/ClientLoan';
 import registerServiceWorker from './registerServiceWorker';
 
 // import rootReducers from './Reducers';
@@ -45,8 +44,6 @@ ReactDOM.render(
       <Route path="/billing" component={StripeWrapper} />
       <Route path="/settings" component={Settings} />
       <Route path="/my_loans" component={MyLoans} />
-      <Route path="/my_loan" component={ClientSelectedLoan} />
-      <Route path="/clientloan/:clientEmail" component={ClientLoan} />
       <Route path="/my_loan/:loanID" component={ClientSelectedLoan} />
       <Route path="/user_settings" component={BorrowerSettings} />
       <Route path="/purchase_loanie" component={PurchasePage} />

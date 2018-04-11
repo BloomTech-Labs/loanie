@@ -16,7 +16,7 @@ import {
 import Navbar from './Navbar';
 import SideBarNav from './SideBarNav';
 import '../CSS/OpenAndClosedLoans.css';
-// 	import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 export default class OpenLoans extends Component {
   constructor() {
@@ -29,16 +29,13 @@ export default class OpenLoans extends Component {
   }
 
   componentDidMount() {
-    const body = {
-      token: this.state.tokenId,
-    };
-
+    const body = { token: this.state.tokenId };
     axios
       .post('http://localhost:3030/user', body)
       .then((res) => {
         console.log('res name', res.data.name);
         this.setState({ loanManagerId: res.data._id });
-        console.log('loanManagerId from open lona: ', res.data._id);
+        console.log('loanManagerId from open loans: ', res.data._id);
         console.log('Response from server: ', res);
         this.handleGetOpenLoans();
       })
@@ -52,13 +49,13 @@ export default class OpenLoans extends Component {
   }
 
   handleGetOpenLoans = () => {
-    const bodya = {
+    const body = {
       loanManagerId: this.state.loanManagerId,
     };
 
-    console.log('loanManagerId from bodya: ', bodya.loanManagerId);
+    console.log('loanManagerId from body: ', body.loanManagerId);
     axios
-      .post('http://localhost:3030/getmanagerloans', bodya)
+      .post('http://localhost:3030/getmanagerloans', body)
       .then((res) => {
         this.setState({ loans: res.data });
         console.log('loans', res);
@@ -69,7 +66,7 @@ export default class OpenLoans extends Component {
   }
 
   handleGetAllOpenLoans = () => {
-    const openLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus) < 4);
+    const openLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus, 0) < 6);
     return openLoans;
   }
 
@@ -85,8 +82,8 @@ export default class OpenLoans extends Component {
               <li>Hey</li>
               <li>Client email: {loan.clientEmail}</li>
               <li>Current Status: {loan.currentStatus}</li>
-              <Link to={`/clientloan/${loan.clientEmail}`}>
-                <h3>See Details</h3>
+              <Link to={`my_loan/${loan._id}`}>
+                See Details
               </Link>
             </ul>
           </CardText>
@@ -106,7 +103,7 @@ export default class OpenLoans extends Component {
         <div className="BreadCrumb">
           <Breadcrumb>
             <BreadcrumbItem tag="a" href="/">
-                    Home
+              Home
             </BreadcrumbItem>
             {' > '}
             <BreadcrumbItem active>Open Loans</BreadcrumbItem>
