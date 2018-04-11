@@ -127,13 +127,9 @@ class EditLoan extends Component {
               <legend>Confirm Client Email Before Editing: {this.state.clientEmail} </legend>
               Edit Loan Type:
               <select value={this.state.loanType} onChange={this.handleDropDownType}>
-                <option value="fha">FHA</option>
-                <option value="usda">USDA</option>
-                <option value="va">VA</option>
-                <option value="conventional">Conventional</option>
                 <option value="new">New Purchase</option>
                 <option value="refinance">Refinance</option>
-                <option value="Constuction">Construction</option>
+                <option value="constuction">Construction</option>
               </select>
               <br />
               <br />
@@ -148,8 +144,8 @@ class EditLoan extends Component {
               <br />
               Edit Loan Open Status:
               <select value={this.state.openLoan} onChange={this.handleDropDownOpen}>
-                <option value="true">True</option>
-                <option value="flase">Flase</option>
+                <option value="true">Open</option>
+                <option value="false">Closed</option>
               </select>
               <br />
               <br />
