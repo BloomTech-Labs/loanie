@@ -138,14 +138,10 @@ export default class LoanCreate extends Component {
             <fieldset>
               <legend>Borrower information:</legend>
               Loan Type:
-              <select value="fha" onChange={this.handleDropDown}>
-                <option value="fha">FHA</option>
-                <option value="usda">USDA</option>
-                <option value="va">VA</option>
-                <option value="conventional">Conventional</option>
-                <option value="new">New Purchase</option>
+              <select value="newLoan" onChange={this.handleDropDown}>
+                <option value="new">New Loan</option>
                 <option value="refinance">Refinance</option>
-                <option value="Constuction">Construction</option>
+                <option value="constuction">Construction</option>
               </select>
               <br />
               <br />
