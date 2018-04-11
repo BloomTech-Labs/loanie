@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardText, CardBody } from 'reactstrap';
+import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
@@ -75,11 +76,17 @@ class AddAssignment extends Component {
   MapAssignments() {
     return (
       <div>
-        {this.state.assignments.map(assignment => (
-          <div className="assignment" key={assignment._id}>
-            <p>Phase: {assignment.phase}</p>
-            <p>{assignment.text}</p>
-          </div>
+        {this.state.assignments.sort((a, b) => a.phase - b.phase).map(assignment => (
+          <Card>
+            <CardHeader>Phase: {assignment.phase}</CardHeader>
+            <CardBody>
+              <CardText>
+                <Link to={`edit_assignment/${assignment._id}-${this.state.loanId}`}>
+                  {assignment.text}
+                </Link>
+              </CardText>
+            </CardBody>
+          </Card>
         ))}
       </div>
     );
@@ -160,9 +167,9 @@ class AddAssignment extends Component {
               <br />
               <br />
             </fieldset>
+            <button onClick={this.submitNewAssignment}>Submit</button>
           </form>
-          <button onClick={this.submitNewAssignment}>Submit</button>
-          Assignments:
+          <h1>Assignments:</h1>
           {this.MapAssignments()}
           <br />
         </div>
