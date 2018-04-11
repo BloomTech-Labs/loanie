@@ -1,28 +1,35 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardText,
+  CardColumns,
+  CardBody,
+} from 'reactstrap';
 // import { connect } from 'react-redux';
 // import { getManagerLoans } from '../Actions';
 import Navbar from './Navbar';
 import SideBarNav from './SideBarNav';
 import '../CSS/OpenAndClosedLoans.css';
-// import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 export default class ClosedLoans extends Component {
   constructor() {
     super();
     this.state = {
       tokenId: sessionStorage.getItem('tokenId'),
-      loanManagerId: '',
+      loanManagerId: "",
       loans: [],
     };
   }
 
   componentDidMount() {
-    const body = {
-      token: this.state.tokenId,
-    };
-
+    const body = { token: this.state.tokenId };
     axios
       .post('http://localhost:3030/user', body)
       .then((res) => {
@@ -40,15 +47,15 @@ export default class ClosedLoans extends Component {
   }
 
   handleGetClosedLoans = () => {
-    const bodya = {
+    const body = {
       loanManagerId: this.state.loanManagerId,
     };
 
-      console.log("loanManagerId from bodya: ", bodya.loanManagerId);
-      axios
-      .post('http://localhost:3030/getmanagerloans', bodya)
+    console.log("loanManagerId from body: ", body.loanManagerId);
+    axios
+      .post('http://localhost:3030/getmanagerloans', body)
       .then((res) => {
-        this.setState({ loans: res.data });
+        this.setState({loans: res.data});
         console.log('loans', res);
       })
       .catch((err) => {
@@ -57,68 +64,56 @@ export default class ClosedLoans extends Component {
   }
 
   handleGetAllClosedLoans = () => {
-    const closedLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus, 0) === 4);
+    const closedLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus, 0) === 6);
     return closedLoans;
   }
 
   render() {
     const loans = this.handleGetAllClosedLoans();
-    if (loans.length === 0) {
-      return (
-        <div className="card-columns">
-          <Navbar />
-          <div className="BreadCrumb">
-            <Breadcrumb>
-              <BreadcrumbItem tag="a" href="/">
-                Home
-              </BreadcrumbItem>
-              <BreadcrumbItem active>Loans</BreadcrumbItem>
-            </Breadcrumb>
-          </div>
-          <div className="ClosedLoans-header">
-            <h2> No closed loans! </h2>
-          </div>
-          <SideBarNav />
-        </div>
-      );
-    }
     const cards = [];
     loans.forEach((loan, index) => {
-      cards.push(
-        <div key={index} className="card box-shadow">
-          <div className="card-header">
-            <h4 className="my-0">Loan {index + 1}</h4>
-          </div>
-          <div className="card-body">
+      cards.push(<Card>
+        <CardHeader>Loan {index + 1}</CardHeader>
+        <CardBody>
+          <CardText>
             <ul className="list-unstyled">
               <li>Hey</li>
-              <li>Client Id: {loan.clientId}</li>
+              <li>Client email: {loan.clientEmail}</li>
               <li>Current Status: {loan.currentStatus}</li>
+              <Link to={`my_loan/${loan._id}`}>
+                See Details
+              </Link>
             </ul>
-          </div>
-        </div>);
+          </CardText>
+        </CardBody>
+      </Card>);
     });
 
-    return (
+    let noCards = null;
+    if (loans.length === 0) {
+      noCards = [];
+      noCards.push(<div className="NoClosedLoans-header"><h2> No closed loans! </h2></div>);
+      noCards.push(<SideBarNav />);
+    }
+
+    return(
       <div>
         <Navbar />
-        <SideBarNav />
         <div className="BreadCrumb">
           <Breadcrumb>
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            <BreadcrumbItem active>Loans</BreadcrumbItem>
+            {' > '}
+            <BreadcrumbItem active>Closed Loans</BreadcrumbItem>
           </Breadcrumb>
-          <div className="ClosedLoans-header">
-            <h2> No closed loans! </h2>
-          </div>
         </div>
-        <div className="card-columns">
+        <CardColumns>
           {cards}
-        </div>
+        </CardColumns>
+        {noCards}
       </div>
-    );
+      );
   }
 }
 
@@ -127,5 +122,5 @@ export default class ClosedLoans extends Component {
 //     loansBySingleManager: state.loans
 //   };
 // };
-
- // connect(mapStateToProps)(ClosedLoans);
+ 
+ // connect(mapStateToProps)(ClosedLoans); 
