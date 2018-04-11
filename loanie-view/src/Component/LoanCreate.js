@@ -141,7 +141,7 @@ export default class LoanCreate extends Component {
               <select value="newLoan" onChange={this.handleDropDown}>
                 <option value="new">New Loan</option>
                 <option value="refinance">Refinance</option>
-                <option value="constuction">Construction</option>
+                <option value="construction">Construction</option>
               </select>
               <br />
               <br />

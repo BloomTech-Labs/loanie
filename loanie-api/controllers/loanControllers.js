@@ -126,13 +126,24 @@ const loanCreateAssignment = (req, res) => {
 // find by loan id and add edit assignment in array
 const loanEditAssignment = (req, res) => {
   console.log("edit loan assignement");
-  const { loanId, assignmentId, assignment } = req.body;
-  console.log(loanId, assignmentId, assignment);
+  const {
+    loanId, assignmentId, text, phase, complete,
+  } = req.body;
+  console.log(loanId, assignmentId, text, phase, complete);
   // find a single Loan
   // edit loan assignment
   Loan.findByIdAndUpdate(
     loanId,
-    { $push: { assignments: { _id: assignmentId, text: assignment } } },
+    {
+      $push: {
+        assignments: {
+          _id: assignmentId,
+          text,
+          phase,
+          complete,
+        },
+      },
+    },
     { safe: true, upsert: true },
     (err, doc) => {
       if (err) {

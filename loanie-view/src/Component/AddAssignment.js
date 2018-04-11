@@ -81,7 +81,7 @@ class AddAssignment extends Component {
             <CardHeader>Phase: {assignment.phase}</CardHeader>
             <CardBody>
               <CardText>
-                <Link to={`edit_assignment/${assignment._id}-${this.state.loanId}`}>
+                <Link to={`/edit_assignment/${assignment._id}-${this.state.loanId}+`}>
                   {assignment.text}
                 </Link>
               </CardText>
