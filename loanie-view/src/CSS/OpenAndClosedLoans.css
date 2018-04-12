@@ -11,3 +11,29 @@
 .ClosedLoans-header {
   margin-left: 2em;
 }
+.OpenLoans-image-container {
+  text-align: center;
+  margin-top: 5em;
+}
+.OpenLoans-image-container img:hover {
+  opacity: 0.7;
+}
+.OpenLoans-image-item{
+  width:8em;
+  height:8em;
+}
+.OpenLoans-imagelist-item {
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
+  width:5.6 em;
+  height:5.6em;
+}
+.OpenLoans-imagelist-container {
+  text-align: center;
+}
+.OpenLoans-imagelist-container img:hover {
+  opacity: 0.7;
+}
+.OpenLoans-card-container {
+  margin-left: 1.2em;
+}

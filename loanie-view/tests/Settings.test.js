@@ -9,6 +9,6 @@ const wrapper = shallow(<Settings />);
 
 describe('<Settings />', () => {
   it('should contain a navbar', () => {
-    expect(wrapper.find('Navbar')).to.have.length(1);
+    expect(wrapper.find('h1')).to.have.length(1);
   });
 });

@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Card,
+  CardHeader,
+  CardText,
+  CardBody,
+} from 'reactstrap';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import '../CSS/MyLoans.css';
@@ -84,75 +91,60 @@ export default class MyLoans extends Component {
           <Navbar />
           <div className="MyLoans-link-container">
             {this.state.loanList.map((val, index) => {
-              if (index <= 4) {
-                return (
-                  <div className="MyLoans-loancard">
-                    <Link to={`my_loan/${val._id}`}>
-                      <h1>Loan {index + 1}</h1>
-                    </Link>
-                    <p>Current Phase: Phase {val.currentStatus}</p>
-                    <Link to={`my_loan/${val._id}`}>
-                      <h3>See Details</h3>
-                    </Link>
-                  </div>
-                );
-              }
-            })}
-          </div>
-          <div className="MyLoans-link-container">
-            {this.state.loanList.map((val, index) => {
-              if (index >= 5 && index < 10) {
-                return (
-                  <div className="MyLoans-loancard">
-                    <Link to={`my_loan/${val._id}`}>
-                      <h1>Loan {index + 1}</h1>
-                    </Link>
-                    <p>Current Phase: Phase {val.currentStatus}</p>
-                    <Link to={`my_loan/${val._id}`}>
-                      <h3>See Details</h3>
-                    </Link>
-                  </div>
-                );
-              }
-            })}
-          </div>
-          <div className="MyLoans-link-container">
-            {this.state.loanList.map((val, index) => {
-              if (index >= 10 && index < 15) {
-                return (
-                  <div className="MyLoans-loancard">
-                    <Link to={`my_loan/${val._id}`}>
-                      <h1>Loan {index + 1}</h1>
-                    </Link>
-                    <p>Current Phase: Phase {val.currentStatus}</p>
-                    <Link to={`my_loan/${val._id}`}>
-                      <h3>See Details</h3>
-                    </Link>
-                  </div>
-                );
-              }
-            })}
-          </div>
-          <div className="MyLoans-link-container">
-            {this.state.loanList.map((val, index) => {
-              if (index >= 15 && index < 20) {
-                return (
-                  <div className="MyLoans-loancard">
-                    <Link to={`my_loan/${val._id}`}>
-                      <h1>Loan {index + 1}</h1>
-                    </Link>
-                    <p>Current Phase: Phase {val.currentStatus}</p>
-                    <Link to={`my_loan/${val._id}`}>
-                      <h3>See Details</h3>
-                    </Link>
-                  </div>
-                );
-              }
+              return (
+                <div className="MyLoans-loancard">
+                  <Card>
+                    <CardHeader>
+                      <Link to={`my_loan/${val._id}`}>
+                        <h5>Loan {index + 1}</h5>
+                      </Link>
+                    </CardHeader>
+                    <CardBody>
+                      <CardText>
+                        <ul className="list-unstyled">
+                          <li>
+                            <p className="MyLoans-text">Current Phase: {val.currentStatus}</p>
+                          </li>
+                          <li>
+                            <p className="MyLoans-text">Loan Type: {val.loanType}</p>
+                          </li>
+                          <li>
+                            <Link to={`my_loan/${val._id}`}>
+                              <p className="MyLoans-text">See Details</p>
+                            </Link>
+                          </li>
+                        </ul>
+                      </CardText>
+                    </CardBody>
+                  </Card>
+                </div>
+              );
             })}
           </div>
           <ClientSideNav />
         </div>
       );
     }
+    return (
+      <div className>
+        <div className="BreadCrumb">
+          <Breadcrumb>
+            <BreadcrumbItem tag="a" href="/">
+              Home
+            </BreadcrumbItem>
+            <BreadcrumbItem active>Loans</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
+        <Navbar />
+        <div>
+          <h1>Open Loans</h1>
+          <br />
+          <h1>Closed Loans</h1>
+          <h1>My Loans</h1>
+          <h2>You currently do not have any active loans.</h2>
+        </div>
+        <ClientSideNav />
+      </div>
+    );
   }
 }
