@@ -155,7 +155,7 @@ class EditLoan extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            <BreadcrumbItem tag="a" href="/loan_list">
+            <BreadcrumbItem tag="a" href="/open_loans">
               Loans
             </BreadcrumbItem>
             <BreadcrumbItem active>Edit Loan</BreadcrumbItem>

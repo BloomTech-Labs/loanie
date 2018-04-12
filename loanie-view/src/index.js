@@ -25,6 +25,7 @@ import PasswordReset from './Component/PasswordReset';
 import LearnMore from './Component/LearnMore';
 import ClientSelectedLoan from './Component/ClientSelectedLoan';
 import registerServiceWorker from './registerServiceWorker';
+import EditAssignment from './Component/EditAssignment';
 
 // import rootReducers from './Reducers';
 
@@ -54,6 +55,7 @@ ReactDOM.render(
       <Route path="/password_reset" component={PasswordReset} />
       <Route path="/edit_loan" component={EditLoan} />
       <Route path="/add_assignment" component={AddAssignment} />
+      <Route path="/edit_assignment" component={EditAssignment} />
     </div>
   </Router>,
   document.getElementById('root'),

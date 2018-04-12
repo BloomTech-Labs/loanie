@@ -33,7 +33,7 @@ export default class MyLoans extends Component {
     axios
       .post('http://localhost:3030/user', body)
       .then((res) => {
-        const userEmail = res.data.email;
+        const userEmail = { clientEmail: res.data.email };
         // console.log('hello');
         console.log('email to get loans', res.data.email);
         axios

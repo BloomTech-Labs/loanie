@@ -21,6 +21,7 @@ export default class ClientSelectedLoan extends Component {
       phaseNumber: null,
       phaseTitle: '',
       tokenId: sessionStorage.getItem('tokenId'),
+      userType: sessionStorage.getItem('userType'),
     };
   }
 
@@ -40,8 +41,10 @@ export default class ClientSelectedLoan extends Component {
           phaseNumber: loandata.data.currentStatus,
         });
         for (let i = 0; i < PhaseContent.length; i += 1) {
-          if (PhaseContent[i].loanType === this.state.type &&
-            PhaseContent[i].phase === this.state.phaseNumber) {
+          if (
+            PhaseContent[i].loanType === this.state.type &&
+            PhaseContent[i].phase === this.state.phaseNumber
+          ) {
             this.setState({
               phaseContent: PhaseContent[i].description,
               phaseTitle: PhaseContent[i].phaseTitle,
@@ -75,6 +78,10 @@ export default class ClientSelectedLoan extends Component {
   render() {
     // getter
     const token = this.state.tokenId;
+    const user = this.state.userType;
+    let loanRoute = '';
+    if (user === 'managerUser') loanRoute = '/open_loans';
+    else loanRoute = '/my_loans';
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (
@@ -91,18 +98,34 @@ export default class ClientSelectedLoan extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            <BreadcrumbItem active>Loans</BreadcrumbItem>
+            <BreadcrumbItem tag="a" href={loanRoute}>
+              Loans
+            </BreadcrumbItem>
+            <BreadcrumbItem active>Loan Details</BreadcrumbItem>
           </Breadcrumb>
         </div>
         <div className="ClientLoan-title-container">
-          <h1><b>{this.state.phaseTitle}</b></h1>
+          <h1>
+            <b>{this.state.phaseTitle}</b>
+          </h1>
         </div>
         <div className="ClientLoan-container">
           <div className="ClientLoan-borrower-container">
-            <p><b>Borrower: </b>{this.state.borrower}</p>
-            <p><b>Co-Borrower: </b>{this.state.coBorrower}</p>
-            <p><b>Type: </b>{this.state.type}</p>
-            <p><b>Amount:</b> ${this.state.amount}</p>
+            <p>
+              <b>Borrower: </b>
+              {this.state.borrower}
+            </p>
+            <p>
+              <b>Co-Borrower: </b>
+              {this.state.coBorrower}
+            </p>
+            <p>
+              <b>Type: </b>
+              {this.state.type}
+            </p>
+            <p>
+              <b>Amount:</b> ${this.state.amount}
+            </p>
           </div>
           <div className="ClientLoan-progress-container">
             <ProgressBar />

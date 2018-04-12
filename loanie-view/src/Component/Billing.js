@@ -27,7 +27,7 @@ class Billing extends Component {
 
   getBillingRoute = () => {
     if (sessionStorage.getItem('userType') === 'managerUser') {
-      return '/loan_list';
+      return '/open_loans';
     }
     return '/my_loans';
   };
