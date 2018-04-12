@@ -1,15 +1,17 @@
 .MyLoans-link-container {
   margin-top: 2em;
-  margin-left: 0.2em;
   padding-left: 1em;
+  display: flex;
+  flex-wrap: wrap;
 }
 .MyLoans-title-container {
-  margin-left: 42em;
+  margin-left: 4em;
 }
 
 .MyLoans-loancard {
   width: 12em;
-  height: 15em;
+  height: 14em;
+  margin-left:1em;
   text-align: center;
 }
 

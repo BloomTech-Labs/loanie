@@ -77,7 +77,7 @@ export default class OpenLoans extends Component {
     const cards = [];
     loans.forEach((loan, index) => {
       cards.push(<Card>
-        <CardHeader>Loan {index + 1}</CardHeader>
+        <CardHeader><b>Loan {index + 1}</b></CardHeader>
         <CardBody>
           <CardText>
             <ul className="list-unstyled">
