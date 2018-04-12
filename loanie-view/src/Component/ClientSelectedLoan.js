@@ -50,7 +50,7 @@ export default class ClientSelectedLoan extends Component {
         }
         if (this.state.type === 'new') {
           this.setState({ type: 'new purchase' });
-        } 
+        }
         for (let j = 0; j < assignArr.length; j += 1) {
           if (this.state.phaseNumber === assignArr[j].phase) {
             this.state.assignments.push(assignArr[j].text);

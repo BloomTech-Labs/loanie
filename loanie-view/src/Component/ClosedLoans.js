@@ -59,7 +59,7 @@ export default class ClosedLoans extends Component {
       })
       .catch((err) => {
         console.log('Unable to fetch loan data.', err);
-      })
+      });
   }
 
   handleGetAllClosedLoans = () => {
