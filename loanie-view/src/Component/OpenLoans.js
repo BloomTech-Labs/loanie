@@ -81,7 +81,6 @@ export default class OpenLoans extends Component {
         <CardBody>
           <CardText>
             <ul className="list-unstyled">
-              <li>Hey</li>
               <li>Client email: {loan.clientEmail}</li>
               <li>Current Status: {loan.currentStatus}</li>
               <Link to={`my_loan/${loan._id}`}>

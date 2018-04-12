@@ -1,18 +1,13 @@
 .MyLoans-link-container {
   margin-top: 2em;
-  margin-left: 7em;
+  margin-left: 0.2em;
   padding-left: 1em;
-  display: flex;
-  flex-direction: row; 
-
 }
 .MyLoans-title-container {
   margin-left: 42em;
 }
 
 .MyLoans-loancard {
-  margin-left: 5em;
-  border: 2px solid black;
   width: 12em;
   height: 15em;
   text-align: center;
@@ -49,4 +44,7 @@
 .BreadCrumb {
   margin-top: 6em;
   margin-left: 1.2em;
+}
+.MyLoans-text {
+  font-size: 0.8em;
 }

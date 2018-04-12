@@ -39,9 +39,6 @@ export default class SideBarNav extends Component {
             <a className="menu-items" href="/my_loans">
               My Loans
             </a>
-            <a className="menu-items" href="/billing">
-              Billing
-            </a>
             <a className="menu-items" href="/user_settings">
               Settings
             </a>

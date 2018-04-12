@@ -61,7 +61,6 @@ export default class LoanCreate extends Component {
       phoneNumber: this.state.phoneNumber,
       clientEmail: this.state.clientEmail,
     };
-
     axios
       .post('http://localhost:3030/newloanemail', body)
       .then((res) => {
