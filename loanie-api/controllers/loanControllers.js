@@ -35,7 +35,7 @@ const loansGetAll = (req, res) => {
 
 const loansGetAllByClientEmail = (req, res) => {
   const { clientEmail } = req.body;
-  Loan.find({ email: clientEmail })
+  Loan.find({ clientEmail })
     .then((loans) => {
       console.log(loans);
       res.json(loans);

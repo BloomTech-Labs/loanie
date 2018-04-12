@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Card,
+  CardHeader,
+  CardText,
+  CardColumns,
+  CardBody,
+} from 'reactstrap';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import ProgressBar from './ProgressBar';
@@ -111,40 +119,48 @@ export default class ClientSelectedLoan extends Component {
             <ProgressBar />
           </div>
         </div>
-        <div className="ClientLoan-content-container">
-          <div className="ClientLoan-assignment-container">
-            <div className="ClientLoan-input-container">
-              <div className="ClientLoan-p1-item">
-                <p> Your loan officer will update these boxes as they recieve your documents</p>
-              </div>
-              <br />
+        <div className="ClientLoan-phase-container">
+          <Card>
+            <CardHeader> <h5><b>Phase {this.state.phaseNumber}</b></h5></CardHeader>
+            <CardBody>
+              <p className="ClientLoan-phase-item"> <b>{this.state.phaseContent}</b></p>
+            </CardBody>
+          </Card>
+        </div>
+        <div className="ClientLoan-input-container">
+          <Card>
+            <CardHeader>
+              <h5><b>Complete these assignments to move to next phase</b></h5>
+            </CardHeader>
+            <div className="ClientLoan-assignment-container">
+              <p>
+                <b>Your loan officer will update these boxes as they recieve your documents.
+                If you have any questions call Bob Officer: 1-800-000-000.
+                </b>
+              </p>
+            </div>
+            <div className="ClientLoan-list-container">
               {this.state.assignments.map((val, index) => {
                 if (this.state.checked[index] !== false) {
                   return (
                     <p>
-                      {val} <input type="checkbox" disabled="disabled" checked />
+                      <input type="checkbox" disabled="disabled" checked /> {val}
                     </p>
                   );
                 }
                 return (
                   <p>
-                    {val} <input type="checkbox" disabled="disabled" />
+                    <input type="checkbox" disabled="disabled" /> {val}
                   </p>
                 );
               })}
             </div>
-            <br />
-            <p>
-              {' '}
-              If you have any questions call Bob Officer: <br />1-800-000-000
-            </p>
-          </div>
-          <div className="ClientLoan-text-container">
-            <div className="ClientLoan-text-item">
-              <p> {this.state.phaseContent} </p>
-            </div>
-          </div>
+          </Card>
         </div>
+        <br />
+        <p>
+          {' '}
+        </p>
         <ClientSideNav />
       </div>
     );

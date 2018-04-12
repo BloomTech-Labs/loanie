@@ -33,7 +33,7 @@ export default class MyLoans extends Component {
     axios
       .post('http://localhost:3030/user', body)
       .then((res) => {
-        const userEmail = res.data.email;
+        const userEmail = { clientEmail: res.data.email };
         // console.log('hello');
         // console.log(res.data.email);
         axios
@@ -42,6 +42,7 @@ export default class MyLoans extends Component {
             console.log(loandata.data);
             this.setState({ loanList: loandata.data });
             //  console.log(this.state.loanList);
+            console.log(this.state.loanList);
           })
           .catch((err) => {
             console.log(err);
@@ -77,7 +78,7 @@ export default class MyLoans extends Component {
         </div>
       );
     }
-    if (this.state.loanList !== '') {
+    if (this.state.loanList.length !== 0) {
       return (
         <div className="MyLoans">
           <div className="BreadCrumb">
@@ -136,11 +137,7 @@ export default class MyLoans extends Component {
           </Breadcrumb>
         </div>
         <Navbar />
-        <div>
-          <h1>Open Loans</h1>
-          <br />
-          <h1>Closed Loans</h1>
-          <h1>My Loans</h1>
+        <div className="MyLoans-noloans-text">
           <h2>You currently do not have any active loans.</h2>
         </div>
         <ClientSideNav />
