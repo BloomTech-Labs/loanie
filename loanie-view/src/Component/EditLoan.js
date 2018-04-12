@@ -18,6 +18,7 @@ class EditLoan extends Component {
       currentStatus: '',
       openLoan: '',
       assignments: '',
+      loanId: '',
     };
   }
 
@@ -35,6 +36,7 @@ class EditLoan extends Component {
           managerEmail: res.data.email,
           currentStatus: res.data.currentStatus,
           openLoan: res.data.openLoan,
+          loanId: id,
         });
         console.log('Response from server: ', res);
       })
@@ -68,9 +70,9 @@ class EditLoan extends Component {
     this.setState({ currentStatus: e.target.value });
   };
 
-  submitEditedLoan() {
+  submitEditedLoan = () => {
     console.log('state', this.state);
-
+    const id = this.state.loanId;
     const body = {
       currentStatus: this.state.currentStatus,
       openLoan: this.state.openLoan,
@@ -79,15 +81,15 @@ class EditLoan extends Component {
       amount: this.state.amount,
     };
     axios
-      .post('http://localhost:3030/newloan', body)
+      .post(`http://localhost:3030/loan/${id}`, body)
       .then(() => {
         console.log('Loan edited successfully!');
-        this.sendNewLoanEmail();
+        window.location = '/open_loans';
       })
       .catch((err) => {
         console.log('Loan creation failed.', err);
       });
-  }
+  };
 
   render() {
     // getter
