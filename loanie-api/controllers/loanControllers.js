@@ -5,7 +5,6 @@ const loanCreate = (req, res) => {
     clientEmail, loanManagerId, amount, loanType, assignments,
   } = req.body;
 
-  console.log("Request Body:", req.body);
   const newLoan = new Loan({
     clientEmail,
     loanManagerId,
@@ -35,9 +34,9 @@ const loansGetAll = (req, res) => {
 
 const loansGetAllByClientEmail = (req, res) => {
   const { clientEmail } = req.body;
-  Loan.find({ email: clientEmail })
+  Loan.find({ clientEmail })
     .then((loans) => {
-      console.log(loans);
+      //console.log(loans);
       res.json(loans);
     })
     .catch(err => res.status(422).json(err));
@@ -75,7 +74,7 @@ const loanEdit = (req, res) => {
   // edit loan details
   // save Loan
   const { id } = req.params;
-  console.log(req.body);
+  //console.log(req.body);
   Loan.updateOne(
     { _id: id },
     {

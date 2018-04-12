@@ -17,11 +17,25 @@ export default class ClientSelectedLoan extends Component {
       coBorrower: 'Bob',
       type: 'New Purchase',
       amount: '',
-      tokenId: sessionStorage.getItem('tokenId'),
+      userType: sessionStorage.getItem('userType'),
+      tokenId: sessionStorage.getItem('tokenId')
     };
   }
 
   componentDidMount() {
+    // axios request to get logged-in user details
+    console.log("lets make an axios request!!");
+    console.log("userType: ", this.state.userType);
+    // axios
+    //   .post('http://localhost:3030/auth', {token: this.state.tokenId})
+    //   .then((user) => {
+    //     console.log("user type: ", user.data.userType);
+    //     this.setState({userType: user.data.userType })
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
     // grabs the current url
     let getLoanId = window.location.href;
     // grabs username inside current url
@@ -40,6 +54,7 @@ export default class ClientSelectedLoan extends Component {
           type: loandata.data.loanType,
         });
 
+        // axios request to get a user by email
         const request = { email: loandata.data.clientEmail };
         console.log("request: ", request);
         axios
@@ -57,6 +72,17 @@ export default class ClientSelectedLoan extends Component {
         console.log(err);
       });
   }
+
+  // handleManagerChecks = () => {
+  // this.state.assignments.map((val, index) => {
+  //   if (this.state.checked[index] !== false) {
+  //     return (
+  //       // <p>
+  //       //   {val} <input type="checkbox" disabled="disabled" checked />
+  //       // </p>
+  //     );
+  //   }
+  // }
 
   render() {
     // getter
