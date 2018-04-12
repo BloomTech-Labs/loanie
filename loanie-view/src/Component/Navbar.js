@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import firebase from './Firebase';
 // import { connect } from 'react-redux';
@@ -30,6 +31,16 @@ export default class Navbar extends Component {
       });
   };
 
+  login() {
+    console.log(this.state);
+    window.location = '/login_user';
+  }
+
+  signin() {
+    console.log(this.state);
+    window.location = '/new_account';
+  }
+
   render() {
     const token = this.state.tokenId;
     if (token === null || token === undefined || token === '') {
@@ -42,12 +53,12 @@ export default class Navbar extends Component {
               </Link>
             </div>
             <ul className="App-signin-container">
-              <Link className="App-signup-item" to="/login_user">
-                Sign In
-              </Link>
-              <Link className="App-signup-item" to="/new_account">
+              <Button outline color="info" className="App-signup-item" onClick={this.login}>
+                Login
+              </Button>
+              <Button outline color="info" className="App-signup-item" onClick={this.signin}>
                 Sign Up
-              </Link>
+              </Button>
             </ul>
           </div>
           <SideBarNav />

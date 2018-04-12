@@ -24,11 +24,14 @@ class App extends Component {
             The cutting edge communication tool that makes any mortgage process smooth and
             efficient!
           </p>
+          <br />
+          <br />
+          <br />
         </div>
         <div className="button-container">
           <button className="button1 button" onClick={this.handlePurchase}>
             {' '}
-            Sign Up Now{' '}
+            Learn More{' '}
           </button>
         </div>
       </div>
