@@ -17,6 +17,7 @@ class AddAssignment extends Component {
       clientEmail: '',
       assignments: [],
       loanId: '',
+      loanType: '',
     };
   }
 
@@ -29,6 +30,7 @@ class AddAssignment extends Component {
       .then((res) => {
         console.log('res clientemail', res.data.clientEmail);
         this.setState({
+          loanType: res.data.loanType,
           clientEmail: res.data.clientEmail,
           assignments: res.data.assignments,
         });
@@ -49,6 +51,46 @@ class AddAssignment extends Component {
     this.setState({ newAssignmentText: event.target.value });
     console.log(this.state.newAssignmentText);
   };
+
+  phaseDropDown() {
+    console.log('current loan type');
+    const type = this.state.loanType;
+    if (type === 'new') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      );
+    } else if (type === 'construction') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+        </select>
+      );
+    } else if (type === 'refinance') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      );
+    }
+  }
 
   submitNewAssignment = () => {
     const id = this.state.loanId;
@@ -152,12 +194,7 @@ class AddAssignment extends Component {
               <br />
               <br />
               New Assignment Phase:
-              <select onChange={this.handleDropDownPhase}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+              {this.phaseDropDown()}
               <br />
               <br />
               New Assignment:
