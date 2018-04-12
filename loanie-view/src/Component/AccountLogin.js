@@ -29,7 +29,7 @@ const sendToken = (tokenId, sendEmail) => {
       const usertype = res.data.userType;
       sessionStorage.setItem('userType', usertype);
       console.log('Response from server: ', res);
-      if (usertype === 'managerUser') window.location = '/loan_list';
+      if (usertype === 'managerUser') window.location = '/open_loans';
       else window.location = '/my_loans';
     })
     .catch((err) => {

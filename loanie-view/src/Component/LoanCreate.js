@@ -54,13 +54,13 @@ export default class LoanCreate extends Component {
   };
 
   sendNewLoanEmail() {
+    console.log('hello');
     const body = {
       managerName: this.state.managerName,
       managerEmail: this.state.managerEmail,
       phoneNumber: this.state.phoneNumber,
       clientEmail: this.state.clientEmail,
     };
-
     axios
       .post('http://localhost:3030/newloanemail', body)
       .then((res) => {
