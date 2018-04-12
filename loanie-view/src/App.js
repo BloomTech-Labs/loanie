@@ -20,12 +20,18 @@ class App extends Component {
       <div className="App">
         <Navbar />
         <div className="App-text-container">
-          <p className="App-text-item">Make your home purchases and mortgages easy and simple!</p>
+          <p className="App-text-item">
+            The cutting edge communication tool that makes any mortgage process smooth and
+            efficient!
+          </p>
+          <br />
+          <br />
+          <br />
         </div>
         <div className="button-container">
           <button className="button1 button" onClick={this.handlePurchase}>
             {' '}
-            Buy Now{' '}
+            Learn More{' '}
           </button>
         </div>
       </div>
