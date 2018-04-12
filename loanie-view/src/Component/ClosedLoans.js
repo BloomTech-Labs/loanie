@@ -6,7 +6,6 @@ import {
   BreadcrumbItem,
   Card,
   CardHeader,
-  CardTitle,
   CardText,
   CardColumns,
   CardBody,
@@ -23,7 +22,7 @@ export default class ClosedLoans extends Component {
     super();
     this.state = {
       tokenId: sessionStorage.getItem('tokenId'),
-      loanManagerId: "",
+      loanManagerId: '',
       loans: [],
     };
   }
@@ -38,7 +37,7 @@ export default class ClosedLoans extends Component {
           loanManagerId: res.data._id,
         });
         console.log('Response from server: ', res);
-        this.handleGetClosedLoans()
+        this.handleGetClosedLoans();
       })
       .catch((err) => {
         console.log('Unable to fetch user data.', err);
@@ -51,16 +50,16 @@ export default class ClosedLoans extends Component {
       loanManagerId: this.state.loanManagerId,
     };
 
-    console.log("loanManagerId from body: ", body.loanManagerId);
+    console.log('loanManagerId from body: ', body.loanManagerId);
     axios
       .post('http://localhost:3030/getmanagerloans', body)
       .then((res) => {
-        this.setState({loans: res.data});
+        this.setState({ loans: res.data });
         console.log('loans', res);
       })
       .catch((err) => {
         console.log('Unable to fetch loan data.', err);
-      })
+      });
   }
 
   handleGetAllClosedLoans = () => {
@@ -96,7 +95,7 @@ export default class ClosedLoans extends Component {
       noCards.push(<SideBarNav />);
     }
 
-    return(
+    return (
       <div>
         <Navbar />
         <div className="BreadCrumb">
@@ -113,7 +112,7 @@ export default class ClosedLoans extends Component {
         </CardColumns>
         {noCards}
       </div>
-      );
+    );
   }
 }
 
@@ -122,5 +121,5 @@ export default class ClosedLoans extends Component {
 //     loansBySingleManager: state.loans
 //   };
 // };
- 
- // connect(mapStateToProps)(ClosedLoans); 
+
+// connect(mapStateToProps)(ClosedLoans);

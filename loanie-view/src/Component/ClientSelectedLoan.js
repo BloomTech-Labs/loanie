@@ -15,10 +15,13 @@ export default class ClientSelectedLoan extends Component {
       checked: [],
       borrower: '',
       coBorrower: 'Bob',
-      type: 'New Purchase',
+      type: '',
       amount: '',
       userType: sessionStorage.getItem('userType'),
-      tokenId: sessionStorage.getItem('tokenId')
+      phaseContent: '',
+      phaseNumber: null,
+      phaseTitle: '',
+      tokenId: sessionStorage.getItem('tokenId'),
     };
   }
 
@@ -43,26 +46,40 @@ export default class ClientSelectedLoan extends Component {
     axios
       .get(`http://localhost:3030/loan/${getLoanId}`)
       .then((loandata) => {
-        // console.log(loandata.data);
+        console.log(loandata.data);
         const assignArr = loandata.data.assignments;
-        for (let j = 0; j < assignArr.length; j += 1) {
-          this.state.assignments.push(assignArr[j].text);
-          this.state.checked.push(assignArr[j].complete);
-        }
         this.setState({
           amount: loandata.data.amount,
           type: loandata.data.loanType,
+          phaseNumber: loandata.data.currentStatus,
         });
-
         // axios request to get a user by email
+        for (let i = 0; i < PhaseContent.length; i += 1) {
+          if (PhaseContent[i].loanType === this.state.type &&
+            PhaseContent[i].phase === this.state.phaseNumber) {
+            this.setState({
+              phaseContent: PhaseContent[i].description,
+              phaseTitle: PhaseContent[i].phaseTitle,
+            });
+          }
+        }
+        if (this.state.type === 'new') {
+          this.setState({ type: 'new purchase' });
+        }
+        for (let j = 0; j < assignArr.length; j += 1) {
+          if (this.state.phaseNumber === assignArr[j].phase) {
+            this.state.assignments.push(assignArr[j].text);
+            this.state.checked.push(assignArr[j].complete);
+          }
+        }
         const request = { email: loandata.data.clientEmail };
-        console.log("request: ", request);
+        console.log('request: ', request);
         axios
           .post('http://localhost:3030/userbyemail', request)
           .then((res) => {
             console.log(res.data.name);
             const userName = res.data.name;
-            this.setState({borrower: userName});
+            this.setState({ borrower: userName });
           })
           .catch((err) => {
             console.log(err);
@@ -107,14 +124,14 @@ export default class ClientSelectedLoan extends Component {
           </Breadcrumb>
         </div>
         <div className="ClientLoan-title-container">
-          <h1><b>Loan Progress</b></h1>
+          <h1><b>{this.state.phaseTitle}</b></h1>
         </div>
         <div className="ClientLoan-container">
           <div className="ClientLoan-borrower-container">
             <p><b>Borrower: </b>{this.state.borrower}</p>
             <p><b>Co-Borrower: </b>{this.state.coBorrower}</p>
             <p><b>Type: </b>{this.state.type}</p>
-            <p><b>Amount: </b>{this.state.amount}</p>
+            <p><b>Amount:</b> ${this.state.amount}</p>
           </div>
           <div className="ClientLoan-progress-container">
             <ProgressBar />
@@ -150,7 +167,7 @@ export default class ClientSelectedLoan extends Component {
           </div>
           <div className="ClientLoan-text-container">
             <div className="ClientLoan-text-item">
-              <PhaseContent />
+              <p> {this.state.phaseContent} </p>
             </div>
           </div>
         </div>
