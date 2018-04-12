@@ -132,24 +132,21 @@ const loanEditAssignment = (req, res) => {
   console.log(loanId, assignmentId, text, phase, complete);
   // find a single Loan
   // edit loan assignment
-  Loan.findByIdAndUpdate(
-    loanId,
+  Loan.updateOne(
+    { _id: loanId, "assignments._id": assignmentId },
     {
-      $push: {
-        assignments: {
-          _id: assignmentId,
-          text,
-          phase,
-          complete,
-        },
+      $set: {
+        "assignments.$.text": text,
+        "assignments.$.phase": phase,
+        "assignments.$.complete": complete,
       },
     },
-    { safe: true, upsert: true },
     (err, doc) => {
       if (err) {
         res.status(500).json(err);
         console.log(err);
       } else {
+        console.log("assignment edited successfully!");
         res.status(200).json(doc);
       }
     },
