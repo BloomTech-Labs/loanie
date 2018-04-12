@@ -16,7 +16,7 @@ export default class LoanCreate extends Component {
       phoneNumber: '',
       loanManagerId: '',
       clientEmail: '',
-      loanType: 'fha',
+      loanType: 'new',
       amount: '',
     };
   }
@@ -73,6 +73,8 @@ export default class LoanCreate extends Component {
   }
 
   sendNewLoanDB() {
+    const defaults = assignmentDefaults(this.state.loanType);
+    console.log('assignments', defaults);
     console.log('state', this.state);
     console.log(assignmentDefaults());
     const body = {
@@ -80,7 +82,7 @@ export default class LoanCreate extends Component {
       clientEmail: this.state.clientEmail,
       loanType: this.state.loanType,
       amount: this.state.amount,
-      assignments: assignmentDefaults(),
+      assignments: defaults,
     };
     axios
       .post('http://localhost:3030/newloan', body)
@@ -138,7 +140,7 @@ export default class LoanCreate extends Component {
             <fieldset>
               <legend>Borrower information:</legend>
               Loan Type:
-              <select value="newLoan" onChange={this.handleDropDown}>
+              <select onChange={this.handleDropDown}>
                 <option value="new">New Loan</option>
                 <option value="refinance">Refinance</option>
                 <option value="construction">Construction</option>

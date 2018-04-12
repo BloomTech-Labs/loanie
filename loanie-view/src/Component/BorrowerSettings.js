@@ -24,15 +24,6 @@ export default class BorrowerSettings extends Component {
   }
 
   componentDidMount() {
-    // const { credential } = sessionStorage.getItem('credential');
-    // console.log('credential', credential);
-    // firebase
-    //   .auth()
-    //   .reauthenticateWithCredential(credential)
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
     console.log(this.state.tokenId);
     const body = {
       token: this.state.tokenId,
@@ -181,7 +172,7 @@ export default class BorrowerSettings extends Component {
             <fieldset>
               <legend>Personal information:</legend>
               <div>
-                <h4>Name:</h4>
+                <p>Name:</p>
                 <input
                   type="text"
                   name="name"
@@ -192,22 +183,7 @@ export default class BorrowerSettings extends Component {
               <br />
               <br />
               <div>
-                <h4>Email:</h4>
-                <input
-                  type="text"
-                  name="email"
-                  value={this.state.email}
-                  onChange={this.handleEmailChange}
-                />
-              </div>
-              <div>
-                <h4>Your current password is required to change email:</h4>
-                <input type="password" name="password" onChange={this.handlePasswordChange} />
-              </div>
-              <br />
-              <br />
-              <div>
-                <h4>Phone Number:</h4>{' '}
+                <p>Phone Number:</p>{' '}
                 <ReactTelephoneInput
                   defaultCountry="us"
                   flagsImagePath=".\Images\flags.png"
