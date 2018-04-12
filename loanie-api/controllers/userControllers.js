@@ -16,7 +16,6 @@ const userCreate = (req, res) => {
     acceptTexts,
     acceptEmails,
     UID: token,
-    // password, // used to validate loan officer
   });
   console.log("Request Body:", req.body);
   newUser.save((err, savedUser) => {

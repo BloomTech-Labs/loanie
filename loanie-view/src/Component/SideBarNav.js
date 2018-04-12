@@ -14,11 +14,11 @@ export default class SideBarNav extends Component {
       return (
         <div className="menu-container">
           <Menu>
+            <a className="menu-items" href="/loan_list">
+              Create Loan
+            </a>
             <a className="menu-items" href="/open_loans">
               Open Loans
-            </a>
-            <a className="menu-items" href="/loan_list">
-              Create Loans
             </a>
             <a className="menu-items" href="/closed_loans">
               Closed Loans
