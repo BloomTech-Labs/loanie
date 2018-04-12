@@ -10,7 +10,7 @@
   box-shadow: none;
   display: block;
   border: 2px solid black;
-  overflow: hidden;  // Removes scrollbar
+  overflow: hidden;
   transition: height 0.2s ease;
 }
 

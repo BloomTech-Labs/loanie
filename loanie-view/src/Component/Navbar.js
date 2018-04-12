@@ -74,9 +74,15 @@ export default class Navbar extends Component {
             </Link>
           </div>
           <ul className="App-signin-container">
-            <Link className="App-signup-item" onClick={this.logout} to="/login_user">
+            <Button
+              outline
+              color="info"
+              className="App-signup-item"
+              onClick={this.logout}
+              to="/login_user"
+            >
               Sign Out
-            </Link>
+            </Button>
           </ul>
         </div>
         <SideBarNav />
