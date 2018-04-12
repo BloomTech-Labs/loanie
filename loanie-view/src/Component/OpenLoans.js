@@ -143,9 +143,10 @@ export default class OpenLoans extends Component {
               />
             </Link>
           </div>
+          <SideBarNav />
         </div>
       );
-    } 
+    }
     return (
       <div>
         <Navbar />
