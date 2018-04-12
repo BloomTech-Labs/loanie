@@ -68,36 +68,33 @@ const loanGetById = (req, res) => {
 
 const loanEdit = (req, res) => {
   console.log("loan edit");
-  const { clientId, currentStatus, loanManagerId } = req.body;
+  const {
+    currentStatus, openLoan, loanType, amount,
+  } = req.body;
   // find a single Loan
   // edit loan details
   // save Loan
   const { id } = req.params;
-  Loan.findById(id)
-    .then(() => {
-      if (Loan === null) throw new Error();
-      // console.log(
-      //   "id:",
-      //   id,
-      //   "clientId:",
-      //   clientId,
-      //   "currentStatus:",
-      //   currentStatus,
-      //   "loanManagerId:",
-      //   loanManagerId,
-      // );
-      if (clientId) Loan.clientId = clientId;
-      if (currentStatus) Loan.currentStatus = currentStatus;
-      if (loanManagerId) Loan.loanManagerId = loanManagerId;
-      Loan.save(Loan, (err, savedloan) => {
-        if (err) {
-          res.status(500).json(err);
-          return;
-        }
-        res.json(savedloan);
-      });
-    })
-    .catch(err => res.status(422).json({ error: "No Loan!", err }));
+  console.log(req.body);
+  Loan.updateOne(
+    { _id: id },
+    {
+      $set: {
+        currentStatus,
+        openLoan,
+        loanType,
+        amount,
+      },
+    },
+    (err, savedloan) => {
+      if (err) {
+        res.status(500).json(err);
+        console.log(err);
+      }
+      res.json(savedloan);
+      console.log("loansaved!");
+    },
+  ).catch(err => res.status(422).json({ error: "No Loan!", err }));
 };
 
 // find by loan id and add new assignment to array

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import axios from 'axios';
 import Navbar from './Navbar';
-import {sendUserNotifications} from './LoanNotification';
 import SidebarNav from './SideBarNav';
 import { assignmentDefaults } from './AssignmentDefaults';
 import '../CSS/LoanCreate.css';
