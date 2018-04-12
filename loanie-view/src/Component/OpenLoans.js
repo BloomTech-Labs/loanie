@@ -85,6 +85,14 @@ export default class OpenLoans extends Component {
               <Link to={`my_loan/${loan._id}`}>
                 See Details
               </Link>
+              {' | '}
+              <Link to={`edit_loan/${loan._id}`}>
+                Edit
+              </Link>
+              {' | '}
+              <Link to={`add_assignment/${loan._id}`}>
+                Add Assignment
+              </Link>
             </ul>
           </CardText>
         </CardBody>
@@ -105,7 +113,6 @@ export default class OpenLoans extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
             <BreadcrumbItem active>Open Loans</BreadcrumbItem>
           </Breadcrumb>
         </div>
