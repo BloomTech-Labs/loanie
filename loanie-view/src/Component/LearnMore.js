@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import React from 'react';
 import SidebarNav from './SideBarNav';
 import Navbar from './Navbar';
 
-export default function MyLoans() {
+export default function LearnMore() {
   return (
     <div className="MyLoans">
       <Navbar />
