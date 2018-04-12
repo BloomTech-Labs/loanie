@@ -19,9 +19,9 @@
   display: block;
   white-space: pre-wrap;
   word-wrap: break-word;  
-  //  Uncomment below to hide the ghost div... 
-  //
-  //  visibility: hidden;
-  //  position: absolute;
-  //  top: 0;
+}
+
+.EditLoan-cards {
+  display: flex;
+  flex-wrap: wrap;
 }

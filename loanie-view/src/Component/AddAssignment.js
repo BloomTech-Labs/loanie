@@ -75,7 +75,7 @@ class AddAssignment extends Component {
 
   MapAssignments() {
     return (
-      <div>
+      <div className="EditLoan-cards">
         {this.state.assignments.sort((a, b) => a.phase - b.phase).map(assignment => (
           <Card>
             <CardHeader>Phase: {assignment.phase}</CardHeader>

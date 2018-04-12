@@ -70,6 +70,47 @@ class EditLoan extends Component {
     this.setState({ currentStatus: e.target.value });
   };
 
+  phaseDropDown() {
+    const type = this.state.loanType;
+    if (type === 'new') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      );
+    }
+    if (type === 'construction') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+        </select>
+      );
+    }
+    if (type === 'refinance') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      );
+    }
+  }
+
   submitEditedLoan = () => {
     console.log('state', this.state);
     const id = this.state.loanId;
@@ -131,17 +172,12 @@ class EditLoan extends Component {
               <select value={this.state.loanType} onChange={this.handleDropDownType}>
                 <option value="new">New Purchase</option>
                 <option value="refinance">Refinance</option>
-                <option value="constuction">Construction</option>
+                <option value="construction">Construction</option>
               </select>
               <br />
               <br />
               Edit Phase:
-              <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+              {this.phaseDropDown()}
               <br />
               <br />
               Edit Loan Open Status:
