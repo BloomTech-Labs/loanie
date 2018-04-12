@@ -1,9 +1,35 @@
-.learn-header {
-	margin-top: 7em;
-	text-align: center;
+.LearnMore {
+	display: flex;
+	flex-direction: column;
+	background-image: url("https://images.unsplash.com/photo-1437719417032-8595fd9e9dc6?ixlib=rb-0.3.5&s=07b2bde5f63c918afbab47012e0bab07&auto=format&fit=crop&w=967&q=80");
+	background-size: 107.85em;
+	background-repeat: no-repeat;
 }
 
-.learn-body {
-	margin-left: 5em;
-	margin-right: 5em;
+.Learn-header {
+	font-weight: bolder;
+	margin-top: 4em;
+	text-align: center;
+	font-size: 50px;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.Learn-text-container {
+	text-align: Left;
+	margin-left: 12em;
+	margin-right: 12em;
+	height: 100%;
+}
+
+.Learn-text-list {
+	padding-top: 5%;
+	font-size: 30px;
+	margin-bottom: 2%;
+}
+
+.Learn-text-item {
+	text-align: center;
+	padding-top: 5%;
+	font-size: 30px;
+	margin-bottom: 2%;
 }
