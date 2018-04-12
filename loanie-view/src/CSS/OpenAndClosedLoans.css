@@ -25,7 +25,7 @@
 .OpenLoans-imagelist-item {
   margin-top: 1.2em;
   margin-bottom: 1.2em;
-  width:5.6em;
+  width:5.6 em;
   height:5.6em;
 }
 .OpenLoans-imagelist-container {
@@ -33,4 +33,7 @@
 }
 .OpenLoans-imagelist-container img:hover {
   opacity: 0.7;
+}
+.OpenLoans-card-container {
+  margin-left: 1.2em;
 }

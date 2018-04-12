@@ -6,9 +6,7 @@ import {
   BreadcrumbItem,
   Card,
   CardHeader,
-  CardTitle,
   CardText,
-  CardColumns,
   CardBody,
 } from 'reactstrap';
 import Navbar from './Navbar';

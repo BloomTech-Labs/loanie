@@ -68,7 +68,6 @@ export default class OpenLoans extends Component {
 
   handleGetAllOpenLoans = () => {
     const openLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus, 0) < 6);
-    
     return openLoans;
   }
 
@@ -76,29 +75,33 @@ export default class OpenLoans extends Component {
     const loans = this.handleGetAllOpenLoans();
     const cards = [];
     loans.forEach((loan, index) => {
-      cards.push(<Card>
-        <CardHeader><b>Loan {index + 1}</b></CardHeader>
-        <CardBody>
-          <CardText>
-            <ul className="list-unstyled">
-              <li>Client email: {loan.clientEmail}</li>
-              <li>Current Status: {loan.currentStatus}</li>
-              <Link to={`my_loan/${loan._id}`}>
-                See Details
-              </Link>
-              {' | '}
-              <Link to={`edit_loan/${loan._id}`}>
-                Edit
-              </Link>
-              {' | '}
-              <Link to={`add_assignment/${loan._id}`}>
-                Add Assignment
-              </Link>
-            </ul>
-          </CardText>
-        </CardBody>
-      </Card>);
-      if (index === loans.length-1) {
+      cards.push(
+        <div className="OpenLoans-card-container">
+          <Card>
+            <CardHeader><b>Loan {index + 1}</b></CardHeader>
+            <CardBody>
+              <CardText>
+                <ul className="list-unstyled">
+                  <li>Client email: {loan.clientEmail}</li>
+                  <li>Current Status: {loan.currentStatus}</li>
+                  <Link to={`my_loan/${loan._id}`}>
+                    See Details
+                  </Link>
+                  {' | '}
+                  <Link to={`edit_loan/${loan._id}`}>
+                    Edit
+                  </Link>
+                  {' | '}
+                  <Link to={`add_assignment/${loan._id}`}>
+                    Add Assignment
+                  </Link>
+                </ul>
+              </CardText>
+            </CardBody>
+          </Card>
+        </div>
+      );
+      if (index === loans.length - 1) {
         cards.push(
           <Card>
             <div className="list-unstyled OpenLoans-imagelist-container">
