@@ -58,6 +58,7 @@ export default class OpenLoans extends Component {
       .post('http://localhost:3030/getmanagerloans', body)
       .then((res) => {
         this.setState({ loans: res.data });
+        // this.setState({ loans: [] });
         console.log('loans', res);
       })
       .catch((err) => {
@@ -92,11 +93,36 @@ export default class OpenLoans extends Component {
     });
 
     const noCards = [];
-    if (loans.length === 0) {
-      noCards.push(<div className="NoOpenLoans-header"><h2> No open loans! </h2></div>);
-      noCards.push(<SideBarNav />);
-    }
-
+    if (this.state.loans.length === 0) {
+      return (
+        <div>
+          <Navbar />
+          <div className="BreadCrumb">
+            <Breadcrumb>
+              <BreadcrumbItem tag="a" href="/">
+                Home
+              </BreadcrumbItem>
+              {' > '}
+              <BreadcrumbItem active>Open Loans</BreadcrumbItem>
+            </Breadcrumb>
+          </div>
+          <CardColumns>
+            {cards}
+          </CardColumns>
+          {noCards}
+          <div className="OpenLoans-image-container">
+            <h1> Add a New Loan</h1>
+            <Link to="/create_loan">
+              <img
+                className="OpenLoans-image-item"
+                src="https://cdn2.iconfinder.com/data/icons/freecns-cumulus/16/519691-199_CircledPlus-256.png"
+                alt="plus_sign"
+              />
+            </Link>
+          </div>
+        </div>
+      );
+    } 
     return (
       <div>
         <Navbar />
