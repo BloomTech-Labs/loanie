@@ -68,6 +68,7 @@ export default class OpenLoans extends Component {
 
   handleGetAllOpenLoans = () => {
     const openLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus, 0) < 6);
+    
     return openLoans;
   }
 
@@ -98,6 +99,21 @@ export default class OpenLoans extends Component {
           </CardText>
         </CardBody>
       </Card>);
+      if (index === loans.length-1) {
+        cards.push(
+          <Card>
+            <div className="list-unstyled OpenLoans-imagelist-container">
+              <CardHeader><h7><b> Add a New Loan</b></h7></CardHeader>
+              <Link to="/create_loan">
+                <img
+                  className="OpenLoans-imagelist-item"
+                  src="https://cdn2.iconfinder.com/data/icons/freecns-cumulus/16/519691-199_CircledPlus-256.png"
+                  alt="plus_sign"
+                />
+              </Link>
+            </div>
+          </Card>);
+      }
     });
 
     const noCards = [];

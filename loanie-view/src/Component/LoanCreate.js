@@ -54,6 +54,7 @@ export default class LoanCreate extends Component {
   };
 
   sendNewLoanEmail() {
+    console.log('hello');
     const body = {
       managerName: this.state.managerName,
       managerEmail: this.state.managerEmail,

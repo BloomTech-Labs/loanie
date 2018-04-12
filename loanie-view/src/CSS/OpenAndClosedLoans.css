@@ -15,13 +15,22 @@
   text-align: center;
   margin-top: 5em;
 }
-.OpenLoans-image-container img:hover{
+.OpenLoans-image-container img:hover {
   opacity: 0.7;
 }
 .OpenLoans-image-item{
   width:8em;
   height:8em;
 }
-OpenLoans-image-item:hover {
+.OpenLoans-imagelist-item {
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
+  width:7em;
+  height:7em;
+}
+.OpenLoans-imagelist-container {
+  text-align: center;
+}
+.OpenLoans-imagelist-container img:hover {
   opacity: 0.7;
 }

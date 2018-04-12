@@ -103,8 +103,10 @@ export default class LoanList extends Component {
             <BreadcrumbItem active>Loans</BreadcrumbItem>
           </Breadcrumb>
         </div>
-        <div className="Loanlist-image-container">
+        <div className="Loanlist-title-containter">
           <h1> Add a new Loan</h1>
+        </div>
+        <div className="Loanlist-image-container">
           <Link to="/create_loan">
             <img
               className="Loanlist-image-item"
