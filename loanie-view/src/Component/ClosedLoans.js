@@ -55,16 +55,16 @@ export default class ClosedLoans extends Component {
       .post('http://localhost:3030/getmanagerloans', body)
       .then((res) => {
         this.setState({ loans: res.data });
-        console.log('loans', res);
+        console.log('get manager loans', res);
       })
       .catch((err) => {
         console.log('Unable to fetch loan data.', err);
-      })
+      });
   }
 
   handleGetAllClosedLoans = () => {
     console.log('loans get all closed handler', this.state.loans);
-    const closedLoans = this.state.loans.filter(loan => loan.loanOpen === false);
+    const closedLoans = this.state.loans.filter(loan => loan.openLoan === false);
     console.log('closed loans', closedLoans);
     return closedLoans;
   }
