@@ -96,21 +96,21 @@ export default class MyLoans extends Component {
                   <Card>
                     <CardHeader>
                       <Link to={`my_loan/${val._id}`}>
-                        <h5>Loan {index + 1}</h5>
+                        <h5><b>Loan</b> {index + 1}</h5>
                       </Link>
                     </CardHeader>
                     <CardBody>
                       <CardText>
                         <ul className="list-unstyled">
                           <li>
-                            <p className="MyLoans-text">Current Phase: {val.currentStatus}</p>
+                            <p className="MyLoans-text"><b>Current Phase</b>: {val.currentStatus}</p>
                           </li>
                           <li>
-                            <p className="MyLoans-text">Loan Type: {val.loanType}</p>
+                            <p className="MyLoans-text"><b>Loan Type</b>: {val.loanType}</p>
                           </li>
                           <li>
                             <Link to={`my_loan/${val._id}`}>
-                              <p className="MyLoans-text">See Details</p>
+                              <p className="MyLoans-text"><b>See Details</b></p>
                             </Link>
                           </li>
                         </ul>
