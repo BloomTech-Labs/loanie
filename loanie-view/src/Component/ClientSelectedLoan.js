@@ -34,10 +34,6 @@ export default class ClientSelectedLoan extends Component {
       .then((loandata) => {
         console.log(loandata.data);
         const assignArr = loandata.data.assignments;
-        for (let j = 0; j < assignArr.length; j += 1) {
-          this.state.assignments.push(assignArr[j].text);
-          this.state.checked.push(assignArr[j].complete);
-        }
         this.setState({
           amount: loandata.data.amount,
           type: loandata.data.loanType,
@@ -50,6 +46,12 @@ export default class ClientSelectedLoan extends Component {
               phaseContent: PhaseContent[i].description,
               phaseTitle: PhaseContent[i].phaseTitle,
             });
+          }
+        }
+        for (let j = 0; j < assignArr.length; j += 1) {
+          if (this.state.phaseNumber === assignArr[j].phase) {
+            this.state.assignments.push(assignArr[j].text);
+            this.state.checked.push(assignArr[j].complete);
           }
         }
         const request = { email: loandata.data.clientEmail };
@@ -117,7 +119,7 @@ export default class ClientSelectedLoan extends Component {
                 if (this.state.checked[index] !== false) {
                   return (
                     <p>
-                      {val} <input type="checkbox" disabled="disabled" checked />
+                      {val} <input type="checkbox" disabled="disabled" checked="r33r" />
                     </p>
                   );
                 }

@@ -24,7 +24,8 @@ export default class ProgressBar extends Component {
         const filteredLoans = PhaseContent.filter(post =>
           post.loanType.includes(loandata.data.loanType));
         const totalPhaseNo = filteredLoans.length;
-
+        console.log('hello')
+        console.log(filteredLoans.legnth);
         this.setState({
           phaseArr: filteredLoans,
           currentPhase: loandata.data.currentStatus,
@@ -32,6 +33,7 @@ export default class ProgressBar extends Component {
           totalPhases: totalPhaseNo,
         });
         console.log(this.state.phaseArr);
+        console.log(this.state.totalPhases);
       })
       .catch((err) => {
         console.log(err);

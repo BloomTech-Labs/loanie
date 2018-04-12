@@ -104,7 +104,7 @@ const phaseData = [
     company representative will watching you so feel free to ask questions.`,
   },
   {
-    loanType: 'Constuction',
+    loanType: 'construction',
     phase: '1',
     phaseTitle: 'Starting Out Phase - Buyer gets pre-qualified',
     description: `This is the "just getting started" phase. You should meet 
@@ -114,7 +114,7 @@ const phaseData = [
     the way, and so will we.`,
   },
   {
-    loanType: 'Constuction',
+    loanType: 'construction',
     phase: '2',
     phaseTitle: 'Pre-Plan with the builder',
     description: `Choose a builder and start planning for your home. If you 
@@ -124,7 +124,7 @@ const phaseData = [
     meetings with the builder to watch out for you.`,
   },
   {
-    loanType: 'Constuction',
+    loanType: 'construction',
     phase: '3',
     phaseTitle: 'Documents Phase - Builder is ready to begin',
     description: `After you have selected a builder and approved the plans, 
@@ -136,7 +136,7 @@ const phaseData = [
     loan officer as quickly as possible.`,
   },
   {
-    loanType: 'Constuction',
+    loanType: 'construction',
     phase: '4',
     phaseTitle: 'Appraisal -- Assess value of property involved in transaction',
     description: `Appraisal on the property is ordered and completed. Regulations 
@@ -146,7 +146,7 @@ const phaseData = [
     interesting.`,
   },
   {
-    loanType: 'Constuction',
+    loanType: 'construction',
     phase: '5',
     phaseTitle: 'Final Disclosure - Review Loan Terms prior to closing',
     description: `The final disclosure is a lengthy document that contains all the 
@@ -155,7 +155,7 @@ const phaseData = [
     three days from the time you sign and approve it and the time you close.`,
   },
   {
-    loanType: 'Constuction',
+    loanType: 'construction',
     phase: '6',
     phaseTitle: 'Closing - Loan is Funded and Recorded',
     description: `You'll arrive at the Title Company and be seated in a conference 
@@ -169,7 +169,7 @@ const phaseData = [
     to make interest payments at this time.`,
   },
   {
-    loanType: 'Constuction',
+    loanType: 'construction',
     phase: '7',
     phaseTitle: 'Home Completed - You house is done!',
     description: `Your home is completed and account reconciled. The builder will 
@@ -180,7 +180,7 @@ const phaseData = [
     authorization through the title company.`,
   },
   {
-    loanType: 'Constuction',
+    loanType: 'construction',
     phase: '8',
     phaseTitle: 'Permanent Mortgage Starts',
     description: `The construction loan is paid off with your approved mortgage 
