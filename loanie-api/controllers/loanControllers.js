@@ -2,7 +2,7 @@ const Loan = require("../models/loanModels");
 
 const loanCreate = (req, res) => {
   const {
-    clientEmail, loanManagerId, amount, loanType,
+    clientEmail, loanManagerId, amount, loanType, assignments,
   } = req.body;
 
   console.log("Request Body:", req.body);
@@ -11,6 +11,7 @@ const loanCreate = (req, res) => {
     loanManagerId,
     amount,
     loanType,
+    assignments,
   });
   newLoan.save(newLoan, (err, savedloan) => {
     if (err) {
@@ -125,19 +126,27 @@ const loanCreateAssignment = (req, res) => {
 // find by loan id and add edit assignment in array
 const loanEditAssignment = (req, res) => {
   console.log("edit loan assignement");
-  const { loanId, assignmentId, assignment } = req.body;
-  console.log(loanId, assignmentId, assignment);
+  const {
+    loanId, assignmentId, text, phase, complete,
+  } = req.body;
+  console.log(loanId, assignmentId, text, phase, complete);
   // find a single Loan
   // edit loan assignment
-  Loan.findByIdAndUpdate(
-    loanId,
-    { $push: { assignments: { _id: assignmentId, text: assignment } } },
-    { safe: true, upsert: true },
+  Loan.updateOne(
+    { _id: loanId, "assignments._id": assignmentId },
+    {
+      $set: {
+        "assignments.$.text": text,
+        "assignments.$.phase": phase,
+        "assignments.$.complete": complete,
+      },
+    },
     (err, doc) => {
       if (err) {
         res.status(500).json(err);
         console.log(err);
       } else {
+        console.log("assignment edited successfully!");
         res.status(200).json(doc);
       }
     },
@@ -146,7 +155,7 @@ const loanEditAssignment = (req, res) => {
 
 // find by loan id and remove item in array
 const loanDeleteAssignment = (req, res) => {
-  console.log("edit loan assignement");
+  console.log("edit loan assignment");
   const { loanId, assignmentId } = req.body;
   console.log(loanId, assignmentId);
   // find a single Loan

@@ -44,7 +44,7 @@ export default class Settings extends Component {
 
   submitChanges = () => {
     console.log('sending to DB');
-    this.sendToDB();
+    this.send();
     // window.location = '/my_loans';
   };
 
@@ -158,7 +158,7 @@ export default class Settings extends Component {
             <fieldset>
               <legend>Personal information:</legend>
               <div>
-                <h4>Name:</h4>
+                <p>Name:</p>
                 <input
                   type="text"
                   name="name"
@@ -169,22 +169,7 @@ export default class Settings extends Component {
               <br />
               <br />
               <div>
-                <h4>Email:</h4>
-                <input
-                  type="text"
-                  name="email"
-                  value={this.state.email}
-                  onChange={this.handleEmailChange}
-                />
-              </div>
-              <div>
-                <h4>Your current password is required to change email:</h4>
-                <input type="password" name="password" onChange={this.handlePasswordChange} />
-              </div>
-              <br />
-              <br />
-              <div>
-                <h4>Phone Number:</h4>{' '}
+                <p>Phone Number:</p>{' '}
                 <ReactTelephoneInput
                   defaultCountry="us"
                   flagsImagePath=".\Images\flags.png"
@@ -193,6 +178,8 @@ export default class Settings extends Component {
                   onBlur={this.handleInputBlur}
                 />
               </div>
+              <br />
+              <br />
               <button onClick={this.sendToDB}>Submit</button>
             </fieldset>
           </form>
