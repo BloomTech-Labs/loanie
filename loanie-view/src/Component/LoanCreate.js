@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from './Navbar';
 import {sendUserNotifications} from './LoanNotification';
 import SidebarNav from './SideBarNav';
+import { assignmentDefaults } from './AssignmentDefaults';
 import '../CSS/LoanCreate.css';
 
 export default class LoanCreate extends Component {
@@ -17,7 +18,7 @@ export default class LoanCreate extends Component {
       phoneNumber: '+10000000000',
       loanManagerId: '',
       clientEmail: 'default@email.com',
-      loanType: 'fha',
+      loanType: 'new',
       amount: '',
     };
   }
@@ -107,13 +108,16 @@ export default class LoanCreate extends Component {
   }
 
   sendNewLoanDB() {
+    const defaults = assignmentDefaults(this.state.loanType);
+    console.log('assignments', defaults);
     console.log('state', this.state);
-
+    console.log(assignmentDefaults());
     const body = {
       loanManagerId: this.state.loanManagerId,
       clientEmail: this.state.clientEmail,
       loanType: this.state.loanType,
       amount: this.state.amount,
+      assignments: defaults,
     };
     axios
       .post('http://localhost:3030/newloan', body)
@@ -170,15 +174,11 @@ export default class LoanCreate extends Component {
           <form>
             <fieldset>
               <legend>Borrower information:</legend>
-              Loan Type: 
+              Loan Type:
               <select onChange={this.handleDropDown}>
-                <option value="fha">FHA</option>
-                <option value="usda">USDA</option>
-                <option value="va">VA</option>
-                <option value="conventional">Conventional</option>
-                <option value="new">New Purchase</option>
+                <option value="new">New Loan</option>
                 <option value="refinance">Refinance</option>
-                <option value="Constuction">Construction</option>
+                <option value="construction">Construction</option>
               </select>
               <br />
               <br />

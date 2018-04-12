@@ -6,9 +6,9 @@ import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import '../CSS/EditLoan.css';
 
-class LoanList extends Component {
-  constructor(props) {
-    super(props);
+class EditLoan extends Component {
+  constructor() {
+    super();
     this.state = {
       tokenId: sessionStorage.getItem('tokenId'),
       clientEmail: '',
@@ -22,7 +22,8 @@ class LoanList extends Component {
   }
 
   componentWillMount() {
-    const id = this.props.loanId;
+    const getLoanId = window.location.href;
+    const id = getLoanId.split('/').pop();
     axios
       .get(`http://localhost:3030/loan/${id}`)
       .then((res) => {
@@ -34,7 +35,6 @@ class LoanList extends Component {
           managerEmail: res.data.email,
           currentStatus: res.data.currentStatus,
           openLoan: res.data.openLoan,
-          assignments: res.data.assignments,
         });
         console.log('Response from server: ', res);
       })
@@ -65,7 +65,7 @@ class LoanList extends Component {
 
   handleDropDownPhase = (e) => {
     console.log(e.target.value);
-    this.setState({ loanType: e.target.value });
+    this.setState({ currentStatus: e.target.value });
   };
 
   submitEditedLoan() {
@@ -88,27 +88,6 @@ class LoanList extends Component {
         console.log('Loan creation failed.', err);
       });
   }
-
-  submitAddAssignment() {
-    console.log('state', this.state);
-    // assignments: [
-    //   {
-    //     text: this.state.assignmentText,
-    //     author: this.state.managerEmail,
-    //     complete: this.state.assignmentComplete,
-    //   },
-    // ];
-  }
-
-  mapAssignments = ({ assignments }) => (
-    <div>
-      {assignments.map(assign => (
-        <div className="assignment" key={this.state.assign.id}>
-          {assign.text}
-        </div>
-        ))}
-    </div>
-  );
 
   render() {
     // getter
@@ -148,13 +127,9 @@ class LoanList extends Component {
               <legend>Confirm Client Email Before Editing: {this.state.clientEmail} </legend>
               Edit Loan Type:
               <select value={this.state.loanType} onChange={this.handleDropDownType}>
-                <option value="fha">FHA</option>
-                <option value="usda">USDA</option>
-                <option value="va">VA</option>
-                <option value="conventional">Conventional</option>
                 <option value="new">New Purchase</option>
                 <option value="refinance">Refinance</option>
-                <option value="Constuction">Construction</option>
+                <option value="constuction">Construction</option>
               </select>
               <br />
               <br />
@@ -169,8 +144,8 @@ class LoanList extends Component {
               <br />
               Edit Loan Open Status:
               <select value={this.state.openLoan} onChange={this.handleDropDownOpen}>
-                <option value="true">True</option>
-                <option value="flase">Flase</option>
+                <option value="true">Open</option>
+                <option value="false">Closed</option>
               </select>
               <br />
               <br />
@@ -183,9 +158,6 @@ class LoanList extends Component {
               />
               <br />
               <br />
-              Assignments:
-              <mapAssignments />
-              <br />
             </fieldset>
           </form>
           <button onClick={this.submitEditedLoan}>Submit</button>
@@ -195,4 +167,4 @@ class LoanList extends Component {
   }
 }
 
-export default LoanList;
+export default EditLoan;
