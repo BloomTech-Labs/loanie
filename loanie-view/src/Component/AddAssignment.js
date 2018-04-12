@@ -117,9 +117,9 @@ class AddAssignment extends Component {
 
   MapAssignments() {
     return (
-      <div className="EditLoan-cards">
+      <div className="Card-container">
         {this.state.assignments.sort((a, b) => a.phase - b.phase).map(assignment => (
-          <Card>
+          <Card className="AddAssignment-cards">
             <CardHeader>Phase: {assignment.phase}</CardHeader>
             <CardBody>
               <CardText>
@@ -170,7 +170,7 @@ class AddAssignment extends Component {
     }
 
     return (
-      <div className="EditLoan">
+      <div className="AddAssignment">
         <SidebarNav />
         <Navbar />
         <div className="BreadCrumb">
@@ -184,10 +184,10 @@ class AddAssignment extends Component {
             <BreadcrumbItem active>Add Assignment</BreadcrumbItem>
           </Breadcrumb>
         </div>
-        <div className="EditLoan-title-container">
+        <div className="AddAssignment-title-container">
           <h1>Add Assignment</h1>
         </div>
-        <div className="EditLoan-form-container">
+        <div className="AddAssignment-form-container">
           <form>
             <fieldset>
               <legend>Confirm Client Email Before Editing: {this.state.clientEmail} </legend>
@@ -206,10 +206,10 @@ class AddAssignment extends Component {
             </fieldset>
             <button onClick={this.submitNewAssignment}>Submit</button>
           </form>
-          <h1>Assignments:</h1>
-          {this.MapAssignments()}
-          <br />
         </div>
+        <h1>Assignments:</h1>
+        <div>{this.MapAssignments()}</div>
+        <br />
       </div>
     );
   }

@@ -4,32 +4,31 @@
 	background-image: url("https://images.unsplash.com/photo-1437719417032-8595fd9e9dc6?ixlib=rb-0.3.5&s=07b2bde5f63c918afbab47012e0bab07&auto=format&fit=crop&w=967&q=80");
 	background-size: 107.85em;
 	background-repeat: no-repeat;
+	height: 70em;
 }
 
 .Learn-header {
-	font-weight: bolder;
-	margin-top: 4em;
+	margin-top: 3em;
 	text-align: center;
-	font-size: 50px;
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 60px;
+	font-weight: bolder;
 }
 
 .Learn-text-container {
+	margin-top: 2em;	
 	text-align: Left;
+	padding: 10px 10px 10px;
 	margin-left: 12em;
 	margin-right: 12em;
-	height: 100%;
+	background-color: rgba(100, 193, 247, 0.5);
+	border-radius: 25px;
 }
 
 .Learn-text-list {
-	padding-top: 5%;
 	font-size: 30px;
-	margin-bottom: 2%;
 }
 
 .Learn-text-item {
 	text-align: center;
-	padding-top: 5%;
 	font-size: 30px;
-	margin-bottom: 2%;
 }
