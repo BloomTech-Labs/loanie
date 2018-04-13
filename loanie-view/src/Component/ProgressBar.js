@@ -24,7 +24,7 @@ export default class ProgressBar extends Component {
         const filteredLoans = PhaseContent.filter(post =>
           post.loanType.includes(loandata.data.loanType));
         const totalPhaseNo = filteredLoans.length;
-        console.log(filteredLoans.legnth);
+        console.log(filteredLoans.length);
         this.setState({
           phaseArr: filteredLoans,
           currentPhase: loandata.data.currentStatus,
@@ -51,15 +51,6 @@ export default class ProgressBar extends Component {
     }
     return (
       <div className="ProgressBar">
-        <div className="ProgressBar-phase-container">
-          {this.state.phaseArr.map((val, index) =>
-            (
-              <div className="ProgressBar-phase-item" style={progressBarStyle} key={val.phase}>
-                <p key={val.phase}>{index + 1}</p>
-              </div>
-            ))
-          }
-        </div>
         <div className="progress ProgressBar-container">
           <div
             className="progress-bar ProgressBar-style progress-bar-success"
@@ -67,7 +58,7 @@ export default class ProgressBar extends Component {
             aria-valuenow={this.state.progressValue}
             style={{ width: `${((this.state.progressValue / (100 / this.state.totalPhases)) * (68.5 / this.state.totalPhases))}em` }}
           >
-            Phase {this.state.currentPhase}
+            Current Phase: {this.state.currentPhase}
           </div>
         </div>
       </div>

@@ -207,7 +207,9 @@ class AddAssignment extends Component {
             <button onClick={this.submitNewAssignment}>Submit</button>
           </form>
         </div>
-        <h1>Assignments:</h1>
+        <div className="Assignment-title">
+          <h1>Assignments:</h1>
+        </div>
         <div>{this.MapAssignments()}</div>
         <br />
       </div>
