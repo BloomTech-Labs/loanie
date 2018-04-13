@@ -30,7 +30,6 @@ export default class ClientSelectedLoan extends Component {
       phaseTitle: '',
       currentLoanId: '',
       tokenId: sessionStorage.getItem('tokenId'),
-      userType: sessionStorage.getItem('userType'),
       clientEmail: '',
     };
   }
