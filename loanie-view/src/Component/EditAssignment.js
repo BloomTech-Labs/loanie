@@ -97,7 +97,7 @@ class EditAssignment extends Component {
     const type = this.state.loanType;
     if (type === 'new') {
       return (
-        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+        <select value={this.state.phase} onChange={this.handleDropDownPhase}>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -108,7 +108,7 @@ class EditAssignment extends Component {
       );
     } else if (type === 'construction') {
       return (
-        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+        <select value={this.state.phase} onChange={this.handleDropDownPhase}>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -121,7 +121,7 @@ class EditAssignment extends Component {
       );
     } else if (type === 'refinance') {
       return (
-        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+        <select value={this.state.phase} onChange={this.handleDropDownPhase}>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
