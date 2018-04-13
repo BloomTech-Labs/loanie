@@ -67,9 +67,19 @@ const loanGetById = (req, res) => {
 
 const loanEdit = (req, res) => {
   console.log("loan edit");
-  const {
-    currentStatus, openLoan, loanType, amount,
-  } = req.body;
+  const setObj = {};
+  if (req.body.currentStatus !== undefined) {
+    setObj.currentStatus = req.body.currentStatus;
+  }
+  if (req.body.openLoan !== undefined) {
+    setObj.openLoan = req.body.openLoan;
+  }
+  if (req.body.loanType !== undefined) {
+    setObj.loanType = req.body.loanType;
+  }
+  if (req.body.amount !== undefined) {
+    setObj.amount = req.body.amount;
+  }
   // find a single Loan
   // edit loan details
   // save Loan
@@ -78,12 +88,7 @@ const loanEdit = (req, res) => {
   Loan.updateOne(
     { _id: id },
     {
-      $set: {
-        currentStatus,
-        openLoan,
-        loanType,
-        amount,
-      },
+      $set: setObj,
     },
     (err, savedloan) => {
       if (err) {
