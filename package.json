@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jasmine tests/*.js",
     "start": "nodemon server.js",
-    "heroku-postbuild": "cd loanie-view/ && npm install && react-scripts start"
+    "heroku-postbuild": "cd loanie-view/ && npm install && npm start"
   },
   "cacheDirectories": ["node_modules", "loanie-api/node_modules"],
   "author": "",
