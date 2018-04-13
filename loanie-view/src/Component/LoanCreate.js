@@ -71,7 +71,7 @@ export default class LoanCreate extends Component {
 
         const link = "https://loanie.herokuapp.com/";
         const message = `Hi ${this.state.clientName}! Your loan officer, ${this.state.managerName}, would like to cordially invite you to use a new cutting edge mortgage communication tool called Loanie! Your loan information is waiting for you, all you have to do is sign up at ${link} . If you have any trouble or questions you can contact ${this.state.managerName} by phone at 1-800-000-0000 or by email at ${this.state.managerEmail} .`;
-        
+
         // axios request to send text notification.
         const textRequest = {
           phoneNumber : this.state.phoneNumber,
