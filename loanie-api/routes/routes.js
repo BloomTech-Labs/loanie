@@ -63,7 +63,7 @@ module.exports = app => {
   // frontend proxy
   app.get("*", (request, response) => {
     response.sendFile(
-      path.resolve(__dirname, "../loanie-view/build", "index.html")
+      path.resolve(__dirname, "../loanie-view/public", "index.html")
     );
   });
 };
