@@ -18,6 +18,7 @@ class EditLoan extends Component {
       currentStatus: '',
       openLoan: '',
       assignments: '',
+      loanId: '',
     };
   }
 
@@ -35,6 +36,7 @@ class EditLoan extends Component {
           managerEmail: res.data.email,
           currentStatus: res.data.currentStatus,
           openLoan: res.data.openLoan,
+          loanId: id,
         });
         console.log('Response from server: ', res);
       })
@@ -68,9 +70,50 @@ class EditLoan extends Component {
     this.setState({ currentStatus: e.target.value });
   };
 
-  submitEditedLoan() {
-    console.log('state', this.state);
+  phaseDropDown() {
+    const type = this.state.loanType;
+    if (type === 'new') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      );
+    }
+    if (type === 'construction') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+        </select>
+      );
+    }
+    if (type === 'refinance') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      );
+    }
+  }
 
+  submitEditedLoan = () => {
+    console.log('state', this.state);
+    const id = this.state.loanId;
     const body = {
       currentStatus: this.state.currentStatus,
       openLoan: this.state.openLoan,
@@ -79,15 +122,15 @@ class EditLoan extends Component {
       amount: this.state.amount,
     };
     axios
-      .post('http://localhost:3030/newloan', body)
+      .post(`http://localhost:3030/loan/${id}`, body)
       .then(() => {
         console.log('Loan edited successfully!');
-        this.sendNewLoanEmail();
+        window.location = '/open_loans';
       })
       .catch((err) => {
         console.log('Loan creation failed.', err);
       });
-  }
+  };
 
   render() {
     // getter
@@ -112,7 +155,7 @@ class EditLoan extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            <BreadcrumbItem tag="a" href="/loan_list">
+            <BreadcrumbItem tag="a" href="/open_loans">
               Loans
             </BreadcrumbItem>
             <BreadcrumbItem active>Edit Loan</BreadcrumbItem>
@@ -129,17 +172,12 @@ class EditLoan extends Component {
               <select value={this.state.loanType} onChange={this.handleDropDownType}>
                 <option value="new">New Purchase</option>
                 <option value="refinance">Refinance</option>
-                <option value="constuction">Construction</option>
+                <option value="construction">Construction</option>
               </select>
               <br />
               <br />
               Edit Phase:
-              <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+              {this.phaseDropDown()}
               <br />
               <br />
               Edit Loan Open Status:
