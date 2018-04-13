@@ -174,16 +174,12 @@ export default class ClientSelectedLoan extends Component {
                   );
                 })
                ) : (this.state.assignments.map((val, index) => {
-                  if (this.state.checked[index] !== false) {
-                    return (
-                      <p>
-                        {val} <input type="checkbox"  disabled="disabled" checked />
-                      </p>
-                    );
-                  }
-                  return (
+                  return(
                     <p>
-                      {val} <input type="checkbox" disabled="disabled" />
+                      {val.text} <input type="checkbox" 
+                        defaultChecked={val.complete}
+                        disabled="disabled"
+                      />
                     </p>
                   );
                 })
