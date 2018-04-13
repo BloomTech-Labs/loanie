@@ -14,7 +14,8 @@ export default class LoanCreate extends Component {
       managerName: '',
       managerEmail: '',
       clientName: '',
-      phoneNumber: '+10000000000',
+      phoneNumber: '',
+      managerPhone: '',
       loanManagerId: '',
       clientEmail: 'default@email.com',
       loanType: 'new',
@@ -34,7 +35,7 @@ export default class LoanCreate extends Component {
         this.setState({
           managerName: res.data.name,
           managerEmail: res.data.email,
-          phoneNumber: res.data.mobilePhone,
+          managerPhone: res.data.mobilePhone,
           loanManagerId: res.data._id,
         });
         console.log('Response from server: ', res);
@@ -74,7 +75,7 @@ export default class LoanCreate extends Component {
           this.state.managerName
         }, would like to cordially invite you to use a new cutting edge mortgage communication tool called Loanie! Your loan information is waiting for you, all you have to do is sign up at ${link} . If you have any trouble or questions you can contact ${
           this.state.managerName
-        } by phone at 1-800-000-0000 or by email at ${this.state.managerEmail} .`;
+        } by phone at ${this.state.managerPhone} or by email at ${this.state.managerEmail} .`;
 
         // axios request to send text notification.
         const textRequest = {
