@@ -17,6 +17,7 @@ class AddAssignment extends Component {
       clientEmail: '',
       assignments: [],
       loanId: '',
+      loanType: '',
     };
   }
 
@@ -29,6 +30,7 @@ class AddAssignment extends Component {
       .then((res) => {
         console.log('res clientemail', res.data.clientEmail);
         this.setState({
+          loanType: res.data.loanType,
           clientEmail: res.data.clientEmail,
           assignments: res.data.assignments,
         });
@@ -49,6 +51,46 @@ class AddAssignment extends Component {
     this.setState({ newAssignmentText: event.target.value });
     console.log(this.state.newAssignmentText);
   };
+
+  phaseDropDown() {
+    console.log('current loan type');
+    const type = this.state.loanType;
+    if (type === 'new') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      );
+    } else if (type === 'construction') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+        </select>
+      );
+    } else if (type === 'refinance') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      );
+    }
+  }
 
   submitNewAssignment = () => {
     const id = this.state.loanId;
@@ -75,9 +117,9 @@ class AddAssignment extends Component {
 
   MapAssignments() {
     return (
-      <div>
+      <div className="Card-container">
         {this.state.assignments.sort((a, b) => a.phase - b.phase).map(assignment => (
-          <Card>
+          <Card className="AddAssignment-cards">
             <CardHeader>Phase: {assignment.phase}</CardHeader>
             <CardBody>
               <CardText>
@@ -128,7 +170,7 @@ class AddAssignment extends Component {
     }
 
     return (
-      <div className="EditLoan">
+      <div className="AddAssignment">
         <SidebarNav />
         <Navbar />
         <div className="BreadCrumb">
@@ -142,22 +184,17 @@ class AddAssignment extends Component {
             <BreadcrumbItem active>Add Assignment</BreadcrumbItem>
           </Breadcrumb>
         </div>
-        <div className="EditLoan-title-container">
+        <div className="AddAssignment-title-container">
           <h1>Add Assignment</h1>
         </div>
-        <div className="EditLoan-form-container">
+        <div className="AddAssignment-form-container">
           <form>
             <fieldset>
               <legend>Confirm Client Email Before Editing: {this.state.clientEmail} </legend>
               <br />
               <br />
               New Assignment Phase:
-              <select onChange={this.handleDropDownPhase}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+              {this.phaseDropDown()}
               <br />
               <br />
               New Assignment:
@@ -169,10 +206,10 @@ class AddAssignment extends Component {
             </fieldset>
             <button onClick={this.submitNewAssignment}>Submit</button>
           </form>
-          <h1>Assignments:</h1>
-          {this.MapAssignments()}
-          <br />
         </div>
+        <h1>Assignments:</h1>
+        <div>{this.MapAssignments()}</div>
+        <br />
       </div>
     );
   }

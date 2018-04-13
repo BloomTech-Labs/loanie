@@ -17,10 +17,11 @@ class EditAssignment extends Component {
       phase: '',
       text: '',
       complete: '',
+      loanType: '',
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const params = window.location.href;
     const assignmentId = params.substring(params.lastIndexOf('/') + 1, params.lastIndexOf('-'));
     const loanId = params.substring(params.lastIndexOf('-') + 1, params.lastIndexOf('+'));
@@ -29,11 +30,12 @@ class EditAssignment extends Component {
     axios
       .get(`http://localhost:3030/loan/${loanId}`)
       .then((res) => {
+        const loanType = res.data.loanType;
         const assignment = res.data.assignments.filter(assign => assign._id === assignmentId);
         this.setState({
           assignment,
         });
-        this.initState(loanId, assignmentId);
+        this.initState(loanId, assignmentId, loanType);
         console.log('assignment', assignment);
         console.log('Response from server: ', res);
       })
@@ -42,9 +44,10 @@ class EditAssignment extends Component {
       });
   }
 
-  initState(loanId, assignmentId) {
+  initState(loanId, assignmentId, loanType) {
     console.log('state assignment', this.state.assignment);
     this.setState({
+      loanType,
       loanId,
       assignmentId,
       complete: this.state.assignment[0].complete,
@@ -88,6 +91,46 @@ class EditAssignment extends Component {
     const url = str + this.state.loanId;
     window.location = url;
   };
+
+  phaseDropDown() {
+    console.log('current loan type');
+    const type = this.state.loanType;
+    if (type === 'new') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      );
+    } else if (type === 'construction') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+        </select>
+      );
+    } else if (type === 'refinance') {
+      return (
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      );
+    }
+  }
 
   submitEditedAssignment = () => {
     console.log('edit assignment');
@@ -151,12 +194,7 @@ class EditAssignment extends Component {
           <form>
             <fieldset>
               Edit Phase:
-              <select value={this.state.phase} onChange={this.handleDropDownPhase}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+              {this.phaseDropDown()}
               <br />
               <br />
               Edit Complete Status:

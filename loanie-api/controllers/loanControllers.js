@@ -74,7 +74,7 @@ const loanEdit = (req, res) => {
   // edit loan details
   // save Loan
   const { id } = req.params;
-  //console.log(req.body);
+  console.log(req.body);
   Loan.updateOne(
     { _id: id },
     {

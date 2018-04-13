@@ -22,8 +22,10 @@ import EditAssignment from './Component/EditAssignment';
 import BorrowerSettings from './Component/BorrowerSettings';
 import PurchasePage from './Component/PurchasePage';
 import PasswordReset from './Component/PasswordReset';
+import LearnMore from './Component/LearnMore';
 import ClientSelectedLoan from './Component/ClientSelectedLoan';
 import registerServiceWorker from './registerServiceWorker';
+import EditAssignment from './Component/EditAssignment';
 
 // import rootReducers from './Reducers';
 
@@ -49,6 +51,7 @@ ReactDOM.render(
       <Route path="/my_loan/:loanID" component={ClientSelectedLoan} />
       <Route path="/user_settings" component={BorrowerSettings} />
       <Route path="/purchase_loanie" component={PurchasePage} />
+      <Route path="/learn_more" component={LearnMore} />
       <Route path="/password_reset" component={PasswordReset} />
       <Route path="/edit_loan" component={EditLoan} />
       <Route path="/add_assignment" component={AddAssignment} />

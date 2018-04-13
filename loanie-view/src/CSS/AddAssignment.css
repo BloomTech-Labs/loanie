@@ -1,27 +1,25 @@
-.container {
-  position: relative;
+
+.AddAssignment-cards {
+  width: 20em;
 }
 
-.textarea {
-  width: 360px;
-  outline: none;
-  min-height: 20px;
-  padding: 0;
-  box-shadow: none;
-  display: block;
-  border: 2px solid black;
-  overflow: hidden;  // Removes scrollbar
-  transition: height 0.2s ease;
+.Card-container{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
-.textarea--ghost {
-  opacity: 0.3;
-  display: block;
-  white-space: pre-wrap;
-  word-wrap: break-word;  
-  //  Uncomment below to hide the ghost div... 
-  //
-  //  visibility: hidden;
-  //  position: absolute;
-  //  top: 0;
+.BreadCrumb {
+  margin-top: 6em;
+  margin-left: 1.2em;
+}
+
+.AddAssignment-title-container {
+  margin-top: 1em;
+  margin-left: 20em;
+}
+
+.AddAssignment-form-container {
+  margin-left:20em;
+  margin-top: 1em;
 }
