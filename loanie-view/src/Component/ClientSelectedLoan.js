@@ -25,10 +25,13 @@ export default class ClientSelectedLoan extends Component {
       coBorrower: 'Bob',
       type: '',
       amount: '',
+      userType: sessionStorage.getItem('userType'),
       phaseContent: '',
       phaseNumber: null,
       phaseTitle: '',
+      currentLoanId: '',
       tokenId: sessionStorage.getItem('tokenId'),
+      userType: sessionStorage.getItem('userType'),
     };
   }
 
@@ -46,10 +49,14 @@ export default class ClientSelectedLoan extends Component {
           amount: loandata.data.amount,
           type: loandata.data.loanType,
           phaseNumber: loandata.data.currentStatus,
+          currentLoanId: getLoanId,
         });
+        // axios request to get a user by email
         for (let i = 0; i < PhaseContent.length; i += 1) {
-          if (PhaseContent[i].loanType === this.state.type &&
-            PhaseContent[i].phase === this.state.phaseNumber) {
+          if (
+            PhaseContent[i].loanType === this.state.type &&
+            PhaseContent[i].phase === this.state.phaseNumber
+          ) {
             this.setState({
               phaseContent: PhaseContent[i].description,
               phaseTitle: PhaseContent[i].phaseTitle,
@@ -61,7 +68,7 @@ export default class ClientSelectedLoan extends Component {
         }
         for (let j = 0; j < assignArr.length; j += 1) {
           if (this.state.phaseNumber === assignArr[j].phase) {
-            this.state.assignments.push(assignArr[j].text);
+            this.state.assignments.push(assignArr[j]);
             this.state.checked.push(assignArr[j].complete);
           }
         }
@@ -83,9 +90,27 @@ export default class ClientSelectedLoan extends Component {
       });
   }
 
+  completedAssignment = (assignmentId, complete) => {
+    const body = {
+      loanId: this.state.currentLoanId,
+      assignmentId,
+      complete,
+    };
+    axios
+      .post('http://localhost:3030/assignmentcomplete', body)
+      .then(console.log('loan marked complete'))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     // getter
     const token = this.state.tokenId;
+    const user = this.state.userType;
+    let loanRoute = '';
+    if (user === 'managerUser') loanRoute = '/open_loans';
+    else loanRoute = '/my_loans';
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (
@@ -94,6 +119,7 @@ export default class ClientSelectedLoan extends Component {
         </div>
       );
     }
+
     return (
       <div>
         <Navbar />
@@ -102,18 +128,34 @@ export default class ClientSelectedLoan extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            <BreadcrumbItem active>Loans</BreadcrumbItem>
+            <BreadcrumbItem tag="a" href={loanRoute}>
+              Loans
+            </BreadcrumbItem>
+            <BreadcrumbItem active>Loan Details</BreadcrumbItem>
           </Breadcrumb>
         </div>
         <div className="ClientLoan-title-container">
-          <h1><b>{this.state.phaseTitle}</b></h1>
+          <h1>
+            <b>{this.state.phaseTitle}</b>
+          </h1>
         </div>
         <div className="ClientLoan-container">
           <div className="ClientLoan-borrower-container">
-            <p><b>Borrower: </b>{this.state.borrower}</p>
-            <p><b>Co-Borrower: </b>{this.state.coBorrower}</p>
-            <p><b>Type: </b>{this.state.type}</p>
-            <p><b>Amount:</b> ${this.state.amount}</p>
+            <p>
+              <b>Borrower: </b>
+              {this.state.borrower}
+            </p>
+            <p>
+              <b>Co-Borrower: </b>
+              {this.state.coBorrower}
+            </p>
+            <p>
+              <b>Type: </b>
+              {this.state.type}
+            </p>
+            <p>
+              <b>Amount:</b> ${this.state.amount}
+            </p>
           </div>
           <div className="ClientLoan-progress-container">
             <ProgressBar />
@@ -140,20 +182,33 @@ export default class ClientSelectedLoan extends Component {
               </p>
             </div>
             <div className="ClientLoan-list-container">
-              {this.state.assignments.map((val, index) => {
-                if (this.state.checked[index] !== false) {
-                  return (
-                    <p>
-                      <input type="checkbox" disabled="disabled" checked /> {val}
-                    </p>
-                  );
+              {this.state.userType === 'managerUser' ? (
+                  this.state.assignments.map((val) => {
+                    const assignmentId = val._id;
+                    console.log('val: ', val);
+                    return (
+                      <p>
+                        <input
+                          type="checkbox"
+                          defaultChecked={val.complete}
+                          onChange={() => { this.completedAssignment(assignmentId, !val.complete); }}
+                        /> {val.text}
+                      </p>
+                    );
+                  })
+                 ) : (this.state.assignments.map((val) => {
+                    return (
+                      <p>
+                        <input
+                          type="checkbox"
+                          defaultChecked={val.complete}
+                          disabled="disabled"
+                        /> {val.text}
+                      </p>
+                    );
+                  })
+                  )
                 }
-                return (
-                  <p>
-                    <input type="checkbox" disabled="disabled" /> {val}
-                  </p>
-                );
-              })}
             </div>
           </Card>
         </div>

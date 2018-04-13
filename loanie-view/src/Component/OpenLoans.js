@@ -129,8 +129,7 @@ export default class OpenLoans extends Component {
               <BreadcrumbItem tag="a" href="/">
                 Home
               </BreadcrumbItem>
-              {' > '}
-              <BreadcrumbItem active>Open Loans</BreadcrumbItem>
+              <BreadcrumbItem active>Loans</BreadcrumbItem>
             </Breadcrumb>
           </div>
           <CardColumns>
@@ -159,7 +158,7 @@ export default class OpenLoans extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            <BreadcrumbItem active>Open Loans</BreadcrumbItem>
+            <BreadcrumbItem active>Loans</BreadcrumbItem>
           </Breadcrumb>
         </div>
         <CardColumns>

@@ -13,7 +13,7 @@ class App extends Component {
   handlePurchase() {
     this.setState({ loginState: true });
     console.log(this.state.loginState);
-    window.location = '/purchase_loanie';
+    window.location = '/learn_more';
   }
   render() {
     return (

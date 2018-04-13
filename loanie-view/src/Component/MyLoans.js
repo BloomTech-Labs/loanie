@@ -25,7 +25,7 @@ export default class MyLoans extends Component {
     };
     this.selectLoan = this.selectLoan.bind(this);
   }
-  componentDidMount() {
+  componentWillMount() {
     // console.log(this.state.userType);
     // console.log('hello');
     // console.log(this.state.tokenId);
@@ -35,11 +35,10 @@ export default class MyLoans extends Component {
       .then((res) => {
         const userEmail = { clientEmail: res.data.email };
         // console.log('hello');
-        // console.log(res.data.email);
+        console.log('email to get loans', res.data.email);
         axios
           .post('http://localhost:3030/getclientloans', userEmail)
           .then((loandata) => {
-            console.log(loandata.data);
             this.setState({ loanList: loandata.data });
             //  console.log(this.state.loanList);
             console.log(this.state.loanList);
