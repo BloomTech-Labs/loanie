@@ -6,12 +6,12 @@
   flex-direction: row;
 }
 .ClientLoan-borrower-container {
-  margin-left: 15em;
+  margin-left: 17.5em;
   margin-top: 1em;
 }
 .ClientLoan-progress-container {
-  margin-left: 10em;
-  margin-top: 1em;
+  margin-left: 5em;
+  margin-top: 3em;
 }
 .ClientLoan-content-container {
   margin-left: 15em;
@@ -21,14 +21,25 @@
   width: 71em;
 }
 .ClientLoan-assignment-container {
-  order: 1;
-  text-align: center;
-  margin-left: 5em;
+  margin-top: 1em;
+  margin-left: 1em;
+}
+.ClientLoan-list-container {
+  margin-left: 2em;
 }
 .ClientLoan-input-container {
-  order: 0;
-  width: 25em;
+  margin-left: 17.4em;
+  width: 65.8em;
 }
 .ClientLoan-p1-item {
   text-align: left;
+}
+.ClientLoan-phase-container {
+  margin-top: 1em;
+  margin-left: 17.4em;
+  margin-bottom: 2em;
+  width: 65.8em;
+}
+.ClientLoan-phase-item {
+  line-height: 2;
 }
