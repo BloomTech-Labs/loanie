@@ -1,0 +1,14 @@
+.Settings {
+  display: flex;
+  flex-direction: column;
+}
+.Settings-title-containter {
+  margin-left: 42em;
+}
+.Settings-form-container {
+  margin-left: 15em;
+}
+.BreadCrumb {
+  margin-top: 6em;
+  margin-left: 1.2em;
+}
