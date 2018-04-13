@@ -86,22 +86,36 @@ export default class ClientSelectedLoan extends Component {
       });
   }
 
-  completedAssignment = (assignmentId, assignmentIndex) => {
-    const tempAssignmets = this.state.assignments;
-    tempAssignmets[assignmentIndex].complete = !tempAssignmets[assignmentIndex].complete;
-    this.setState({ assignments: tempAssignmets });
+  saveAssignmentsButton = () => {
     const body = {
       loanId: this.state.currentLoanId,
-      assignmentId,
-      complete: tempAssignmets[assignmentIndex].complete,
+      assignments: this.state.assignments,
     };
-
+    
     axios
-      .post('http://localhost:3030/assignmentcomplete', body)
+      .post('http://localhost:3030/saveassignments', body)
       .then(console.log('loan marked complete'))
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  completedAssignment = (assignmentId, assignmentIndex) => {
+    const tempAssignmets = this.state.assignments;
+    tempAssignmets[assignmentIndex].complete = !tempAssignmets[assignmentIndex].complete;
+    this.setState({ assignments: tempAssignmets });
+    // const body = {
+    //   loanId: this.state.currentLoanId,
+    //   assignmentId,
+    //   complete: tempAssignmets[assignmentIndex].complete,
+    // };
+
+    // axios
+    //   .post('http://localhost:3030/assignmentcomplete', body)
+    //   .then(console.log('loan marked complete'))
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 
     // check if all assignments are checked with the current phase.
     // If yes, increment the phase
@@ -112,7 +126,6 @@ export default class ClientSelectedLoan extends Component {
         break;
       }
     }
-
     if (isPhaseComplete) {
       let phaseIncrement = parseInt(this.state.phaseNumber, 10);
       phaseIncrement += 1;
@@ -287,6 +300,7 @@ export default class ClientSelectedLoan extends Component {
                       </p>
                     );
                   })
+                  <button /> 
                  ) : (this.state.assignments.map((val) => {
                    console.log(val);
                     return (
