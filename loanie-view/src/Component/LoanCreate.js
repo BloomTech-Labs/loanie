@@ -98,8 +98,8 @@ export default class LoanCreate extends Component {
         };
         axios
           .post('http://localhost:3030/sendemail', emailRequest)
-          .then((res) => {
-            console.log('Success! Response from server: ', res);
+          .then((response) => {
+            console.log('Success! Response from server: ', response);
             window.location = '/open_loans';
           })
           .catch((err) => {
