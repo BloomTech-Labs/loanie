@@ -189,6 +189,32 @@ const loanDelete = (req, res) => {
     .catch(err => res.status(422).json({ error: "No Loan!", err }));
 };
 
+const loanCompleteAssignment = (req, res) => {
+  console.log("loan assignment completed");
+  const { loanId, assignmentId, complete } = req.body;
+  console.log(loanId, assignmentId, complete);
+  // find a single Loan
+  // edit loan assignment
+  Loan.updateOne(
+    { _id: loanId, "assignments._id": assignmentId },
+    {
+      $set: {
+        "assignments.$.complete": complete,
+      },
+    },
+    (err, doc) => {
+      if (err) {
+        res.status(500).json(err);
+        console.log(err);
+      } else {
+        console.log("assignment edited successfully!");
+        console.log("doc: ", doc);
+        res.status(200).json(doc);
+      }
+    },
+  );
+};
+
 module.exports = {
   loanCreate,
   loansGetAll,
@@ -200,4 +226,5 @@ module.exports = {
   loanEditAssignment,
   loanDeleteAssignment,
   loanCreateAssignment,
+  loanCompleteAssignment,
 };

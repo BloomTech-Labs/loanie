@@ -21,24 +21,12 @@ export default class ClientSelectedLoan extends Component {
       phaseContent: '',
       phaseNumber: null,
       phaseTitle: '',
+      currentLoanId: '',
       tokenId: sessionStorage.getItem('tokenId'),
     };
   }
 
   componentDidMount() {
-    // axios request to get logged-in user details
-    console.log("lets make an axios request!!");
-    console.log("userType: ", this.state.userType);
-    // axios
-    //   .post('http://localhost:3030/auth', {token: this.state.tokenId})
-    //   .then((user) => {
-    //     console.log("user type: ", user.data.userType);
-    //     this.setState({userType: user.data.userType })
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
     // grabs the current url
     let getLoanId = window.location.href;
     // grabs username inside current url
@@ -52,6 +40,7 @@ export default class ClientSelectedLoan extends Component {
           amount: loandata.data.amount,
           type: loandata.data.loanType,
           phaseNumber: loandata.data.currentStatus,
+          currentLoanId: getLoanId,
         });
         // axios request to get a user by email
         for (let i = 0; i < PhaseContent.length; i += 1) {
@@ -68,7 +57,7 @@ export default class ClientSelectedLoan extends Component {
         }
         for (let j = 0; j < assignArr.length; j += 1) {
           if (this.state.phaseNumber === assignArr[j].phase) {
-            this.state.assignments.push(assignArr[j].text);
+            this.state.assignments.push(assignArr[j]);
             this.state.checked.push(assignArr[j].complete);
           }
         }
@@ -90,16 +79,19 @@ export default class ClientSelectedLoan extends Component {
       });
   }
 
-  // handleManagerChecks = () => {
-  // this.state.assignments.map((val, index) => {
-  //   if (this.state.checked[index] !== false) {
-  //     return (
-  //       // <p>
-  //       //   {val} <input type="checkbox" disabled="disabled" checked />
-  //       // </p>
-  //     );
-  //   }
-  // }
+  completedAssignment = (assignmentId, complete) => {
+    const body = {
+      loanId: this.state.currentLoanId,
+      assignmentId,
+      complete,
+    };
+    axios
+      .post('http://localhost:3030/assignmentcomplete', body)
+      .then(console.log('loan marked complete'))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   render() {
     // getter
@@ -112,6 +104,7 @@ export default class ClientSelectedLoan extends Component {
         </div>
       );
     }
+
     return (
       <div>
         <Navbar />
@@ -144,20 +137,35 @@ export default class ClientSelectedLoan extends Component {
                 <p> Your loan officer will update these boxes as they recieve your documents</p>
               </div>
               <br />
-              {this.state.assignments.map((val, index) => {
-                if (this.state.checked[index] !== false) {
-                  return (
+              {this.state.userType === "managerUser" ? (
+                this.state.assignments.map((val, index) => {
+                  let assignmentId = val._id;
+                  console.log("val: ", val);
+                  return(
                     <p>
-                      {val} <input type="checkbox" disabled="disabled" checked />
+                      {val.text} <input type="checkbox" 
+                      defaultChecked={val.complete}
+                      onChange={() => {this.completedAssignment(assignmentId, !val.complete)}}
+                      />
                     </p>
                   );
-                }
-                return (
-                  <p>
-                    {val} <input type="checkbox" disabled="disabled" />
-                  </p>
-                );
-              })}
+                })
+               ) : (this.state.assignments.map((val, index) => {
+                  if (this.state.checked[index] !== false) {
+                    return (
+                      <p>
+                        {val} <input type="checkbox"  disabled="disabled" checked />
+                      </p>
+                    );
+                  }
+                  return (
+                    <p>
+                      {val} <input type="checkbox" disabled="disabled" />
+                    </p>
+                  );
+                })
+                )
+              }
             </div>
             <br />
             <p>

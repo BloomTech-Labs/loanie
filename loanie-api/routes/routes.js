@@ -26,6 +26,7 @@ module.exports = (app) => {
   app.route("/assignment").post(loanControllers.loanCreateAssignment);
   app.route("/assignmentedit").post(loanControllers.loanEditAssignment);
   app.route("/assignmentdelete").post(loanControllers.loanDeleteAssignment);
+  app.route("/assignmentcomplete").post(loanControllers.loanCompleteAssignment);
 
   // Creates a new user. Creates a new row for the user in User collection.
   app.route("/newuser").post(userControllers.userCreate);
