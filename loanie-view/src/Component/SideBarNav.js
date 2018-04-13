@@ -14,7 +14,7 @@ export default class SideBarNav extends Component {
       return (
         <div className="menu-container">
           <Menu>
-            <a className="menu-items" href="/loan_list">
+            <a className="menu-items" href="/create_loan">
               Create Loan
             </a>
             <a className="menu-items" href="/open_loans">
