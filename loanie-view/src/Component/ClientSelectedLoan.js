@@ -47,6 +47,7 @@ export default class ClientSelectedLoan extends Component {
           currentLoanId: getLoanId,
           clientEmail: loandata.data.clientEmail,
         });
+
         for (let i = 0; i < PhaseContent.length; i += 1) {
           if (
             PhaseContent[i].loanType === this.state.type &&
