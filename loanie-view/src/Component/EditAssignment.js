@@ -1,51 +1,60 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
+import React, { Component } from "react";
+import axios from "axios";
+import { Breadcrumb, BreadcrumbItem, Button } from "reactstrap";
 // import { connect } from 'react-redux';
-import Navbar from './Navbar';
-import SidebarNav from './SideBarNav';
-import '../CSS/EditLoan.css';
+import Navbar from "./Navbar";
+import SidebarNav from "./SideBarNav";
+import "../CSS/EditLoan.css";
 
 class EditAssignment extends Component {
   constructor() {
     super();
     this.state = {
-      tokenId: sessionStorage.getItem('tokenId'),
-      assignment: '',
-      loanId: '',
-      assignmentId: '',
-      phase: '',
-      text: '',
-      complete: '',
-      loanType: '',
+      tokenId: sessionStorage.getItem("tokenId"),
+      assignment: "",
+      loanId: "",
+      assignmentId: "",
+      phase: "",
+      text: "",
+      complete: "",
+      loanType: "",
     };
   }
 
   componentWillMount() {
+    let base = process.env.BASE_URL || "http://localhost:3030";
     const params = window.location.href;
-    const assignmentId = params.substring(params.lastIndexOf('/') + 1, params.lastIndexOf('-'));
-    const loanId = params.substring(params.lastIndexOf('-') + 1, params.lastIndexOf('+'));
-    console.log('loanId', loanId);
-    console.log('assignmentId', assignmentId);
+    const assignmentId = params.substring(
+      params.lastIndexOf("/") + 1,
+      params.lastIndexOf("-")
+    );
+    const loanId = params.substring(
+      params.lastIndexOf("-") + 1,
+      params.lastIndexOf("+")
+    );
+    console.log("loanId", loanId);
+    console.log("assignmentId", assignmentId);
     axios
-      .get(`http://localhost:3030/loan/${loanId}`)
-      .then((res) => {
+      .get(`${base}/loan/${loanId}`)
+      .then(res => {
         const loanType = res.data.loanType;
-        const assignment = res.data.assignments.filter(assign => assign._id === assignmentId);
+        const assignment = res.data.assignments.filter(
+          assign => assign._id === assignmentId
+        );
         this.setState({
           assignment,
         });
         this.initState(loanId, assignmentId, loanType);
-        console.log('assignment', assignment);
-        console.log('Response from server: ', res);
+        console.log("assignment", assignment);
+        console.log("Response from server: ", res);
       })
-      .catch((err) => {
-        console.log('Unable to fetch loan data.', err);
+      .catch(err => {
+        console.log("Unable to fetch loan data.", err);
       });
   }
 
   initState(loanId, assignmentId, loanType) {
-    console.log('state assignment', this.state.assignment);
+    console.log("state assignment", this.state.assignment);
     this.setState({
       loanType,
       loanId,
@@ -54,48 +63,48 @@ class EditAssignment extends Component {
       text: this.state.assignment[0].text,
       phase: this.state.assignment[0].phase,
     });
-    console.log('state', this.state);
+    console.log("state", this.state);
   }
 
-  handleDropDownComplete = (e) => {
+  handleDropDownComplete = e => {
     console.log(e.target.value);
     this.setState({ complete: e.target.value });
   };
 
-  handleDropDownPhase = (e) => {
+  handleDropDownPhase = e => {
     console.log(e.target.value);
     this.setState({ phase: e.target.value });
   };
 
-  handleNewAssignment = (e) => {
+  handleNewAssignment = e => {
     this.setState({ text: e.target.value });
     console.log(this.state.newAssignmentText);
   };
 
   submitDeleteAssignment = () => {
-    console.log('delete assignment');
-    console.log('state', this.state);
+    console.log("delete assignment");
+    console.log("state", this.state);
     const body = {
       loanId: this.state.loanId,
       assignmentId: this.state.assignmentId,
     };
     axios
-      .post('http://localhost:3030/assignmentdelete', body)
+      .post(`${base}/assignmentdelete`, body)
       .then(() => {
-        console.log('Assignment deleted successfully!');
+        console.log("Assignment deleted successfully!");
       })
-      .catch((err) => {
-        console.log('Assignment deletion failed.', err);
+      .catch(err => {
+        console.log("Assignment deletion failed.", err);
       });
-    const str = '/add_assignment/';
+    const str = "/add_assignment/";
     const url = str + this.state.loanId;
     window.location = url;
   };
 
   phaseDropDown() {
-    console.log('current loan type');
+    console.log("current loan type");
     const type = this.state.loanType;
-    if (type === 'new') {
+    if (type === "new") {
       return (
         <select value={this.state.phase} onChange={this.handleDropDownPhase}>
           <option value="1">1</option>
@@ -106,7 +115,7 @@ class EditAssignment extends Component {
           <option value="6">6</option>
         </select>
       );
-    } else if (type === 'construction') {
+    } else if (type === "construction") {
       return (
         <select value={this.state.phase} onChange={this.handleDropDownPhase}>
           <option value="1">1</option>
@@ -119,7 +128,7 @@ class EditAssignment extends Component {
           <option value="8">8</option>
         </select>
       );
-    } else if (type === 'refinance') {
+    } else if (type === "refinance") {
       return (
         <select value={this.state.phase} onChange={this.handleDropDownPhase}>
           <option value="1">1</option>
@@ -133,8 +142,8 @@ class EditAssignment extends Component {
   }
 
   submitEditedAssignment = () => {
-    console.log('edit assignment');
-    console.log('state', this.state);
+    console.log("edit assignment");
+    console.log("state", this.state);
     const body = {
       loanId: this.state.loanId,
       assignmentId: this.state.assignmentId,
@@ -143,14 +152,14 @@ class EditAssignment extends Component {
       complete: this.state.complete,
     };
     axios
-      .post('http://localhost:3030/assignmentedit', body)
+      .post(`{base}/assignmentedit`, body)
       .then(() => {
-        console.log('Assignment edited successfully!');
+        console.log("Assignment edited successfully!");
       })
-      .catch((err) => {
-        console.log('Assingment editing failed.', err);
+      .catch(err => {
+        console.log("Assingment editing failed.", err);
       });
-    const str = '/add_assignment/';
+    const str = "/add_assignment/";
     const url = str + this.state.loanId;
     window.location = url;
   };
@@ -158,10 +167,10 @@ class EditAssignment extends Component {
   render() {
     // getter
     const token = this.state.tokenId;
-    console.log(sessionStorage.getItem('tokenId'));
-    console.log('state tokenId:', token);
-    if (token === null || token === undefined || token === '') {
-      window.location = '/login_user';
+    console.log(sessionStorage.getItem("tokenId"));
+    console.log("state tokenId:", token);
+    if (token === null || token === undefined || token === "") {
+      window.location = "/login_user";
       return (
         <div>
           <h1> Please Login</h1>
@@ -198,13 +207,16 @@ class EditAssignment extends Component {
               <br />
               <br />
               Edit Complete Status:
-              <select value={this.state.complete} onChange={this.handleDropDownComplete}>
+              <select
+                value={this.state.complete}
+                onChange={this.handleDropDownComplete}
+              >
                 <option value="true">Complete</option>
                 <option value="false">Incomplete</option>
               </select>
               <br />
               <br />
-              Edit Assignment:{' '}
+              Edit Assignment:{" "}
               <input
                 type="text"
                 value={this.state.text}
@@ -216,7 +228,7 @@ class EditAssignment extends Component {
           </form>
           <Button color="warning" onClick={this.submitEditedAssignment}>
             Submit Changes
-          </Button>{' '}
+          </Button>{" "}
           <Button color="danger" onClick={this.submitDeleteAssignment}>
             Delete Assignment
           </Button>

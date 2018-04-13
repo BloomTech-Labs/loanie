@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,46 +8,47 @@ import {
   CardHeader,
   CardText,
   CardBody,
-} from 'reactstrap';
-import Navbar from './Navbar';
-import ClientSideNav from './ClientSideNav';
-import '../CSS/MyLoans.css';
-import '../CSS/LoanList.css';
+} from "reactstrap";
+import Navbar from "./Navbar";
+import ClientSideNav from "./ClientSideNav";
+import "../CSS/MyLoans.css";
+import "../CSS/LoanList.css";
 
 export default class MyLoans extends Component {
   constructor() {
     super();
     this.state = {
-      username: '',
+      username: "",
       loanList: [],
-      userType: sessionStorage.getItem('userType'),
-      tokenId: sessionStorage.getItem('tokenId'),
+      userType: sessionStorage.getItem("userType"),
+      tokenId: sessionStorage.getItem("tokenId"),
     };
     this.selectLoan = this.selectLoan.bind(this);
   }
   componentWillMount() {
+    let base = process.env.BASE_URL || "http://localhost:3030";
     // console.log(this.state.userType);
     // console.log('hello');
     // console.log(this.state.tokenId);
     const body = { token: this.state.tokenId };
     axios
-      .post('http://localhost:3030/user', body)
-      .then((res) => {
+      .post(`${base}/user`, body)
+      .then(res => {
         const userEmail = { clientEmail: res.data.email };
         // console.log('hello');
-        console.log('email to get loans', res.data.email);
+        console.log("email to get loans", res.data.email);
         axios
-          .post('http://localhost:3030/getclientloans', userEmail)
-          .then((loandata) => {
+          .post(`${base}/getclientloans`, userEmail)
+          .then(loandata => {
             this.setState({ loanList: loandata.data });
             //  console.log(this.state.loanList);
             console.log(this.state.loanList);
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   }
@@ -62,15 +63,15 @@ export default class MyLoans extends Component {
     // console.log('state tokenId:', token);
     // console.log(this.state.username);
     // console.log(this.state.userType);
-    if (token === null || token === undefined || token === '') {
-      window.location = '/login_user';
+    if (token === null || token === undefined || token === "") {
+      window.location = "/login_user";
       return (
         <div>
           <h1> Please Login</h1>
         </div>
       );
     }
-    if (user === 'managerUser') {
+    if (user === "managerUser") {
       return (
         <div>
           <h1> Please login to as a standard user </h1>
@@ -96,21 +97,29 @@ export default class MyLoans extends Component {
                   <Card>
                     <CardHeader>
                       <Link to={`my_loan/${val._id}`}>
-                        <h5><b>Loan</b> {index + 1}</h5>
+                        <h5>
+                          <b>Loan</b> {index + 1}
+                        </h5>
                       </Link>
                     </CardHeader>
                     <CardBody>
                       <CardText>
                         <ul className="list-unstyled">
                           <li>
-                            <p className="MyLoans-text"><b>Current Phase</b>: {val.currentStatus}</p>
+                            <p className="MyLoans-text">
+                              <b>Current Phase</b>: {val.currentStatus}
+                            </p>
                           </li>
                           <li>
-                            <p className="MyLoans-text"><b>Loan Type</b>: {val.loanType}</p>
+                            <p className="MyLoans-text">
+                              <b>Loan Type</b>: {val.loanType}
+                            </p>
                           </li>
                           <li>
                             <Link to={`my_loan/${val._id}`}>
-                              <p className="MyLoans-text"><b>See Details</b></p>
+                              <p className="MyLoans-text">
+                                <b>See Details</b>
+                              </p>
                             </Link>
                           </li>
                         </ul>

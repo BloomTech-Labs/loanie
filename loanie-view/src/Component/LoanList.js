@@ -1,45 +1,46 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 // import { connect } from 'react-redux';
-import Navbar from './Navbar';
-import SidebarNav from './SideBarNav';
-import '../CSS/LoanList.css';
+import Navbar from "./Navbar";
+import SidebarNav from "./SideBarNav";
+import "../CSS/LoanList.css";
 
 export default class LoanList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tokenId: sessionStorage.getItem('tokenId'),
+      tokenId: sessionStorage.getItem("tokenId"),
       loanList: [],
     };
   }
 
   componentWillMount() {
+    let base = process.env.BASE_URL || "http://localhost:3030";
     // if (this.props.tokenId === '') window.location = '/login_user';
     console.log(this.state.userType);
-    console.log('hello');
+    console.log("hello");
     console.log(this.state.tokenId);
     const body = { token: this.state.tokenId };
     axios
-      .post('http://localhost:3030/user', body)
-      .then((res) => {
+      .post(`${base}/user`, body)
+      .then(res => {
         console.log(res);
         console.log(res.data.id);
         const managerID = { loanManagerId: res.data.id };
         axios
-          .post('http://localhost:3030/getmanagerloans', managerID)
-          .then((loandata) => {
+          .post(`${base}/getmanagerloans`, managerID)
+          .then(loandata => {
             const loanArr = loandata.data;
             console.log(loandata);
             this.setState({ loanList: loanArr });
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   }
@@ -50,10 +51,10 @@ export default class LoanList extends Component {
   render() {
     // getter
     const token = this.state.tokenId;
-    console.log(sessionStorage.getItem('tokenId'));
-    console.log('state tokenId:', token);
-    if (token === null || token === undefined || token === '') {
-      window.location = '/login_user';
+    console.log(sessionStorage.getItem("tokenId"));
+    console.log("state tokenId:", token);
+    if (token === null || token === undefined || token === "") {
+      window.location = "/login_user";
       return (
         <div>
           <h1> Please Login</h1>
@@ -72,7 +73,7 @@ export default class LoanList extends Component {
                   <BreadcrumbItem tag="a" href="/">
                     Home
                   </BreadcrumbItem>
-                  {' > '}
+                  {" > "}
                   <BreadcrumbItem active>Loans</BreadcrumbItem>
                 </Breadcrumb>
               </div>

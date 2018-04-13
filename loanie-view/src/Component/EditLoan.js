@@ -1,34 +1,35 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import React, { Component } from "react";
+import axios from "axios";
+import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 // import { connect } from 'react-redux';
-import Navbar from './Navbar';
-import SidebarNav from './SideBarNav';
-import '../CSS/EditLoan.css';
+import Navbar from "./Navbar";
+import SidebarNav from "./SideBarNav";
+import "../CSS/EditLoan.css";
 
 class EditLoan extends Component {
   constructor() {
     super();
     this.state = {
-      tokenId: sessionStorage.getItem('tokenId'),
-      clientEmail: '',
-      amount: '',
-      loanType: '',
-      managerEmail: '',
-      currentStatus: '',
-      openLoan: '',
-      assignments: '',
-      loanId: '',
+      tokenId: sessionStorage.getItem("tokenId"),
+      clientEmail: "",
+      amount: "",
+      loanType: "",
+      managerEmail: "",
+      currentStatus: "",
+      openLoan: "",
+      assignments: "",
+      loanId: "",
     };
   }
 
   componentWillMount() {
+    let base = process.env.BASE_URL || "http://localhost:3030";
     const getLoanId = window.location.href;
-    const id = getLoanId.split('/').pop();
+    const id = getLoanId.split("/").pop();
     axios
-      .get(`http://localhost:3030/loan/${id}`)
-      .then((res) => {
-        console.log('res clientemail', res.data.clientEmail);
+      .get(`${base}/loan/${id}`)
+      .then(res => {
+        console.log("res clientemail", res.data.clientEmail);
         this.setState({
           clientEmail: res.data.clientEmail,
           amount: res.data.amount,
@@ -38,43 +39,46 @@ class EditLoan extends Component {
           openLoan: res.data.openLoan,
           loanId: id,
         });
-        console.log('Response from server: ', res);
+        console.log("Response from server: ", res);
       })
-      .catch((err) => {
-        console.log('Unable to fetch user data.', err);
+      .catch(err => {
+        console.log("Unable to fetch user data.", err);
       });
   }
 
-  handleAmountChange = (event) => {
+  handleAmountChange = event => {
     this.setState({ amount: event.target.value });
     console.log(this.state.amount);
   };
 
-  handleEmailChange = (event) => {
+  handleEmailChange = event => {
     this.setState({ clientEmail: event.target.value });
     console.log(this.state.email);
   };
 
-  handleDropDownType = (e) => {
+  handleDropDownType = e => {
     console.log(e.target.value);
     this.setState({ loanType: e.target.value });
   };
 
-  handleDropDownOpen = (e) => {
+  handleDropDownOpen = e => {
     console.log(e.target.value);
     this.setState({ openLoan: e.target.value });
   };
 
-  handleDropDownPhase = (e) => {
+  handleDropDownPhase = e => {
     console.log(e.target.value);
     this.setState({ currentStatus: e.target.value });
   };
 
   phaseDropDown() {
     const type = this.state.loanType;
-    if (type === 'new') {
+    if (type === "new") {
       return (
-        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+        <select
+          value={this.state.currentStatus}
+          onChange={this.handleDropDownPhase}
+        >
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -84,9 +88,12 @@ class EditLoan extends Component {
         </select>
       );
     }
-    if (type === 'construction') {
+    if (type === "construction") {
       return (
-        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+        <select
+          value={this.state.currentStatus}
+          onChange={this.handleDropDownPhase}
+        >
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -98,9 +105,12 @@ class EditLoan extends Component {
         </select>
       );
     }
-    if (type === 'refinance') {
+    if (type === "refinance") {
       return (
-        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+        <select
+          value={this.state.currentStatus}
+          onChange={this.handleDropDownPhase}
+        >
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -112,7 +122,7 @@ class EditLoan extends Component {
   }
 
   submitEditedLoan = () => {
-    console.log('state', this.state);
+    console.log("state", this.state);
     const id = this.state.loanId;
     const body = {
       currentStatus: this.state.currentStatus,
@@ -122,23 +132,23 @@ class EditLoan extends Component {
       amount: this.state.amount,
     };
     axios
-      .post(`http://localhost:3030/loan/${id}`, body)
+      .post(`${base}/loan/${id}`, body)
       .then(() => {
-        console.log('Loan edited successfully!');
-        window.location = '/open_loans';
+        console.log("Loan edited successfully!");
+        window.location = "/open_loans";
       })
-      .catch((err) => {
-        console.log('Loan creation failed.', err);
+      .catch(err => {
+        console.log("Loan creation failed.", err);
       });
   };
 
   render() {
     // getter
     const token = this.state.tokenId;
-    console.log(sessionStorage.getItem('tokenId'));
-    console.log('state tokenId:', token);
-    if (token === null || token === undefined || token === '') {
-      window.location = '/login_user';
+    console.log(sessionStorage.getItem("tokenId"));
+    console.log("state tokenId:", token);
+    if (token === null || token === undefined || token === "") {
+      window.location = "/login_user";
       return (
         <div>
           <h1> Please Login</h1>
@@ -167,9 +177,14 @@ class EditLoan extends Component {
         <div className="EditLoan-form-container">
           <form>
             <fieldset>
-              <legend>Confirm Client Email Before Editing: {this.state.clientEmail} </legend>
+              <legend>
+                Confirm Client Email Before Editing: {this.state.clientEmail}{" "}
+              </legend>
               Edit Loan Type:
-              <select value={this.state.loanType} onChange={this.handleDropDownType}>
+              <select
+                value={this.state.loanType}
+                onChange={this.handleDropDownType}
+              >
                 <option value="new">New Purchase</option>
                 <option value="refinance">Refinance</option>
                 <option value="construction">Construction</option>
@@ -181,17 +196,20 @@ class EditLoan extends Component {
               <br />
               <br />
               Edit Loan Open Status:
-              <select value={this.state.openLoan} onChange={this.handleDropDownOpen}>
+              <select
+                value={this.state.openLoan}
+                onChange={this.handleDropDownOpen}
+              >
                 <option value="true">Open</option>
                 <option value="false">Closed</option>
               </select>
               <br />
               <br />
-              Edit Loan Amount:{' '}
+              Edit Loan Amount:{" "}
               <input
                 type="text"
                 name="amount"
-                value={this.state.amount || ''}
+                value={this.state.amount || ""}
                 onChange={this.handleAmountChange}
               />
               <br />
