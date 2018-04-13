@@ -18,7 +18,6 @@ import StripeWrapper from './Component/StripeBilling/StripeWrapper';
 import OpenLoans from './Component/OpenLoans';
 import ClosedLoans from './Component/ClosedLoans';
 import MyLoans from './Component/MyLoans';
-// import EditAssignment from './Component/EditAssignment';
 import BorrowerSettings from './Component/BorrowerSettings';
 import PurchasePage from './Component/PurchasePage';
 import PasswordReset from './Component/PasswordReset';

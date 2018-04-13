@@ -2,9 +2,8 @@ const User = require("../models/userModels");
 const sgMail = require("@sendgrid/mail");
 
 const sendEmailNotification = (req, res) => {
-  const { name, email, text } = req.body;
+  const { email, text } = req.body;
   const newUser = new User({
-    name,
     email,
     text,
   });
@@ -29,40 +28,10 @@ const sendEmailNotification = (req, res) => {
   });
 };
 
-const sendNewLoanEmail = (req, res) => {
-  console.log("send new loan email");
-  const name = "Valued Client";
-  const link = "https://loanie.herokuapp.com/";
-  const {
-    managerName, managerEmail, phoneNumber, clientEmail,
-  } = req.body;
-  const text = `Hi ${name}! Your loan officer, ${managerName}, would like to cordially invite you to use a new cutting edge mortgage communication tool called Loanie! Your loan information is waiting for you, all you have to do is sign up at ${link} . If you have any trouble or questions you can contact ${managerName} by phone at ${phoneNumber} or by email at ${managerEmail} .`;
-
-  console.log("Request Body:", req.body);
-
-  const sendgridKey = process.env.SENDGRID_API_KEY || "default_sendgrid_key";
-  sgMail.setApiKey(sendgridKey);
-  const msg = {
-    to: clientEmail,
-    from: process.env.SENDGRID_EMAIL_FROM,
-    subject: "Your loan process has begun!",
-    text,
-  };
-  sgMail.send(msg, (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Email sent successfully!");
-      res.json("Email notification sent!");
-    }
-  });
-};
-
 const sendSmsNotification = (req, res) => {
-  const { name, mobilePhone, text } = req.body;
+  const { phoneNumber, text } = req.body;
   const newUser = new User({
-    name,
-    mobilePhone,
+    phoneNumber,
     text,
   });
   console.log("Request Body:", req.body);
@@ -75,7 +44,7 @@ const sendSmsNotification = (req, res) => {
   client.messages
     .create({
       body: text,
-      to: mobilePhone, // Text this number
+      to: phoneNumber, // Text this number
       from: process.env.TWILIO_PHONE_NUMBER // From a valid Twilio number
     })
     .then((message) => {
@@ -88,5 +57,4 @@ const sendSmsNotification = (req, res) => {
 module.exports = {
   sendEmailNotification,
   sendSmsNotification,
-  sendNewLoanEmail,
 };

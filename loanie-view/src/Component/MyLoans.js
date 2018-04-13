@@ -39,7 +39,6 @@ export default class MyLoans extends Component {
         axios
           .post('http://localhost:3030/getclientloans', userEmail)
           .then((loandata) => {
-            // console.log(loandata.data);
             this.setState({ loanList: loandata.data });
             //  console.log(this.state.loanList);
           })
