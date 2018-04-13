@@ -83,6 +83,7 @@ export default class Settings extends Component {
   };
 
   send() {
+    let base = process.env.BASE_URL || "http://localhost:3030";
     const userInfo = {
       name: this.state.name,
       email: this.state.email,

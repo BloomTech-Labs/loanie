@@ -43,10 +43,6 @@ class AccountCreation extends Component {
     console.log(this.state);
   }
 
-  componentDidMount() {
-    let base = process.env.BASE_URL || "http://localhost:3030";
-  }
-
   selectStandardUser = () => {
     this.setState({ userType: "standardUser" });
   };
@@ -114,6 +110,7 @@ class AccountCreation extends Component {
     };
     sessionStorage.setItem("userType", this.state.userType);
     console.log("sending to db:", userInfo);
+    let base = process.env.BASE_URL || "http://localhost:3030";
     axios
       .post(`${base}/newuser`, userInfo)
       .then(res => {

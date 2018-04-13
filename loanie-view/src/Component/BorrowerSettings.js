@@ -105,6 +105,7 @@ export default class BorrowerSettings extends Component {
       token: this.state.tokenId,
     };
     console.log("sending to db:", userInfo);
+    let base = process.env.BASE_URL || "http://localhost:3030";
     axios
       .post(`${base}/edituser`, userInfo)
       .then(res => {

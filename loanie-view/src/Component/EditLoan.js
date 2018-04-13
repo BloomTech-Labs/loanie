@@ -131,6 +131,7 @@ class EditLoan extends Component {
       loanType: this.state.loanType,
       amount: this.state.amount,
     };
+    let base = process.env.BASE_URL || "http://localhost:3030";
     axios
       .post(`${base}/loan/${id}`, body)
       .then(() => {

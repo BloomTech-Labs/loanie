@@ -25,10 +25,6 @@ class Billing extends Component {
     };
   }
 
-  componentWillMount() {
-    let base = process.env.BASE_URL || "http://localhost:3030";
-  }
-
   getBillingRoute = () => {
     if (sessionStorage.getItem("userType") === "managerUser") {
       return "/open_loans";
@@ -43,6 +39,7 @@ class Billing extends Component {
       loanPlan: this.state.loanPlan,
       stripeToken: this.state.stripeToken,
     };
+    let base = process.env.BASE_URL || "http://localhost:3030";
     axios
       .post(`${base}/stripe`, body)
       .then(res => {

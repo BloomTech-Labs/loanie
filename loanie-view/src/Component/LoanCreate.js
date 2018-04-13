@@ -62,6 +62,7 @@ export default class LoanCreate extends Component {
   };
 
   sendNewLoanNotification = () => {
+    let base = process.env.BASE_URL || "http://localhost:3030";
     // axios request to get client name
     const request = { email: this.state.clientEmail };
     console.log("request from loan create: ", request);
@@ -115,6 +116,7 @@ export default class LoanCreate extends Component {
   };
 
   sendNewLoanDB() {
+    let base = process.env.BASE_URL || "http://localhost:3030";
     const defaults = assignmentDefaults(this.state.loanType);
     console.log("assignments", defaults);
     console.log("state", this.state);

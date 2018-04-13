@@ -33,11 +33,11 @@ export default class ClientSelectedLoan extends Component {
   }
 
   componentDidMount() {
-    let base = process.env.BASE_URL || "http://localhost:3030";
     this.getLoanData();
   }
 
   getLoanData = () => {
+    let base = process.env.BASE_URL || "http://localhost:3030";
     // grabs the current url
     let getLoanId = window.location.href;
     // grabs username inside current url
@@ -102,7 +102,7 @@ export default class ClientSelectedLoan extends Component {
       assignmentId,
       complete: tempAssignmets[assignmentIndex].complete,
     };
-
+    let base = process.env.BASE_URL || "http://localhost:3030";
     axios
       .post(`${base}/assignmentcomplete`, body)
       .then(console.log("loan marked complete"))
@@ -147,6 +147,7 @@ export default class ClientSelectedLoan extends Component {
 
   sendNewLoanNotification = () => {
     // axios request to get client name
+    let base = process.env.BASE_URL || "http://localhost:3030";
     const request = { email: this.state.clientEmail };
     console.log("request from loan create: ", request);
     axios

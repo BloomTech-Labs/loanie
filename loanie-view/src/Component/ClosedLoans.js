@@ -47,6 +47,7 @@ export default class ClosedLoans extends Component {
   }
 
   handleGetClosedLoans = () => {
+    let base = process.env.BASE_URL || "http://localhost:3030";
     const body = {
       loanManagerId: this.state.loanManagerId,
     };

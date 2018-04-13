@@ -121,6 +121,7 @@ class AddAssignment extends Component {
       assignments: assignment,
     };
     console.log("body", body);
+    let base = process.env.BASE_URL || "http://localhost:3030";
     axios
       .post(`${base}/assignment`, body)
       .then(() => {

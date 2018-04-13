@@ -88,6 +88,7 @@ class EditAssignment extends Component {
       loanId: this.state.loanId,
       assignmentId: this.state.assignmentId,
     };
+    let base = process.env.BASE_URL || "http://localhost:3030";
     axios
       .post(`${base}/assignmentdelete`, body)
       .then(() => {
@@ -151,6 +152,7 @@ class EditAssignment extends Component {
       phase: this.state.phase,
       complete: this.state.complete,
     };
+    let base = process.env.BASE_URL || "http://localhost:3030";
     axios
       .post(`{base}/assignmentedit`, body)
       .then(() => {
