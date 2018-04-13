@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  Card,
-  CardHeader,
-  CardBody,
-} from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardBody } from 'reactstrap';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import ProgressBar from './ProgressBar';
@@ -53,6 +47,7 @@ export default class ClientSelectedLoan extends Component {
         const filteredLoans = PhaseContent.filter(post =>
           post.loanType.includes(loandata.data.loanType));
         const totalPhaseNo = filteredLoans;
+        console.log('totalPhase', totalPhaseNo);
         this.setState({
           amount: loandata.data.amount,
           type: loandata.data.loanType,
@@ -64,7 +59,7 @@ export default class ClientSelectedLoan extends Component {
           phaseTitleNumber: loandata.data.currentStatus,
           clientEmail: loandata.data.clientEmail,
         });
-        
+
         for (let i = 0; i < PhaseContent.length; i += 1) {
           if (
             PhaseContent[i].loanType === this.state.type &&
@@ -107,11 +102,11 @@ export default class ClientSelectedLoan extends Component {
   completedAssignment = (assignmentId, assignmentIndex) => {
     const tempAssignmets = this.state.assignments;
     tempAssignmets[assignmentIndex].complete = !tempAssignmets[assignmentIndex].complete;
-    this.setState({assignments: tempAssignmets});
+    this.setState({ assignments: tempAssignmets });
     const body = {
       loanId: this.state.currentLoanId,
       assignmentId,
-      complete: tempAssignmets[assignmentIndex].complete
+      complete: tempAssignmets[assignmentIndex].complete,
     };
 
     axios
@@ -121,29 +116,29 @@ export default class ClientSelectedLoan extends Component {
         console.log(err);
       });
 
-    // check if all assignments are checked with the current phase. 
+    // check if all assignments are checked with the current phase.
     // If yes, increment the phase
     let isPhaseComplete = true;
-    for(let i = 0; i < this.state.assignments.length; ++i) {
-      if(!this.state.assignments[i].complete) {
+    for (let i = 0; i < this.state.assignments.length; i += 1) {
+      if (!this.state.assignments[i].complete) {
         isPhaseComplete = false;
         break;
       }
     }
 
-    if(isPhaseComplete) {
+    if (isPhaseComplete) {
       let phaseIncrement = parseInt(this.state.phaseNumber, 10);
-      phaseIncrement++;
+      phaseIncrement += 1;
       phaseIncrement += '';
-      console.log("phaseIncrement: ", phaseIncrement);
+      console.log('phaseIncrement: ', phaseIncrement);
 
       // let server know phase completed
       // TODO: Also send openLoan to the axios request to update if the loan is open o closed!
-      const request = {currentStatus: phaseIncrement}
+      const request = { currentStatus: phaseIncrement };
       axios
         .post(`http://localhost:3030/loan/${this.state.currentLoanId}`, request)
         .then((res) => {
-          console.log("res.data.name: ", res.data.name);
+          console.log('res.data.name: ', res.data.name);
           const userName = res.data.name;
           this.setState({ borrower: userName, assignments: [] });
           // refreh all data in this component
@@ -190,25 +185,25 @@ export default class ClientSelectedLoan extends Component {
   sendNewLoanNotification = () => {
     // axios request to get client name
     const request = { email: this.state.clientEmail };
-    console.log("request from loan create: ", request);
+    console.log('request from loan create: ', request);
     axios
       .post('http://localhost:3030/userbyemail', request)
       .then((res) => {
-        console.log("res.data.name: ", res.data.name);
+        console.log('res.data.name: ', res.data.name);
         const clientName = res.data.name;
 
-        const link = "https://loanie.herokuapp.com/";
+        // const link = "https://loanie.herokuapp.com/";
         const message = `Hi ${clientName}! Congratulations! Your loan process has now moved to the next phase! If you have any trouble or questions you can contact by phone at 1-800-000-0000 or by email at loaniecs4@gmail.com .`;
-        
+
         // axios request to send text notification.
         const textRequest = {
-          phoneNumber : res.data.phoneNumber,
-          text : message,
+          phoneNumber: res.data.phoneNumber,
+          text: message,
         };
         axios
           .post('http://localhost:3030/sendsms', textRequest)
-          .then((res) => {
-            console.log('Success! Response from server: ', res);
+          .then((resp) => {
+            console.log('Success! Response from server: ', resp);
           })
           .catch((err) => {
             console.log('Loan creation failed.', err);
@@ -216,13 +211,13 @@ export default class ClientSelectedLoan extends Component {
 
         // axios request to send email notification.
         const emailRequest = {
-          email : this.state.clientEmail,
-          text : message,
+          email: this.state.clientEmail,
+          text: message,
         };
         axios
           .post('http://localhost:3030/sendemail', emailRequest)
-          .then((res) => {
-            console.log('Success! Response from server: ', res);
+          .then((response) => {
+            console.log('Success! Response from server: ', response);
           })
           .catch((err) => {
             console.log('Loan creation failed.', err);
@@ -317,19 +312,25 @@ export default class ClientSelectedLoan extends Component {
           <Card>
             <CardHeader> <h5><b>Phase {this.state.phaseTitleNumber}</b></h5></CardHeader>
             <CardBody>
-              <p className="ClientLoan-phase-item"> <b>{this.state.phaseContent}</b></p>
+              <p className="ClientLoan-phase-item">
+                {' '}
+                <b>{this.state.phaseContent}</b>
+              </p>
             </CardBody>
           </Card>
         </div>
         <div className="ClientLoan-input-container">
           <Card>
             <CardHeader>
-              <h5><b>Complete these assignments to move to next phase</b></h5>
+              <h5>
+                <b>Complete these assignments to move to next phase</b>
+              </h5>
             </CardHeader>
             <div className="ClientLoan-assignment-container">
               <p>
-                <b>Your loan officer will update these boxes as they recieve your documents.
-                If you have any questions call Bob Officer: 1-800-000-000.
+                <b>
+                  Your loan officer will update these boxes as they recieve your documents. If you
+                  have any questions call Bob Officer: 1-800-000-000.
                 </b>
               </p>
             </div>
@@ -349,6 +350,7 @@ export default class ClientSelectedLoan extends Component {
                     );
                   })
                  ) : (this.state.assignments.map((val) => {
+                   console.log(val);
                     return (
                       <p>
                         <input
@@ -359,15 +361,12 @@ export default class ClientSelectedLoan extends Component {
                       </p>
                     );
                   })
-                  )
-                }
+                )}
             </div>
           </Card>
         </div>
         <br />
-        <p>
-          {' '}
-        </p>
+        <p />
         <ClientSideNav />
       </div>
     );

@@ -66,7 +66,7 @@ export default class OpenLoans extends Component {
   }
 
   handleGetAllOpenLoans = () => {
-    const openLoans = this.state.loans.filter(loan => parseInt(loan.currentStatus, 0) < 6);
+    const openLoans = this.state.loans.filter(loan => loan.openLoan === true);
     return openLoans;
   }
 

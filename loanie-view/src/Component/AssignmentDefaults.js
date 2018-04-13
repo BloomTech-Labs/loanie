@@ -358,6 +358,12 @@ export function assignmentDefaults(loanType) {
       complete: false,
     },
     {
+      text: 'Contact your lender and builder if you have questions during this process.',
+      author: '1',
+      phase: '7',
+      complete: false,
+    },
+    {
       text: 'Start making payments when required',
       author: '1',
       phase: '8',

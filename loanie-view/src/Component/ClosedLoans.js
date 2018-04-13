@@ -60,14 +60,14 @@ export default class ClosedLoans extends Component {
       .catch((err) => {
         console.log('Unable to fetch loan data.', err);
       });
-  }
+  };
 
   handleGetAllClosedLoans = () => {
     console.log('loans get all closed handler', this.state.loans);
     const closedLoans = this.state.loans.filter(loan => loan.openLoan === false);
     console.log('closed loans', closedLoans);
     return closedLoans;
-  }
+  };
 
   render() {
     const loans = this.handleGetAllClosedLoans();
@@ -81,19 +81,19 @@ export default class ClosedLoans extends Component {
               <li>Hey</li>
               <li>Client email: {loan.clientEmail}</li>
               <li>Current Status: {loan.currentStatus}</li>
-              <Link to={`my_loan/${loan._id}`}>
-                See Details
-              </Link>
+              <Link to={`my_loan/${loan._id}`}>See Details</Link>
             </ul>
           </CardText>
         </CardBody>
-      </Card>);
+                 </Card>);
     });
 
     let noCards = null;
     if (loans.length === 0) {
       noCards = [];
-      noCards.push(<div className="NoClosedLoans-header"><h2> No closed loans! </h2></div>);
+      noCards.push(<div className="NoClosedLoans-header">
+        <h2> No closed loans! </h2>
+                   </div>);
       noCards.push(<SideBarNav />);
     }
 
@@ -105,13 +105,13 @@ export default class ClosedLoans extends Component {
             <BreadcrumbItem tag="a" href="/">
               Home
             </BreadcrumbItem>
-            {' > '}
+            <BreadcrumbItem tag="a" href="/open_loans">
+              Loans
+            </BreadcrumbItem>
             <BreadcrumbItem active>Closed Loans</BreadcrumbItem>
           </Breadcrumb>
         </div>
-        <CardColumns>
-          {cards}
-        </CardColumns>
+        <CardColumns>{cards}</CardColumns>
         {noCards}
       </div>
     );

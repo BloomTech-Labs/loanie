@@ -108,7 +108,7 @@ class AddAssignment extends Component {
       .post('http://localhost:3030/assignment', body)
       .then(() => {
         console.log('Assignment created successfully!');
-        window.location = '/open_loans';
+        window.location = `/add_assignment/${id}`;
       })
       .catch((err) => {
         console.log('Assignment creation failed.', err);
