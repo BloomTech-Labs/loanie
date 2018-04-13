@@ -39,9 +39,9 @@ export default class MyLoans extends Component {
         axios
           .post('http://localhost:3030/getclientloans', userEmail)
           .then((loandata) => {
-            // console.log(loandata.data);
             this.setState({ loanList: loandata.data });
             //  console.log(this.state.loanList);
+            console.log(this.state.loanList);
           })
           .catch((err) => {
             console.log(err);
@@ -77,7 +77,7 @@ export default class MyLoans extends Component {
         </div>
       );
     }
-    if (this.state.loanList !== '') {
+    if (this.state.loanList.length !== 0) {
       return (
         <div className="MyLoans">
           <div className="BreadCrumb">
@@ -96,21 +96,21 @@ export default class MyLoans extends Component {
                   <Card>
                     <CardHeader>
                       <Link to={`my_loan/${val._id}`}>
-                        <h5>Loan {index + 1}</h5>
+                        <h5><b>Loan</b> {index + 1}</h5>
                       </Link>
                     </CardHeader>
                     <CardBody>
                       <CardText>
                         <ul className="list-unstyled">
                           <li>
-                            <p className="MyLoans-text">Current Phase: {val.currentStatus}</p>
+                            <p className="MyLoans-text"><b>Current Phase</b>: {val.currentStatus}</p>
                           </li>
                           <li>
-                            <p className="MyLoans-text">Loan Type: {val.loanType}</p>
+                            <p className="MyLoans-text"><b>Loan Type</b>: {val.loanType}</p>
                           </li>
                           <li>
                             <Link to={`my_loan/${val._id}`}>
-                              <p className="MyLoans-text">See Details</p>
+                              <p className="MyLoans-text"><b>See Details</b></p>
                             </Link>
                           </li>
                         </ul>
@@ -136,11 +136,7 @@ export default class MyLoans extends Component {
           </Breadcrumb>
         </div>
         <Navbar />
-        <div>
-          <h1>Open Loans</h1>
-          <br />
-          <h1>Closed Loans</h1>
-          <h1>My Loans</h1>
+        <div className="MyLoans-noloans-text">
           <h2>You currently do not have any active loans.</h2>
         </div>
         <ClientSideNav />

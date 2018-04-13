@@ -16,7 +16,6 @@ const userCreate = (req, res) => {
     acceptTexts,
     acceptEmails,
     UID: token,
-    // password, // used to validate loan officer
   });
   console.log("Request Body:", req.body);
   newUser.save((err, savedUser) => {
@@ -98,6 +97,8 @@ const userGetByUID = (req, res) => {
   console.log("token:", token);
   User.findOne({ UID: token })
     .then((user) => {
+      console.log('hello');
+      console.log(user);
       if (user === null) throw new Error();
       else res.json(user);
     })

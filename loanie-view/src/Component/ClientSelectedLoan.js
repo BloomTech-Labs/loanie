@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Card,
+  CardHeader,
+  CardText,
+  CardColumns,
+  CardBody,
+} from 'reactstrap';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import ProgressBar from './ProgressBar';
@@ -17,9 +25,11 @@ export default class ClientSelectedLoan extends Component {
       coBorrower: 'Bob',
       type: '',
       amount: '',
+      userType: sessionStorage.getItem('userType'),
       phaseContent: '',
       phaseNumber: null,
       phaseTitle: '',
+      currentLoanId: '',
       tokenId: sessionStorage.getItem('tokenId'),
       userType: sessionStorage.getItem('userType'),
     };
@@ -39,7 +49,9 @@ export default class ClientSelectedLoan extends Component {
           amount: loandata.data.amount,
           type: loandata.data.loanType,
           phaseNumber: loandata.data.currentStatus,
+          currentLoanId: getLoanId,
         });
+        // axios request to get a user by email
         for (let i = 0; i < PhaseContent.length; i += 1) {
           if (
             PhaseContent[i].loanType === this.state.type &&
@@ -51,9 +63,12 @@ export default class ClientSelectedLoan extends Component {
             });
           }
         }
+        if (this.state.type === 'new') {
+          this.setState({ type: 'new purchase' });
+        }
         for (let j = 0; j < assignArr.length; j += 1) {
           if (this.state.phaseNumber === assignArr[j].phase) {
-            this.state.assignments.push(assignArr[j].text);
+            this.state.assignments.push(assignArr[j]);
             this.state.checked.push(assignArr[j].complete);
           }
         }
@@ -75,6 +90,20 @@ export default class ClientSelectedLoan extends Component {
       });
   }
 
+  completedAssignment = (assignmentId, complete) => {
+    const body = {
+      loanId: this.state.currentLoanId,
+      assignmentId,
+      complete,
+    };
+    axios
+      .post('http://localhost:3030/assignmentcomplete', body)
+      .then(console.log('loan marked complete'))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     // getter
     const token = this.state.tokenId;
@@ -90,6 +119,7 @@ export default class ClientSelectedLoan extends Component {
         </div>
       );
     }
+
     return (
       <div>
         <Navbar />
@@ -131,40 +161,61 @@ export default class ClientSelectedLoan extends Component {
             <ProgressBar />
           </div>
         </div>
-        <div className="ClientLoan-content-container">
-          <div className="ClientLoan-assignment-container">
-            <div className="ClientLoan-input-container">
-              <div className="ClientLoan-p1-item">
-                <p> Your loan officer will update these boxes as they recieve your documents</p>
-              </div>
-              <br />
-              {this.state.assignments.map((val, index) => {
-                if (this.state.checked[index] !== false) {
-                  return (
-                    <p>
-                      {val} <input type="checkbox" disabled="disabled" checked="r33r" />
-                    </p>
-                  );
-                }
-                return (
-                  <p>
-                    {val} <input type="checkbox" disabled="disabled" />
-                  </p>
-                );
-              })}
-            </div>
-            <br />
-            <p>
-              {' '}
-              If you have any questions call Bob Officer: <br />1-800-000-000
-            </p>
-          </div>
-          <div className="ClientLoan-text-container">
-            <div className="ClientLoan-text-item">
-              <p> {this.state.phaseContent} </p>
-            </div>
-          </div>
+        <div className="ClientLoan-phase-container">
+          <Card>
+            <CardHeader> <h5><b>Phase {this.state.phaseNumber}</b></h5></CardHeader>
+            <CardBody>
+              <p className="ClientLoan-phase-item"> <b>{this.state.phaseContent}</b></p>
+            </CardBody>
+          </Card>
         </div>
+        <div className="ClientLoan-input-container">
+          <Card>
+            <CardHeader>
+              <h5><b>Complete these assignments to move to next phase</b></h5>
+            </CardHeader>
+            <div className="ClientLoan-assignment-container">
+              <p>
+                <b>Your loan officer will update these boxes as they recieve your documents.
+                If you have any questions call Bob Officer: 1-800-000-000.
+                </b>
+              </p>
+            </div>
+            <div className="ClientLoan-list-container">
+              {this.state.userType === 'managerUser' ? (
+                  this.state.assignments.map((val) => {
+                    const assignmentId = val._id;
+                    console.log('val: ', val);
+                    return (
+                      <p>
+                        <input
+                          type="checkbox"
+                          defaultChecked={val.complete}
+                          onChange={() => { this.completedAssignment(assignmentId, !val.complete); }}
+                        /> {val.text}
+                      </p>
+                    );
+                  })
+                 ) : (this.state.assignments.map((val) => {
+                    return (
+                      <p>
+                        <input
+                          type="checkbox"
+                          defaultChecked={val.complete}
+                          disabled="disabled"
+                        /> {val.text}
+                      </p>
+                    );
+                  })
+                  )
+                }
+            </div>
+          </Card>
+        </div>
+        <br />
+        <p>
+          {' '}
+        </p>
         <ClientSideNav />
       </div>
     );

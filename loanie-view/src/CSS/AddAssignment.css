@@ -14,6 +14,17 @@
   margin-left: 1.2em;
 }
 
+.textarea {
+  width: 360px;
+  outline: none;
+  min-height: 20px;
+  padding: 0;
+  box-shadow: none;
+  display: block;
+  border: 2px solid black;
+  overflow: hidden;  
+  transition: height 0.2s ease;
+}
 .AddAssignment-title-container {
   margin-top: 1em;
   margin-left: 20em;

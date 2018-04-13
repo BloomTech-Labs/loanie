@@ -57,8 +57,6 @@ module.exports = (app) => {
   // Send email notification to the user
   app.route("/sendemail").post(thirdPartyApiControllers.sendEmailNotification);
 
-  // Send New Loan Email to Client
-  app.route("/newloanemail").post(thirdPartyApiControllers.sendNewLoanEmail);
   // Send sms notification to the user
   app.route("/sendsms").post(thirdPartyApiControllers.sendSmsNotification);
 };

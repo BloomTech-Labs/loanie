@@ -13,9 +13,10 @@ export default class LoanCreate extends Component {
       tokenId: sessionStorage.getItem('tokenId'),
       managerName: '',
       managerEmail: '',
-      phoneNumber: '',
+      clientName: '',
+      phoneNumber: '+10000000000',
       loanManagerId: '',
-      clientEmail: '',
+      clientEmail: 'default@email.com',
       loanType: 'new',
       amount: '',
     };
@@ -53,22 +54,55 @@ export default class LoanCreate extends Component {
     console.log(this.state.email);
   };
 
-  sendNewLoanEmail() {
-    console.log('hello');
-    const body = {
-      managerName: this.state.managerName,
-      managerEmail: this.state.managerEmail,
-      phoneNumber: this.state.phoneNumber,
-      clientEmail: this.state.clientEmail,
-    };
+  handleSmsChange = (event) => {
+    this.setState({ phoneNumber: event.target.value });
+    console.log(this.state.phoneNumber);
+  };
+
+  sendNewLoanNotification = () => {
+    // axios request to get client name
+    const request = { email: this.state.clientEmail };
+    console.log("request from loan create: ", request);
     axios
-      .post('http://localhost:3030/newloanemail', body)
+      .post('http://localhost:3030/userbyemail', request)
       .then((res) => {
-        console.log('Success! Response from server: ', res);
-        window.location = '/open_loans';
+        console.log("res.data.name: ", res.data.name);
+        this.setState({clientName: res.data.name});
+
+        const link = "https://loanie.herokuapp.com/";
+        const message = `Hi ${this.state.clientName}! Your loan officer, ${this.state.managerName}, would like to cordially invite you to use a new cutting edge mortgage communication tool called Loanie! Your loan information is waiting for you, all you have to do is sign up at ${link} . If you have any trouble or questions you can contact ${this.state.managerName} by phone at 1-800-000-0000 or by email at ${this.state.managerEmail} .`;
+        
+        // axios request to send text notification.
+        const textRequest = {
+          phoneNumber : this.state.phoneNumber,
+          text : message,
+        };
+        axios
+          .post('http://localhost:3030/sendsms', textRequest)
+          .then((res) => {
+            console.log('Success! Response from server: ', res);
+          })
+          .catch((err) => {
+            console.log('Loan creation failed.', err);
+          });
+
+        // axios request to send email notification.
+        const emailRequest = {
+          email : this.state.clientEmail,
+          text : message,
+        };
+        axios
+          .post('http://localhost:3030/sendemail', emailRequest)
+          .then((res) => {
+            console.log('Success! Response from server: ', res);
+            window.location = '/open_loans';
+          })
+          .catch((err) => {
+            console.log('Loan creation failed.', err);
+          });
       })
       .catch((err) => {
-        console.log('Loan creation failed.', err);
+        console.log(err);
       });
   }
 
@@ -88,7 +122,7 @@ export default class LoanCreate extends Component {
       .post('http://localhost:3030/newloan', body)
       .then((res) => {
         console.log('Success! Response from server: ', res);
-        this.sendNewLoanEmail();
+        this.sendNewLoanNotification();
       })
       .catch((err) => {
         console.log('Loan creation failed.', err);
@@ -147,10 +181,13 @@ export default class LoanCreate extends Component {
               </select>
               <br />
               <br />
-              Loan Amount: <input type="text" name="amount" onChange={this.handleAmountChange} />
+              Loan Amount: <input type="text" name="amount" placeholder="$0.00" onChange={this.handleAmountChange} />
               <br />
               <br />
-              Borrower Email: <input type="text" name="email" onChange={this.handleEmailChange} />
+              Borrower Email: <input type="text" placeholder="abc@example.com" name="email" onChange={this.handleEmailChange} />
+              <br />
+              <br />
+              Borrower Contact No.: <input type="text" placeholder="+12223334444" name="contactNo" onChange={this.handleSmsChange} />
               <br />
             </fieldset>
           </form>
