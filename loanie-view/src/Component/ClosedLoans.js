@@ -73,27 +73,30 @@ export default class ClosedLoans extends Component {
     const loans = this.handleGetAllClosedLoans();
     const cards = [];
     loans.forEach((loan, index) => {
-      cards.push(<Card>
-        <CardHeader>Loan {index + 1}</CardHeader>
-        <CardBody>
-          <CardText>
-            <ul className="list-unstyled">
-              <li>Hey</li>
-              <li>Client email: {loan.clientEmail}</li>
-              <li>Current Status: {loan.currentStatus}</li>
-              <Link to={`my_loan/${loan._id}`}>See Details</Link>
-            </ul>
-          </CardText>
-        </CardBody>
-                 </Card>);
+      cards.push(
+        <div className="ClosedLoan-style">
+          <Card>
+            <CardHeader>Loan {index + 1}</CardHeader>
+            <CardBody>
+              <CardText>
+                <ul className="list-unstyled">
+                  <li>Client email: {loan.clientEmail}</li>
+                  <li>Current Status: {loan.currentStatus}</li>
+                  <Link to={`my_loan/${loan._id}`}>See Details</Link>
+                </ul>
+              </CardText>
+            </CardBody>
+          </Card>
+        </div>);
     });
 
     let noCards = null;
     if (loans.length === 0) {
       noCards = [];
-      noCards.push(<div className="NoClosedLoans-header">
-        <h2> No closed loans! </h2>
-                   </div>);
+      noCards.push(
+        <div className="NoClosedLoans-header">
+          <h2> No closed loans! </h2>
+        </div>);
       noCards.push(<SideBarNav />);
     }
 
