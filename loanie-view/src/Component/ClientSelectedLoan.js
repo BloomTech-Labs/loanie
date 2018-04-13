@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  Card,
-  CardHeader,
-  CardText,
-  CardColumns,
-  CardBody,
-} from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardBody } from 'reactstrap';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import ProgressBar from './ProgressBar';
@@ -31,7 +23,6 @@ export default class ClientSelectedLoan extends Component {
       phaseTitle: '',
       currentLoanId: '',
       tokenId: sessionStorage.getItem('tokenId'),
-      userType: sessionStorage.getItem('userType'),
     };
   }
 
@@ -163,27 +154,38 @@ export default class ClientSelectedLoan extends Component {
         </div>
         <div className="ClientLoan-phase-container">
           <Card>
-            <CardHeader> <h5><b>Phase {this.state.phaseNumber}</b></h5></CardHeader>
+            <CardHeader>
+              {' '}
+              <h5>
+                <b>Phase {this.state.phaseNumber}</b>
+              </h5>
+            </CardHeader>
             <CardBody>
-              <p className="ClientLoan-phase-item"> <b>{this.state.phaseContent}</b></p>
+              <p className="ClientLoan-phase-item">
+                {' '}
+                <b>{this.state.phaseContent}</b>
+              </p>
             </CardBody>
           </Card>
         </div>
         <div className="ClientLoan-input-container">
           <Card>
             <CardHeader>
-              <h5><b>Complete these assignments to move to next phase</b></h5>
+              <h5>
+                <b>Complete these assignments to move to next phase</b>
+              </h5>
             </CardHeader>
             <div className="ClientLoan-assignment-container">
               <p>
-                <b>Your loan officer will update these boxes as they recieve your documents.
-                If you have any questions call Bob Officer: 1-800-000-000.
+                <b>
+                  Your loan officer will update these boxes as they recieve your documents. If you
+                  have any questions call Bob Officer: 1-800-000-000.
                 </b>
               </p>
             </div>
             <div className="ClientLoan-list-container">
-              {this.state.userType === 'managerUser' ? (
-                  this.state.assignments.map((val) => {
+              {this.state.userType === 'managerUser'
+                ? this.state.assignments.map((val) => {
                     const assignmentId = val._id;
                     console.log('val: ', val);
                     return (
@@ -191,31 +193,25 @@ export default class ClientSelectedLoan extends Component {
                         <input
                           type="checkbox"
                           defaultChecked={val.complete}
-                          onChange={() => { this.completedAssignment(assignmentId, !val.complete); }}
-                        /> {val.text}
+                          onChange={() => {
+                            this.completedAssignment(assignmentId, !val.complete);
+                          }}
+                        />{' '}
+                        {val.text}
                       </p>
                     );
                   })
-                 ) : (this.state.assignments.map((val) => {
-                    return (
-                      <p>
-                        <input
-                          type="checkbox"
-                          defaultChecked={val.complete}
-                          disabled="disabled"
-                        /> {val.text}
-                      </p>
-                    );
-                  })
-                  )
-                }
+                : this.state.assignments.map(val => (
+                  <p>
+                    <input type="checkbox" defaultChecked={val.complete} disabled="disabled" />{' '}
+                    {val.text}
+                  </p>
+                  ))}
             </div>
           </Card>
         </div>
         <br />
-        <p>
-          {' '}
-        </p>
+        <p />
         <ClientSideNav />
       </div>
     );
