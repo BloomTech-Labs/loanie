@@ -8,6 +8,10 @@
     "start": "nodemon server.js",
     "heroku-postbuild": "cd loanie-view/ && npm install && npm install && npm run build"
   },
+  "cacheDirectories": [
+    "node_modules",
+    "loanie-api/node_modules"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
