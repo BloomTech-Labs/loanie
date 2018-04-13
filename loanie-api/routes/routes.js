@@ -2,7 +2,7 @@ const userControllers = require("../controllers/userControllers");
 const loanControllers = require("../controllers/loanControllers");
 const thirdPartyApiControllers = require("../controllers/thirdPartyApiControllers");
 
-module.exports = app => {
+module.exports = (app) => {
   // Returns all loans in the database. This is just for manual debugging,
   // frontend should never need to user it.
   app.route("/loans").get(loanControllers.loansGetAll);
@@ -62,8 +62,6 @@ module.exports = app => {
 
   // frontend proxy
   app.get("*", (request, response) => {
-    response.sendFile(
-      path.resolve(__dirname, "../loanie-view/public", "index.html")
-    );
+    response.sendFile(path.resolve(__dirname, "../../loanie-view/public", "index.html"));
   });
 };
