@@ -2,11 +2,14 @@
 .AddAssignment-cards {
   width: 20em;
 }
-
+.Assignment-title {
+  margin-left: 3em;
+}
 .Card-container{
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  margin-left: 3em;
 }
 
 .BreadCrumb {
