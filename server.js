@@ -43,7 +43,7 @@ server.listen(port, () => {
   console.log(`server listening on port ${port}`);
 });
 
-// app.get("*", (request, response) => {
-//   response.sendFile(path.resolve(__dirname, "../../loanie-view/src", "index.html"));
-// });
-// };
+server.get("*", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "../../loanie-view/src", "index.html"));
+});
+};
