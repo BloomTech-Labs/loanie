@@ -17,7 +17,13 @@ const server = express();
 // };
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGOLAB_MAROON_URI || "mongodb://localhost/loanie");
+mongoose.connect(process.env.MONGOLAB_MAROON_URI || "mongodb://localhost/loanie", (err, res) => {
+  if (err) {
+    console.log(`ERROR connecting to: ${uristring}. ${err}`);
+  } else {
+    console.log(`Succeeded connected to: ${uristring}`, res);
+  }
+});
 
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
