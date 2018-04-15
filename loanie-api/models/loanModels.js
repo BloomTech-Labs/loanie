@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const Scheme = mongoose.Schema;
-mongoose.connect(process.env.MONGOLAB_MAROON_URI || "mongodb://localhost/loanie");
 
 // This table stores current status of all loans. There should always be exactly 1 row
 // for a loan in this table. ClientId and loanManagerId columns are forgeing keys that refer
