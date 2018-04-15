@@ -1,98 +1,97 @@
-import React, { Component } from "react";
-import { Breadcrumb, BreadcrumbItem } from "reactstrap";
-import axios from "axios";
-import Navbar from "./Navbar";
-import SidebarNav from "./SideBarNav";
-import { assignmentDefaults } from "./AssignmentDefaults";
-import "../CSS/LoanCreate.css";
+import React, { Component } from 'react';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import axios from 'axios';
+import Navbar from './Navbar';
+import SidebarNav from './SideBarNav';
+import { assignmentDefaults } from './AssignmentDefaults';
+import '../CSS/LoanCreate.css';
 
 export default class LoanCreate extends Component {
   constructor() {
     super();
     this.state = {
-      tokenId: sessionStorage.getItem("tokenId"),
-      managerName: "",
-      managerEmail: "",
-      clientName: "",
-      phoneNumber: "",
-      managerPhone: "",
-      loanManagerId: "",
-      clientEmail: "default@email.com",
-      loanType: "new",
-      amount: "",
+      tokenId: sessionStorage.getItem('tokenId'),
+      managerName: '',
+      managerEmail: '',
+      clientName: '',
+      phoneNumber: '',
+      managerPhone: '',
+      loanManagerId: '',
+      clientEmail: 'default@email.com',
+      loanType: 'new',
+      amount: '',
     };
   }
 
   componentWillMount() {
-    let base = process.env.BASE_URL || "http://localhost:3030";
+    const base = process.env.BASE_URL || 'http://localhost:3030';
     const body = {
       token: this.state.tokenId,
     };
 
     axios
       .post(`${base}/user`, body)
-      .then(res => {
-        console.log("res name", res.data.name);
+      .then((res) => {
+        console.log('res name', res.data.name);
         this.setState({
           managerName: res.data.name,
           managerEmail: res.data.email,
           managerPhone: res.data.mobilePhone,
           loanManagerId: res.data._id,
         });
-        console.log("Response from server: ", res);
+        console.log('Response from server: ', res);
       })
-      .catch(err => {
-        console.log("Unable to fetch user data.", err);
+      .catch((err) => {
+        console.log('Unable to fetch user data.', err);
       });
   }
 
-  handleAmountChange = event => {
+  handleAmountChange = (event) => {
     this.setState({ amount: event.target.value });
     console.log(this.state.amount);
   };
 
-  handleEmailChange = event => {
+  handleEmailChange = (event) => {
     this.setState({ clientEmail: event.target.value });
     console.log(this.state.email);
   };
 
-  handleSmsChange = event => {
+  handleSmsChange = (event) => {
     this.setState({ phoneNumber: event.target.value });
     console.log(this.state.phoneNumber);
   };
 
   sendNewLoanNotification = () => {
-    let base = process.env.BASE_URL || "http://localhost:3030";
+    const base = process.env.BASE_URL || 'http://localhost:3030';
     // axios request to get client name
     const request = { email: this.state.clientEmail };
-    console.log("request from loan create: ", request);
+    console.log('request from loan create: ', request);
     axios
       .post(`${base}/userbyemail`, request)
-      .then(res => {
-        console.log("res.data.name: ", res.data.name);
+      .then((res) => {
+        console.log('res.data.name: ', res.data.name);
         this.setState({ clientName: res.data.name });
 
-        const link = "https://loanie.herokuapp.com/";
+        const link = 'https://loanie.herokuapp.com/';
         const message = `Hi ${this.state.clientName}! Your loan officer, ${
           this.state.managerName
         }, would like to cordially invite you to use a new cutting edge mortgage communication tool called Loanie! Your loan information is waiting for you, all you have to do is sign up at ${link} . If you have any trouble or questions you can contact ${
           this.state.managerName
-        } by phone at ${this.state.managerPhone} or by email at ${
-          this.state.managerEmail
-        } .`;
+        } by phone at ${this.state.managerPhone} or by email at ${this.state.managerEmail} .`;
 
         // axios request to send text notification.
         const textRequest = {
           phoneNumber: this.state.phoneNumber,
           text: message,
         };
+        const bases = process.env.BASE_URL || 'http://localhost:3030';
         axios
-          .post(`${base}/sendsms`, textRequest)
-          .then(res => {
-            console.log("Success! Response from server: ", res);
+          .post(`${bases}/sendsms`, textRequest)
+          .then((resp) => {
+            console.log('Success! Response from server: ', resp);
           })
-          .catch(err => {
-            console.log("Loan creation failed.", err);
+          .catch((err) => {
+            console.log('Loan creation failed.', err);
           });
 
         // axios request to send email notification.
@@ -101,25 +100,25 @@ export default class LoanCreate extends Component {
           text: message,
         };
         axios
-          .post(`${base}/sendemail`, emailRequest)
-          .then(response => {
-            console.log("Success! Response from server: ", response);
-            window.location = "/open_loans";
+          .post(`${bases}/sendemail`, emailRequest)
+          .then((response) => {
+            console.log('Success! Response from server: ', response);
+            window.location = '/open_loans';
           })
-          .catch(err => {
-            console.log("Loan creation failed.", err);
+          .catch((err) => {
+            console.log('Loan creation failed.', err);
           });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
 
   sendNewLoanDB() {
-    let base = process.env.BASE_URL || "http://localhost:3030";
+    const base = process.env.BASE_URL || 'http://localhost:3030';
     const defaults = assignmentDefaults(this.state.loanType);
-    console.log("assignments", defaults);
-    console.log("state", this.state);
+    console.log('assignments', defaults);
+    console.log('state', this.state);
     console.log(assignmentDefaults());
     const body = {
       loanManagerId: this.state.loanManagerId,
@@ -130,12 +129,12 @@ export default class LoanCreate extends Component {
     };
     axios
       .post(`${base}/newloan`, body)
-      .then(res => {
-        console.log("Success! Response from server: ", res);
+      .then((res) => {
+        console.log('Success! Response from server: ', res);
         this.sendNewLoanNotification();
       })
-      .catch(err => {
-        console.log("Loan creation failed.", err);
+      .catch((err) => {
+        console.log('Loan creation failed.', err);
       });
   }
 
@@ -143,7 +142,7 @@ export default class LoanCreate extends Component {
     this.sendNewLoanDB();
   };
 
-  handleDropDown = e => {
+  handleDropDown = (e) => {
     console.log(e.target.value);
     this.setState({ loanType: e.target.value });
   };
@@ -151,10 +150,10 @@ export default class LoanCreate extends Component {
   render() {
     // render getter
     const token = this.state.tokenId;
-    console.log(sessionStorage.getItem("tokenId"));
-    console.log("state tokenId:", token);
-    if (token === null || token === undefined || token === "") {
-      window.location = "/login_user";
+    console.log(sessionStorage.getItem('tokenId'));
+    console.log('state tokenId:', token);
+    if (token === null || token === undefined || token === '') {
+      window.location = '/login_user';
       return (
         <div>
           <h1> Please Login</h1>
@@ -191,7 +190,7 @@ export default class LoanCreate extends Component {
               </select>
               <br />
               <br />
-              Loan Amount:{" "}
+              Loan Amount:{' '}
               <input
                 type="text"
                 name="amount"
@@ -200,7 +199,7 @@ export default class LoanCreate extends Component {
               />
               <br />
               <br />
-              Borrower Email:{" "}
+              Borrower Email:{' '}
               <input
                 type="text"
                 placeholder="abc@example.com"
@@ -209,7 +208,7 @@ export default class LoanCreate extends Component {
               />
               <br />
               <br />
-              Borrower Contact No.:{" "}
+              Borrower Contact No.:{' '}
               <input
                 type="text"
                 placeholder="+12223334444"
