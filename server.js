@@ -39,6 +39,8 @@ require("dotenv").config();
 
 routes(server);
 
+server.use("/", express.static(path.join(__dirname, "./loanie-view/build")));
+
 server.get("*", (request, response) => {
   response.sendFile(
     path.resolve(__dirname, "./loanie-view/build", "index.html")
