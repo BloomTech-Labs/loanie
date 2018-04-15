@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const routes = require("./loanie-api/routes/routes");
 
 const path = require("path");
-const port = process.env.PORT || 3030;
+const port = process.env.PORT || 8080;
 const server = express();
 
 // let token = token;
