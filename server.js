@@ -18,7 +18,7 @@ const server = express();
 // };
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/loanie");
+mongoose.connect(process.env.MONGODB_URI);
 
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
