@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "jasmine tests/*.js",
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "heroku-postbuild":
       "cd loanie-view/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
