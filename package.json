@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "engines": {
-    "node": "6.11.x"
+    "node": "8.9.4",
+    "npm": "4.6.1"
   },
   "scripts": {
     "test": "jasmine tests/*.js",
