@@ -23,6 +23,7 @@
     "redux": "^3.7.2",
     "redux-promise": "^0.5.3"
   },
+  "homepage": "https://loanie.herokuapp.com/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
