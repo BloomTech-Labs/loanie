@@ -19,7 +19,7 @@ const server = express();
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGOLAB_MAROON_URI);
-
+server.use(express.static(path.resolve(__dirname, "./loanie-view/build")));
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 
@@ -39,9 +39,7 @@ require("dotenv").config();
 
 routes(server);
 
-server.use("/", express.static(path.join(__dirname, "./loanie-view/build")));
-
-server.get("*", (request, response) => {
+server.get("/*", (request, response) => {
   response.sendFile(
     path.resolve(__dirname, "./loanie-view/build", "index.html")
   );
