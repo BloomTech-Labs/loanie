@@ -39,12 +39,10 @@ require("dotenv").config();
 
 routes(server);
 
+server.get("*", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "loanie-view/build", "index.html"));
+});
+
 server.listen(port, "0.0.0.0", () => {
   console.log(`server listening on port ${port}`);
 });
-
-// server.get("*", (request, response) => {
-//   response.sendFile(
-//     path.resolve(__dirname, "loanie-view/public", "index.html")
-//   );
-// });
