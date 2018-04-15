@@ -45,6 +45,6 @@ server.listen(port, "0.0.0.0", () => {
 
 server.get("*", (request, response) => {
   response.sendFile(
-    path.resolve(__dirname, "./loanie-view/public", "index.html")
+    path.resolve(__dirname, "loanie-view/public", "index.html")
   );
 });
