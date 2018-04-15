@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const routes = require("./loanie-api/routes/routes");
 
+const path = require("path");
 const port = process.env.PORT || 3030;
 const server = express();
 
@@ -41,3 +42,8 @@ routes(server);
 server.listen(port, () => {
   console.log(`server listening on port ${port}`);
 });
+
+// app.get("*", (request, response) => {
+//   response.sendFile(path.resolve(__dirname, "../../loanie-view/src", "index.html"));
+// });
+// };
