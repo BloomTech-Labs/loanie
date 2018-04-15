@@ -29,6 +29,7 @@
     "test": "jest",
     "eject": "react-scripts eject"
   },
+  "proxy": "https://loanie.herokuapp.com/",
   "jest": {
     "moduleNameMapper": {
       "\\.(css|scss)$": "<rootDir>/__mocks__/styleMock.js"
