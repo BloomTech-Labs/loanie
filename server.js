@@ -1,10 +1,10 @@
+const path = require("path");
+const dotenv = require('dotenv').config();
 const express = require("express");
-const bodyParser = require("body-parser");
 // const cors = require("cors");
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const routes = require("./loanie-api/routes/routes");
-
-const path = require("path");
 const port = process.env.PORT || 8080;
 const server = express();
 
@@ -16,6 +16,9 @@ const server = express();
 //   preflightContinue: false,
 //   optionsSuccessStatus: 204,
 // };
+server.use(express.static(path.resolve(__dirname, "./loanie-view/build")));
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.json());
 
 mongoose.Promise = global.Promise;
 // mongoose.connect(process.env.MONGOLAB_MAROON_URI);
@@ -31,9 +34,6 @@ mongoose
   .catch(function(err) {
     console.log("DB connection failed..", err.message);
   });
-server.use(express.static(path.resolve(__dirname, "./loanie-view/build")));
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(bodyParser.json());
 
 // server.use(cors());
 
