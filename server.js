@@ -39,7 +39,7 @@ require("dotenv").config();
 
 routes(server);
 
-server.get("/*", (request, response) => {
+server.get("*", (request, response) => {
   response.sendFile(
     path.resolve(__dirname, "./loanie-view/build", "index.html")
   );
