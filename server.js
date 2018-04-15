@@ -18,7 +18,19 @@ const server = express();
 // };
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGOLAB_MAROON_URI);
+// mongoose.connect(process.env.MONGOLAB_MAROON_URI);
+mongoose
+  .connect(process.env.MONGOLAB_MAROON_URI)
+  //.connect("mongodb://localhost:27017/users")
+  .then(function(db) {
+    console.log("All your dbs are belong to us!");
+    server.listen(port, function() {
+      console.log("server running on port " + port);
+    });
+  })
+  .catch(function(err) {
+    console.log("DB connection failed..", err.message);
+  });
 server.use(express.static(path.resolve(__dirname, "./loanie-view/build")));
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
@@ -45,6 +57,6 @@ server.get("*", (request, response) => {
   );
 });
 
-server.listen(port, "0.0.0.0", () => {
-  console.log(`server listening on port ${port}`);
-});
+// server.listen(port, "0.0.0.0", () => {
+//   console.log(`server listening on port ${port}`);
+// });
