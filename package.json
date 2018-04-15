@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "engines": {
+    "node": "6.11.x"
+  },
   "scripts": {
     "test": "jasmine tests/*.js",
     "start": "nodemon server.js",
