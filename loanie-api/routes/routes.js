@@ -62,7 +62,7 @@ module.exports = (app) => {
   app.route("/sendsms").post(thirdPartyApiControllers.sendSmsNotification);
 
   // frontend proxy
-  //   app.get("*", (request, response) => {
-  //     response.sendFile(path.resolve(__dirname, "../../loanie-view/src", "index.html"));
-  //   });
+  app.get("*", (request, response) => {
+    response.sendFile(path.resolve(__dirname, "../../loanie-view/src", "index.html"));
+  });
 };
