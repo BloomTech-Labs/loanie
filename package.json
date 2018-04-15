@@ -9,7 +9,7 @@
     "heroku-postbuild":
       "cd loanie-view/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
-  "cacheDirectories": ["node_modules", "loanie-api/node_modules"],
+  "cacheDirectories": ["node_modules", "loanie-view/node_modules"],
   "author": "",
   "license": "ISC",
   "dependencies": {
