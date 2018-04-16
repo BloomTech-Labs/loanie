@@ -23,7 +23,7 @@ export default class LoanCreate extends Component {
   }
 
   componentWillMount() {
-    const base = process.env.BASE_URL || 'http://localhost:3030';
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const body = {
       token: this.state.tokenId,
     };
@@ -75,7 +75,7 @@ export default class LoanCreate extends Component {
       phoneNumber: this.state.phoneNumber,
       text: message,
     };
-    const base = process.env.BASE_URL || 'http://localhost:3030';
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
       .post(`${base}/sendsms`, textRequest)
       .then((resp) => {
@@ -103,7 +103,7 @@ export default class LoanCreate extends Component {
   };
 
   sendNewLoanDB() {
-    const base = process.env.BASE_URL || 'http://localhost:3030';
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const defaults = assignmentDefaults(this.state.loanType);
     console.log('assignments', defaults);
     console.log('state', this.state);

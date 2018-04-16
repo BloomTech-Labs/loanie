@@ -1,66 +1,60 @@
-import React, { Component } from "react";
-import axios from "axios";
-import PhaseContent from "./PhaseContent";
-import "../CSS/ProgressBar.css";
+import React, { Component } from 'react';
+import axios from 'axios';
+import PhaseContent from './PhaseContent';
+import '../CSS/ProgressBar.css';
 
 export default class ProgressBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       progressValue: 0,
-      currentPhase: "",
+      currentPhase: '',
       totalPhases: 0,
       phaseArr: [],
     };
   }
   componentDidMount() {
-    let base = process.env.BASE_URL || "http://localhost:3030";
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     // grabs the current url
     let getLoanId = window.location.href;
     // grabs username inside current url
-    getLoanId = getLoanId.split("/").pop();
+    getLoanId = getLoanId.split('/').pop();
     axios
       .get(`${base}/loan/${getLoanId}`)
-      .then(loandata => {
+      .then((loandata) => {
         const filteredLoans = PhaseContent.filter(post =>
-          post.loanType.includes(loandata.data.loanType)
-        );
+          post.loanType.includes(loandata.data.loanType));
         const totalPhaseNo = filteredLoans.length;
         console.log(filteredLoans.legnth);
         this.setState({
           phaseArr: filteredLoans,
           currentPhase: loandata.data.currentStatus,
-          progressValue:
-            Number(loandata.data.currentStatus) * (100 / totalPhaseNo),
+          progressValue: Number(loandata.data.currentStatus) * (100 / totalPhaseNo),
           totalPhases: totalPhaseNo,
         });
         console.log(this.state.phaseArr);
         console.log(this.state.totalPhases);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
   render() {
     let progressBarStyle = {};
     if (this.state.totalPhases === 5) {
-      progressBarStyle = { marginLeft: "9.8em" };
+      progressBarStyle = { marginLeft: '9.8em' };
     } else if (this.state.totalPhases === 6) {
-      progressBarStyle = { marginLeft: "8em" };
+      progressBarStyle = { marginLeft: '8em' };
     } else if (this.state.totalPhases === 8) {
-      progressBarStyle = { marginLeft: "5.9em" };
+      progressBarStyle = { marginLeft: '5.9em' };
     } else {
-      progressBarStyle = { marginLeft: "6em" };
+      progressBarStyle = { marginLeft: '6em' };
     }
     return (
       <div className="ProgressBar">
         <div className="ProgressBar-phase-container">
           {this.state.phaseArr.map((val, index) => (
-            <div
-              className="ProgressBar-phase-item"
-              style={progressBarStyle}
-              key={val.phase}
-            >
+            <div className="ProgressBar-phase-item" style={progressBarStyle} key={val.phase}>
               <p key={val.phase}>{index + 1}</p>
             </div>
           ))}

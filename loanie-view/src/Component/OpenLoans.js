@@ -28,18 +28,18 @@ export default class OpenLoans extends Component {
   }
 
   componentDidMount() {
-    let base = process.env.BASE_URL || "http://localhost:3030";
+    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
     const body = { token: this.state.tokenId };
     axios
       .post(`${base}/user`, body)
-      .then(res => {
+      .then((res) => {
         console.log("res name", res.data.name);
         this.setState({ loanManagerId: res.data._id });
         console.log("loanManagerId from open loans: ", res.data._id);
         console.log("Response from server: ", res);
         this.handleGetOpenLoans();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Unable to fetch user data.", err);
       });
 
@@ -49,7 +49,7 @@ export default class OpenLoans extends Component {
   }
 
   handleGetOpenLoans = () => {
-    let base = process.env.BASE_URL || "http://localhost:3030";
+    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
     const body = {
       loanManagerId: this.state.loanManagerId,
     };
@@ -57,12 +57,12 @@ export default class OpenLoans extends Component {
     console.log("loanManagerId from body: ", body.loanManagerId);
     axios
       .post(`${base}/getmanagerloans`, body)
-      .then(res => {
+      .then((res) => {
         this.setState({ loans: res.data });
         // this.setState({ loans: [] });
         console.log("loans", res);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Unable to fetch loan data.", err);
       });
   };

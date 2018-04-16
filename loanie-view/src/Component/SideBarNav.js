@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { slide as Menu } from "react-burger-menu";
-import "../CSS/SideBar.css";
+import React, { Component } from 'react';
+import { slide as Menu } from 'react-burger-menu';
+import '../CSS/SideBar.css';
 
 export default class SideBarNav extends Component {
   constructor() {
     super();
     this.state = {
-      userType: sessionStorage.getItem("userType"),
+      userType: sessionStorage.getItem('userType'),
     };
   }
   render() {
-    if (this.state.userType === "managerUser") {
+    if (this.state.userType === 'managerUser') {
       return (
         <div className="menu-container">
           <Menu>
@@ -32,7 +32,7 @@ export default class SideBarNav extends Component {
           </Menu>
         </div>
       );
-    } else if (this.state.userType === "standardUser") {
+    } else if (this.state.userType === 'standardUser') {
       return (
         <div className="menu-container">
           <Menu>

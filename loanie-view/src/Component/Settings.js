@@ -22,7 +22,7 @@ export default class Settings extends Component {
   }
 
   componentDidMount() {
-    const base = process.env.BASE_URL || 'http://localhost:3030';
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const body = {
       token: this.state.tokenId,
     };
@@ -80,7 +80,7 @@ export default class Settings extends Component {
   };
 
   send() {
-    const base = process.env.BASE_URL || 'http://localhost:3030';
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const userInfo = {
       name: this.state.name,
       email: this.state.email,

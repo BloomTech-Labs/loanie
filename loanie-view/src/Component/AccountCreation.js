@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import ReactTelephoneInput from "react-telephone-input/lib/withStyles";
-import axios from "axios";
-import firebase from "./Firebase";
-import Navbar from "./Navbar";
-import "../CSS/AccountCreate.css";
+import React, { Component } from 'react';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
+import axios from 'axios';
+import firebase from './Firebase';
+import Navbar from './Navbar';
+import '../CSS/AccountCreate.css';
 
 const uiConfig = {
   // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-  signInFlow: "popup",
+  signInFlow: 'popup',
   signInOptions: [
     // Leave the lines as is for the providers you want to offer your users.
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -16,15 +16,15 @@ const uiConfig = {
   ],
   callbacks: {
     signInSuccess: () => {
-      firebase.auth().onAuthStateChanged(user => {
-        console.log("got the ID!!", user.uid);
+      firebase.auth().onAuthStateChanged((user) => {
+        console.log('got the ID!!', user.uid);
 
         // persist signup data so additional info can be added and sent to backend
-        sessionStorage.setItem("tokenId", user.uid);
-        sessionStorage.setItem("email", user.email);
-        sessionStorage.setItem("name", user.displayName);
+        sessionStorage.setItem('tokenId', user.uid);
+        sessionStorage.setItem('email', user.email);
+        sessionStorage.setItem('name', user.displayName);
       });
-      window.location = "/new_account";
+      window.location = '/new_account';
     },
   },
   // credentialHelper: firebase.auth.CredentialHelper.NONE,
@@ -36,7 +36,7 @@ class AccountCreation extends Component {
   constructor() {
     super();
     this.state = {
-      userType: "",
+      userType: '',
       acceptText: false,
       acceptEmail: false,
     };
@@ -44,46 +44,41 @@ class AccountCreation extends Component {
   }
 
   selectStandardUser = () => {
-    this.setState({ userType: "standardUser" });
+    this.setState({ userType: 'standardUser' });
   };
 
   selectManagerUser = () => {
-    this.setState({ userType: "managerUser" });
+    this.setState({ userType: 'managerUser' });
   };
 
   selectGoBack = () => {
-    this.setState({ userType: "" });
+    this.setState({ userType: '' });
   };
 
   submitClientAccountInfo = () => {
     this.sendToDB();
-    window.location = "/my_loans";
+    window.location = '/my_loans';
   };
 
   submitManagerAccountInfo = () => {
     this.sendToDB();
-    window.location = "/loan_list";
+    window.location = '/loan_list';
   };
-  handlePasswordChange = event => {
+  handlePasswordChange = (event) => {
     this.setState({ password: event.target.value });
   };
 
   handleInputChange = (telNumber, selectedCountry) => {
-    console.log(
-      "input changed. number: ",
-      telNumber,
-      "selected country: ",
-      selectedCountry
-    );
+    console.log('input changed. number: ', telNumber, 'selected country: ', selectedCountry);
     this.setState({ phone: telNumber });
   };
 
   handleInputBlur = (telNumber, selectedCountry) => {
     console.log(
-      "Focus off the ReactTelephoneInput component. Tel number entered is: ",
+      'Focus off the ReactTelephoneInput component. Tel number entered is: ',
       telNumber,
-      " selected country is: ",
-      selectedCountry
+      ' selected country is: ',
+      selectedCountry,
     );
   };
 
@@ -99,44 +94,41 @@ class AccountCreation extends Component {
 
   sendToDB = () => {
     const userInfo = {
-      name: sessionStorage.getItem("name"),
+      name: sessionStorage.getItem('name'),
       userType: this.state.userType,
-      email: sessionStorage.getItem("email"),
-      token: sessionStorage.getItem("tokenId"),
+      email: sessionStorage.getItem('email'),
+      token: sessionStorage.getItem('tokenId'),
       mobilePhone: this.state.phone,
       acceptTexts: this.state.acceptText,
       acceptEmails: this.state.acceptEmail,
       password: this.state.password,
     };
-    sessionStorage.setItem("userType", this.state.userType);
-    console.log("sending to db:", userInfo);
-    let base = process.env.BASE_URL || "http://localhost:3030";
+    sessionStorage.setItem('userType', this.state.userType);
+    console.log('sending to db:', userInfo);
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
       .post(`${base}/newuser`, userInfo)
-      .then(res => {
-        console.log("Response from server: ", res);
+      .then((res) => {
+        console.log('Response from server: ', res);
       })
-      .catch(err => {
-        console.log("Creation Failed!", err);
+      .catch((err) => {
+        console.log('Creation Failed!', err);
       });
   };
 
   render() {
-    const token = sessionStorage.getItem("tokenId");
-    if (token === null || token === undefined || token === "") {
+    const token = sessionStorage.getItem('tokenId');
+    if (token === null || token === undefined || token === '') {
       return (
         <div>
           <Navbar />
           <div className="Account-title-containter">
-            <StyledFirebaseAuth
-              uiConfig={uiConfig}
-              firebaseAuth={firebase.auth()}
-            />
+            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
           </div>
         </div>
       );
     }
-    if (this.state.userType === "managerUser") {
+    if (this.state.userType === 'managerUser') {
       return (
         <div className="Login">
           <Navbar />
@@ -147,15 +139,11 @@ class AccountCreation extends Component {
             <form>
               <fieldset>
                 <legend>Additional information:</legend>
-                Credentials(optional):{" "}
-                <input
-                  type="text"
-                  name="password"
-                  onChange={this.handlePasswordChange}
-                />
+                Credentials(optional):{' '}
+                <input type="text" name="password" onChange={this.handlePasswordChange} />
                 <br />
                 <br />
-                Mobile Phone:{" "}
+                Mobile Phone:{' '}
                 <ReactTelephoneInput
                   defaultCountry="us"
                   flagsImagePath=".\Images\flags.png"
@@ -172,7 +160,7 @@ class AccountCreation extends Component {
         </div>
       );
     }
-    if (this.state.userType === "standardUser") {
+    if (this.state.userType === 'standardUser') {
       return (
         <div className="Login">
           <Navbar />
@@ -183,7 +171,7 @@ class AccountCreation extends Component {
             <form>
               <fieldset>
                 <legend>Additional information:</legend>
-                Mobile Phone:{" "}
+                Mobile Phone:{' '}
                 <ReactTelephoneInput
                   defaultCountry="us"
                   flagsImagePath="\Images\flags.png"
@@ -192,18 +180,10 @@ class AccountCreation extends Component {
                 />
                 <br />
                 <br />
-                <input
-                  type="checkbox"
-                  name="acceptText"
-                  onChange={this.handleTextAlerts}
-                />{" "}
-                I would like to recieve TEXT notifications about my loan<br />
-                <input
-                  type="checkbox"
-                  name="acceptEmail"
-                  onChange={this.handleEmailAlerts}
-                />{" "}
-                I would like to recieve EMAIL notifications about my loan<br />
+                <input type="checkbox" name="acceptText" onChange={this.handleTextAlerts} /> I would
+                like to recieve TEXT notifications about my loan<br />
+                <input type="checkbox" name="acceptEmail" onChange={this.handleEmailAlerts} /> I
+                would like to recieve EMAIL notifications about my loan<br />
                 <br />
                 <button onClick={this.submitClientAccountInfo}>Submit</button>
               </fieldset>
@@ -213,7 +193,7 @@ class AccountCreation extends Component {
         </div>
       );
     }
-    if (!sessionStorage.getItem("userType")) {
+    if (!sessionStorage.getItem('userType')) {
       return (
         <div>
           <Navbar />
@@ -227,15 +207,15 @@ class AccountCreation extends Component {
         </div>
       );
     }
-    if (sessionStorage.getItem("userType") === "managerUser") {
-      window.location = "/loan_list";
+    if (sessionStorage.getItem('userType') === 'managerUser') {
+      window.location = '/loan_list';
       return (
         <div>
           <h1> Logged In </h1>
         </div>
       );
     }
-    window.location = "/my_loans";
+    window.location = '/my_loans';
     return (
       <div>
         <h1> Logged In </h1>

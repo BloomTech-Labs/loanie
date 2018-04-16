@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { CardElement, injectStripe } from "react-stripe-elements";
-import axios from "axios";
-import { Breadcrumb, BreadcrumbItem } from "reactstrap";
-import PropTypes from "prop-types";
-import Navbar from "./Navbar";
-import SidebarNav from "./SideBarNav";
-import "../CSS/Billing.css";
+import React, { Component } from 'react';
+import { CardElement, injectStripe } from 'react-stripe-elements';
+import axios from 'axios';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import PropTypes from 'prop-types';
+import Navbar from './Navbar';
+import SidebarNav from './SideBarNav';
+import '../CSS/Billing.css';
 
 class Billing extends Component {
   // have to use camel case method proptypes not the one from import
@@ -16,36 +16,36 @@ class Billing extends Component {
   constructor() {
     super();
     this.state = {
-      stripeToken: "",
-      name: "",
-      creditCardNumber: "",
-      creditCardExperation: "",
-      loanPlan: "",
-      tokenId: sessionStorage.getItem("tokenId"),
+      stripeToken: '',
+      name: '',
+      creditCardNumber: '',
+      creditCardExperation: '',
+      loanPlan: '',
+      tokenId: sessionStorage.getItem('tokenId'),
     };
   }
 
   getBillingRoute = () => {
-    if (sessionStorage.getItem("userType") === "managerUser") {
-      return "/open_loans";
+    if (sessionStorage.getItem('userType') === 'managerUser') {
+      return '/open_loans';
     }
-    return "/my_loans";
+    return '/my_loans';
   };
 
   sendStripeToken() {
-    console.log("sending stripe token to server!");
-    console.log("loanPlan on state", this.state.loanPlan);
+    console.log('sending stripe token to server!');
+    console.log('loanPlan on state', this.state.loanPlan);
     const body = {
       loanPlan: this.state.loanPlan,
       stripeToken: this.state.stripeToken,
     };
-    let base = process.env.BASE_URL || "http://localhost:3030";
+    const base = process.env.BASE_URL || 'http://localhost:3030';
     axios
       .post(`${base}/stripe`, body)
-      .then(res => {
-        console.log("Response from server: ", res);
+      .then((res) => {
+        console.log('Response from server: ', res);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -60,42 +60,40 @@ class Billing extends Component {
     console.log(this.state.creditCardNumber);
   }
 
-  handleNameChange = e => {
+  handleNameChange = (e) => {
     this.setState({ name: e.target.value });
   };
 
   handleOneYPlanSelection = () => {
-    this.setState({ loanPlan: "Full Year Subscription" });
+    this.setState({ loanPlan: 'Full Year Subscription' });
     console.log(this.state.loanPlan);
   };
 
   handleOneLPlanSelection = () => {
-    this.setState({ loanPlan: "Single Loan" });
+    this.setState({ loanPlan: 'Single Loan' });
     console.log(this.state.loanPlan);
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     // We don't want to let default form submission happen here, which would refresh the page.
     e.preventDefault();
 
     // Within the context of `Elements`, this call to createToken knows which Element to
     // tokenize, since there's only one in this group.
-    this.props.stripe
-      .createToken({ name: this.state.name })
-      .then(({ token }) => {
-        this.setState({ stripeToken: token });
-        console.log("Created Stripe token:", token);
-        this.sendStripeToken();
-      });
+    this.props.stripe.createToken({ name: this.state.name }).then(({ token }) => {
+      this.setState({ stripeToken: token });
+      console.log('Created Stripe token:', token);
+      this.sendStripeToken();
+    });
   };
 
   render() {
     // render getter
     const token = this.state.tokenId;
-    console.log(sessionStorage.getItem("tokenId"));
-    console.log("state tokenId:", token);
-    if (token === null || token === undefined || token === "") {
-      window.location = "/login_user";
+    console.log(sessionStorage.getItem('tokenId'));
+    console.log('state tokenId:', token);
+    if (token === null || token === undefined || token === '') {
+      window.location = '/login_user';
       return (
         <div>
           <h1> Please Login</h1>
@@ -125,22 +123,18 @@ class Billing extends Component {
                   type="checkbox"
                   name="loanPlan"
                   onChange={this.handleOneYPlanSelection}
-                />{" "}
+                />{' '}
                 Full Year Subscription - $99.99<br />
                 <input
                   type="checkbox"
                   name="loanPlan"
                   onChange={this.handleOneLPlanSelection}
-                />{" "}
+                />{' '}
                 Single Loan - $9.99<br />
                 <br />
                 <legend>Credit/Debit Card Details: </legend>
-                Name as it appears on card:{" "}
-                <input
-                  type="text"
-                  name="name"
-                  onChange={this.handleNameChange}
-                />
+                Name as it appears on card:{' '}
+                <input type="text" name="name" onChange={this.handleNameChange} />
               </fieldset>
               <CardElement />
               <button onClick={this.submitBillingInfo}>Submit</button>

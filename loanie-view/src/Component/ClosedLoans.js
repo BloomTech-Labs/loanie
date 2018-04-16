@@ -28,11 +28,11 @@ export default class ClosedLoans extends Component {
   }
 
   componentDidMount() {
-    let base = process.env.BASE_URL || "http://localhost:3030";
+    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
     const body = { token: this.state.tokenId };
     axios
       .post(`${base}/user`, body)
-      .then(res => {
+      .then((res) => {
         console.log("res name", res.data.name);
         this.setState({
           loanManagerId: res.data._id,
@@ -40,14 +40,14 @@ export default class ClosedLoans extends Component {
         console.log("Response from server: ", res);
         this.handleGetClosedLoans();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Unable to fetch user data.", err);
       });
     // this.props.dispatch(getManagerLoans("000000000000000000000001"));
   }
 
   handleGetClosedLoans = () => {
-    let base = process.env.BASE_URL || "http://localhost:3030";
+    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
     const body = {
       loanManagerId: this.state.loanManagerId,
     };
@@ -55,11 +55,11 @@ export default class ClosedLoans extends Component {
     console.log("loanManagerId from body: ", body.loanManagerId);
     axios
       .post(`${base}/getmanagerloans`, body)
-      .then(res => {
+      .then((res) => {
         this.setState({ loans: res.data });
         console.log("get manager loans", res);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Unable to fetch loan data.", err);
       });
   };
@@ -77,8 +77,7 @@ export default class ClosedLoans extends Component {
     const loans = this.handleGetAllClosedLoans();
     const cards = [];
     loans.forEach((loan, index) => {
-      cards.push(
-        <Card>
+      cards.push(<Card>
           <CardHeader>Loan {index + 1}</CardHeader>
           <CardBody>
             <CardText>
@@ -100,8 +99,7 @@ export default class ClosedLoans extends Component {
       noCards.push(
         <div className="NoClosedLoans-header">
           <h2> No closed loans! </h2>
-        </div>
-      );
+        </div>);
       noCards.push(<SideBarNav />);
     }
 

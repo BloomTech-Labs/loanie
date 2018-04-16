@@ -1,51 +1,44 @@
-import React, { Component } from "react";
-import axios from "axios";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  Card,
-  CardHeader,
-  CardText,
-  CardBody,
-} from "reactstrap";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardText, CardBody } from 'reactstrap';
+import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
-import Navbar from "./Navbar";
-import SidebarNav from "./SideBarNav";
-import "../CSS/AddAssignment.css";
+import Navbar from './Navbar';
+import SidebarNav from './SideBarNav';
+import '../CSS/AddAssignment.css';
 
 class AddAssignment extends Component {
   constructor() {
     super();
     this.state = {
-      tokenId: sessionStorage.getItem("tokenId"),
-      assignmentPhase: "1",
-      newAssignmentText: "",
-      clientEmail: "",
+      tokenId: sessionStorage.getItem('tokenId'),
+      assignmentPhase: '1',
+      newAssignmentText: '',
+      clientEmail: '',
       assignments: [],
-      loanId: "",
-      loanType: "",
+      loanId: '',
+      loanType: '',
     };
   }
 
   componentWillMount() {
-    let base = process.env.BASE_URL || "http://localhost:3030";
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const getLoanId = window.location.href;
-    const id = getLoanId.split("/").pop();
+    const id = getLoanId.split('/').pop();
     this.setId(id);
     axios
       .get(`${base}/loan/${id}`)
-      .then(res => {
-        console.log("res clientemail", res.data.clientEmail);
+      .then((res) => {
+        console.log('res clientemail', res.data.clientEmail);
         this.setState({
           loanType: res.data.loanType,
           clientEmail: res.data.clientEmail,
           assignments: res.data.assignments,
         });
-        console.log("Response from server: ", res);
+        console.log('Response from server: ', res);
       })
-      .catch(err => {
-        console.log("Unable to fetch user data.", err);
+      .catch((err) => {
+        console.log('Unable to fetch user data.', err);
       });
   }
 
@@ -55,20 +48,17 @@ class AddAssignment extends Component {
     });
   }
 
-  handleNewAssignment = event => {
+  handleNewAssignment = (event) => {
     this.setState({ newAssignmentText: event.target.value });
     console.log(this.state.newAssignmentText);
   };
 
   phaseDropDown() {
-    console.log("current loan type");
+    console.log('current loan type');
     const type = this.state.loanType;
-    if (type === "new") {
+    if (type === 'new') {
       return (
-        <select
-          value={this.state.currentStatus}
-          onChange={this.handleDropDownPhase}
-        >
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -77,12 +67,9 @@ class AddAssignment extends Component {
           <option value="6">6</option>
         </select>
       );
-    } else if (type === "construction") {
+    } else if (type === 'construction') {
       return (
-        <select
-          value={this.state.currentStatus}
-          onChange={this.handleDropDownPhase}
-        >
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -93,12 +80,9 @@ class AddAssignment extends Component {
           <option value="8">8</option>
         </select>
       );
-    } else if (type === "refinance") {
+    } else if (type === 'refinance') {
       return (
-        <select
-          value={this.state.currentStatus}
-          onChange={this.handleDropDownPhase}
-        >
+        <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -120,53 +104,47 @@ class AddAssignment extends Component {
       loanId: id,
       assignments: assignment,
     };
-    console.log("body", body);
-    let base = process.env.BASE_URL || "http://localhost:3030";
+    console.log('body', body);
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
       .post(`${base}/assignment`, body)
       .then(() => {
-        console.log("Assignment created successfully!");
+        console.log('Assignment created successfully!');
         window.location = `/add_assignment/${id}`;
       })
-      .catch(err => {
-        console.log("Assignment creation failed.", err);
+      .catch((err) => {
+        console.log('Assignment creation failed.', err);
       });
   };
 
   MapAssignments() {
     return (
       <div className="Card-container">
-        {this.state.assignments
-          .sort((a, b) => a.phase - b.phase)
-          .map(assignment => (
-            <Card className="AddAssignment-cards">
-              <CardHeader>Phase: {assignment.phase}</CardHeader>
-              <CardBody>
-                <CardText>
-                  <Link
-                    to={`/edit_assignment/${assignment._id}-${
-                      this.state.loanId
-                    }+`}
-                  >
-                    {assignment.text}
-                  </Link>
-                </CardText>
-              </CardBody>
-            </Card>
-          ))}
+        {this.state.assignments.sort((a, b) => a.phase - b.phase).map(assignment => (
+          <Card className="AddAssignment-cards">
+            <CardHeader>Phase: {assignment.phase}</CardHeader>
+            <CardBody>
+              <CardText>
+                <Link to={`/edit_assignment/${assignment._id}-${this.state.loanId}+`}>
+                  {assignment.text}
+                </Link>
+              </CardText>
+            </CardBody>
+          </Card>
+        ))}
       </div>
     );
   }
 
-  handleDropDownPhase = e => {
+  handleDropDownPhase = (e) => {
     console.log(e.target.value);
     this.setState({ assignmentPhase: e.target.value });
   };
 
   autoresize = () => {
-    this.style.height = "auto";
-    this.style.width = "auto";
-    this.style.height = this.scrollHeight.concat("px");
+    this.style.height = 'auto';
+    this.style.width = 'auto';
+    this.style.height = this.scrollHeight.concat('px');
     this.scrollTop = this.scrollHeight;
     window.scrollTo(window.scrollLeft, this.scrollTop + this.scrollHeight);
   };
@@ -182,10 +160,10 @@ class AddAssignment extends Component {
 
     // getter
     const token = this.state.tokenId;
-    console.log(sessionStorage.getItem("tokenId"));
-    console.log("state tokenId:", token);
-    if (token === null || token === undefined || token === "") {
-      window.location = "/login_user";
+    console.log(sessionStorage.getItem('tokenId'));
+    console.log('state tokenId:', token);
+    if (token === null || token === undefined || token === '') {
+      window.location = '/login_user';
       return (
         <div>
           <h1> Please Login</h1>
@@ -214,9 +192,7 @@ class AddAssignment extends Component {
         <div className="AddAssignment-form-container">
           <form>
             <fieldset>
-              <legend>
-                Confirm Client Email Before Editing: {this.state.clientEmail}{" "}
-              </legend>
+              <legend>Confirm Client Email Before Editing: {this.state.clientEmail} </legend>
               <br />
               <br />
               New Assignment Phase:
@@ -226,11 +202,7 @@ class AddAssignment extends Component {
               New Assignment:
               <br />
               <br />
-              <input
-                type="text"
-                name="text"
-                onChange={this.handleNewAssignment}
-              />
+              <input type="text" name="text" onChange={this.handleNewAssignment} />
               <br />
               <br />
             </fieldset>

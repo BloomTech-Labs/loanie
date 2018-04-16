@@ -26,29 +26,29 @@ export default class MyLoans extends Component {
     this.selectLoan = this.selectLoan.bind(this);
   }
   componentWillMount() {
-    let base = process.env.BASE_URL || "http://localhost:3030";
+    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
     // console.log(this.state.userType);
     // console.log('hello');
     // console.log(this.state.tokenId);
     const body = { token: this.state.tokenId };
     axios
       .post(`${base}/user`, body)
-      .then(res => {
+      .then((res) => {
         const userEmail = { clientEmail: res.data.email };
         // console.log('hello');
         console.log("email to get loans", res.data.email);
         axios
           .post(`${base}/getclientloans`, userEmail)
-          .then(loandata => {
+          .then((loandata) => {
             this.setState({ loanList: loandata.data });
             //  console.log(this.state.loanList);
             console.log(this.state.loanList);
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
           });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
