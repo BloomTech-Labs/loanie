@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
 import firebase from './Firebase';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
@@ -166,6 +166,15 @@ export default class BorrowerSettings extends Component {
             <BreadcrumbItem active>Settings</BreadcrumbItem>
           </Breadcrumb>
         </div>
+        <Button
+          color="info"
+          onClick={() => {
+            window.location = '/billing';
+          }}
+        >
+          {' '}
+          Loan Officers{' '}
+        </Button>
         <div className="Settings-title-containter">
           <h1>Settings</h1>
         </div>

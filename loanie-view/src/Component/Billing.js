@@ -21,7 +21,7 @@ class Billing extends Component {
       creditCardNumber: '',
       creditCardExperation: '',
       loanPlan: '',
-      tokenId: sessionStorage.getItem('tokenId'),
+      email: '',
     };
   }
 
@@ -32,24 +32,59 @@ class Billing extends Component {
     return '/my_loans';
   };
 
+  getUserId = () => {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+    const info = { email: this.state.email };
+    axios
+      .post(`${base}/userbyemail`, info)
+      .then((res) => {
+        console.log('found ID', res.data.UID);
+        this.elevateUser(res.data.UID);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   sendStripeToken() {
     console.log('sending stripe token to server!');
     console.log('loanPlan on state', this.state.loanPlan);
     const body = {
       loanPlan: this.state.loanPlan,
       stripeToken: this.state.stripeToken,
+      email: this.state.email,
     };
     const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
       .post(`${base}/stripe`, body)
       .then((res) => {
         console.log('Response from server: ', res);
-        window.location = '/open_loans';
+        this.getUserId();
       })
       .catch((err) => {
         console.log(err);
       });
   }
+
+  elevateUser = (id) => {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+
+    const userInfo = {
+      token: id,
+      userType: 'managerUser',
+    };
+
+    console.log('sending to db:', userInfo);
+    axios
+      .post(`${base}/edituser`, userInfo)
+      .then((res) => {
+        console.log('Success response: ', res);
+        window.location = '/open_loans';
+      })
+      .catch((err) => {
+        console.log('Failed to make changes to user!', err);
+      });
+  };
 
   submitBillingInfo() {
     console.log(this.state.username);
@@ -63,6 +98,10 @@ class Billing extends Component {
 
   handleNameChange = (e) => {
     this.setState({ name: e.target.value });
+  };
+
+  handleEmailChange = (e) => {
+    this.setState({ email: e.target.value });
   };
 
   handleOneYPlanSelection = () => {
@@ -89,18 +128,6 @@ class Billing extends Component {
   };
 
   render() {
-    // render getter
-    const token = this.state.tokenId;
-    console.log(sessionStorage.getItem('tokenId'));
-    console.log('state tokenId:', token);
-    if (token === null || token === undefined || token === '') {
-      window.location = '/login_user';
-      return (
-        <div>
-          <h1> Please Login</h1>
-        </div>
-      );
-    }
     return (
       <div className="Billing">
         <Navbar />
@@ -138,6 +165,9 @@ class Billing extends Component {
                 <input type="text" name="name" onChange={this.handleNameChange} />
               </fieldset>
               <CardElement />
+              <br />
+              <legend>Email Address Of The User To Be Granted Loan Officer Privileges: </legend>
+              Email Address: <input type="text" name="email" onChange={this.handleEmailChange} />
               <button onClick={this.handleSubmit}>Submit</button>
             </form>
           </div>
