@@ -13,7 +13,7 @@ export default class SideBarNav extends Component {
       userName: '',
     };
   }
-  initState() {
+  componentDidMount() {
     const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const body = { token: this.state.tokenId };
     axios
@@ -27,7 +27,6 @@ export default class SideBarNav extends Component {
   }
   render() {
     if (this.state.userType === 'managerUser') {
-      this.initState();
       return (
         <div className="menu-container">
           <Menu>
@@ -55,7 +54,6 @@ export default class SideBarNav extends Component {
         </div>
       );
     } else if (this.state.userType === 'standardUser') {
-      this.initState();
       return (
         <div className="menu-container">
           <Menu>

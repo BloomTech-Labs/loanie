@@ -49,36 +49,6 @@ export default class Settings extends Component {
     // window.location = '/my_loans';
   };
 
-  sendToDB = () => {
-    // check to see if email changed
-    if (this.state.email !== this.state.originalEmail) {
-      firebase
-        .signInAndRetrieveDataWithEmailAndPassword(this.state.originalEmail, this.state.password)
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          if (errorCode === 'auth/wrong-password') {
-            console.log('Wrong password.');
-          } else {
-            console.log(errorMessage);
-          }
-          console.log(error);
-        });
-
-      firebase
-        .auth()
-        .updateEmail(this.state.email)
-        .then(() => {
-          this.send();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      this.send();
-    }
-  };
-
   send() {
     const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const userInfo = {
@@ -97,10 +67,6 @@ export default class Settings extends Component {
         console.log('Failed to make changes to user!', err);
       });
   }
-
-  handleEmailChange = (event) => {
-    this.setState({ email: event.target.value });
-  };
 
   handleNameChange = (event) => {
     this.setState({ name: event.target.value });
@@ -180,7 +146,7 @@ export default class Settings extends Component {
               </div>
               <br />
               <br />
-              <button onClick={this.sendToDB}>Submit</button>
+              <button onClick={this.send}>Submit</button>
             </fieldset>
           </form>
         </div>
