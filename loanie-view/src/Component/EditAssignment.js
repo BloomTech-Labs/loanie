@@ -70,7 +70,7 @@ class EditAssignment extends Component {
 
   handleNewAssignment = (e) => {
     this.setState({ text: e.target.value });
-    console.log(this.state.newAssignmentText);
+    console.log(this.state.text);
   };
 
   submitDeleteAssignment = () => {
@@ -89,8 +89,7 @@ class EditAssignment extends Component {
       .catch((err) => {
         console.log('Assignment deletion failed.', err);
       });
-    const str = '/add_assignment/';
-    const url = str + this.state.loanId;
+    const url = `/add_assignment/${this.state.loanId}`;
     window.location = url;
   };
 
@@ -146,7 +145,7 @@ class EditAssignment extends Component {
     };
     const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
-      .post('{base}/assignmentedit', body)
+      .post(`${base}/assignmentedit`, body)
       .then(() => {
         console.log('Assignment edited successfully!');
       })

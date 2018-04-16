@@ -39,11 +39,12 @@ class Billing extends Component {
       loanPlan: this.state.loanPlan,
       stripeToken: this.state.stripeToken,
     };
-    const base = process.env.BASE_URL || 'http://localhost:3030';
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
       .post(`${base}/stripe`, body)
       .then((res) => {
         console.log('Response from server: ', res);
+        window.location = '/open_loans';
       })
       .catch((err) => {
         console.log(err);
@@ -116,7 +117,7 @@ class Billing extends Component {
         </div>
         <div className="Billing-title-containter">
           <div className="Billing-form-container">
-            <form onSubmit={this.handleSubmit}>
+            <form>
               <fieldset>
                 <legend>Select a Plan:</legend>
                 <input
@@ -137,7 +138,7 @@ class Billing extends Component {
                 <input type="text" name="name" onChange={this.handleNameChange} />
               </fieldset>
               <CardElement />
-              <button onClick={this.submitBillingInfo}>Submit</button>
+              <button onClick={this.handleSubmit}>Submit</button>
             </form>
           </div>
         </div>
