@@ -19,10 +19,9 @@ export default class SideBarNav extends Component {
       .post('http://localhost:3030/user', body)
       .then((res) => {
         this.setState({ userName: res.data.name });
-        // console.log('userName', this.state.userName);
       })
       .catch((err) => {
-        console.log(err);
+        throw err;
       });
   }
   render() {
