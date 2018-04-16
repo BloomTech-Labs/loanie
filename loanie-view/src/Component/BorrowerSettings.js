@@ -24,13 +24,14 @@ export default class BorrowerSettings extends Component {
   }
 
   componentDidMount() {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     console.log(this.state.tokenId);
     const body = {
       token: this.state.tokenId,
     };
 
     axios
-      .post('http://localhost:3030/user', body)
+      .post(`${base}/user`, body)
       .then((res) => {
         this.setState({
           name: res.data.name,
@@ -101,8 +102,9 @@ export default class BorrowerSettings extends Component {
       token: this.state.tokenId,
     };
     console.log('sending to db:', userInfo);
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
-      .post('http://localhost:3030/edituser', userInfo)
+      .post(`${base}/edituser`, userInfo)
       .then((res) => {
         console.log('Success response: ', res);
       })

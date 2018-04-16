@@ -22,7 +22,6 @@ export default class ClientSelectedLoan extends Component {
       currentStatus: null,
       phaseTitle: '',
       currentLoanId: '',
-      tokenId: sessionStorage.getItem('tokenId'),
       totalPhases: [],
       allAssignments: [],
       phaseTitleNumber: '',
@@ -35,15 +34,16 @@ export default class ClientSelectedLoan extends Component {
   }
 
   getLoanData = () => {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     // grabs the current url
     let getLoanId = window.location.href;
     // grabs username inside current url
     getLoanId = getLoanId.split('/').pop();
     axios
-      .get(`http://localhost:3030/loan/${getLoanId}`)
-      .then((loandata) => {
-        // console.log(loandata.data);
-        const assignArr = loandata.data.assignments;
+    .get(`${base}/loan/${getLoanId}`)
+    .then((loandata) => {
+      console.log(loandata.data);
+      const assignArr = loandata.data.assignments;
         const filteredLoans = PhaseContent.filter(post =>
           post.loanType.includes(loandata.data.loanType));
         const totalPhaseNo = filteredLoans;
@@ -81,14 +81,13 @@ export default class ClientSelectedLoan extends Component {
         }
         // axios request to get a user by email.
         const request = { email: loandata.data.clientEmail };
-        // console.log('request: ', request);
+        console.log('request: ', request);
         axios
-          .post('http://localhost:3030/userbyemail', request)
+          .post(`${base}/userbyemail`, request)
           .then((res) => {
-           //  console.log(res.data.name);
+            console.log(res.data.name);
             const userName = res.data.name;
             this.setState({ borrower: userName });
-            console.log(this.state.totalPhases.length);
           })
           .catch((err) => {
             console.log(err);
@@ -97,7 +96,7 @@ export default class ClientSelectedLoan extends Component {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   completedAssignment = (assignmentId, assignmentIndex) => {
     const tempAssignmets = this.state.assignments;
@@ -108,9 +107,9 @@ export default class ClientSelectedLoan extends Component {
       assignmentId,
       complete: tempAssignmets[assignmentIndex].complete,
     };
-
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
-      .post('http://localhost:3030/assignmentcomplete', body)
+      .post(`${base}/assignmentcomplete`, body)
       .then(console.log('loan marked complete'))
       .catch((err) => {
         console.log(err);
@@ -136,7 +135,7 @@ export default class ClientSelectedLoan extends Component {
       // TODO: Also send openLoan to the axios request to update if the loan is open o closed!
       const request = { currentStatus: phaseIncrement };
       axios
-        .post(`http://localhost:3030/loan/${this.state.currentLoanId}`, request)
+        .post(`${base}/loan/${this.state.currentLoanId}`, request)
         .then((res) => {
           console.log('res.data.name: ', res.data.name);
           const userName = res.data.name;
@@ -184,10 +183,11 @@ export default class ClientSelectedLoan extends Component {
   }
   sendNewLoanNotification = () => {
     // axios request to get client name
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const request = { email: this.state.clientEmail };
     console.log('request from loan create: ', request);
     axios
-      .post('http://localhost:3030/userbyemail', request)
+      .post(`${base}/userbyemail`, request)
       .then((res) => {
         console.log('res.data.name: ', res.data.name);
         const clientName = res.data.name;
@@ -201,7 +201,7 @@ export default class ClientSelectedLoan extends Component {
           text: message,
         };
         axios
-          .post('http://localhost:3030/sendsms', textRequest)
+          .post(`${base}/sendsms`, textRequest)
           .then((resp) => {
             console.log('Success! Response from server: ', resp);
           })
@@ -215,7 +215,7 @@ export default class ClientSelectedLoan extends Component {
           text: message,
         };
         axios
-          .post('http://localhost:3030/sendemail', emailRequest)
+          .post(`${base}/sendemail`, emailRequest)
           .then((response) => {
             console.log('Success! Response from server: ', response);
           })
@@ -226,8 +226,7 @@ export default class ClientSelectedLoan extends Component {
       .catch((err) => {
         console.log(err);
       });
-    
-  }
+  };
 
   render() {
     // getter

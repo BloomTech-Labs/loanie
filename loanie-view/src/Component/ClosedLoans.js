@@ -28,9 +28,10 @@ export default class ClosedLoans extends Component {
   }
 
   componentDidMount() {
+    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
     const body = { token: this.state.tokenId };
     axios
-      .post('http://localhost:3030/user', body)
+      .post(`${base}/user`, body)
       .then((res) => {
         console.log('res name', res.data.name);
         this.setState({
@@ -46,13 +47,14 @@ export default class ClosedLoans extends Component {
   }
 
   handleGetClosedLoans = () => {
+    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
     const body = {
       loanManagerId: this.state.loanManagerId,
     };
 
     console.log('loanManagerId from body: ', body.loanManagerId);
     axios
-      .post('http://localhost:3030/getmanagerloans', body)
+      .post(`${base}/getmanagerloans`, body)
       .then((res) => {
         this.setState({ loans: res.data });
         console.log('get manager loans', res);

@@ -10,6 +10,7 @@ import '../CSS/AccountLogin.css';
 
 const sendToken = (tokenId, sendEmail) => {
   // setter
+  const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
   sessionStorage.setItem('tokenId', tokenId);
   sessionStorage.setItem('email', sendEmail);
 
@@ -24,7 +25,7 @@ const sendToken = (tokenId, sendEmail) => {
     email: sendEmail,
   };
   axios
-    .post('http://localhost:3030/auth', data)
+    .post(`${base}/auth`, data)
     .then((res) => {
       const usertype = res.data.userType;
       sessionStorage.setItem('userType', usertype);

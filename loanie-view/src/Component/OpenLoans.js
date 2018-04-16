@@ -28,18 +28,19 @@ export default class OpenLoans extends Component {
   }
 
   componentDidMount() {
+    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
     const body = { token: this.state.tokenId };
     axios
-      .post('http://localhost:3030/user', body)
+      .post(`${base}/user`, body)
       .then((res) => {
-        console.log('res name', res.data.name);
+        console.log("res name", res.data.name);
         this.setState({ loanManagerId: res.data._id });
-        console.log('loanManagerId from open loans: ', res.data._id);
-        console.log('Response from server: ', res);
+        console.log("loanManagerId from open loans: ", res.data._id);
+        console.log("Response from server: ", res);
         this.handleGetOpenLoans();
       })
       .catch((err) => {
-        console.log('Unable to fetch user data.', err);
+        console.log("Unable to fetch user data.", err);
       });
 
     // console.log("User email: ", this.props.userLoginDetails.email);
@@ -48,27 +49,28 @@ export default class OpenLoans extends Component {
   }
 
   handleGetOpenLoans = () => {
+    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
     const body = {
       loanManagerId: this.state.loanManagerId,
     };
 
-    console.log('loanManagerId from body: ', body.loanManagerId);
+    console.log("loanManagerId from body: ", body.loanManagerId);
     axios
-      .post('http://localhost:3030/getmanagerloans', body)
+      .post(`${base}/getmanagerloans`, body)
       .then((res) => {
         this.setState({ loans: res.data });
         // this.setState({ loans: [] });
-        console.log('loans', res);
+        console.log("loans", res);
       })
       .catch((err) => {
-        console.log('Unable to fetch loan data.', err);
+        console.log("Unable to fetch loan data.", err);
       });
-  }
+  };
 
   handleGetAllOpenLoans = () => {
     const openLoans = this.state.loans.filter(loan => loan.openLoan === true);
     return openLoans;
-  }
+  };
 
   render() {
     const loans = this.handleGetAllOpenLoans();
@@ -132,9 +134,7 @@ export default class OpenLoans extends Component {
               <BreadcrumbItem active>Loans</BreadcrumbItem>
             </Breadcrumb>
           </div>
-          <CardColumns>
-            {cards}
-          </CardColumns>
+          <CardColumns>{cards}</CardColumns>
           {noCards}
           <div className="OpenLoans-image-container">
             <h1> Add a New Loan</h1>

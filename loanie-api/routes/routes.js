@@ -1,6 +1,7 @@
 const userControllers = require("../controllers/userControllers");
 const loanControllers = require("../controllers/loanControllers");
 const thirdPartyApiControllers = require("../controllers/thirdPartyApiControllers");
+const path = require("path");
 
 module.exports = (app) => {
   // Returns all loans in the database. This is just for manual debugging,
@@ -59,4 +60,9 @@ module.exports = (app) => {
 
   // Send sms notification to the user
   app.route("/sendsms").post(thirdPartyApiControllers.sendSmsNotification);
+
+  // frontend proxy
+  app.get("*", (request, response) => {
+    response.sendFile(path.resolve(__dirname, "../../loanie-view/build", "index.html"));
+  });
 };

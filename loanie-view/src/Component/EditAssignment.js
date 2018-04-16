@@ -22,13 +22,14 @@ class EditAssignment extends Component {
   }
 
   componentWillMount() {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const params = window.location.href;
     const assignmentId = params.substring(params.lastIndexOf('/') + 1, params.lastIndexOf('-'));
     const loanId = params.substring(params.lastIndexOf('-') + 1, params.lastIndexOf('+'));
     console.log('loanId', loanId);
     console.log('assignmentId', assignmentId);
     axios
-      .get(`http://localhost:3030/loan/${loanId}`)
+      .get(`${base}/loan/${loanId}`)
       .then((res) => {
         const loanType = res.data.loanType;
         const assignment = res.data.assignments.filter(assign => assign._id === assignmentId);
@@ -69,7 +70,7 @@ class EditAssignment extends Component {
 
   handleNewAssignment = (e) => {
     this.setState({ text: e.target.value });
-    console.log(this.state.newAssignmentText);
+    console.log(this.state.text);
   };
 
   submitDeleteAssignment = () => {
@@ -79,16 +80,16 @@ class EditAssignment extends Component {
       loanId: this.state.loanId,
       assignmentId: this.state.assignmentId,
     };
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
-      .post('http://localhost:3030/assignmentdelete', body)
+      .post(`${base}/assignmentdelete`, body)
       .then(() => {
         console.log('Assignment deleted successfully!');
       })
       .catch((err) => {
         console.log('Assignment deletion failed.', err);
       });
-    const str = '/add_assignment/';
-    const url = str + this.state.loanId;
+    const url = `/add_assignment/${this.state.loanId}`;
     window.location = url;
   };
 
@@ -142,8 +143,9 @@ class EditAssignment extends Component {
       phase: this.state.phase,
       complete: this.state.complete,
     };
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
-      .post('http://localhost:3030/assignmentedit', body)
+      .post(`${base}/assignmentedit`, body)
       .then(() => {
         console.log('Assignment edited successfully!');
       })

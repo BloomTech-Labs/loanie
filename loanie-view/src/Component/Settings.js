@@ -22,12 +22,13 @@ export default class Settings extends Component {
   }
 
   componentDidMount() {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const body = {
       token: this.state.tokenId,
     };
 
     axios
-      .post('http://localhost:3030/user', body)
+      .post(`${base}/user`, body)
       .then((res) => {
         this.setState({
           name: res.data.name,
@@ -79,6 +80,7 @@ export default class Settings extends Component {
   };
 
   send() {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const userInfo = {
       name: this.state.name,
       email: this.state.email,
@@ -87,7 +89,7 @@ export default class Settings extends Component {
     };
     console.log('sending to db:', userInfo);
     axios
-      .post('http://localhost:3030/edituser', userInfo)
+      .post(`${base}/edituser`, userInfo)
       .then((res) => {
         console.log('Success response: ', res);
       })
@@ -170,7 +172,7 @@ export default class Settings extends Component {
                 <p>Phone Number:</p>{' '}
                 <ReactTelephoneInput
                   defaultCountry="us"
-                  flagsImagePath=".\Images\flags.png"
+                  flagsImagePath="/Images/flags.png"
                   value={this.state.phoneNumber}
                   onChange={this.handlePhoneChange}
                   onBlur={this.handleInputBlur}

@@ -22,11 +22,12 @@ class AddAssignment extends Component {
   }
 
   componentWillMount() {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const getLoanId = window.location.href;
     const id = getLoanId.split('/').pop();
     this.setId(id);
     axios
-      .get(`http://localhost:3030/loan/${id}`)
+      .get(`${base}/loan/${id}`)
       .then((res) => {
         console.log('res clientemail', res.data.clientEmail);
         this.setState({
@@ -104,8 +105,9 @@ class AddAssignment extends Component {
       assignments: assignment,
     };
     console.log('body', body);
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
-      .post('http://localhost:3030/assignment', body)
+      .post(`${base}/assignment`, body)
       .then(() => {
         console.log('Assignment created successfully!');
         window.location = `/add_assignment/${id}`;

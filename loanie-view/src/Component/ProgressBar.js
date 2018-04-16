@@ -13,12 +13,13 @@ export default class ProgressBar extends Component {
     };
   }
   componentDidMount() {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     // grabs the current url
     let getLoanId = window.location.href;
     // grabs username inside current url
     getLoanId = getLoanId.split('/').pop();
     axios
-      .get(`http://localhost:3030/loan/${getLoanId}`)
+      .get(`${base}/loan/${getLoanId}`)
       .then((loandata) => {
         // filter loan phases based on the loantype
         const filteredLoans = PhaseContent.filter(post =>

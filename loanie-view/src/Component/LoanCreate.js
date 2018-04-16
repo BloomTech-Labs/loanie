@@ -13,23 +13,23 @@ export default class LoanCreate extends Component {
       tokenId: sessionStorage.getItem('tokenId'),
       managerName: '',
       managerEmail: '',
-      clientName: '',
       phoneNumber: '',
       managerPhone: '',
       loanManagerId: '',
-      clientEmail: 'default@email.com',
+      clientEmail: '',
       loanType: 'new',
       amount: '',
     };
   }
 
   componentWillMount() {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const body = {
       token: this.state.tokenId,
     };
 
     axios
-      .post('http://localhost:3030/user', body)
+      .post(`${base}/user`, body)
       .then((res) => {
         console.log('res name', res.data.name);
         this.setState({
@@ -45,77 +45,68 @@ export default class LoanCreate extends Component {
       });
   }
 
-  handleAmountChange = (event) => {
-    this.setState({ amount: event.target.value });
-    console.log(this.state.amount);
+  handleAmountChange = (e) => {
+    this.setState({ amount: e.target.value });
+    console.log('amount', this.state.amount);
   };
 
-  handleEmailChange = (event) => {
-    this.setState({ clientEmail: event.target.value });
-    console.log(this.state.email);
+  handleEmailChange = (e) => {
+    e.preventDefault();
+    this.setState({ clientEmail: e.target.value });
+    console.log('email', this.state.email);
   };
 
-  handleSmsChange = (event) => {
-    this.setState({ phoneNumber: event.target.value });
-    console.log(this.state.phoneNumber);
+  handleSmsChange = (e) => {
+    this.setState({ phoneNumber: e.target.value });
+    console.log('phone number', this.state.phoneNumber);
   };
 
   sendNewLoanNotification = () => {
     // axios request to get client name
-    const request = { email: this.state.clientEmail };
-    console.log('request from loan create: ', request);
+    const link = 'https://loanie.herokuapp.com/';
+    const message = `Hello! Your loan officer, ${
+      this.state.managerName
+    }, would like to cordially invite you to use a new cutting edge mortgage communication tool called Loanie! Your loan information is waiting for you, all you have to do is sign up at ${link} . If you have any trouble or questions you can contact ${
+      this.state.managerName
+    } by phone at ${this.state.managerPhone} or by email at ${this.state.managerEmail} .`;
+
+    // axios request to send text notification.
+    const textRequest = {
+      phoneNumber: this.state.phoneNumber,
+      text: message,
+    };
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
-      .post('http://localhost:3030/userbyemail', request)
-      .then((res) => {
-        console.log('res.data.name: ', res.data.name);
-        this.setState({ clientName: res.data.name });
-
-        const link = 'https://loanie.herokuapp.com/';
-        const message = `Hi ${this.state.clientName}! Your loan officer, ${
-          this.state.managerName
-        }, would like to cordially invite you to use a new cutting edge mortgage communication tool called Loanie! Your loan information is waiting for you, all you have to do is sign up at ${link} . If you have any trouble or questions you can contact ${
-          this.state.managerName
-        } by phone at ${this.state.managerPhone} or by email at ${this.state.managerEmail} .`;
-
-        // axios request to send text notification.
-        const textRequest = {
-          phoneNumber: this.state.phoneNumber,
-          text: message,
-        };
-        axios
-          .post('http://localhost:3030/sendsms', textRequest)
-          .then((res) => {
-            console.log('Success! Response from server: ', res);
-          })
-          .catch((err) => {
-            console.log('Loan creation failed.', err);
-          });
-
-        // axios request to send email notification.
-        const emailRequest = {
-          email: this.state.clientEmail,
-          text: message,
-        };
-        axios
-          .post('http://localhost:3030/sendemail', emailRequest)
-          .then((response) => {
-            console.log('Success! Response from server: ', response);
-            window.location = '/open_loans';
-          })
-          .catch((err) => {
-            console.log('Loan creation failed.', err);
-          });
+      .post(`${base}/sendsms`, textRequest)
+      .then((resp) => {
+        console.log('SMS Success! Response from server: ', resp);
       })
       .catch((err) => {
-        console.log(err);
+        console.log('Loan creation failed.', err);
+      });
+
+    // axios request to send email notification.
+    const emailRequest = {
+      email: this.state.clientEmail,
+      text: message,
+    };
+    axios
+      .post(`${base}/sendemail`, emailRequest)
+      .then((response) => {
+        console.log('Email Success! Response from server: ', response);
+        console.log('redirecting');
+        window.location = '/open_loans';
+      })
+      .catch((err) => {
+        console.log('Loan creation failed.', err);
       });
   };
 
   sendNewLoanDB() {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const defaults = assignmentDefaults(this.state.loanType);
     console.log('assignments', defaults);
     console.log('state', this.state);
-    console.log(assignmentDefaults());
     const body = {
       loanManagerId: this.state.loanManagerId,
       clientEmail: this.state.clientEmail,
@@ -124,7 +115,7 @@ export default class LoanCreate extends Component {
       assignments: defaults,
     };
     axios
-      .post('http://localhost:3030/newloan', body)
+      .post(`${base}/newloan`, body)
       .then((res) => {
         console.log('Success! Response from server: ', res);
         this.sendNewLoanNotification();
@@ -139,14 +130,14 @@ export default class LoanCreate extends Component {
   };
 
   handleDropDown = (e) => {
-    console.log(e.target.value);
+    console.log('dropdown', e.target.value);
     this.setState({ loanType: e.target.value });
   };
 
   render() {
     // render getter
     const token = this.state.tokenId;
-    console.log(sessionStorage.getItem('tokenId'));
+    console.log('tokenId', sessionStorage.getItem('tokenId'));
     console.log('state tokenId:', token);
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';

@@ -36,7 +36,7 @@ const loansGetAllByClientEmail = (req, res) => {
   const { clientEmail } = req.body;
   Loan.find({ clientEmail })
     .then((loans) => {
-      //console.log(loans);
+      // console.log(loans);
       res.json(loans);
     })
     .catch(err => res.status(422).json(err));

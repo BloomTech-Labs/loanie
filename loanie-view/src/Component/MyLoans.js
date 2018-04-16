@@ -24,24 +24,30 @@ export default class MyLoans extends Component {
     };
   }
   componentWillMount() {
+    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
+    // console.log(this.state.userType);
+    // console.log('hello');
+    // console.log(this.state.tokenId);
     const body = { token: this.state.tokenId };
     axios
-      .post('http://localhost:3030/user', body)
+      .post(`${base}/user`, body)
       .then((res) => {
-        // gran client email to use for next request
         const userEmail = { clientEmail: res.data.email };
+        // console.log('hello');
+        console.log("email to get loans", res.data.email);
         axios
-          .post('http://localhost:3030/getclientloans', userEmail)
+          .post(`${base}/getclientloans`, userEmail)
           .then((loandata) => {
-            // grabs client loans based on email
             this.setState({ loanList: loandata.data });
+            //  console.log(this.state.loanList);
+            console.log(this.state.loanList);
           })
           .catch((err) => {
-            throw err;
+            console.log(err);
           });
       })
       .catch((err) => {
-        throw err;
+        console.log(err);
       });
   }
   render() {

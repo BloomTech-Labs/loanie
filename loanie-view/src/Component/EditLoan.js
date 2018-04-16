@@ -23,10 +23,11 @@ class EditLoan extends Component {
   }
 
   componentWillMount() {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const getLoanId = window.location.href;
     const id = getLoanId.split('/').pop();
     axios
-      .get(`http://localhost:3030/loan/${id}`)
+      .get(`${base}/loan/${id}`)
       .then((res) => {
         console.log('res clientemail', res.data.clientEmail);
         this.setState({
@@ -121,8 +122,9 @@ class EditLoan extends Component {
       loanType: this.state.loanType,
       amount: this.state.amount,
     };
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
-      .post(`http://localhost:3030/loan/${id}`, body)
+      .post(`${base}/loan/${id}`, body)
       .then(() => {
         console.log('Loan edited successfully!');
         window.location = '/open_loans';

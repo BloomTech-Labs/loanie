@@ -68,8 +68,7 @@ class AccountCreation extends Component {
     this.setState({ password: event.target.value });
   };
 
-  handleInputChange = (telNumber, selectedCountry) => {
-    console.log('input changed. number: ', telNumber, 'selected country: ', selectedCountry);
+  handleInputChange = (telNumber) => {
     this.setState({ phone: telNumber });
   };
 
@@ -105,8 +104,9 @@ class AccountCreation extends Component {
     };
     sessionStorage.setItem('userType', this.state.userType);
     console.log('sending to db:', userInfo);
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     axios
-      .post('http://localhost:3030/newuser', userInfo)
+      .post(`${base}/newuser`, userInfo)
       .then((res) => {
         console.log('Response from server: ', res);
       })

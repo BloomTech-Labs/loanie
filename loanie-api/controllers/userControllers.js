@@ -97,7 +97,6 @@ const userGetByUID = (req, res) => {
   console.log("token:", token);
   User.findOne({ UID: token })
     .then((user) => {
-      console.log('hello');
       console.log(user);
       if (user === null) throw new Error();
       else res.json(user);

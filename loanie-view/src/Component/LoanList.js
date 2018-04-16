@@ -15,20 +15,22 @@ export default class LoanList extends Component {
       loanList: [],
     };
   }
+
   componentWillMount() {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     // if (this.props.tokenId === '') window.location = '/login_user';
     console.log(this.state.userType);
     console.log('hello');
     console.log(this.state.tokenId);
     const body = { token: this.state.tokenId };
     axios
-      .post('http://localhost:3030/user', body)
+      .post(`${base}/user`, body)
       .then((res) => {
         console.log(res);
         console.log(res.data.id);
         const managerID = { loanManagerId: res.data.id };
         axios
-          .post('http://localhost:3030/getmanagerloans', managerID)
+          .post(`${base}/getmanagerloans`, managerID)
           .then((loandata) => {
             const loanArr = loandata.data;
             console.log(loandata);
