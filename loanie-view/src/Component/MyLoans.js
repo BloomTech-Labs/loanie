@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  Card,
-  CardHeader,
-  CardText,
-  CardBody,
-} from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardText, CardBody } from 'reactstrap';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import '../CSS/MyLoans.css';
@@ -24,7 +17,7 @@ export default class MyLoans extends Component {
     };
   }
   componentWillMount() {
-    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     // console.log(this.state.userType);
     // console.log('hello');
     // console.log(this.state.tokenId);
@@ -34,7 +27,7 @@ export default class MyLoans extends Component {
       .then((res) => {
         const userEmail = { clientEmail: res.data.email };
         // console.log('hello');
-        console.log("email to get loans", res.data.email);
+        console.log('email to get loans', res.data.email);
         axios
           .post(`${base}/getclientloans`, userEmail)
           .then((loandata) => {
@@ -83,35 +76,42 @@ export default class MyLoans extends Component {
           </div>
           <Navbar />
           <div className="MyLoans-link-container">
-            {this.state.loanList.map((val, index) =>
-              (
-                <div className="MyLoans-loancard">
-                  <Card>
-                    <CardHeader>
-                      <Link to={`my_loan/${val._id}`}>
-                        <h5><b>Loan</b> {index + 1}</h5>
-                      </Link>
-                    </CardHeader>
-                    <CardBody>
-                      <CardText>
-                        <ul className="list-unstyled">
-                          <li>
-                            <p className="MyLoans-text"><b>Current Phase</b>: {val.currentStatus}</p>
-                          </li>
-                          <li>
-                            <p className="MyLoans-text"><b>Loan Type</b>: {val.loanType}</p>
-                          </li>
-                          <li>
-                            <Link to={`my_loan/${val._id}`}>
-                              <p className="MyLoans-text"><b>See Details</b></p>
-                            </Link>
-                          </li>
-                        </ul>
-                      </CardText>
-                    </CardBody>
-                  </Card>
-                </div>
-              ))}
+            {this.state.loanList.map((val, index) => (
+              <div className="MyLoans-loancard">
+                <Card>
+                  <CardHeader>
+                    <Link to={`my_loan/${val._id}`}>
+                      <h5>
+                        <b>Loan</b> {index + 1}
+                      </h5>
+                    </Link>
+                  </CardHeader>
+                  <CardBody>
+                    <CardText>
+                      <ul className="list-unstyled">
+                        <li>
+                          <p className="MyLoans-text">
+                            <b>Current Phase</b>: {val.currentStatus}
+                          </p>
+                        </li>
+                        <li>
+                          <p className="MyLoans-text">
+                            <b>Loan Type</b>: {val.loanType}
+                          </p>
+                        </li>
+                        <li>
+                          <Link to={`my_loan/${val._id}`}>
+                            <p className="MyLoans-text">
+                              <b>See Details</b>
+                            </p>
+                          </Link>
+                        </li>
+                      </ul>
+                    </CardText>
+                  </CardBody>
+                </Card>
+              </div>
+            ))}
           </div>
           <ClientSideNav />
         </div>
