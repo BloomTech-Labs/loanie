@@ -33,10 +33,7 @@ class EditAssignment extends Component {
       .then((res) => {
         const loanType = res.data.loanType;
         const assignment = res.data.assignments.filter(assign => assign._id === assignmentId);
-        this.setState({
-          assignment,
-        });
-        this.initState(loanId, assignmentId, loanType);
+        this.initState(loanId, assignmentId, loanType, assignment);
         console.log('assignment', assignment);
         console.log('Response from server: ', res);
       })
@@ -45,9 +42,10 @@ class EditAssignment extends Component {
       });
   }
 
-  initState(loanId, assignmentId, loanType) {
+  initState(loanId, assignmentId, loanType, assignment) {
     console.log('state assignment', this.state.assignment);
     this.setState({
+      assignment,
       loanType,
       loanId,
       assignmentId,
