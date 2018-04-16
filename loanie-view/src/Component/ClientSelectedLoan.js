@@ -22,6 +22,7 @@ export default class ClientSelectedLoan extends Component {
       currentStatus: null,
       phaseTitle: '',
       currentLoanId: '',
+      tokenId: sessionStorage.getItem('tokenId'),
       totalPhases: [],
       allAssignments: [],
       phaseTitleNumber: '',
@@ -40,10 +41,10 @@ export default class ClientSelectedLoan extends Component {
     // grabs username inside current url
     getLoanId = getLoanId.split('/').pop();
     axios
-    .get(`${base}/loan/${getLoanId}`)
-    .then((loandata) => {
-      console.log(loandata.data);
-      const assignArr = loandata.data.assignments;
+      .get(`${base}/loan/${getLoanId}`)
+      .then((loandata) => {
+        // console.log(loandata.data);
+        const assignArr = loandata.data.assignments;
         const filteredLoans = PhaseContent.filter(post =>
           post.loanType.includes(loandata.data.loanType));
         const totalPhaseNo = filteredLoans;
@@ -81,13 +82,14 @@ export default class ClientSelectedLoan extends Component {
         }
         // axios request to get a user by email.
         const request = { email: loandata.data.clientEmail };
-        console.log('request: ', request);
+        // console.log('request: ', request);
         axios
           .post(`${base}/userbyemail`, request)
           .then((res) => {
-            console.log(res.data.name);
+            //  console.log(res.data.name);
             const userName = res.data.name;
             this.setState({ borrower: userName });
+            console.log(this.state.totalPhases.length);
           })
           .catch((err) => {
             console.log(err);
@@ -96,9 +98,10 @@ export default class ClientSelectedLoan extends Component {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }
 
   completedAssignment = (assignmentId, assignmentIndex) => {
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const tempAssignmets = this.state.assignments;
     tempAssignmets[assignmentIndex].complete = !tempAssignmets[assignmentIndex].complete;
     this.setState({ assignments: tempAssignmets });
@@ -107,7 +110,7 @@ export default class ClientSelectedLoan extends Component {
       assignmentId,
       complete: tempAssignmets[assignmentIndex].complete,
     };
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+
     axios
       .post(`${base}/assignmentcomplete`, body)
       .then(console.log('loan marked complete'))
@@ -149,9 +152,9 @@ export default class ClientSelectedLoan extends Component {
         });
     }
   };
+
   handlePhaseChange = (event) => {
-    // console.log(event.target.value);
-    // console.log(this.state.allAssignments);
+    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     const filteredAssign = [];
     const updatePhase = event.target.value;
     // grabs the current url
@@ -159,7 +162,7 @@ export default class ClientSelectedLoan extends Component {
     // grabs username inside current url
     getLoanId = getLoanId.split('/').pop();
     axios
-      .get(`http://localhost:3030/loan/${getLoanId}`)
+      .get(`${base}/loan/${getLoanId}`)
       .then((loandata) => {
         const assignArr = loandata.data.assignments;
         console.log('all assigns', assignArr);
@@ -181,6 +184,7 @@ export default class ClientSelectedLoan extends Component {
         console.log(err);
       });
   }
+
   sendNewLoanNotification = () => {
     // axios request to get client name
     const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
@@ -226,7 +230,7 @@ export default class ClientSelectedLoan extends Component {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }
 
   render() {
     // getter
@@ -298,13 +302,18 @@ export default class ClientSelectedLoan extends Component {
               {this.state.totalPhases.map((val, index) =>
                 (
                   <div style={progressBarStyle} key={val.phase}>
-                    <button key={val.phase} value={val.phase} onClick={this.handlePhaseChange}>{index + 1}</button>
+                    <button
+                      key={val.phase}
+                      value={val.phase}
+                      onClick={this.handlePhaseChange}
+                    >{index + 1}
+                    </button>
                   </div>
                 ))
               }
             </div>
             <br />
-            <ProgressBar key={this.state.phaseNumber}/>
+            <ProgressBar key={this.state.phaseNumber} />
           </div>
         </div>
         <div className="ClientLoan-phase-container">

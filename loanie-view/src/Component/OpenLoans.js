@@ -76,8 +76,7 @@ export default class OpenLoans extends Component {
     const loans = this.handleGetAllOpenLoans();
     const cards = [];
     loans.forEach((loan, index) => {
-      cards.push(
-        <div className="OpenLoans-card-container">
+      cards.push(<div className="OpenLoans-card-container">
           <Card>
             <CardHeader><b>Loan {index + 1}</b></CardHeader>
             <CardBody>
@@ -100,7 +99,7 @@ export default class OpenLoans extends Component {
               </CardText>
             </CardBody>
           </Card>
-        </div>,
+        </div>
       );
       if (index === loans.length - 1) {
         cards.push(
