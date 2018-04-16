@@ -87,7 +87,8 @@ class EditAssignment extends Component {
       .catch((err) => {
         console.log('Assignment deletion failed.', err);
       });
-    const url = `/add_assignment/${this.state.loanId}`;
+    const str = '/add_assignment/';
+    const url = str + this.state.loanId;
     window.location = url;
   };
 
