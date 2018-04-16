@@ -179,32 +179,6 @@ const loanCompleteAssignment = (req, res) => {
   );
 };
 
-
-const loanSaveAssignments = (req, res) => {
-  console.log("loan assignment completed");
-  const { loanId, assignments } = req.body;
-  console.log(loanId, assignments);
-  // find a single Loan
-  // edit loan assignment
-  Loan.updateOne(
-    { _id: loanId },
-    {
-      $set: {
-        assignments,
-      },
-    },
-    (err, doc) => {
-      if (err) {
-        res.status(500).json(err);
-        console.log(err);
-      } else {
-        console.log("loan assignments updated successfully!");
-        res.status(200).json(doc);
-      }
-    },
-  );
-};
-
 // find by loan id and remove item in array
 const loanDeleteAssignment = (req, res) => {
   console.log("edit loan assignment");
@@ -257,5 +231,4 @@ module.exports = {
   loanDeleteAssignment,
   loanCreateAssignment,
   loanCompleteAssignment,
-  loanSaveAssignments,
 };

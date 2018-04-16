@@ -99,36 +99,22 @@ export default class ClientSelectedLoan extends Component {
       });
   }
 
-  saveAssignmentsButton = () => {
-    const body = {
-      loanId: this.state.currentLoanId,
-      assignments: this.state.assignments,
-    };
-    
-    axios
-      .post('http://localhost:3030/saveassignments', body)
-      .then(console.log('loan marked complete'))
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
   completedAssignment = (assignmentId, assignmentIndex) => {
     const tempAssignmets = this.state.assignments;
     tempAssignmets[assignmentIndex].complete = !tempAssignmets[assignmentIndex].complete;
     this.setState({ assignments: tempAssignmets });
-    // const body = {
-    //   loanId: this.state.currentLoanId,
-    //   assignmentId,
-    //   complete: tempAssignmets[assignmentIndex].complete,
-    // };
+    const body = {
+      loanId: this.state.currentLoanId,
+      assignmentId,
+      complete: tempAssignmets[assignmentIndex].complete,
+    };
 
-    // axios
-    //   .post('http://localhost:3030/assignmentcomplete', body)
-    //   .then(console.log('loan marked complete'))
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .post('http://localhost:3030/assignmentcomplete', body)
+      .then(console.log('loan marked complete'))
+      .catch((err) => {
+        console.log(err);
+      });
 
     // check if all assignments are checked with the current phase.
     // If yes, increment the phase
@@ -361,8 +347,7 @@ export default class ClientSelectedLoan extends Component {
                         /> {val.text}
                       </p>
                     );
-                  })
-                  <button /> 
+                  }) 
                  ) : (this.state.assignments.map((val) => {
                    console.log(val);
                     return (
@@ -375,7 +360,8 @@ export default class ClientSelectedLoan extends Component {
                       </p>
                     );
                   })
-                )}
+                )
+              }
             </div>
           </Card>
         </div>
