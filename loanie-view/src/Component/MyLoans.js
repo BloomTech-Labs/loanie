@@ -21,7 +21,7 @@ export default class MyLoans extends Component {
     // console.log(this.state.userType);
     // console.log('hello');
     // console.log(this.state.tokenId);
-    const body = { token: this.state.tokenId };
+    const body = { token: sessionStorage.getItem('tokenId') };
     axios
       .post(`${base}/user`, body)
       .then((res) => {

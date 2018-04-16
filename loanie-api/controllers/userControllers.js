@@ -99,7 +99,7 @@ const userGetByUID = (req, res) => {
     .then((user) => {
       console.log(user);
       if (user === null) throw new Error();
-      else res.json(user);
+      else res.status(200).json(user);
     })
     .catch(err => res.status(422).json({ error: "User not found!", err }));
 };
