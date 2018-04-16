@@ -68,8 +68,7 @@ class AccountCreation extends Component {
     this.setState({ password: event.target.value });
   };
 
-  handleInputChange = (telNumber, selectedCountry) => {
-    console.log('input changed. number: ', telNumber, 'selected country: ', selectedCountry);
+  handleInputChange = (telNumber) => {
     this.setState({ phone: telNumber });
   };
 
