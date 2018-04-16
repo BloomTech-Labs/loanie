@@ -1,17 +1,12 @@
-const User = require("../models/userModels");
 const sgMail = require("@sendgrid/mail");
+const Twilio = require("twilio");
 
 const sendEmailNotification = (req, res) => {
   const { email, text } = req.body;
-  const newUser = new User({
-    email,
-    text,
-  });
   console.log("Request Body:", req.body);
 
-  const sgMail = require("@sendgrid/mail");
-  const sendgrid_key = process.env.SENDGRID_API_KEY || "default_sendgrid_key";
-  sgMail.setApiKey(sendgrid_key);
+  const sendgridKey = process.env.SENDGRID_API_KEY || "default_sendgrid_key";
+  sgMail.setApiKey(sendgridKey);
   const msg = {
     to: email,
     from: process.env.SENDGRID_EMAIL_FROM,
@@ -22,7 +17,7 @@ const sendEmailNotification = (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Yay! Our templated email has been sent");
+      console.log("Yay! Our templated email has been sent", response);
       res.json("Email notification sent!");
     }
   });
@@ -30,16 +25,11 @@ const sendEmailNotification = (req, res) => {
 
 const sendSmsNotification = (req, res) => {
   const { phoneNumber, text } = req.body;
-  const newUser = new User({
-    phoneNumber,
-    text,
-  });
   console.log("Request Body:", req.body);
 
   const accountSid = process.env.TWILIO_ACCOUNT_SID || "default_twilio_sid"; // Your Account SID from www.twilio.com/console
   const authToken = process.env.TWILIO_AUTH_TOKEN || "default_twilio_authToken"; // Your Auth Token from www.twilio.com/console
-  const twilio = require("twilio");
-  const client = new twilio(accountSid, authToken);
+  const client = new Twilio(accountSid, authToken);
 
   client.messages
     .create({
