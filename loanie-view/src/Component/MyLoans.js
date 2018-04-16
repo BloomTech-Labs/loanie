@@ -16,7 +16,7 @@ export default class MyLoans extends Component {
       tokenId: sessionStorage.getItem('tokenId'),
     };
   }
-  componentWillMount() {
+  componentDidMount() {
     const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
     // console.log(this.state.userType);
     // console.log('hello');

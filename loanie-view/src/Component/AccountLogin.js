@@ -11,6 +11,7 @@ import '../CSS/AccountLogin.css';
 const sendToken = (tokenId, sendEmail) => {
   // setter
   const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+  console.log('set sessionStorage id', tokenId);
   sessionStorage.setItem('tokenId', tokenId);
   sessionStorage.setItem('email', sendEmail);
 
