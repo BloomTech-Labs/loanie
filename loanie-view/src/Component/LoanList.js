@@ -15,7 +15,6 @@ export default class LoanList extends Component {
       loanList: [],
     };
   }
-
   componentWillMount() {
     // if (this.props.tokenId === '') window.location = '/login_user';
     console.log(this.state.userType);

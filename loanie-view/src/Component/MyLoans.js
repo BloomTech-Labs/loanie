@@ -18,50 +18,36 @@ export default class MyLoans extends Component {
   constructor() {
     super();
     this.state = {
-      username: '',
       loanList: [],
       userType: sessionStorage.getItem('userType'),
       tokenId: sessionStorage.getItem('tokenId'),
     };
-    this.selectLoan = this.selectLoan.bind(this);
   }
   componentWillMount() {
-    // console.log(this.state.userType);
-    // console.log('hello');
-    // console.log(this.state.tokenId);
     const body = { token: this.state.tokenId };
     axios
       .post('http://localhost:3030/user', body)
       .then((res) => {
+        // gran client email to use for next request
         const userEmail = { clientEmail: res.data.email };
-        // console.log('hello');
-        console.log('email to get loans', res.data.email);
         axios
           .post('http://localhost:3030/getclientloans', userEmail)
           .then((loandata) => {
+            // grabs client loans based on email
             this.setState({ loanList: loandata.data });
-            //  console.log(this.state.loanList);
-            console.log(this.state.loanList);
           })
           .catch((err) => {
-            console.log(err);
+            throw err;
           });
       })
       .catch((err) => {
-        console.log(err);
+        throw err;
       });
   }
-  selectLoan() {
-    console.log(this.state.username);
-  }
   render() {
-    // render getter
+    // grab user type and token id to make sure user is authorized
     const token = this.state.tokenId;
     const user = this.state.userType;
-    // console.log(sessionStorage.getItem('tokenId'));
-    // console.log('state tokenId:', token);
-    // console.log(this.state.username);
-    // console.log(this.state.userType);
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (
@@ -77,9 +63,10 @@ export default class MyLoans extends Component {
         </div>
       );
     }
+    // renders if loan list is not empty
     if (this.state.loanList.length !== 0) {
       return (
-        <div className="MyLoans">
+        <div>
           <div className="BreadCrumb">
             <Breadcrumb>
               <BreadcrumbItem tag="a" href="/">
@@ -90,8 +77,8 @@ export default class MyLoans extends Component {
           </div>
           <Navbar />
           <div className="MyLoans-link-container">
-            {this.state.loanList.map((val, index) => {
-              return (
+            {this.state.loanList.map((val, index) =>
+              (
                 <div className="MyLoans-loancard">
                   <Card>
                     <CardHeader>
@@ -118,13 +105,13 @@ export default class MyLoans extends Component {
                     </CardBody>
                   </Card>
                 </div>
-              );
-            })}
+              ))}
           </div>
           <ClientSideNav />
         </div>
       );
     }
+    // renders if loan list is empty and user authorized
     return (
       <div className>
         <div className="BreadCrumb">
