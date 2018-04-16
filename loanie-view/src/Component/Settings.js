@@ -127,8 +127,6 @@ export default class Settings extends Component {
   render() {
     // render getter
     const token = this.state.tokenId;
-    console.log(sessionStorage.getItem('tokenId'));
-    console.log('state tokenId:', token);
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (
@@ -174,7 +172,7 @@ export default class Settings extends Component {
                 <p>Phone Number:</p>{' '}
                 <ReactTelephoneInput
                   defaultCountry="us"
-                  flagsImagePath="Images\flags.png"
+                  flagsImagePath="/Images/flags.png"
                   value={this.state.phoneNumber}
                   onChange={this.handlePhoneChange}
                   onBlur={this.handleInputBlur}

@@ -10,7 +10,6 @@ export default class ProgressBar extends Component {
       progressValue: 0,
       currentPhase: '',
       totalPhases: 0,
-      phaseArr: [],
     };
   }
   componentDidMount() {
@@ -22,55 +21,32 @@ export default class ProgressBar extends Component {
     axios
       .get(`${base}/loan/${getLoanId}`)
       .then((loandata) => {
+        // filter loan phases based on the loantype
         const filteredLoans = PhaseContent.filter(post =>
           post.loanType.includes(loandata.data.loanType));
+        // records the length of filtered loans to indicate total number of phases
         const totalPhaseNo = filteredLoans.length;
-        console.log(filteredLoans.legnth);
         this.setState({
-          phaseArr: filteredLoans,
           currentPhase: loandata.data.currentStatus,
           progressValue: Number(loandata.data.currentStatus) * (100 / totalPhaseNo),
           totalPhases: totalPhaseNo,
         });
-        console.log(this.state.phaseArr);
-        console.log(this.state.totalPhases);
       })
       .catch((err) => {
-        console.log(err);
+        throw err;
       });
   }
   render() {
-    let progressBarStyle = {};
-    if (this.state.totalPhases === 5) {
-      progressBarStyle = { marginLeft: '9.8em' };
-    } else if (this.state.totalPhases === 6) {
-      progressBarStyle = { marginLeft: '8em' };
-    } else if (this.state.totalPhases === 8) {
-      progressBarStyle = { marginLeft: '5.9em' };
-    } else {
-      progressBarStyle = { marginLeft: '6em' };
-    }
     return (
       <div className="ProgressBar">
-        <div className="ProgressBar-phase-container">
-          {this.state.phaseArr.map((val, index) => (
-            <div className="ProgressBar-phase-item" style={progressBarStyle} key={val.phase}>
-              <p key={val.phase}>{index + 1}</p>
-            </div>
-          ))}
-        </div>
         <div className="progress ProgressBar-container">
           <div
             className="progress-bar ProgressBar-style progress-bar-success"
             role="progressbar"
             aria-valuenow={this.state.progressValue}
-            style={{
-              width: `${this.state.progressValue /
-                (100 / this.state.totalPhases) *
-                (68.5 / this.state.totalPhases)}em`,
-            }}
+            style={{ width: `${((this.state.progressValue / (100 / this.state.totalPhases)) * (68.5 / this.state.totalPhases))}em` }}
           >
-            Phase {this.state.currentPhase}
+            Current Phase: {this.state.currentPhase}
           </div>
         </div>
       </div>

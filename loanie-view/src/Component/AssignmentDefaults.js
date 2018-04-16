@@ -358,7 +358,7 @@ export function assignmentDefaults(loanType) {
       complete: false,
     },
     {
-      text: 'Ask questions and confirm you would like to move forward',
+      text: 'Contact your lender and builder if you have questions during this process.',
       author: '1',
       phase: '7',
       complete: false,

@@ -23,7 +23,7 @@ server.use(bodyParser.json());
 mongoose.Promise = global.Promise;
 // mongoose.connect(process.env.MONGOLAB_MAROON_URI);
 mongoose
-  .connect(process.env.MONGOLAB_MAROON_URI)
+  .connect(process.env.MONGOLAB_MAROON_URI || "mongodb://localhost:27017/users")
   //.connect("mongodb://localhost:27017/users")
   .then(function(db) {
     console.log("All your dbs are belong to us!");

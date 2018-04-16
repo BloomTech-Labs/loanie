@@ -19,9 +19,12 @@ export default class ClientSelectedLoan extends Component {
       userType: sessionStorage.getItem('userType'),
       phaseContent: '',
       phaseNumber: null,
+      currentStatus: null,
       phaseTitle: '',
       currentLoanId: '',
-      tokenId: sessionStorage.getItem('tokenId'),
+      totalPhases: [],
+      allAssignments: [],
+      phaseTitleNumber: '',
       clientEmail: '',
     };
   }
@@ -37,17 +40,26 @@ export default class ClientSelectedLoan extends Component {
     // grabs username inside current url
     getLoanId = getLoanId.split('/').pop();
     axios
-      .get(`${base}/loan/${getLoanId}`)
-      .then((loandata) => {
-        console.log(loandata.data);
-        const assignArr = loandata.data.assignments;
+    .get(`${base}/loan/${getLoanId}`)
+    .then((loandata) => {
+      console.log(loandata.data);
+      const assignArr = loandata.data.assignments;
+        const filteredLoans = PhaseContent.filter(post =>
+          post.loanType.includes(loandata.data.loanType));
+        const totalPhaseNo = filteredLoans;
+        console.log('totalPhase', totalPhaseNo);
         this.setState({
           amount: loandata.data.amount,
           type: loandata.data.loanType,
           phaseNumber: loandata.data.currentStatus,
+          currentStatus: loandata.data.currentStatus,
           currentLoanId: getLoanId,
+          totalPhases: totalPhaseNo,
+          allAssignments: assignArr,
+          phaseTitleNumber: loandata.data.currentStatus,
           clientEmail: loandata.data.clientEmail,
         });
+
         for (let i = 0; i < PhaseContent.length; i += 1) {
           if (
             PhaseContent[i].loanType === this.state.type &&
@@ -137,7 +149,38 @@ export default class ClientSelectedLoan extends Component {
         });
     }
   };
-
+  handlePhaseChange = (event) => {
+    // console.log(event.target.value);
+    // console.log(this.state.allAssignments);
+    const filteredAssign = [];
+    const updatePhase = event.target.value;
+    // grabs the current url
+    let getLoanId = window.location.href;
+    // grabs username inside current url
+    getLoanId = getLoanId.split('/').pop();
+    axios
+      .get(`http://localhost:3030/loan/${getLoanId}`)
+      .then((loandata) => {
+        const assignArr = loandata.data.assignments;
+        console.log('all assigns', assignArr);
+        for (let j = 0; j < assignArr.length; j += 1) {
+          if (updatePhase === assignArr[j].phase) {
+            filteredAssign.push(assignArr[j]);
+          }
+        }
+        console.log('filtered assign', filteredAssign);
+        this.setState({
+          phaseTitle: PhaseContent[updatePhase].phaseTitle,
+          phaseContent: PhaseContent[updatePhase].description,
+          assignments: filteredAssign,
+          phaseTitleNumber: updatePhase,
+        });
+        console.log(this.state.assignments);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   sendNewLoanNotification = () => {
     // axios request to get client name
     const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
@@ -190,6 +233,16 @@ export default class ClientSelectedLoan extends Component {
     const token = this.state.tokenId;
     const user = this.state.userType;
     let loanRoute = '';
+    let progressBarStyle = {};
+    if (this.state.totalPhases.length === 5) {
+      progressBarStyle = { marginLeft: '8.5em' };
+    } else if (this.state.totalPhases.length === 6) {
+      progressBarStyle = { marginLeft: '6.8em' };
+    } else if (this.state.totalPhases.length === 8) {
+      progressBarStyle = { marginLeft: '4.6em' };
+    } else {
+      progressBarStyle = { marginLeft: '6em' };
+    }
     if (user === 'managerUser') loanRoute = '/open_loans';
     else loanRoute = '/my_loans';
     if (token === null || token === undefined || token === '') {
@@ -200,7 +253,6 @@ export default class ClientSelectedLoan extends Component {
         </div>
       );
     }
-
     return (
       <div>
         <Navbar />
@@ -239,17 +291,25 @@ export default class ClientSelectedLoan extends Component {
             </p>
           </div>
           <div className="ClientLoan-progress-container">
-            <ProgressBar key={this.state.phaseNumber} />
+            <div className="ClientLoan-phasetitle">
+              <h5><b> Click on a number to see its phase </b></h5>
+            </div>
+            <div className="ClientLoan-phasebutton-container">
+              {this.state.totalPhases.map((val, index) =>
+                (
+                  <div style={progressBarStyle} key={val.phase}>
+                    <button key={val.phase} value={val.phase} onClick={this.handlePhaseChange}>{index + 1}</button>
+                  </div>
+                ))
+              }
+            </div>
+            <br />
+            <ProgressBar key={this.state.phaseNumber}/>
           </div>
         </div>
         <div className="ClientLoan-phase-container">
           <Card>
-            <CardHeader>
-              {' '}
-              <h5>
-                <b>Phase {this.state.phaseNumber}</b>
-              </h5>
-            </CardHeader>
+            <CardHeader> <h5><b>Phase {this.state.phaseTitleNumber}</b></h5></CardHeader>
             <CardBody>
               <p className="ClientLoan-phase-item">
                 {' '}
@@ -273,9 +333,9 @@ export default class ClientSelectedLoan extends Component {
                 </b>
               </p>
             </div>
-            <div className="ClientLoan-list-container">
-              {this.state.userType === 'managerUser'
-                ? this.state.assignments.map((val, index) => {
+            <div className="ClientLoan-list-container" key={this.state.phaseTitleNumber}>
+              {this.state.userType === 'managerUser' ? (
+                  this.state.assignments.map((val, index) => {
                     const assignmentId = val._id;
                     console.log('val: ', val);
                     return (
@@ -283,23 +343,24 @@ export default class ClientSelectedLoan extends Component {
                         <input
                           type="checkbox"
                           defaultChecked={val.complete}
-                          onChange={() => {
-                            this.completedAssignment(assignmentId, index);
-                          }}
-                        />{' '}
-                        {val.text}
+                          onChange={() => { this.completedAssignment(assignmentId, index); }}
+                        /> {val.text}
                       </p>
                     );
                   })
-                : this.state.assignments.map((val) => {
-                    console.log(val);
+                 ) : (this.state.assignments.map((val) => {
+                   console.log(val);
                     return (
                       <p>
-                        <input type="checkbox" defaultChecked={val.complete} disabled="disabled" />{' '}
-                        {val.text}
+                        <input
+                          type="checkbox"
+                          defaultChecked={val.complete}
+                          disabled="disabled"
+                        /> {val.text}
                       </p>
                     );
-                  })}
+                  })
+                )}
             </div>
           </Card>
         </div>

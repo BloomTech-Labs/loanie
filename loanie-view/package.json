@@ -56,6 +56,9 @@
     "mock-local-storage": "^1.0.5"
   },
   "babel": {
-    "presets": ["env", "react"]
+    "presets": [
+      "env",
+      "react"
+    ]
   }
 }

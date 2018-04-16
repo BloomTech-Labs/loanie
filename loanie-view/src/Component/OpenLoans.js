@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
-import axios from "axios";
+import axios from 'axios';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,19 +10,19 @@ import {
   CardText,
   CardColumns,
   CardBody,
-} from "reactstrap";
+} from 'reactstrap';
 // import { getManagerLoans } from '../Actions';
-import Navbar from "./Navbar";
-import SideBarNav from "./SideBarNav";
-import "../CSS/OpenAndClosedLoans.css";
-import "../../node_modules/bootstrap/dist/css/bootstrap.css";
+import Navbar from './Navbar';
+import SideBarNav from './SideBarNav';
+import '../CSS/OpenAndClosedLoans.css';
+import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 export default class OpenLoans extends Component {
   constructor() {
     super();
     this.state = {
-      tokenId: sessionStorage.getItem("tokenId"),
-      loanManagerId: "",
+      tokenId: sessionStorage.getItem('tokenId'),
+      loanManagerId: '',
       loans: [],
     };
   }
@@ -79,35 +79,35 @@ export default class OpenLoans extends Component {
       cards.push(
         <div className="OpenLoans-card-container">
           <Card>
-            <CardHeader>
-              <b>Loan {index + 1}</b>
-            </CardHeader>
+            <CardHeader><b>Loan {index + 1}</b></CardHeader>
             <CardBody>
               <CardText>
                 <ul className="list-unstyled">
                   <li>Client email: {loan.clientEmail}</li>
                   <li>Current Status: {loan.currentStatus}</li>
-                  <Link to={`my_loan/${loan._id}`}>See Details</Link>
-                  {" | "}
-                  <Link to={`edit_loan/${loan._id}`}>Edit</Link>
-                  {" | "}
-                  <Link to={`add_assignment/${loan._id}`}>Add Assignment</Link>
+                  <Link to={`my_loan/${loan._id}`}>
+                    See Details
+                  </Link>
+                  {' | '}
+                  <Link to={`edit_loan/${loan._id}`}>
+                    Edit
+                  </Link>
+                  {' | '}
+                  <Link to={`add_assignment/${loan._id}`}>
+                    Add Assignment
+                  </Link>
                 </ul>
               </CardText>
             </CardBody>
           </Card>
-        </div>
+        </div>,
       );
       if (index === loans.length - 1) {
         cards.push(
           <div className="OpenLoans-card-container">
             <Card>
               <div className="list-unstyled OpenLoans-imagelist-container">
-                <CardHeader>
-                  <h7>
-                    <b> Add a New Loan</b>
-                  </h7>
-                </CardHeader>
+                <CardHeader><h7><b> Add a New Loan</b></h7></CardHeader>
                 <Link to="/create_loan">
                   <img
                     className="OpenLoans-imagelist-item"
@@ -117,8 +117,7 @@ export default class OpenLoans extends Component {
                 </Link>
               </div>
             </Card>
-          </div>
-        );
+          </div>);
       }
     });
 
@@ -162,7 +161,9 @@ export default class OpenLoans extends Component {
             <BreadcrumbItem active>Loans</BreadcrumbItem>
           </Breadcrumb>
         </div>
-        <CardColumns>{cards}</CardColumns>
+        <CardColumns>
+          {cards}
+        </CardColumns>
         {noCards}
       </div>
     );
