@@ -13,19 +13,18 @@ export default class MyLoans extends Component {
 
   handleEmailInput = (event) => {
     this.setState({ email: event.target.value });
-    console.log(this.state.email);
   };
 
   submitPasswordReset = () => {
-    console.log('submit reset request');
     firebase
       .auth()
       .sendPasswordResetEmail(this.state.email)
       .then(() => {
         window.location = '/';
-        console.log(this.state.email);
       })
-      .catch(error => console.log(error));
+      .catch((error) => {
+        throw error;
+      });
     this.setState({
       sent: !this.state.sent,
     });

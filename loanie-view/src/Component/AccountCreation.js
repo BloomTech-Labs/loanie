@@ -44,7 +44,6 @@ class AccountCreation extends Component {
       acceptEmail: false,
       tokenId: sessionStorage.getItem('tokenId'),
     };
-    console.log(this.state);
   }
 
   selectStandardUser = () => {
@@ -88,12 +87,10 @@ class AccountCreation extends Component {
 
   handleTextAlerts = () => {
     this.setState({ acceptText: !this.state.acceptText });
-    console.log(!this.state.acceptText);
   };
 
   handleEmailAlerts = () => {
     this.setState({ acceptEmail: !this.state.acceptEmail });
-    console.log(!this.state.acceptEmail);
   };
 
   sendToDB = () => {
@@ -117,7 +114,7 @@ class AccountCreation extends Component {
         // window.location = '/my_loans';
       })
       .catch((err) => {
-        console.log('Creation Failed!', err);
+        throw err;
       });
     // window.location = '/my_loans';
   };

@@ -33,15 +33,13 @@ export default class ClosedLoans extends Component {
     axios
       .post(`${base}/user`, body)
       .then((res) => {
-        console.log('res name', res.data.name);
         this.setState({
           loanManagerId: res.data._id,
         });
-        console.log('Response from server: ', res);
         this.handleGetClosedLoans();
       })
       .catch((err) => {
-        console.log('Unable to fetch user data.', err);
+        throw err;
       });
     // this.props.dispatch(getManagerLoans("000000000000000000000001"));
   }
@@ -51,23 +49,18 @@ export default class ClosedLoans extends Component {
     const body = {
       loanManagerId: this.state.loanManagerId,
     };
-
-    console.log('loanManagerId from body: ', body.loanManagerId);
     axios
       .post(`${base}/getmanagerloans`, body)
       .then((res) => {
         this.setState({ loans: res.data });
-        console.log('get manager loans', res);
       })
       .catch((err) => {
-        console.log('Unable to fetch loan data.', err);
+        throw err;
       });
   };
 
   handleGetAllClosedLoans = () => {
-    console.log('loans get all closed handler', this.state.loans);
     const closedLoans = this.state.loans.filter(loan => loan.openLoan === false);
-    console.log('closed loans', closedLoans);
     return closedLoans;
   };
 

@@ -31,7 +31,6 @@ export default class LoanCreate extends Component {
     axios
       .post(`${base}/user`, body)
       .then((res) => {
-        console.log('res name', res.data.name);
         this.setState({
           managerName: res.data.name,
           managerEmail: res.data.email,
@@ -41,24 +40,20 @@ export default class LoanCreate extends Component {
         console.log('Response from server: ', res);
       })
       .catch((err) => {
-        console.log('Unable to fetch user data.', err);
+        throw err;
       });
   }
 
-  handleAmountChange = (e) => {
-    this.setState({ amount: e.target.value });
-    console.log('amount', this.state.amount);
+  handleAmountChange = (event) => {
+    this.setState({ amount: event.target.value });
   };
 
-  handleEmailChange = (e) => {
-    e.preventDefault();
-    this.setState({ clientEmail: e.target.value });
-    console.log('email', this.state.email);
+  handleEmailChange = (event) => {
+    this.setState({ clientEmail: event.target.value });
   };
 
-  handleSmsChange = (e) => {
-    this.setState({ phoneNumber: e.target.value });
-    console.log('phone number', this.state.phoneNumber);
+  handleSmsChange = (event) => {
+    this.setState({ phoneNumber: event.target.value });
   };
 
   sendNewLoanNotification = () => {
@@ -92,9 +87,7 @@ export default class LoanCreate extends Component {
     };
     axios
       .post(`${base}/sendemail`, emailRequest)
-      .then((response) => {
-        console.log('Email Success! Response from server: ', response);
-        console.log('redirecting');
+      .then(() => {
         window.location = '/open_loans';
       })
       .catch((err) => {
@@ -105,8 +98,6 @@ export default class LoanCreate extends Component {
   sendNewLoanDB() {
     const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const defaults = assignmentDefaults(this.state.loanType);
-    console.log('assignments', defaults);
-    console.log('state', this.state);
     const body = {
       loanManagerId: this.state.loanManagerId,
       clientEmail: this.state.clientEmail,
@@ -121,7 +112,7 @@ export default class LoanCreate extends Component {
         this.sendNewLoanNotification();
       })
       .catch((err) => {
-        console.log('Loan creation failed.', err);
+        throw err;
       });
   }
 
@@ -130,15 +121,12 @@ export default class LoanCreate extends Component {
   };
 
   handleDropDown = (e) => {
-    console.log('dropdown', e.target.value);
     this.setState({ loanType: e.target.value });
   };
 
   render() {
     // render getter
     const token = this.state.tokenId;
-    console.log('tokenId', sessionStorage.getItem('tokenId'));
-    console.log('state tokenId:', token);
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (

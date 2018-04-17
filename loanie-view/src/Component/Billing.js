@@ -19,8 +19,6 @@ class Billing extends Component {
     this.state = {
       stripeToken: '',
       name: '',
-      creditCardNumber: '',
-      creditCardExperation: '',
       loanPlan: 'Full Year Subscription',
       email: '',
     };
@@ -48,8 +46,6 @@ class Billing extends Component {
   };
 
   sendStripeToken() {
-    console.log('sending stripe token to server!');
-    console.log('loanPlan on state', this.state.loanPlan);
     const body = {
       loanPlan: this.state.loanPlan,
       stripeToken: this.state.stripeToken,
@@ -108,11 +104,6 @@ class Billing extends Component {
       });
   };
 
-  submitBillingInfo() {
-    console.log(this.state.username);
-    console.log(this.state.creditCardExperation);
-  }
-
   handleCreditCardNumber(event) {
     this.setState({ creditCardNumber: event.target.value });
     console.log(this.state.creditCardNumber);
@@ -138,7 +129,6 @@ class Billing extends Component {
     // tokenize, since there's only one in this group.
     this.props.stripe.createToken({ name: this.state.name }).then(({ token }) => {
       this.setState({ stripeToken: token });
-      console.log('Created Stripe token:', token);
       this.sendStripeToken();
     });
   };

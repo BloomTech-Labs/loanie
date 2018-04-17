@@ -22,22 +22,19 @@ export default class Navbar extends Component {
       .auth()
       .signOut()
       .then(() => {
-        console.log('signed out successfully!');
         sessionStorage.clear();
         window.location = '/';
       })
       .catch((error) => {
-        console.log('error signing out', error);
+        throw error;
       });
   };
 
-  login() {
-    console.log(this.state);
+  login = () => {
     window.location = '/login_user';
   }
 
-  signin() {
-    console.log(this.state);
+  signin = () => {
     window.location = '/new_account';
   }
 

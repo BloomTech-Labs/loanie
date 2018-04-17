@@ -19,40 +19,30 @@ export default class LoanList extends Component {
   componentWillMount() {
     const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     // if (this.props.tokenId === '') window.location = '/login_user';
-    console.log(this.state.userType);
-    console.log('hello');
-    console.log(this.state.tokenId);
     const body = { token: this.state.tokenId };
     axios
       .post(`${base}/user`, body)
       .then((res) => {
-        console.log(res);
-        console.log(res.data.id);
         const managerID = { loanManagerId: res.data.id };
         axios
           .post(`${base}/getmanagerloans`, managerID)
           .then((loandata) => {
             const loanArr = loandata.data;
-            console.log(loandata);
             this.setState({ loanList: loanArr });
           })
           .catch((err) => {
-            console.log(err);
+            throw err;
           });
       })
       .catch((err) => {
-        console.log(err);
+        throw err;
       });
   }
 
-  selectLoan = () => {
-    console.log(this.state.username);
-  };
+
   render() {
     // getter
     const token = this.state.tokenId;
-    console.log(sessionStorage.getItem('tokenId'));
-    console.log('state tokenId:', token);
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (

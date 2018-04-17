@@ -33,14 +33,11 @@ export default class OpenLoans extends Component {
     axios
       .post(`${base}/user`, body)
       .then((res) => {
-        console.log("res name", res.data.name);
         this.setState({ loanManagerId: res.data._id });
-        console.log("loanManagerId from open loans: ", res.data._id);
-        console.log("Response from server: ", res);
         this.handleGetOpenLoans();
       })
       .catch((err) => {
-        console.log("Unable to fetch user data.", err);
+        throw err;
       });
 
     // console.log("User email: ", this.props.userLoginDetails.email);
@@ -53,17 +50,13 @@ export default class OpenLoans extends Component {
     const body = {
       loanManagerId: this.state.loanManagerId,
     };
-
-    console.log("loanManagerId from body: ", body.loanManagerId);
     axios
       .post(`${base}/getmanagerloans`, body)
       .then((res) => {
         this.setState({ loans: res.data });
-        // this.setState({ loans: [] });
-        console.log("loans", res);
       })
       .catch((err) => {
-        console.log("Unable to fetch loan data.", err);
+        throw err;
       });
   };
 
@@ -77,30 +70,29 @@ export default class OpenLoans extends Component {
     const cards = [];
     loans.forEach((loan, index) => {
       cards.push(<div className="OpenLoans-card-container">
-          <Card>
-            <CardHeader><b>Loan {index + 1}</b></CardHeader>
-            <CardBody>
-              <CardText>
-                <ul className="list-unstyled">
-                  <li>Client email: {loan.clientEmail}</li>
-                  <li>Current Status: {loan.currentStatus}</li>
-                  <Link to={`my_loan/${loan._id}`}>
-                    See Details
-                  </Link>
-                  {' | '}
-                  <Link to={`edit_loan/${loan._id}`}>
-                    Edit
-                  </Link>
-                  {' | '}
-                  <Link to={`add_assignment/${loan._id}`}>
-                    Add Assignment
-                  </Link>
-                </ul>
-              </CardText>
-            </CardBody>
-          </Card>
-        </div>
-      );
+        <Card>
+          <CardHeader><b>Loan {index + 1}</b></CardHeader>
+          <CardBody>
+            <CardText>
+              <ul className="list-unstyled">
+                <li>Client email: {loan.clientEmail}</li>
+                <li>Current Status: {loan.currentStatus}</li>
+                <Link to={`my_loan/${loan._id}`}>
+                  See Details
+                </Link>
+                {' | '}
+                <Link to={`edit_loan/${loan._id}`}>
+                  Edit
+                </Link>
+                {' | '}
+                <Link to={`add_assignment/${loan._id}`}>
+                  Add Assignment
+                </Link>
+              </ul>
+            </CardText>
+          </CardBody>
+        </Card>
+        </div>);
       if (index === loans.length - 1) {
         cards.push(
           <div className="OpenLoans-card-container">
@@ -121,7 +113,7 @@ export default class OpenLoans extends Component {
     });
 
     const noCards = [];
-    if (this.state.loans.length === 0) {
+    if (loans.length === 0) {
       return (
         <div>
           <Navbar />

@@ -8,7 +8,6 @@ export default class SideBarNav extends Component {
   constructor() {
     super();
     this.state = {
-      tokenId: sessionStorage.getItem('tokenId'),
       userType: sessionStorage.getItem('userType'),
       userName: '',
     };

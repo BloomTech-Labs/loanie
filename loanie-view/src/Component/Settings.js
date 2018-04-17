@@ -34,15 +34,13 @@ export default class Settings extends Component {
           phoneNumber: res.data.mobilePhone,
           subExp: res.data.subExp,
         });
-        console.log('Response from server: ', res);
       })
       .catch((err) => {
-        console.log('Unable to fetch user data.', err);
+        throw err;
       });
   }
 
   submitChanges = () => {
-    console.log('sending to DB');
     this.send();
     // window.location = '/my_loans';
   };
@@ -55,14 +53,13 @@ export default class Settings extends Component {
       mobilePhone: this.state.phoneNumber,
       token: this.state.tokenId,
     };
-    console.log('sending to db:', userInfo);
     axios
       .post(`${base}/edituser`, userInfo)
       .then((res) => {
         console.log('Success response: ', res);
       })
       .catch((err) => {
-        console.log('Failed to make changes to user!', err);
+        throw err;
       });
   }
 

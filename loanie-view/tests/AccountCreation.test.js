@@ -9,9 +9,6 @@ configure({ adapter: new Adapter() });
 const wrapper = shallow(<AccountCreation />);
 
 describe('<AccountCreation />', () => {
-  //  it('should have the correct class name', () => {
-  //    expect(wrapper.hasClass('AccountCreation')).equal(true);
-  //  });
   it('should have a Navbar in the webpage', () => {
     expect(wrapper.find('Navbar')).to.have.length(1);
   });

@@ -131,6 +131,7 @@ export default class MyLoans extends Component {
         <Navbar />
         <div className="MyLoans-noloans-text">
           <h2>You currently do not have any active loans.</h2>
+          <Link to="/billing">Click to subscibe (Loan Officers only)</Link>
         </div>
         <ClientSideNav />
       </div>

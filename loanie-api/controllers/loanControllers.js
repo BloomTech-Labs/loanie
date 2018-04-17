@@ -14,17 +14,14 @@ const loanCreate = (req, res) => {
   });
   newLoan.save(newLoan, (err, savedloan) => {
     if (err) {
-      console.log("err: ", err);
       res.status(500).json(err);
       return;
     }
-    console.log(savedloan);
     res.status(200).json(savedloan);
   });
 };
 
 const loansGetAll = (req, res) => {
-  console.log("get all");
   Loan.find({})
     .then((loans) => {
       res.status(200).json(loans);
@@ -43,9 +40,7 @@ const loansGetAllByClientEmail = (req, res) => {
 };
 
 const loansGetAllByManagerId = (req, res) => {
-  console.log("get by manager id");
   const { loanManagerId } = req.body;
-  console.log("loanManagerId: ", loanManagerId);
   Loan.find({ loanManagerId })
     .then((loans) => {
       res.status(200).json(loans);
@@ -54,7 +49,6 @@ const loansGetAllByManagerId = (req, res) => {
 };
 
 const loanGetById = (req, res) => {
-  console.log("get one");
   // console.log(req);
   const { id } = req.params;
   Loan.findById(id)
@@ -66,7 +60,6 @@ const loanGetById = (req, res) => {
 };
 
 const loanEdit = (req, res) => {
-  console.log("loan edit");
   const setObj = {};
   if (req.body.currentStatus !== undefined) {
     setObj.currentStatus = req.body.currentStatus;
@@ -84,7 +77,6 @@ const loanEdit = (req, res) => {
   // edit loan details
   // save Loan
   const { id } = req.params;
-  console.log(req.body);
   Loan.updateOne(
     { _id: id },
     {
@@ -93,19 +85,15 @@ const loanEdit = (req, res) => {
     (err, savedloan) => {
       if (err) {
         res.status(500).json(err);
-        console.log(err);
       }
       res.json(savedloan);
-      console.log("loansaved!");
     },
   ).catch(err => res.status(422).json({ error: "No Loan!", err }));
 };
 
 // find by loan id and add new assignment to array
 const loanCreateAssignment = (req, res) => {
-  console.log("create loan assignment");
   const { loanId, assignments } = req.body;
-  console.log(loanId, assignments);
   // find a single Loan
   // create loan assignment
   // save Loan
@@ -116,7 +104,6 @@ const loanCreateAssignment = (req, res) => {
     (err, doc) => {
       if (err) {
         res.status(500).json(err);
-        console.log(err);
       } else {
         res.status(200).json(doc);
       }
@@ -126,11 +113,9 @@ const loanCreateAssignment = (req, res) => {
 
 // find by loan id and add edit assignment in array
 const loanEditAssignment = (req, res) => {
-  console.log("edit loan assignement");
   const {
     loanId, assignmentId, text, phase, complete,
   } = req.body;
-  console.log(loanId, assignmentId, text, phase, complete);
   // find a single Loan
   // edit loan assignment
   Loan.updateOne(
@@ -145,9 +130,7 @@ const loanEditAssignment = (req, res) => {
     (err, doc) => {
       if (err) {
         res.status(500).json(err);
-        console.log(err);
       } else {
-        console.log("assignment edited successfully!");
         res.status(200).json(doc);
       }
     },
@@ -155,9 +138,7 @@ const loanEditAssignment = (req, res) => {
 };
 
 const loanCompleteAssignment = (req, res) => {
-  console.log("loan assignment completed");
   const { loanId, assignmentId, complete } = req.body;
-  console.log(loanId, assignmentId, complete);
   // find a single Loan
   // edit loan assignment
   Loan.updateOne(
@@ -170,9 +151,7 @@ const loanCompleteAssignment = (req, res) => {
     (err, doc) => {
       if (err) {
         res.status(500).json(err);
-        console.log(err);
       } else {
-        console.log("loan assignment marked complete successfully!");
         res.status(200).json(doc);
       }
     },
@@ -181,9 +160,7 @@ const loanCompleteAssignment = (req, res) => {
 
 // find by loan id and remove item in array
 const loanDeleteAssignment = (req, res) => {
-  console.log("edit loan assignment");
   const { loanId, assignmentId } = req.body;
-  console.log(loanId, assignmentId);
   // find a single Loan
   // delete loan assignment
   Loan.findByIdAndUpdate(
@@ -193,7 +170,6 @@ const loanDeleteAssignment = (req, res) => {
     (err, doc) => {
       if (err) {
         res.status(500).json(err);
-        console.log(err);
       } else {
         res.status(200).json(doc);
       }
