@@ -21,7 +21,7 @@ class Billing extends Component {
       name: '',
       creditCardNumber: '',
       creditCardExperation: '',
-      loanPlan: '',
+      loanPlan: 'Full Year Subscription',
       email: '',
     };
   }
@@ -118,22 +118,16 @@ class Billing extends Component {
     console.log(this.state.creditCardNumber);
   }
 
+  handleOptionChange = (e) => {
+    this.setState({ loanPlan: e.target.value });
+  };
+
   handleNameChange = (e) => {
     this.setState({ name: e.target.value });
   };
 
   handleEmailChange = (e) => {
     this.setState({ email: e.target.value });
-  };
-
-  handleOneYPlanSelection = () => {
-    this.setState({ loanPlan: 'Full Year Subscription' });
-    console.log(this.state.loanPlan);
-  };
-
-  handleOneLPlanSelection = () => {
-    this.setState({ loanPlan: 'Single Loan' });
-    console.log(this.state.loanPlan);
   };
 
   handleSubmit = (e) => {
@@ -170,17 +164,22 @@ class Billing extends Component {
               <fieldset>
                 <legend>Select a Plan:</legend>
                 <input
-                  type="checkbox"
-                  name="loanPlan"
-                  onChange={this.handleOneYPlanSelection}
-                />{' '}
-                Full Year Subscription - $99.99<br />
+                  type="radio"
+                  value="Full Year Subscription"
+                  checked={this.state.loanPlan === 'Full Year Subscription'}
+                  onClick={this.handleOptionChange}
+                />
+                Full Year Subscription - $99.99
+                <br />
+                <br />
                 <input
-                  type="checkbox"
-                  name="loanPlan"
-                  onChange={this.handleOneLPlanSelection}
-                />{' '}
-                Single Loan - $9.99<br />
+                  type="radio"
+                  value="Single Loan"
+                  checked={this.state.loanPlan === 'Single Loan'}
+                  onClick={this.handleOptionChange}
+                />
+                Single Loan - $9.99
+                <br />
                 <br />
                 <legend>Credit/Debit Card Details: </legend>
                 Name as it appears on card:{' '}
