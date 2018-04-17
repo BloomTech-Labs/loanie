@@ -163,11 +163,3 @@ export default class OpenLoans extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     loansBySingleManager: state.loans,
-//     //userLoginDetails: state.userLoginDetails,
-//   };
-// };
-
-// connect(mapStateToProps)(OpenLoans);
