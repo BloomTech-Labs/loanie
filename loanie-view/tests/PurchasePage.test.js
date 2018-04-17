@@ -11,4 +11,7 @@ describe('<PurchasePage />', () => {
   it('should have a header which is the title of the page', () => {
     expect(wrapper.find('h1')).have.length(1);
   });
+  it('should have a div tag', () => {
+    expect(wrapper.find('div')).have.length(1);
+  });
 });

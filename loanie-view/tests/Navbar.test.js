@@ -11,7 +11,10 @@ describe('<Navbar />', () => {
   it('should have a header which is the title of app', () => {
     expect(wrapper.find('h1')).have.length(1);
   });
-  it('should have three links', () => {
-    expect(wrapper.find('Link')).have.length(3);
+  it('should have one links', () => {
+    expect(wrapper.find('Link')).have.length(1);
+  });
+  it('should have two buttons', () => {
+    expect(wrapper.find('Button')).have.length(2);
   });
 });

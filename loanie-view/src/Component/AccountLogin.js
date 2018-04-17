@@ -12,13 +12,10 @@ const sendToken = (tokenId, sendEmail) => {
   // setter
   sessionStorage.setItem('tokenId', tokenId);
   sessionStorage.setItem('email', sendEmail);
-
   // console.log('Inside sendToken(), this.props: ', this.props);
-
   // Change token in Redux state.
   // this.props.dispatch(changeTokenId(tokenId));
 
-  console.log('sending token to server!');
   const data = {
     token: tokenId,
     email: sendEmail,
@@ -28,12 +25,11 @@ const sendToken = (tokenId, sendEmail) => {
     .then((res) => {
       const usertype = res.data.userType;
       sessionStorage.setItem('userType', usertype);
-      console.log('Response from server: ', res);
       if (usertype === 'managerUser') window.location = '/open_loans';
       else window.location = '/my_loans';
     })
     .catch((err) => {
-      console.log('Login Failed!', err);
+      throw err;
     });
 };
 
@@ -49,9 +45,6 @@ const uiConfig = {
     signInSuccess: (credential) => {
       firebase.auth().onAuthStateChanged((user) => {
         sessionStorage.setItem('credential', credential);
-        console.log('got the ID!!', user.uid);
-        console.log('firebase user', user);
-
         sendToken(user.uid, user.email);
       });
     },
