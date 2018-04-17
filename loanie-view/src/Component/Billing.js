@@ -33,8 +33,6 @@ class Billing extends Component {
   };
 
   sendStripeToken() {
-    console.log('sending stripe token to server!');
-    console.log('loanPlan on state', this.state.loanPlan);
     const body = {
       loanPlan: this.state.loanPlan,
       stripeToken: this.state.stripeToken,
@@ -65,12 +63,10 @@ class Billing extends Component {
 
   handleOneYPlanSelection = () => {
     this.setState({ loanPlan: 'Full Year Subscription' });
-    console.log(this.state.loanPlan);
   };
 
   handleOneLPlanSelection = () => {
     this.setState({ loanPlan: 'Single Loan' });
-    console.log(this.state.loanPlan);
   };
 
   handleSubmit = (e) => {
@@ -81,7 +77,6 @@ class Billing extends Component {
     // tokenize, since there's only one in this group.
     this.props.stripe.createToken({ name: this.state.name }).then(({ token }) => {
       this.setState({ stripeToken: token });
-      console.log('Created Stripe token:', token);
       this.sendStripeToken();
     });
   };
@@ -89,8 +84,6 @@ class Billing extends Component {
   render() {
     // render getter
     const token = this.state.tokenId;
-    console.log(sessionStorage.getItem('tokenId'));
-    console.log('state tokenId:', token);
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (

@@ -19,7 +19,6 @@ import OpenLoans from './Component/OpenLoans';
 import ClosedLoans from './Component/ClosedLoans';
 import MyLoans from './Component/MyLoans';
 import BorrowerSettings from './Component/BorrowerSettings';
-import PurchasePage from './Component/PurchasePage';
 import PasswordReset from './Component/PasswordReset';
 import LearnMore from './Component/LearnMore';
 import ClientSelectedLoan from './Component/ClientSelectedLoan';
@@ -49,7 +48,6 @@ ReactDOM.render(
       <Route path="/my_loans" component={MyLoans} />
       <Route path="/my_loan/:loanID" component={ClientSelectedLoan} />
       <Route path="/user_settings" component={BorrowerSettings} />
-      <Route path="/purchase_loanie" component={PurchasePage} />
       <Route path="/learn_more" component={LearnMore} />
       <Route path="/password_reset" component={PasswordReset} />
       <Route path="/edit_loan" component={EditLoan} />

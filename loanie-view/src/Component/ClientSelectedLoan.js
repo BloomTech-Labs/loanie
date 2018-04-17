@@ -19,12 +19,10 @@ export default class ClientSelectedLoan extends Component {
       userType: sessionStorage.getItem('userType'),
       phaseContent: '',
       phaseNumber: null,
-      currentStatus: null,
       phaseTitle: '',
       currentLoanId: '',
       tokenId: sessionStorage.getItem('tokenId'),
       totalPhases: [],
-      allAssignments: [],
       phaseTitleNumber: '',
       clientEmail: '',
     };
@@ -52,10 +50,8 @@ export default class ClientSelectedLoan extends Component {
           amount: loandata.data.amount,
           type: loandata.data.loanType,
           phaseNumber: loandata.data.currentStatus,
-          currentStatus: loandata.data.currentStatus,
           currentLoanId: getLoanId,
           totalPhases: totalPhaseNo,
-          allAssignments: assignArr,
           phaseTitleNumber: loandata.data.currentStatus,
           clientEmail: loandata.data.clientEmail,
         });
@@ -85,17 +81,16 @@ export default class ClientSelectedLoan extends Component {
         axios
           .post('http://localhost:3030/userbyemail', request)
           .then((res) => {
-           //  console.log(res.data.name);
+            // console.log(res.data.name);
             const userName = res.data.name;
             this.setState({ borrower: userName });
-            console.log(this.state.totalPhases.length);
           })
           .catch((err) => {
-            console.log(err);
+            throw err;
           });
       })
       .catch((err) => {
-        console.log(err);
+        throw err;
       });
   }
 
@@ -113,7 +108,7 @@ export default class ClientSelectedLoan extends Component {
       .post('http://localhost:3030/assignmentcomplete', body)
       .then(console.log('loan marked complete'))
       .catch((err) => {
-        console.log(err);
+        throw err;
       });
 
     // check if all assignments are checked with the current phase.
@@ -130,7 +125,6 @@ export default class ClientSelectedLoan extends Component {
       let phaseIncrement = parseInt(this.state.phaseNumber, 10);
       phaseIncrement += 1;
       phaseIncrement += '';
-      console.log('phaseIncrement: ', phaseIncrement);
 
       // let server know phase completed
       // TODO: Also send openLoan to the axios request to update if the loan is open o closed!
@@ -138,7 +132,6 @@ export default class ClientSelectedLoan extends Component {
       axios
         .post(`http://localhost:3030/loan/${this.state.currentLoanId}`, request)
         .then((res) => {
-          console.log('res.data.name: ', res.data.name);
           const userName = res.data.name;
           this.setState({ borrower: userName, assignments: [] });
           // refreh all data in this component
@@ -146,7 +139,7 @@ export default class ClientSelectedLoan extends Component {
           this.sendNewLoanNotification();
         })
         .catch((err) => {
-          console.log(err);
+          throw err;
         });
     }
   };
@@ -163,33 +156,28 @@ export default class ClientSelectedLoan extends Component {
       .get(`http://localhost:3030/loan/${getLoanId}`)
       .then((loandata) => {
         const assignArr = loandata.data.assignments;
-        console.log('all assigns', assignArr);
         for (let j = 0; j < assignArr.length; j += 1) {
           if (updatePhase === assignArr[j].phase) {
             filteredAssign.push(assignArr[j]);
           }
         }
-        console.log('filtered assign', filteredAssign);
         this.setState({
           phaseTitle: PhaseContent[updatePhase].phaseTitle,
           phaseContent: PhaseContent[updatePhase].description,
           assignments: filteredAssign,
           phaseTitleNumber: updatePhase,
         });
-        console.log(this.state.assignments);
       })
       .catch((err) => {
-        console.log(err);
+        throw err;
       });
   }
   sendNewLoanNotification = () => {
     // axios request to get client name
     const request = { email: this.state.clientEmail };
-    console.log('request from loan create: ', request);
     axios
       .post('http://localhost:3030/userbyemail', request)
       .then((res) => {
-        console.log('res.data.name: ', res.data.name);
         const clientName = res.data.name;
 
         // const link = "https://loanie.herokuapp.com/";
@@ -206,7 +194,7 @@ export default class ClientSelectedLoan extends Component {
             console.log('Success! Response from server: ', resp);
           })
           .catch((err) => {
-            console.log('Loan creation failed.', err);
+            throw err;
           });
 
         // axios request to send email notification.
@@ -220,13 +208,12 @@ export default class ClientSelectedLoan extends Component {
             console.log('Success! Response from server: ', response);
           })
           .catch((err) => {
-            console.log('Loan creation failed.', err);
+            throw err;
           });
       })
       .catch((err) => {
-        console.log(err);
+        throw err;
       });
-    
   }
 
   render() {
@@ -299,13 +286,19 @@ export default class ClientSelectedLoan extends Component {
               {this.state.totalPhases.map((val, index) =>
                 (
                   <div style={progressBarStyle} key={val.phase}>
-                    <button key={val.phase} value={val.phase} onClick={this.handlePhaseChange}>{index + 1}</button>
+                    <button
+                      key={val.phase}
+                      value={val.phase}
+                      onClick={this.handlePhaseChange}
+                    >
+                      {index + 1}
+                    </button>
                   </div>
                 ))
               }
             </div>
             <br />
-            <ProgressBar key={this.state.phaseNumber}/>
+            <ProgressBar key={this.state.phaseNumber} />
           </div>
         </div>
         <div className="ClientLoan-phase-container">
@@ -338,7 +331,6 @@ export default class ClientSelectedLoan extends Component {
               {this.state.userType === 'managerUser' ? (
                   this.state.assignments.map((val, index) => {
                     const assignmentId = val._id;
-                    console.log('val: ', val);
                     return (
                       <p>
                         <input
@@ -350,7 +342,6 @@ export default class ClientSelectedLoan extends Component {
                     );
                   })
                  ) : (this.state.assignments.map((val) => {
-                   console.log(val);
                     return (
                       <p>
                         <input
