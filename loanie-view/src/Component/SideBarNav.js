@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { slide as Menu } from 'react-burger-menu';
 import axios from 'axios';
+import base from './base';
 import '../CSS/SideBar.css';
 
 export default class SideBarNav extends Component {
@@ -13,7 +14,6 @@ export default class SideBarNav extends Component {
     };
   }
   componentDidMount() {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const body = { token: sessionStorage.getItem('tokenId') };
     axios
       .post(`${base}/user`, body)

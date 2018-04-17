@@ -2,6 +2,7 @@ import React from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import axios from 'axios';
 import moment from 'moment';
+import base from './base';
 import Navbar from './Navbar';
 import firebase from './Firebase';
 // import { connect } from 'react-redux';
@@ -9,7 +10,6 @@ import firebase from './Firebase';
 import '../CSS/AccountLogin.css';
 
 const expirationCheck = (exp, tokenId) => {
-  const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
   if (exp <= moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')) {
     console.log('expired!');
     const userInfo = {
@@ -34,7 +34,6 @@ const expirationCheck = (exp, tokenId) => {
 
 const sendToken = (tokenId, sendEmail) => {
   // setter
-  const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
   console.log('set sessionStorage id', tokenId);
   sessionStorage.setItem('tokenId', tokenId);
   sessionStorage.setItem('email', sendEmail);

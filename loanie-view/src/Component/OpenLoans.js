@@ -11,6 +11,7 @@ import {
   CardColumns,
   CardBody,
 } from 'reactstrap';
+import base from './base';
 // import { getManagerLoans } from '../Actions';
 import Navbar from './Navbar';
 import SideBarNav from './SideBarNav';
@@ -28,7 +29,6 @@ export default class OpenLoans extends Component {
   }
 
   componentDidMount() {
-    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
     const body = { token: this.state.tokenId };
     axios
       .post(`${base}/user`, body)
@@ -46,7 +46,6 @@ export default class OpenLoans extends Component {
   }
 
   handleGetOpenLoans = () => {
-    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
     const body = {
       loanManagerId: this.state.loanManagerId,
     };

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
 import { Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
+import base from './base';
 import firebase from './Firebase';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
@@ -24,7 +25,6 @@ export default class BorrowerSettings extends Component {
   }
 
   componentDidMount() {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     console.log(this.state.tokenId);
     const body = {
       token: this.state.tokenId,
@@ -98,7 +98,6 @@ export default class BorrowerSettings extends Component {
       token: this.state.tokenId,
     };
     console.log('sending to db:', userInfo);
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     axios
       .post(`${base}/edituser`, userInfo)
       .then((res) => {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
+import base from './base';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import '../CSS/EditLoan.css';
@@ -21,7 +22,6 @@ class EditAssignment extends Component {
   }
 
   componentWillMount() {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const params = window.location.href;
     const assignmentId = params.substring(params.lastIndexOf('/') + 1, params.lastIndexOf('-'));
     const loanId = params.substring(params.lastIndexOf('-') + 1, params.lastIndexOf('+'));
@@ -68,7 +68,6 @@ class EditAssignment extends Component {
       loanId: this.state.loanId,
       assignmentId: this.state.assignmentId,
     };
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     axios
       .post(`${base}/assignmentdelete`, body)
       .then(() => {
@@ -137,7 +136,6 @@ class EditAssignment extends Component {
       phase: this.state.phase,
       complete: this.state.complete,
     };
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     axios
       .post(`${base}/assignmentedit`, body)
       .then(() => {

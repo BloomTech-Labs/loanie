@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import base from './base';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import '../CSS/Billing.css';
@@ -32,7 +33,6 @@ class Billing extends Component {
   };
 
   getUserId = () => {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const info = { email: this.state.email };
     axios
       .post(`${base}/userbyemail`, info)
@@ -51,7 +51,6 @@ class Billing extends Component {
       stripeToken: this.state.stripeToken,
       email: this.state.email,
     };
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     axios
       .post(`${base}/stripe`, body)
       .then((res) => {
@@ -64,7 +63,6 @@ class Billing extends Component {
   }
 
   elevateUser = (id) => {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     let subDate = '';
     if (this.state.loanPlan === 'Full Year Subscription') {
       subDate = moment(Date.now())

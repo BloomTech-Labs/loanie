@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardBody } from 'reactstrap';
+import base from './base';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import ProgressBar from './ProgressBar';
@@ -33,7 +34,6 @@ export default class ClientSelectedLoan extends Component {
   }
 
   getLoanData = () => {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     // grabs the current url
     let getLoanId = window.location.href;
     // grabs username inside current url
@@ -96,7 +96,6 @@ export default class ClientSelectedLoan extends Component {
   }
 
   completedAssignment = (assignmentId, assignmentIndex) => {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const tempAssignmets = this.state.assignments;
     tempAssignmets[assignmentIndex].complete = !tempAssignmets[assignmentIndex].complete;
     this.setState({ assignments: tempAssignmets });
@@ -147,7 +146,6 @@ export default class ClientSelectedLoan extends Component {
   };
 
   handlePhaseChange = (event) => {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const filteredAssign = [];
     const updatePhase = event.target.value;
     // grabs the current url
@@ -177,7 +175,6 @@ export default class ClientSelectedLoan extends Component {
 
   sendNewLoanNotification = () => {
     // axios request to get client name
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const request = { email: this.state.clientEmail };
     axios
       .post(`${base}/userbyemail`, request)

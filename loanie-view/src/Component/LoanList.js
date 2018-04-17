@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import base from './base';
 // import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
@@ -17,7 +18,6 @@ export default class LoanList extends Component {
   }
 
   componentWillMount() {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     // if (this.props.tokenId === '') window.location = '/login_user';
     const body = { token: this.state.tokenId };
     axios
@@ -38,7 +38,6 @@ export default class LoanList extends Component {
         throw err;
       });
   }
-
 
   render() {
     // getter

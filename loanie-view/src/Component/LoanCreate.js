@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import axios from 'axios';
+import base from './base';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import { assignmentDefaults } from './AssignmentDefaults';
@@ -23,11 +24,9 @@ export default class LoanCreate extends Component {
   }
 
   componentWillMount() {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const body = {
       token: this.state.tokenId,
     };
-
     axios
       .post(`${base}/user`, body)
       .then((res) => {
@@ -70,7 +69,6 @@ export default class LoanCreate extends Component {
       phoneNumber: this.state.phoneNumber,
       text: message,
     };
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     axios
       .post(`${base}/sendsms`, textRequest)
       .then((resp) => {
@@ -96,7 +94,6 @@ export default class LoanCreate extends Component {
   };
 
   sendNewLoanDB() {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const defaults = assignmentDefaults(this.state.loanType);
     const body = {
       loanManagerId: this.state.loanManagerId,

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
 import axios from 'axios';
+import base from './base';
 import firebase from './Firebase';
 import Navbar from './Navbar';
 import '../CSS/AccountCreate.css';
@@ -106,7 +107,6 @@ class AccountCreation extends Component {
     };
     sessionStorage.setItem('userType', this.state.userType);
     console.log('sending to db:', userInfo);
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     axios
       .post(`${base}/newuser`, userInfo)
       .then((res) => {
