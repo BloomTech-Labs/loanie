@@ -4,7 +4,6 @@ import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import axios from 'axios';
 import Navbar from './Navbar';
 import SideBarNav from './SideBarNav';
-import firebase from './Firebase';
 
 import '../CSS/Settings.css';
 
@@ -13,16 +12,15 @@ export default class Settings extends Component {
     super();
     this.state = {
       email: '',
-      originalEmail: '',
+      subExp: '',
       phoneNumber: '',
       name: '',
-      password: '',
       tokenId: sessionStorage.getItem('tokenId'),
     };
   }
 
   componentDidMount() {
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const body = {
       token: this.state.tokenId,
     };
@@ -32,9 +30,9 @@ export default class Settings extends Component {
       .then((res) => {
         this.setState({
           name: res.data.name,
-          originalEmail: res.data.email,
           email: res.data.email,
           phoneNumber: res.data.mobilePhone,
+          subExp: res.data.subExp,
         });
         console.log('Response from server: ', res);
       })
@@ -50,7 +48,7 @@ export default class Settings extends Component {
   };
 
   send() {
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const userInfo = {
       name: this.state.name,
       email: this.state.email,
@@ -70,10 +68,6 @@ export default class Settings extends Component {
 
   handleNameChange = (event) => {
     this.setState({ name: event.target.value });
-  };
-
-  handlePasswordChange = (event) => {
-    this.setState({ password: event.target.value });
   };
 
   handlePhoneChange = (telNumber, selectedCountry) => {
@@ -146,6 +140,7 @@ export default class Settings extends Component {
               </div>
               <br />
               <br />
+              <p>Subscription expiration date: {this.state.subExp}</p>
               <button onClick={this.send}>Submit</button>
             </fieldset>
           </form>

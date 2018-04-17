@@ -17,7 +17,7 @@ export default class MyLoans extends Component {
     };
   }
   componentDidMount() {
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     console.log(this.state.userType);
     // console.log('hello');
     // console.log(this.state.tokenId);

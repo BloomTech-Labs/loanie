@@ -14,8 +14,8 @@ export default class SideBarNav extends Component {
     };
   }
   componentDidMount() {
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
-    const body = { token: this.state.tokenId };
+    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
+    const body = { token: sessionStorage.getItem('tokenId') };
     axios
       .post(`${base}/user`, body)
       .then((res) => {

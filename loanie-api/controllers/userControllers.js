@@ -124,7 +124,7 @@ const userGetByEmail = (req, res) => {
 const userEdit = (req, res) => {
   console.log("user edit");
   const {
-    name, userType, email, mobilePhone, acceptTexts, acceptEmails, token,
+    name, userType, email, mobilePhone, acceptTexts, acceptEmails, token, subExp
   } = req.body;
   // find a single User
   // edit user details
@@ -141,6 +141,7 @@ const userEdit = (req, res) => {
       if (mobilePhone) user.mobilePhone = mobilePhone;
       if (acceptTexts) user.acceptTexts = acceptTexts;
       if (acceptEmails) user.acceptEmails = acceptEmails;
+      if (subExp) user.subExp = subExp;
       user.save(user, (err, saveduser) => {
         if (err) {
           console.log("error", err);

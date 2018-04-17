@@ -28,6 +28,9 @@ const UserSchema = new mongoose.Schema({
   UID: {
     type: String,
   },
+  subExp: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);

@@ -10,7 +10,7 @@ import '../CSS/AccountLogin.css';
 
 const sendToken = (tokenId, sendEmail) => {
   // setter
-  const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+  const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
   console.log('set sessionStorage id', tokenId);
   sessionStorage.setItem('tokenId', tokenId);
   sessionStorage.setItem('email', sendEmail);
@@ -48,12 +48,10 @@ const uiConfig = {
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
   ],
   callbacks: {
-    signInSuccess: (credential) => {
+    signInSuccess: () => {
       firebase.auth().onAuthStateChanged((user) => {
-        sessionStorage.setItem('credential', credential);
         console.log('got the ID!!', user.uid);
         console.log('firebase user', user);
-
         sendToken(user.uid, user.email);
       });
     },
@@ -71,9 +69,6 @@ export default function AccountLogin() {
       <Navbar />
       <div className="Account-title-containter">
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-        <div className="Account-text-containter">
-          <Link to="/password_reset">Forgot Password?</Link>
-        </div>
       </div>
     </div>
   );

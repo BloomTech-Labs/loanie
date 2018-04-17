@@ -13,7 +13,7 @@ export default class ProgressBar extends Component {
     };
   }
   componentDidMount() {
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     // grabs the current url
     let getLoanId = window.location.href;
     // grabs username inside current url

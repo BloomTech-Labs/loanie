@@ -3,6 +3,7 @@ import { CardElement, injectStripe } from 'react-stripe-elements';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import '../CSS/Billing.css';
@@ -33,7 +34,7 @@ class Billing extends Component {
   };
 
   getUserId = () => {
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const info = { email: this.state.email };
     axios
       .post(`${base}/userbyemail`, info)
@@ -54,7 +55,7 @@ class Billing extends Component {
       stripeToken: this.state.stripeToken,
       email: this.state.email,
     };
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     axios
       .post(`${base}/stripe`, body)
       .then((res) => {
@@ -67,11 +68,23 @@ class Billing extends Component {
   }
 
   elevateUser = (id) => {
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
-
+    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
+    let subDate = '';
+    if (this.state.loanPlan === 'Full Year Subscription') {
+      subDate = moment(Date.now())
+        .add(1, 'years')
+        .format('MMMM Do YYYY, h:mm:ss a');
+    }
+    if (this.state.loanPlan === 'Single Loan') {
+      subDate = moment(Date.now())
+        .add(30, 'days')
+        .format('MMMM Do YYYY, h:mm:ss a');
+    }
+    console.log(subDate);
     const userInfo = {
       token: id,
       userType: 'managerUser',
+      subExp: subDate,
     };
 
     console.log('sending to db:', userInfo);
@@ -79,6 +92,7 @@ class Billing extends Component {
       .post(`${base}/edituser`, userInfo)
       .then((res) => {
         console.log('Success response: ', res);
+        sessionStorage.setItem('userType', 'managerUser');
         window.location = '/open_loans';
       })
       .catch((err) => {

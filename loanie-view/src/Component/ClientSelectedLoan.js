@@ -35,7 +35,7 @@ export default class ClientSelectedLoan extends Component {
   }
 
   getLoanData = () => {
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     // grabs the current url
     let getLoanId = window.location.href;
     // grabs username inside current url
@@ -101,7 +101,7 @@ export default class ClientSelectedLoan extends Component {
   }
 
   completedAssignment = (assignmentId, assignmentIndex) => {
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const tempAssignmets = this.state.assignments;
     tempAssignmets[assignmentIndex].complete = !tempAssignmets[assignmentIndex].complete;
     this.setState({ assignments: tempAssignmets });
@@ -154,7 +154,7 @@ export default class ClientSelectedLoan extends Component {
   };
 
   handlePhaseChange = (event) => {
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const filteredAssign = [];
     const updatePhase = event.target.value;
     // grabs the current url
@@ -187,7 +187,7 @@ export default class ClientSelectedLoan extends Component {
 
   sendNewLoanNotification = () => {
     // axios request to get client name
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const request = { email: this.state.clientEmail };
     console.log('request from loan create: ', request);
     axios

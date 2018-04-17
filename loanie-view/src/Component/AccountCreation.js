@@ -36,9 +36,13 @@ class AccountCreation extends Component {
   constructor() {
     super();
     this.state = {
-      userType: '',
+      email: sessionStorage.getItem('email'),
+      name: sessionStorage.getItem('name'),
+      phone: '',
+      userType: 'standardUser',
       acceptText: false,
       acceptEmail: false,
+      tokenId: sessionStorage.getItem('tokenId'),
     };
     console.log(this.state);
   }
@@ -94,10 +98,10 @@ class AccountCreation extends Component {
 
   sendToDB = () => {
     const userInfo = {
-      name: sessionStorage.getItem('name'),
+      name: this.state.name,
       userType: this.state.userType,
-      email: sessionStorage.getItem('email'),
-      token: sessionStorage.getItem('tokenId'),
+      email: this.state.email,
+      token: this.state.tokenId,
       mobilePhone: this.state.phone,
       acceptTexts: this.state.acceptText,
       acceptEmails: this.state.acceptEmail,
@@ -105,15 +109,17 @@ class AccountCreation extends Component {
     };
     sessionStorage.setItem('userType', this.state.userType);
     console.log('sending to db:', userInfo);
-    const base = 'https://loanie.herokuapp.com' || 'http://localhost:3030';
+    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     axios
       .post(`${base}/newuser`, userInfo)
       .then((res) => {
         console.log('Response from server: ', res);
+        // window.location = '/my_loans';
       })
       .catch((err) => {
         console.log('Creation Failed!', err);
       });
+    // window.location = '/my_loans';
   };
 
   render() {
@@ -128,39 +134,24 @@ class AccountCreation extends Component {
         </div>
       );
     }
-    if (this.state.userType === 'managerUser') {
+    if (sessionStorage.getItem('userType') === 'managerUser') {
+      window.location = '/loan_list';
       return (
-        <div className="Login">
-          <Navbar />
-          <div className="Login-header-container">
-            <h1> Loan Officer Account Creation</h1>
-          </div>
-          <div>
-            <form>
-              <fieldset>
-                <legend>Additional information:</legend>
-                Credentials(optional):{' '}
-                <input type="text" name="password" onChange={this.handlePasswordChange} />
-                <br />
-                <br />
-                Mobile Phone:{' '}
-                <ReactTelephoneInput
-                  defaultCountry="us"
-                  flagsImagePath=".\Images\flags.png"
-                  onChange={this.handleInputChange}
-                  onBlur={this.handleInputBlur}
-                />
-                <br />
-                <br />
-                <button onClick={this.submitManagerAccountInfo}>Submit</button>
-              </fieldset>
-            </form>
-            <button onClick={this.selectGoBack}>Go Back</button>
-          </div>
+        <div>
+          <h1> Logged In </h1>
         </div>
       );
     }
-    if (this.state.userType === 'standardUser') {
+    if (sessionStorage.getItem('userType') === 'standardUser') {
+      console.log('standardUser redirect!');
+      window.location = '/my_loans';
+      return (
+        <div>
+          <h1> Logged In </h1>
+        </div>
+      );
+    }
+    if (this.state.userType) {
       return (
         <div className="Login">
           <Navbar />
@@ -193,34 +184,6 @@ class AccountCreation extends Component {
         </div>
       );
     }
-    if (!sessionStorage.getItem('userType')) {
-      return (
-        <div>
-          <Navbar />
-          <div className="Login-header-container">
-            <h1> Select User Type </h1>
-          </div>
-          <div>
-            <button onClick={this.selectStandardUser}>Client</button>
-            <button onClick={this.selectManagerUser}>Loan Officer</button>
-          </div>
-        </div>
-      );
-    }
-    if (sessionStorage.getItem('userType') === 'managerUser') {
-      window.location = '/loan_list';
-      return (
-        <div>
-          <h1> Logged In </h1>
-        </div>
-      );
-    }
-    window.location = '/my_loans';
-    return (
-      <div>
-        <h1> Logged In </h1>
-      </div>
-    );
   }
 }
 
