@@ -75,11 +75,19 @@ class Billing extends Component {
         .add(1, 'years')
         .format('MMMM Do YYYY, h:mm:ss a');
     }
+
+    // comment to test expiration
     if (this.state.loanPlan === 'Single Loan') {
       subDate = moment(Date.now())
         .add(30, 'days')
         .format('MMMM Do YYYY, h:mm:ss a');
     }
+
+    // uncomment to test expiration
+    // if (this.state.loanPlan === 'Single Loan') {
+    //   subDate = moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a');
+    // }
+
     console.log(subDate);
     const userInfo = {
       token: id,
