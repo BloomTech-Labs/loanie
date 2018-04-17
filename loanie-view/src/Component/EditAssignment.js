@@ -27,12 +27,12 @@ class EditAssignment extends Component {
     axios
       .get(`http://localhost:3030/loan/${loanId}`)
       .then((res) => {
-        const loanType = res.data.loanType;
+        const loans = res.data.loanType;
         const assignment = res.data.assignments.filter(assign => assign._id === assignmentId);
         this.setState({
           assignment,
         });
-        this.initState(loanId, assignmentId, loanType);
+        this.initState(loanId, assignmentId, loans);
       })
       .catch((err) => {
         throw err;
