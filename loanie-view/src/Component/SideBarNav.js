@@ -67,6 +67,9 @@ export default class SideBarNav extends Component {
             <a className="menu-items" href="/my_loans">
               My Loans
             </a>
+            <a className="menu-items" href="/billing">
+              Subscribe (Loan Officers only)
+            </a>
             <a className="menu-items" href="/user_settings">
               Settings
             </a>
