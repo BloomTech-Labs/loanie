@@ -47,27 +47,11 @@ class AccountCreation extends Component {
     };
   }
 
-  selectStandardUser = () => {
-    this.setState({ userType: 'standardUser' });
-  };
-
-  selectManagerUser = () => {
-    this.setState({ userType: 'managerUser' });
-  };
-
-  selectGoBack = () => {
-    this.setState({ userType: '' });
-  };
-
   submitClientAccountInfo = () => {
     this.sendToDB();
     window.location = '/my_loans';
   };
 
-  submitManagerAccountInfo = () => {
-    this.sendToDB();
-    window.location = '/loan_list';
-  };
   handlePasswordChange = (event) => {
     this.setState({ password: event.target.value });
   };
@@ -150,13 +134,13 @@ class AccountCreation extends Component {
     }
     if (this.state.userType) {
       return (
-        <div className="Login">
+        <div className="Create">
           <Navbar />
-          <div className="Login-header-container">
+          <div className="Create-title-containter">
             <h1> Client Account Creation</h1>
           </div>
           <div>
-            <form>
+            <form className="Create-form-container">
               <fieldset>
                 <legend>Additional information:</legend>
                 Mobile Phone:{' '}
@@ -176,7 +160,6 @@ class AccountCreation extends Component {
                 <button onClick={this.submitClientAccountInfo}>Submit</button>
               </fieldset>
             </form>
-            <button onClick={this.selectGoBack}>Go Back</button>
           </div>
         </div>
       );

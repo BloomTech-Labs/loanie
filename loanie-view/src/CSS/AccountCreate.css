@@ -1,15 +1,14 @@
-.Login {
+.Create {
   display: flex;
   flex-direction: column;
 }
-.Login-header-container {
-  margin-top:10%;
+.Create-title-containter {
+  margin-left: 1.3em;
 }
-.Loanlist-title-containter {
-  margin-top: 10%;
-  text-align: center;
+.Create-form-container {
+  margin-left: 1.3em;
 }
-.Account-title-containter {
-  margin-top: 10em;
-  text-align: center;
+.BreadCrumb {
+  margin-top: 6em;
+  margin-left: 1.2em;
 }
