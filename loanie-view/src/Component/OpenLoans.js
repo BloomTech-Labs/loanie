@@ -77,15 +77,15 @@ export default class OpenLoans extends Component {
                 <li>Client email: {loan.clientEmail}</li>
                 <li>Current Status: {loan.currentStatus}</li>
                 <Link to={`my_loan/${loan._id}`}>
-                  See Details
+                  View Details
                 </Link>
                 {' | '}
                 <Link to={`edit_loan/${loan._id}`}>
-                  Edit
+                  Edit Loan
                 </Link>
                 {' | '}
                 <Link to={`add_assignment/${loan._id}`}>
-                  Add Assignment
+                  Edit Assignments
                 </Link>
               </ul>
             </CardText>

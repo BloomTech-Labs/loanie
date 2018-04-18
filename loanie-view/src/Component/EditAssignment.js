@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button, Input } from 'reactstrap';
 import base from './base';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
@@ -197,10 +197,10 @@ class EditAssignment extends Component {
               <br />
               <br />
               Edit Assignment:{' '}
-              <input
-                type="text"
+              <Input
+                type="textarea"
+                name="text"
                 value={this.state.text}
-                name="edit"
                 onChange={this.handleNewAssignment}
               />
               <br />
