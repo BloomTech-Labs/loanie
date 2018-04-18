@@ -1,6 +1,9 @@
+---
 # Loanie
 
 Loanie simplifies the mortgage process by breaking it down into phases. Each phase is concluded by completing its assignments. When the loan officer creates a loan an email is sent to the client inviting them to sign up. When a client signs up they instantly have access to their loan phases and assignments. As each phase is completed the client receives an optional text or email letting them know the loan officer has acknowledge the completion of each assignment.
+
+---
 
 ## Setup
 
@@ -13,6 +16,8 @@ What you'll need:
 * Stripe API key - In order to receive payments from subscribers, you'll need a Stripe account and API key. Setup an account at https://stripe.com.
 
 * SendGrid API key - In order to automate email messages to clients, you'll need a SendGrid API key. Sign up at https://sendgrid.com to receive an API key.
+
+---
 
 ### Installing
 
@@ -39,15 +44,22 @@ Navigate to `loanie/loanie-view/src/Components/base.js` and adjust the value of 
 
 Executing the `npm start` or `yarn start` command in the loanie directory will start the front and back ends of the server. Loanie features a built-in proxy that forwards all browser requests to static html files.
 
-### Running Automated Tests
+---
+
+### Running Tests
 
 Testing will be done using Jest.  Run tests using `npm test` or `yarn test` in your terminal from the loanie directory.
 
+---
+
 ## Authors
+
 The major contributors who brought this project to life:
 * Joshua Hall - [MannieJay](https://github.com/MannieJay)
 * Rashmi Baheti - [rbaheti](https://github.com/rbaheti)
 * Samuel Kim - [IllSmithDa](https://github.com/IllSmithDa)
+
+---
 
 ## License
 
