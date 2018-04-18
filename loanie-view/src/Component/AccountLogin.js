@@ -25,8 +25,8 @@ const sendToken = (tokenId, sendEmail) => {
   axios
     .post(`${base}/auth`, data)
     .then((res) => {
-      let userType = res.data.userType;
-      if (userType === 'managerUser') {
+      let type = res.data.userType;
+      if (type === 'managerUser') {
         if (res.data.subExp <= moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')) {
           console.log('expired!');
           const userInfo = {
@@ -37,7 +37,7 @@ const sendToken = (tokenId, sendEmail) => {
           axios
             .post(`${base}/edituser`, userInfo)
             .then((resp) => {
-              userType = 'standardUser';
+              type = 'standardUser';
               console.log('Success response: ', resp);
             })
             .catch((err) => {
@@ -48,11 +48,11 @@ const sendToken = (tokenId, sendEmail) => {
         }
         console.log('subscription not expired');
       }
-      if (userType === 'standardUser') {
+      if (type === 'standardUser') {
         sessionStorage.setItem('userType', 'standardUser');
         window.location = '/my_loans';
       }
-      if (userType === 'managerUser') {
+      if (type === 'managerUser') {
         window.location = '/open_loans';
       }
     })
