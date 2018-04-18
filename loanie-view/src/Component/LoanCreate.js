@@ -75,36 +75,34 @@ export default class LoanCreate extends Component {
         } by phone at ${this.state.managerPhone} or by email at ${this.state.managerEmail} .`;
 
         // axios request to send text notification.
-        if(this.state.acceptTexts) {
-          const textRequest = {
-            phoneNumber: this.state.phoneNumber,
-            text: message,
-          };
-          axios
-            .post('http://localhost:3030/sendsms', textRequest)
-            .then((res) => {
-              console.log('Success! Response from server: ', res);
-            })
-            .catch((err) => {
-              console.log('Loan creation failed.', err);
-            });
-        }
-
-        // axios request to send email notification.
-        if(this.state.acceptEmails) {
-          const emailRequest = {
-          email: this.state.clientEmail,
+        const textRequest = {
+          phoneNumber: this.state.phoneNumber,
           text: message,
         };
         axios
-          .post('http://localhost:3030/sendemail', emailRequest)
-          .then(() => {
-            window.location = '/open_loans';
+          .post('http://localhost:3030/sendsms', textRequest)
+          .then((res) => {
+            console.log('Success! Response from server: ', res);
           })
           .catch((err) => {
-            throw err;
+            console.log('Loan creation failed.', err);
           });
-        }
+      
+
+        // axios request to send email notification.
+        const emailRequest = {
+          email: this.state.clientEmail,
+          text: message,
+        };
+      axios
+        .post('http://localhost:3030/sendemail', emailRequest)
+        .then(() => {
+          window.location = '/open_loans';
+        })
+        .catch((err) => {
+          throw err;
+        });
+        
       })
       .catch((err) => {
         throw err;
