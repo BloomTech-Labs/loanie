@@ -53,9 +53,7 @@ const userToken = (req, res) => {
       user.save(user, (err) => {
         if (err) {
           res.status(500).json(err);
-          return;
         }
-        console.log("hello");
         console.log(user);
         res.status(200).json(user);
       });

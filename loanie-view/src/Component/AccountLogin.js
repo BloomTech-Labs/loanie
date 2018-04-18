@@ -34,7 +34,7 @@ const expirationCheck = (exp, tokenId) => {
 
 const sendToken = (tokenId, sendEmail) => {
   // setter
-  console.log('set sessionStorage id', tokenId);
+  console.log('set sessionStorage id ann email', tokenId, sendEmail);
   sessionStorage.setItem('tokenId', tokenId);
   sessionStorage.setItem('email', sendEmail);
   // console.log('Inside sendToken(), this.props: ', this.props);
@@ -48,7 +48,7 @@ const sendToken = (tokenId, sendEmail) => {
   axios
     .post(`${base}/auth`, data)
     .then((res) => {
-      expirationCheck(res.data.subExp, tokenId);
+      if (res.data.userType === 'managerUser') expirationCheck(res.data.subExp, tokenId);
       const usertype = res.data.userType;
       sessionStorage.setItem('userType', usertype);
       if (usertype === 'managerUser') window.location = '/open_loans';
@@ -71,7 +71,7 @@ const uiConfig = {
     signInSuccess: () => {
       firebase.auth().onAuthStateChanged((user) => {
         console.log('got the ID!!', user.uid);
-        console.log('firebase user', user);
+        console.log('user email', user.email);
         sendToken(user.uid, user.email);
       });
     },
