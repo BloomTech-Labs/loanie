@@ -130,18 +130,18 @@ const userEdit = (req, res) => {
   // find a single User
   // edit user details
   // save User
-  console.log(token);
-  console.log("req.body", req.body);
   User.findOne({ UID: token })
     .then((user) => {
       console.log("user", user);
       if (user === null) throw new Error();
-      if (name) user.name = name;
-      if (userType) user.userType = userType;
-      if (email) user.email = email;
-      if (mobilePhone) user.mobilePhone = mobilePhone;
-      if (acceptTexts) user.acceptTexts = acceptTexts;
-      if (acceptEmails) user.acceptEmails = acceptEmails;
+      if (name !== undefined) user.name = name;
+      if (userType !== undefined) user.userType = userType;
+      if (email !== undefined) user.email = email;
+      if (mobilePhone !== undefined) user.mobilePhone = mobilePhone;
+      if (acceptTexts !== undefined) user.acceptTexts = acceptTexts;
+      if (acceptEmails !== undefined) user.acceptEmails = acceptEmails;
+      console.log("user.acceptTexts: ", user.acceptTexts);
+      console.log("user.acceptEmails: ", user.acceptEmails);
       user.save(user, (err, saveduser) => {
         if (err) {
           console.log("error", err);

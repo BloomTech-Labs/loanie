@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
 import axios from 'axios';
 import firebase from './Firebase';
 import Navbar from './Navbar';
@@ -37,8 +36,11 @@ class AccountCreation extends Component {
     super();
     this.state = {
       userType: '',
+      phoneNumber: '',
       acceptText: false,
       acceptEmail: false,
+      invalidPhoneNumber: false,
+      invalidCheckBoxSelection: false,
     };
   }
 
@@ -67,18 +69,9 @@ class AccountCreation extends Component {
     this.setState({ password: event.target.value });
   };
 
-  handleInputChange = (telNumber, selectedCountry) => {
-    console.log('input changed. number: ', telNumber, 'selected country: ', selectedCountry);
-    this.setState({ phone: telNumber });
-  };
-
-  handleInputBlur = (telNumber, selectedCountry) => {
-    console.log(
-      'Focus off the ReactTelephoneInput component. Tel number entered is: ',
-      telNumber,
-      ' selected country is: ',
-      selectedCountry,
-    );
+  handleInputChange = (event) => {
+    const contactNo = event.target.value.substring(0, 10);
+    this.setState({ phoneNumber: contactNo });
   };
 
   handleTextAlerts = () => {
@@ -95,7 +88,7 @@ class AccountCreation extends Component {
       userType: this.state.userType,
       email: sessionStorage.getItem('email'),
       token: sessionStorage.getItem('tokenId'),
-      mobilePhone: this.state.phone,
+      mobilePhone: this.state.phoneNumber,
       acceptTexts: this.state.acceptText,
       acceptEmails: this.state.acceptEmail,
       password: this.state.password,
@@ -139,11 +132,9 @@ class AccountCreation extends Component {
                 <br />
                 <br />
                 Mobile Phone:{' '}
-                <ReactTelephoneInput
-                  defaultCountry="us"
-                  flagsImagePath=".\Images\flags.png"
+                <input
+                  type="text"
                   onChange={this.handleInputChange}
-                  onBlur={this.handleInputBlur}
                 />
                 <br />
                 <br />
@@ -167,11 +158,10 @@ class AccountCreation extends Component {
               <fieldset>
                 <legend>Additional information:</legend>
                 Mobile Phone:{' '}
-                <ReactTelephoneInput
-                  defaultCountry="us"
-                  flagsImagePath="\Images\flags.png"
+                <input
+                  type="text"
+                  value={this.state.phoneNumber}
                   onChange={this.handleInputChange}
-                  onBlur={this.handleInputBlur}
                 />
                 <br />
                 <br />

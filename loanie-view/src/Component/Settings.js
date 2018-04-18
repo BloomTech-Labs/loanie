@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import axios from 'axios';
 import Navbar from './Navbar';
@@ -18,6 +17,8 @@ export default class Settings extends Component {
       name: '',
       password: '',
       tokenId: sessionStorage.getItem('tokenId'),
+      invalidName: false,
+      invalidPhoneNumber: false,
     };
   }
 
@@ -29,11 +30,12 @@ export default class Settings extends Component {
     axios
       .post('http://localhost:3030/user', body)
       .then((res) => {
+        const contactNum = res.data.mobilePhone;
         this.setState({
           name: res.data.name,
           originalEmail: res.data.email,
           email: res.data.email,
-          phoneNumber: res.data.mobilePhone,
+          phoneNumber: contactNum,
         });
       })
       .catch((err) => {
@@ -41,12 +43,9 @@ export default class Settings extends Component {
       });
   }
 
-  submitChanges = () => {
-    this.send();
-    // window.location = '/my_loans';
-  };
+  sendToDB = (event) => {
+    event.preventDefault();
 
-  sendToDB = () => {
     // check to see if email changed
     if (this.state.email !== this.state.originalEmail) {
       firebase
@@ -76,6 +75,19 @@ export default class Settings extends Component {
   };
 
   send() {
+    // Validate user input.
+    if (this.state.name.length === 0) {
+      this.setState({ invalidName: true });
+      return; 
+    }
+    this.setState({ invalidName: false });
+
+    if (isNaN(this.state.phoneNumber) || this.state.phoneNumber.length < 10) {
+      this.setState({ invalidPhoneNumber: true });
+      return; 
+    }
+    this.setState({ invalidPhoneNumber: false });
+
     const userInfo = {
       name: this.state.name,
       email: this.state.email,
@@ -86,6 +98,7 @@ export default class Settings extends Component {
       .post('http://localhost:3030/edituser', userInfo)
       .then((res) => {
         console.log('Success response: ', res);
+        window.location = '/open_loans';
       })
       .catch((err) => {
         throw err;
@@ -104,18 +117,9 @@ export default class Settings extends Component {
     this.setState({ password: event.target.value });
   };
 
-  handlePhoneChange = (telNumber, selectedCountry) => {
-    console.log('input changed. number: ', telNumber, 'selected country: ', selectedCountry);
-    this.setState({ phoneNumber: telNumber });
-  };
-
-  handleInputBlur = (telNumber, selectedCountry) => {
-    console.log(
-      'Focus off the ReactTelephoneInput component. Tel number entered is: ',
-      telNumber,
-      ' selected country is: ',
-      selectedCountry,
-    );
+  handlePhoneChange = (event) => {
+    const contactNo = event.target.value.substring(0, 10);
+    this.setState({ phoneNumber: contactNo });
   };
 
   render() {
@@ -129,6 +133,17 @@ export default class Settings extends Component {
         </div>
       );
     }
+
+    let invalidNameDiv = null;
+    if (this.state.invalidName) {
+      invalidNameDiv = <div className="invalid-user-input">*Invalid Name</div>
+    }
+
+    let invalidPhoneNumberDiv = null;
+    if (this.state.invalidPhoneNumber) {
+      invalidPhoneNumberDiv = <div className="invalid-user-input">*Invalid Phone Number</div>
+    }
+
     return (
       <div className="Settings">
         <Navbar />
@@ -156,21 +171,21 @@ export default class Settings extends Component {
                 <input
                   type="text"
                   name="name"
-                  value={this.state.name || ''}
+                  value={this.state.name}
                   onChange={this.handleNameChange}
                 />
+                {invalidNameDiv}
               </div>
               <br />
               <br />
               <div>
                 <p>Phone Number:</p>{' '}
-                <ReactTelephoneInput
-                  defaultCountry="us"
-                  flagsImagePath=".\Images\flags.png"
+                <input
+                  type="text"
                   value={this.state.phoneNumber}
                   onChange={this.handlePhoneChange}
-                  onBlur={this.handleInputBlur}
                 />
+                {invalidPhoneNumberDiv}
               </div>
               <br />
               <br />

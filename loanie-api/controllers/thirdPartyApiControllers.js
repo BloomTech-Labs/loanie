@@ -29,7 +29,10 @@ const sendEmailNotification = (req, res) => {
 };
 
 const sendSmsNotification = (req, res) => {
-  const { phoneNumber, text } = req.body;
+  let { phoneNumber, text } = req.body;
+  if(phoneNumber.length === 10) {
+    phoneNumber = "+1" + phoneNumber;
+  }
   const newUser = new User({
     phoneNumber,
     text,
