@@ -159,7 +159,6 @@ class Billing extends Component {
                 />
                 Full Year Subscription - $99.99
                 <br />
-                <br />
                 <input
                   type="radio"
                   value="Single Loan"
@@ -167,6 +166,7 @@ class Billing extends Component {
                   onClick={this.handleOptionChange}
                 />
                 Single Loan - $9.99
+                <br />
                 <br />
                 <legend>Credit/Debit Card Details: </legend>
                 Name as it appears on card:{' '}
