@@ -23,7 +23,6 @@ const expirationCheck = (exp, tokenId) => {
       .then((res) => {
         sessionStorage.setItem('userType', 'standardUser');
         console.log('Success response: ', res);
-        window.location = '/my_loans';
       })
       .catch((err) => {
         console.log('Failed to make changes to user!', err);
