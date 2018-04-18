@@ -1,4 +1,3 @@
----
 # Loanie
 
 Loanie simplifies the mortgage process by breaking it down into phases. Each phase is concluded by completing its assignments. When the loan officer creates a loan an email is sent to the client inviting them to sign up. When a client signs up they instantly have access to their loan phases and assignments. As each phase is completed the client receives an optional text or email letting them know the loan officer has acknowledge the completion of each assignment.
