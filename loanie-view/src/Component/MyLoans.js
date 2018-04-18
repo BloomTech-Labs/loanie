@@ -58,7 +58,7 @@ export default class MyLoans extends Component {
     if (user === 'managerUser') {
       return (
         <div>
-          <h1> Please login to as a standard user </h1>
+          <h1> Please login as a standard user </h1>
         </div>
       );
     }

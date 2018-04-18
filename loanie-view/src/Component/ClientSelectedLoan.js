@@ -14,7 +14,6 @@ export default class ClientSelectedLoan extends Component {
     this.state = {
       assignments: [],
       borrower: '',
-      coBorrower: 'Bob',
       type: '',
       amount: '',
       userType: sessionStorage.getItem('userType'),
@@ -266,10 +265,6 @@ export default class ClientSelectedLoan extends Component {
             <p>
               <b>Borrower: </b>
               {this.state.borrower}
-            </p>
-            <p>
-              <b>Co-Borrower: </b>
-              {this.state.coBorrower}
             </p>
             <p>
               <b>Type: </b>
