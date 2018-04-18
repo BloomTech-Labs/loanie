@@ -17,8 +17,6 @@ What you'll need:
 
 * SendGrid API key - In order to automate email messages to clients, you'll need a SendGrid API key. Sign up at https://sendgrid.com.
 
----
-
 ### Installing
 
 Clone the repository using the SSH or HTTPS method.
@@ -46,7 +44,7 @@ Executing the `npm start` or `yarn start` command in the loanie directory will s
 
 ---
 
-### Running Tests
+## Tests
 
 Testing were created using Jest. Run tests using `npm test` or `yarn test` in  the loanie and loanie-view directories.
 
