@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
 import axios from 'axios';
 import base from './base';
 import firebase from './Firebase';
@@ -37,13 +36,15 @@ class AccountCreation extends Component {
   constructor() {
     super();
     this.state = {
+      userType: 'standardUser',
+      phoneNumber: '',
       email: sessionStorage.getItem('email'),
       name: sessionStorage.getItem('name'),
-      phone: '',
-      userType: 'standardUser',
       acceptText: false,
       acceptEmail: false,
       tokenId: sessionStorage.getItem('tokenId'),
+      invalidPhoneNumber: false,
+      invalidCheckBoxSelection: false,
     };
   }
 
@@ -52,22 +53,9 @@ class AccountCreation extends Component {
     window.location = '/my_loans';
   };
 
-  handlePasswordChange = (event) => {
-    this.setState({ password: event.target.value });
-  };
-
-  handleInputChange = (telNumber, selectedCountry) => {
-    console.log('input changed. number: ', telNumber, 'selected country: ', selectedCountry);
-    this.setState({ phone: telNumber });
-  };
-
-  handleInputBlur = (telNumber, selectedCountry) => {
-    console.log(
-      'Focus off the ReactTelephoneInput component. Tel number entered is: ',
-      telNumber,
-      ' selected country is: ',
-      selectedCountry,
-    );
+  handleInputChange = (event) => {
+    const contactNo = event.target.value.substring(0, 10);
+    this.setState({ phoneNumber: contactNo });
   };
 
   handleTextAlerts = () => {
@@ -84,10 +72,9 @@ class AccountCreation extends Component {
       userType: this.state.userType,
       email: this.state.email,
       token: this.state.tokenId,
-      mobilePhone: this.state.phone,
+      mobilePhone: this.state.phoneNumber,
       acceptTexts: this.state.acceptText,
       acceptEmails: this.state.acceptEmail,
-      password: this.state.password,
     };
     sessionStorage.setItem('userType', this.state.userType);
     console.log('sending to db:', userInfo);
@@ -143,13 +130,7 @@ class AccountCreation extends Component {
             <form className="Create-form-container">
               <fieldset>
                 <legend>Additional information:</legend>
-                Mobile Phone:{' '}
-                <ReactTelephoneInput
-                  defaultCountry="us"
-                  flagsImagePath="\Images\flags.png"
-                  onChange={this.handleInputChange}
-                  onBlur={this.handleInputBlur}
-                />
+                Mobile Phone: <input type="text" onChange={this.handleInputChange} />
                 <br />
                 <br />
                 <input type="checkbox" name="acceptText" onChange={this.handleTextAlerts} /> I would
