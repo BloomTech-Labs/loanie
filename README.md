@@ -10,11 +10,11 @@ Loanie simplifies the mortgage process by breaking it down into phases. Each pha
 
 What you'll need:
 
-* Twilio API key - In order to automate text messages to clients, you'll need a Twilio API key. Sign up at https://twilio.com.
+* Twilio API key - A Twilio API key is required to automate text messages to clients. Sign up at https://twilio.com.
 
-* Stripe API key - In order to receive payments from subscribers, you'll need a Stripe account and API key. Setup an account at https://stripe.com.
+* Stripe API key - A Stripe API key is required to receive payments from subscribers. Setup an account at https://stripe.com.
 
-* SendGrid API key - In order to automate email messages to clients, you'll need a SendGrid API key. Sign up at https://sendgrid.com.
+* SendGrid API key - A Sendgrid API key is necessary to automate text messages to clients. Sign up at https://sendgrid.com.
 
 ### Installing
 
