@@ -12,6 +12,7 @@ import {
 } from 'reactstrap';
 // import { connect } from 'react-redux';
 // import { getManagerLoans } from '../Actions';
+import base from './base';
 import Navbar from './Navbar';
 import SideBarNav from './SideBarNav';
 import '../CSS/OpenAndClosedLoans.css';
@@ -28,7 +29,6 @@ export default class ClosedLoans extends Component {
   }
 
   componentDidMount() {
-    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
     const body = { token: this.state.tokenId };
     axios
       .post(`${base}/user`, body)
@@ -45,7 +45,6 @@ export default class ClosedLoans extends Component {
   }
 
   handleGetClosedLoans = () => {
-    const base = 'https://loanie.herokuapp.com' || "http://localhost:3030";
     const body = {
       loanManagerId: this.state.loanManagerId,
     };

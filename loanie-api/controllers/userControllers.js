@@ -53,14 +53,12 @@ const userToken = (req, res) => {
       user.save(user, (err) => {
         if (err) {
           res.status(500).json(err);
-          return;
         }
-        console.log("hello");
         console.log(user);
         res.status(200).json(user);
       });
     })
-    .catch(err => res.status(422).json({ error: "User not found!", err }));
+    .catch(err => res.status(422).json({ error: err }));
 };
 
 const usersGetAll = (req, res) => {
@@ -124,7 +122,7 @@ const userGetByEmail = (req, res) => {
 const userEdit = (req, res) => {
   console.log("user edit");
   const {
-    name, userType, email, mobilePhone, acceptTexts, acceptEmails, token, subExp
+    name, userType, email, mobilePhone, acceptTexts, acceptEmails, token, subExp,
   } = req.body;
   // find a single User
   // edit user details

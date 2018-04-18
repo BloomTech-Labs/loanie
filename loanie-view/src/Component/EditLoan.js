@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import base from './base';
 // import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
@@ -21,7 +22,6 @@ class EditLoan extends Component {
   }
 
   componentWillMount() {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const getLoanId = window.location.href;
     const id = getLoanId.split('/').pop();
     axios
@@ -118,7 +118,6 @@ class EditLoan extends Component {
       loanType: this.state.loanType,
       amount: this.state.amount,
     };
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     axios
       .post(`${base}/loan/${id}`, body)
       .then(() => {

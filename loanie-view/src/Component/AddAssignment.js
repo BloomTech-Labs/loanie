@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardText, CardBody } from 'reactstrap';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Card,
+  CardHeader,
+  CardText,
+  CardBody,
+  Input,
+} from 'reactstrap';
 import { Link } from 'react-router-dom';
+import base from './base';
 // import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
@@ -22,7 +31,6 @@ class AddAssignment extends Component {
   }
 
   componentWillMount() {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const getLoanId = window.location.href;
     const id = getLoanId.split('/').pop();
     this.setId(id);
@@ -113,7 +121,6 @@ class AddAssignment extends Component {
       assignments: assignment,
     };
     console.log('body', body);
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     axios
       .post(`${base}/assignment`, body)
       .then(() => {
@@ -210,7 +217,7 @@ class AddAssignment extends Component {
               New Assignment:
               <br />
               <br />
-              <input type="text" name="text" onChange={this.handleNewAssignment} />
+              <Input type="textarea" name="text" onChange={this.handleNewAssignment} />
               <br />
               <br />
             </fieldset>

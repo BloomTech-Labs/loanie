@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactTelephoneInput from 'react-telephone-input/lib/withStyles';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import axios from 'axios';
+import base from './base';
 import Navbar from './Navbar';
 import SideBarNav from './SideBarNav';
 
@@ -20,7 +21,6 @@ export default class Settings extends Component {
   }
 
   componentDidMount() {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const body = {
       token: this.state.tokenId,
     };
@@ -46,7 +46,6 @@ export default class Settings extends Component {
   };
 
   send() {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     const userInfo = {
       name: this.state.name,
       email: this.state.email,

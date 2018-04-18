@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardText, CardBody } from 'reactstrap';
+import base from './base';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import '../CSS/MyLoans.css';
@@ -17,7 +18,6 @@ export default class MyLoans extends Component {
     };
   }
   componentDidMount() {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     console.log(this.state.userType);
     // console.log('hello');
     // console.log(this.state.tokenId);
@@ -58,7 +58,7 @@ export default class MyLoans extends Component {
     if (user === 'managerUser') {
       return (
         <div>
-          <h1> Please login to as a standard user </h1>
+          <h1> Please login as a standard user </h1>
         </div>
       );
     }

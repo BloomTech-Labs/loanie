@@ -2,40 +2,16 @@ import React from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import axios from 'axios';
 import moment from 'moment';
+import base from './base';
 import Navbar from './Navbar';
 import firebase from './Firebase';
 // import { connect } from 'react-redux';
 // import { changeTokenId } from '../Actions';
 import '../CSS/AccountLogin.css';
 
-const expirationCheck = (exp, tokenId) => {
-  const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
-  if (exp <= moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')) {
-    console.log('expired!');
-    const userInfo = {
-      token: tokenId,
-      userType: 'standardUser',
-    };
-
-    console.log('sending to db:', userInfo);
-    axios
-      .post(`${base}/edituser`, userInfo)
-      .then((res) => {
-        sessionStorage.setItem('userType', 'standardUser');
-        console.log('Success response: ', res);
-        window.location = '/my_loans';
-      })
-      .catch((err) => {
-        console.log('Failed to make changes to user!', err);
-      });
-  }
-  console.log('subscription not expired');
-};
-
 const sendToken = (tokenId, sendEmail) => {
   // setter
-  const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
-  console.log('set sessionStorage id', tokenId);
+  console.log('set sessionStorage id ann email', tokenId, sendEmail);
   sessionStorage.setItem('tokenId', tokenId);
   sessionStorage.setItem('email', sendEmail);
   // console.log('Inside sendToken(), this.props: ', this.props);
@@ -49,11 +25,36 @@ const sendToken = (tokenId, sendEmail) => {
   axios
     .post(`${base}/auth`, data)
     .then((res) => {
-      expirationCheck(res.data.subExp, tokenId);
-      const usertype = res.data.userType;
-      sessionStorage.setItem('userType', usertype);
-      if (usertype === 'managerUser') window.location = '/open_loans';
-      else window.location = '/my_loans';
+      let userType = res.data.userType;
+      if (userType === 'managerUser') {
+        if (res.data.subExp <= moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')) {
+          console.log('expired!');
+          const userInfo = {
+            token: tokenId,
+            userType: 'standardUser',
+          };
+          console.log('sending to db:', userInfo);
+          axios
+            .post(`${base}/edituser`, userInfo)
+            .then((resp) => {
+              userType = 'standardUser';
+              console.log('Success response: ', resp);
+            })
+            .catch((err) => {
+              console.log('Failed to make changes to user!', err);
+            });
+        } else {
+          sessionStorage.setItem('userType', 'managerUser');
+        }
+        console.log('subscription not expired');
+      }
+      if (userType === 'standardUser') {
+        sessionStorage.setItem('userType', 'standardUser');
+        window.location = '/my_loans';
+      }
+      if (userType === 'managerUser') {
+        window.location = '/open_loans';
+      }
     })
     .catch((err) => {
       throw err;
@@ -72,7 +73,7 @@ const uiConfig = {
     signInSuccess: () => {
       firebase.auth().onAuthStateChanged((user) => {
         console.log('got the ID!!', user.uid);
-        console.log('firebase user', user);
+        console.log('user email', user.email);
         sendToken(user.uid, user.email);
       });
     },

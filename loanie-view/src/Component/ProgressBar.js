@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import base from './base';
 import PhaseContent from './PhaseContent';
 import '../CSS/ProgressBar.css';
 
@@ -13,7 +14,6 @@ export default class ProgressBar extends Component {
     };
   }
   componentDidMount() {
-    const base = 'http://localhost:3030' || 'https://loanie.herokuapp.com';
     // grabs the current url
     let getLoanId = window.location.href;
     // grabs username inside current url
@@ -44,7 +44,11 @@ export default class ProgressBar extends Component {
             className="progress-bar ProgressBar-style progress-bar-success"
             role="progressbar"
             aria-valuenow={this.state.progressValue}
-            style={{ width: `${((this.state.progressValue / (100 / this.state.totalPhases)) * (68.5 / this.state.totalPhases))}em` }}
+            style={{
+              width: `${this.state.progressValue /
+                (100 / this.state.totalPhases) *
+                (68.5 / this.state.totalPhases)}em`,
+            }}
           >
             Current Phase: {this.state.currentPhase}
           </div>
