@@ -43,15 +43,8 @@ export default class Settings extends Component {
       });
   }
 
-<<<<<<< HEAD
   sendToDB = (event) => {
     event.preventDefault();
-=======
-  submitChanges = () => {
-    this.send();
-    // window.location = '/my_loans';
-  };
->>>>>>> 5422fc7ab9a1d3d1244df79c9c70d60ffa984e4e
 
     // check to see if email changed
     if (this.state.email !== this.state.originalEmail) {

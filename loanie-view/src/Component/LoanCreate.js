@@ -75,7 +75,6 @@ export default class LoanCreate extends Component {
         } by phone at ${this.state.managerPhone} or by email at ${this.state.managerEmail} .`;
 
         // axios request to send text notification.
-<<<<<<< HEAD
         if(this.state.acceptTexts) {
           const textRequest = {
             phoneNumber: this.state.phoneNumber,
@@ -90,22 +89,7 @@ export default class LoanCreate extends Component {
               console.log('Loan creation failed.', err);
             });
         }
-        
-=======
-        const textRequest = {
-          phoneNumber: this.state.phoneNumber,
-          text: message,
-        };
-        axios
-          .post('http://localhost:3030/sendsms', textRequest)
-          .then(() => {
-            console.log('Success!');
-          })
-          .catch((err) => {
-            throw err;
-          });
 
->>>>>>> 5422fc7ab9a1d3d1244df79c9c70d60ffa984e4e
         // axios request to send email notification.
         if(this.state.acceptEmails) {
           const emailRequest = {
