@@ -9,30 +9,6 @@ import firebase from './Firebase';
 // import { changeTokenId } from '../Actions';
 import '../CSS/AccountLogin.css';
 
-const expirationCheck = (exp, tokenId) => {
-  if (exp <= moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')) {
-    console.log('expired!');
-    const userInfo = {
-      token: tokenId,
-      userType: 'standardUser',
-    };
-
-    console.log('sending to db:', userInfo);
-    axios
-      .post(`${base}/edituser`, userInfo)
-      .then((res) => {
-        sessionStorage.setItem('userType', 'standardUser');
-        console.log('Success response: ', res);
-      })
-      .catch((err) => {
-        console.log('Failed to make changes to user!', err);
-      });
-  } else {
-    sessionStorage.setItem('userType', 'managerUser');
-  }
-  console.log('subscription not expired');
-};
-
 const sendToken = (tokenId, sendEmail) => {
   // setter
   console.log('set sessionStorage id ann email', tokenId, sendEmail);
@@ -49,14 +25,36 @@ const sendToken = (tokenId, sendEmail) => {
   axios
     .post(`${base}/auth`, data)
     .then((res) => {
-      if (res.data.userType === 'managerUser') {
-        expirationCheck(res.data.subExp, tokenId);
+      let userType = res.data.userType;
+      if (userType === 'managerUser') {
+        if (res.data.subExp <= moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')) {
+          console.log('expired!');
+          const userInfo = {
+            token: tokenId,
+            userType: 'standardUser',
+          };
+          console.log('sending to db:', userInfo);
+          axios
+            .post(`${base}/edituser`, userInfo)
+            .then((resp) => {
+              userType = 'standardUser';
+              console.log('Success response: ', resp);
+            })
+            .catch((err) => {
+              console.log('Failed to make changes to user!', err);
+            });
+        } else {
+          sessionStorage.setItem('userType', 'managerUser');
+        }
+        console.log('subscription not expired');
       }
-      if (res.data.userType === 'standardUser') {
+      if (userType === 'standardUser') {
         sessionStorage.setItem('userType', 'standardUser');
         window.location = '/my_loans';
       }
-      if (this.sessionStorage.getItem('userType') === 'managerUser') { window.location = '/open_loans'; }
+      if (userType === 'managerUser') {
+        window.location = '/open_loans';
+      }
     })
     .catch((err) => {
       throw err;

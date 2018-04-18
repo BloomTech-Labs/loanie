@@ -144,6 +144,33 @@ export default class ClientSelectedLoan extends Component {
     }
   };
 
+  // handlePhaseChange = (event) => {
+  //   const filteredAssign = [];
+  //   const updatePhase = event.target.value;
+  //   // grabs the current url
+  //   let getLoanId = window.location.href;
+  //   // grabs username inside current url
+  //   getLoanId = getLoanId.split('/').pop();
+  //   axios
+  //     .get(`${base}/loan/${getLoanId}`)
+  //     .then((loandata) => {
+  //       const assignArr = loandata.data.assignments;
+  //       for (let j = 0; j < assignArr.length; j += 1) {
+  //         if (updatePhase === assignArr[j].phase) {
+  //           filteredAssign.push(assignArr[j]);
+  //         }
+  //       }
+  //       this.setState({
+  //         phaseTitle: PhaseContent[updatePhase].phaseTitle,
+  //         phaseContent: PhaseContent[updatePhase].description,
+  //         assignments: filteredAssign,
+  //         phaseTitleNumber: updatePhase,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       throw err;
+  //     });
+  // }
   handlePhaseChange = (event) => {
     const filteredAssign = [];
     const updatePhase = event.target.value;
@@ -152,7 +179,7 @@ export default class ClientSelectedLoan extends Component {
     // grabs username inside current url
     getLoanId = getLoanId.split('/').pop();
     axios
-      .get(`${base}/loan/${getLoanId}`)
+      .get(`http://localhost:3030/loan/${getLoanId}`)
       .then((loandata) => {
         const assignArr = loandata.data.assignments;
         for (let j = 0; j < assignArr.length; j += 1) {
@@ -160,12 +187,19 @@ export default class ClientSelectedLoan extends Component {
             filteredAssign.push(assignArr[j]);
           }
         }
-        this.setState({
-          phaseTitle: PhaseContent[updatePhase].phaseTitle,
-          phaseContent: PhaseContent[updatePhase].description,
-          assignments: filteredAssign,
-          phaseTitleNumber: updatePhase,
-        });
+        for (let i = 0; i < PhaseContent.length; i += 1) {
+          if (
+            PhaseContent[i].loanType === this.state.type &&
+            PhaseContent[i].phase === updatePhase
+          ) {
+            this.setState({
+              phaseTitle: PhaseContent[i].phaseTitle,
+              phaseContent: PhaseContent[i].description,
+              assignments: filteredAssign,
+              phaseTitleNumber: updatePhase,
+            });
+          }
+        }
       })
       .catch((err) => {
         throw err;
