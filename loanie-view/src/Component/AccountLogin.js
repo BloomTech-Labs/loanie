@@ -27,6 +27,8 @@ const expirationCheck = (exp, tokenId) => {
       .catch((err) => {
         console.log('Failed to make changes to user!', err);
       });
+  } else {
+    sessionStorage.setItem('userType', 'managerUser');
   }
   console.log('subscription not expired');
 };
@@ -47,11 +49,14 @@ const sendToken = (tokenId, sendEmail) => {
   axios
     .post(`${base}/auth`, data)
     .then((res) => {
-      if (res.data.userType === 'managerUser') expirationCheck(res.data.subExp, tokenId);
-      const usertype = res.data.userType;
-      sessionStorage.setItem('userType', usertype);
-      if (usertype === 'managerUser') window.location = '/open_loans';
-      else window.location = '/my_loans';
+      if (res.data.userType === 'managerUser') {
+        expirationCheck(res.data.subExp, tokenId);
+      }
+      if (res.data.userType === 'standardUser') {
+        sessionStorage.setItem('userType', 'standardUser');
+        window.location = '/my_loans';
+      }
+      if (this.sessionStorage.getItem('userType') === 'managerUser') { window.location = '/open_loans'; }
     })
     .catch((err) => {
       throw err;
