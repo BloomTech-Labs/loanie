@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
-// import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import '../CSS/EditLoan.css';
@@ -25,27 +24,22 @@ class EditAssignment extends Component {
     const params = window.location.href;
     const assignmentId = params.substring(params.lastIndexOf('/') + 1, params.lastIndexOf('-'));
     const loanId = params.substring(params.lastIndexOf('-') + 1, params.lastIndexOf('+'));
-    console.log('loanId', loanId);
-    console.log('assignmentId', assignmentId);
     axios
       .get(`http://localhost:3030/loan/${loanId}`)
       .then((res) => {
-        const loanType = res.data.loanType;
+        const loans = res.data.loanType;
         const assignment = res.data.assignments.filter(assign => assign._id === assignmentId);
         this.setState({
           assignment,
         });
-        this.initState(loanId, assignmentId, loanType);
-        console.log('assignment', assignment);
-        console.log('Response from server: ', res);
+        this.initState(loanId, assignmentId, loans);
       })
       .catch((err) => {
-        console.log('Unable to fetch loan data.', err);
+        throw err;
       });
   }
 
   initState(loanId, assignmentId, loanType) {
-    console.log('state assignment', this.state.assignment);
     this.setState({
       loanType,
       loanId,
@@ -54,27 +48,21 @@ class EditAssignment extends Component {
       text: this.state.assignment[0].text,
       phase: this.state.assignment[0].phase,
     });
-    console.log('state', this.state);
   }
 
   handleDropDownComplete = (e) => {
-    console.log(e.target.value);
     this.setState({ complete: e.target.value });
   };
 
   handleDropDownPhase = (e) => {
-    console.log(e.target.value);
     this.setState({ phase: e.target.value });
   };
 
   handleNewAssignment = (e) => {
     this.setState({ text: e.target.value });
-    console.log(this.state.newAssignmentText);
   };
 
   submitDeleteAssignment = () => {
-    console.log('delete assignment');
-    console.log('state', this.state);
     const body = {
       loanId: this.state.loanId,
       assignmentId: this.state.assignmentId,
@@ -85,7 +73,7 @@ class EditAssignment extends Component {
         console.log('Assignment deleted successfully!');
       })
       .catch((err) => {
-        console.log('Assignment deletion failed.', err);
+        throw err;
       });
     const str = '/add_assignment/';
     const url = str + this.state.loanId;
@@ -93,7 +81,6 @@ class EditAssignment extends Component {
   };
 
   phaseDropDown() {
-    console.log('current loan type');
     const type = this.state.loanType;
     if (type === 'new') {
       return (
@@ -130,11 +117,17 @@ class EditAssignment extends Component {
         </select>
       );
     }
+    return (
+      <select value={this.state.phase} onChange={this.handleDropDownPhase}>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    );
   }
 
   submitEditedAssignment = () => {
-    console.log('edit assignment');
-    console.log('state', this.state);
     const body = {
       loanId: this.state.loanId,
       assignmentId: this.state.assignmentId,
@@ -148,7 +141,7 @@ class EditAssignment extends Component {
         console.log('Assignment edited successfully!');
       })
       .catch((err) => {
-        console.log('Assingment editing failed.', err);
+        throw err;
       });
     const str = '/add_assignment/';
     const url = str + this.state.loanId;
@@ -158,8 +151,6 @@ class EditAssignment extends Component {
   render() {
     // getter
     const token = this.state.tokenId;
-    console.log(sessionStorage.getItem('tokenId'));
-    console.log('state tokenId:', token);
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (

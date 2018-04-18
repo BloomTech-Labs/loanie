@@ -42,7 +42,6 @@ class AccountCreation extends Component {
       invalidPhoneNumber: false,
       invalidCheckBoxSelection: false,
     };
-    console.log(this.state);
   }
 
   selectStandardUser = () => {
@@ -77,12 +76,10 @@ class AccountCreation extends Component {
 
   handleTextAlerts = () => {
     this.setState({ acceptText: !this.state.acceptText });
-    console.log(!this.state.acceptText);
   };
 
   handleEmailAlerts = () => {
     this.setState({ acceptEmail: !this.state.acceptEmail });
-    console.log(!this.state.acceptEmail);
   };
 
   sendToDB = () => {
@@ -97,14 +94,13 @@ class AccountCreation extends Component {
       password: this.state.password,
     };
     sessionStorage.setItem('userType', this.state.userType);
-    console.log('sending to db:', userInfo);
     axios
       .post('http://localhost:3030/newuser', userInfo)
       .then((res) => {
         console.log('Response from server: ', res);
       })
       .catch((err) => {
-        console.log('Creation Failed!', err);
+        throw err;
       });
   };
 

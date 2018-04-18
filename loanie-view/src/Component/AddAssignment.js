@@ -28,16 +28,14 @@ class AddAssignment extends Component {
     axios
       .get(`http://localhost:3030/loan/${id}`)
       .then((res) => {
-        console.log('res clientemail', res.data.clientEmail);
         this.setState({
           loanType: res.data.loanType,
           clientEmail: res.data.clientEmail,
           assignments: res.data.assignments,
         });
-        console.log('Response from server: ', res);
       })
       .catch((err) => {
-        console.log('Unable to fetch user data.', err);
+        throw err;
       });
   }
 
@@ -49,11 +47,9 @@ class AddAssignment extends Component {
 
   handleNewAssignment = (event) => {
     this.setState({ newAssignmentText: event.target.value });
-    console.log(this.state.newAssignmentText);
   };
 
   phaseDropDown() {
-    console.log('current loan type');
     const type = this.state.loanType;
     if (type === 'new') {
       return (
@@ -90,6 +86,14 @@ class AddAssignment extends Component {
         </select>
       );
     }
+    return (
+      <select value={this.state.currentStatus} onChange={this.handleDropDownPhase}>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    );
   }
 
   submitNewAssignment = () => {
@@ -103,15 +107,13 @@ class AddAssignment extends Component {
       loanId: id,
       assignments: assignment,
     };
-    console.log('body', body);
     axios
       .post('http://localhost:3030/assignment', body)
       .then(() => {
-        console.log('Assignment created successfully!');
         window.location = `/add_assignment/${id}`;
       })
       .catch((err) => {
-        console.log('Assignment creation failed.', err);
+        throw err;
       });
   };
 
@@ -135,7 +137,6 @@ class AddAssignment extends Component {
   }
 
   handleDropDownPhase = (e) => {
-    console.log(e.target.value);
     this.setState({ assignmentPhase: e.target.value });
   };
 
@@ -148,18 +149,8 @@ class AddAssignment extends Component {
   };
 
   render() {
-    // const resizingTextareas = [].slice.call(document.querySelectorAll('textarea[autoresize]'));
-
-    // resizingTextareas.forEach((textarea) => {
-    //   textarea.addEventListener('input', this.autoresize(), false);
-    // });
-
-    // <textarea autoresize OnChange={this.handleNewAssignment} />
-
     // getter
     const token = this.state.tokenId;
-    console.log(sessionStorage.getItem('tokenId'));
-    console.log('state tokenId:', token);
     if (token === null || token === undefined || token === '') {
       window.location = '/login_user';
       return (

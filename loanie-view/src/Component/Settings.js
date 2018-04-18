@@ -37,15 +37,21 @@ export default class Settings extends Component {
           email: res.data.email,
           phoneNumber: contactNum,
         });
-        console.log('Response from server: ', res);
       })
       .catch((err) => {
-        console.log('Unable to fetch user data.', err);
+        throw err;
       });
   }
 
+<<<<<<< HEAD
   sendToDB = (event) => {
     event.preventDefault();
+=======
+  submitChanges = () => {
+    this.send();
+    // window.location = '/my_loans';
+  };
+>>>>>>> 5422fc7ab9a1d3d1244df79c9c70d60ffa984e4e
 
     // check to see if email changed
     if (this.state.email !== this.state.originalEmail) {
@@ -55,11 +61,10 @@ export default class Settings extends Component {
           const errorCode = error.code;
           const errorMessage = error.message;
           if (errorCode === 'auth/wrong-password') {
-            console.log('Wrong password.');
+            throw errorCode;
           } else {
-            console.log(errorMessage);
+            throw errorMessage;
           }
-          console.log(error);
         });
 
       firebase
@@ -69,7 +74,7 @@ export default class Settings extends Component {
           this.send();
         })
         .catch((error) => {
-          console.log(error);
+          throw error;
         });
     } else {
       this.send();
@@ -96,7 +101,6 @@ export default class Settings extends Component {
       mobilePhone: this.state.phoneNumber,
       token: this.state.tokenId,
     };
-    console.log('sending to db:', userInfo);
     axios
       .post('http://localhost:3030/edituser', userInfo)
       .then((res) => {
@@ -104,7 +108,7 @@ export default class Settings extends Component {
         window.location = '/open_loans';
       })
       .catch((err) => {
-        console.log('Failed to make changes to user!', err);
+        throw err;
       });
   }
 

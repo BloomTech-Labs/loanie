@@ -15,14 +15,16 @@ export default class SideBarNav extends Component {
   }
   componentDidMount() {
     const body = { token: this.state.tokenId };
-    axios
-      .post('http://localhost:3030/user', body)
-      .then((res) => {
-        this.setState({ userName: res.data.name });
-      })
-      .catch((err) => {
-        throw err;
-      });
+    if (this.state.tokenId !== null) {
+      axios
+        .post('http://localhost:3030/user', body)
+        .then((res) => {
+          this.setState({ userName: res.data.name });
+        })
+        .catch((err) => {
+          throw err;
+        });
+    }
   }
   render() {
     if (this.state.userType === 'managerUser') {

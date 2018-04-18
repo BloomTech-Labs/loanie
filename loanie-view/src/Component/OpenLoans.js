@@ -32,14 +32,11 @@ export default class OpenLoans extends Component {
     axios
       .post('http://localhost:3030/user', body)
       .then((res) => {
-        console.log('res name', res.data.name);
         this.setState({ loanManagerId: res.data._id });
-        console.log('loanManagerId from open loans: ', res.data._id);
-        console.log('Response from server: ', res);
         this.handleGetOpenLoans();
       })
       .catch((err) => {
-        console.log('Unable to fetch user data.', err);
+        throw err;
       });
 
     // console.log("User email: ", this.props.userLoginDetails.email);
@@ -51,17 +48,14 @@ export default class OpenLoans extends Component {
     const body = {
       loanManagerId: this.state.loanManagerId,
     };
-
-    console.log('loanManagerId from body: ', body.loanManagerId);
     axios
       .post('http://localhost:3030/getmanagerloans', body)
       .then((res) => {
         this.setState({ loans: res.data });
         // this.setState({ loans: [] });
-        console.log('loans', res);
       })
       .catch((err) => {
-        console.log('Unable to fetch loan data.', err);
+        throw err;
       });
   }
 
@@ -98,8 +92,7 @@ export default class OpenLoans extends Component {
               </CardText>
             </CardBody>
           </Card>
-        </div>,
-      );
+        </div>);
       if (index === loans.length - 1) {
         cards.push(
           <div className="OpenLoans-card-container">
@@ -120,7 +113,7 @@ export default class OpenLoans extends Component {
     });
 
     const noCards = [];
-    if (this.state.loans.length === 0) {
+    if (loans.length === 0) {
       return (
         <div>
           <Navbar />
@@ -170,11 +163,3 @@ export default class OpenLoans extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     loansBySingleManager: state.loans,
-//     //userLoginDetails: state.userLoginDetails,
-//   };
-// };
-
-// connect(mapStateToProps)(OpenLoans);
