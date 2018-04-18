@@ -28,12 +28,12 @@ HTTPS: git clone https://github.com/Lambda-School-Labs/loanie.git
 Navigate within the repository to the `loanie` directory and install the dependencies with 'npm install' or 'yarn install'.
 
 Create an .env file in the `loanie` directory. Add the following information to your .env file:  
-   SENDGRID_API_KEY=  
-   SENDGRID_EMAIL_FROM=  
-   TWILIO_ACCOUNT_SID=  
-   TWILIO_AUTH_TOKEN=  
-   TWILIO_PHONE_NUMBER=  
-   MONGOLAB_MAROON_URI=  
+ SENDGRID_API_KEY=  
+ SENDGRID_EMAIL_FROM=  
+ TWILIO_ACCOUNT_SID=  
+ TWILIO_AUTH_TOKEN=  
+ TWILIO_PHONE_NUMBER=  
+ MONGOLAB_MAROON_URI=
 
 Install and launch an instance of MongoDB. Add the url of the MongoDB instance as the value associated with the MONGOLAB_MAROON_URI key in the .env file. Here is an example of a locally hosted instance of MongoDB. `MONGOLAB_MAROON_URI=http://localhost:27017`
 
@@ -45,13 +45,14 @@ Executing the `npm start` or `yarn start` command in the loanie directory will s
 
 ## Tests
 
-Testing were created using Jest. Run tests using `npm test` or `yarn test` in  the loanie and loanie-view directories.
+Run tests using `npm test` or `yarn test` in the loanie and loanie/loanie-view directories.
 
 ---
 
 ## Authors
 
 The major contributors who brought this project to life:
+
 * Joshua Hall - [MannieJay](https://github.com/MannieJay)
 * Rashmi Baheti - [rbaheti](https://github.com/rbaheti)
 * Samuel Kim - [IllSmithDa](https://github.com/IllSmithDa)
