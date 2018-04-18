@@ -1,8 +1,10 @@
+
 .Create {
   display: flex;
   flex-direction: column;
 }
 .Create-title-containter {
+  margin-top: 10em;
   margin-left: 1.3em;
 }
 .Create-form-container {

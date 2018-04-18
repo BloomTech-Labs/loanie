@@ -168,7 +168,6 @@ class Billing extends Component {
                 />
                 Single Loan - $9.99
                 <br />
-                <br />
                 <legend>Credit/Debit Card Details: </legend>
                 Name as it appears on card:{' '}
                 <input type="text" name="name" onChange={this.handleNameChange} />
