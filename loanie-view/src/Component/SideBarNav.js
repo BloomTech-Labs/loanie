@@ -2,29 +2,27 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { slide as Menu } from 'react-burger-menu';
 import axios from 'axios';
+import base from './base';
 import '../CSS/SideBar.css';
 
 export default class SideBarNav extends Component {
   constructor() {
     super();
     this.state = {
-      tokenId: sessionStorage.getItem('tokenId'),
       userType: sessionStorage.getItem('userType'),
       userName: '',
     };
   }
   componentDidMount() {
-    const body = { token: this.state.tokenId };
-    if (this.state.tokenId !== null) {
-      axios
-        .post('http://localhost:3030/user', body)
-        .then((res) => {
-          this.setState({ userName: res.data.name });
-        })
-        .catch((err) => {
-          throw err;
-        });
-    }
+    const body = { token: sessionStorage.getItem('tokenId') };
+    axios
+      .post(`${base}/user`, body)
+      .then((res) => {
+        this.setState({ userName: res.data.name });
+      })
+      .catch((err) => {
+        throw err;
+      });
   }
   render() {
     if (this.state.userType === 'managerUser') {
@@ -68,6 +66,9 @@ export default class SideBarNav extends Component {
             </a>
             <a className="menu-items" href="/my_loans">
               My Loans
+            </a>
+            <a className="menu-items" href="/billing">
+              Subscribe (Loan Officers only)
             </a>
             <a className="menu-items" href="/user_settings">
               Settings

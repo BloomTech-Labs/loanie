@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import base from './base';
 // import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
@@ -24,7 +25,7 @@ class EditLoan extends Component {
     const getLoanId = window.location.href;
     const id = getLoanId.split('/').pop();
     axios
-      .get(`http://localhost:3030/loan/${id}`)
+      .get(`${base}/loan/${id}`)
       .then((res) => {
         this.setState({
           clientEmail: res.data.clientEmail,
@@ -118,7 +119,7 @@ class EditLoan extends Component {
       amount: this.state.amount,
     };
     axios
-      .post(`http://localhost:3030/loan/${id}`, body)
+      .post(`${base}/loan/${id}`, body)
       .then(() => {
         window.location = '/open_loans';
       })

@@ -3,6 +3,8 @@ import { CardElement, injectStripe } from 'react-stripe-elements';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import base from './base';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import '../CSS/Billing.css';
@@ -18,10 +20,8 @@ class Billing extends Component {
     this.state = {
       stripeToken: '',
       name: '',
-      creditCardNumber: '',
-      creditCardExperation: '',
-      loanPlan: '',
-      tokenId: sessionStorage.getItem('tokenId'),
+      loanPlan: 'Full Year Subscription',
+      email: '',
     };
   }
 
@@ -32,41 +32,86 @@ class Billing extends Component {
     return '/my_loans';
   };
 
+  getUserId = () => {
+    const info = { email: this.state.email };
+    axios
+      .post(`${base}/userbyemail`, info)
+      .then((res) => {
+        console.log('found ID', res.data.UID);
+        this.elevateUser(res.data.UID);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   sendStripeToken() {
     const body = {
       loanPlan: this.state.loanPlan,
       stripeToken: this.state.stripeToken,
+      email: this.state.email,
     };
     axios
-      .post('http://localhost:3030/stripe', body)
+      .post(`${base}/stripe`, body)
       .then((res) => {
         console.log('Response from server: ', res);
+        this.getUserId();
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  submitBillingInfo() {
-    console.log(this.state.username);
-    console.log(this.state.creditCardExperation);
-  }
+  elevateUser = (id) => {
+    let subDate = '';
+    if (this.state.loanPlan === 'Full Year Subscription') {
+      subDate = moment(Date.now())
+        .add(1, 'years')
+        .format('MMMM Do YYYY, h:mm:ss a');
+    }
 
-  handleCreditCardNumber(event) {
-    this.setState({ creditCardNumber: event.target.value });
-    console.log(this.state.creditCardNumber);
-  }
+    // comment to test expiration
+    if (this.state.loanPlan === 'Single Loan') {
+      subDate = moment(Date.now())
+        .add(30, 'days')
+        .format('MMMM Do YYYY, h:mm:ss a');
+    }
+
+    // uncomment to test expiration
+    // if (this.state.loanPlan === 'Single Loan') {
+    //   subDate = moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a');
+    // }
+
+    console.log(subDate);
+    const userInfo = {
+      token: id,
+      userType: 'managerUser',
+      subExp: subDate,
+    };
+
+    console.log('sending to db:', userInfo);
+    axios
+      .post(`${base}/edituser`, userInfo)
+      .then((res) => {
+        console.log('Success response: ', res);
+        sessionStorage.setItem('userType', 'managerUser');
+        window.location = '/open_loans';
+      })
+      .catch((err) => {
+        console.log('Failed to make changes to user!', err);
+      });
+  };
+
+  handleOptionChange = (e) => {
+    this.setState({ loanPlan: e.target.value });
+  };
 
   handleNameChange = (e) => {
     this.setState({ name: e.target.value });
   };
 
-  handleOneYPlanSelection = () => {
-    this.setState({ loanPlan: 'Full Year Subscription' });
-  };
-
-  handleOneLPlanSelection = () => {
-    this.setState({ loanPlan: 'Single Loan' });
+  handleEmailChange = (e) => {
+    this.setState({ email: e.target.value });
   };
 
   handleSubmit = (e) => {
@@ -82,16 +127,6 @@ class Billing extends Component {
   };
 
   render() {
-    // render getter
-    const token = this.state.tokenId;
-    if (token === null || token === undefined || token === '') {
-      window.location = '/login_user';
-      return (
-        <div>
-          <h1> Please Login</h1>
-        </div>
-      );
-    }
     return (
       <div className="Billing">
         <Navbar />
@@ -108,28 +143,35 @@ class Billing extends Component {
         </div>
         <div className="Billing-title-containter">
           <div className="Billing-form-container">
-            <form onSubmit={this.handleSubmit}>
+            <form>
               <fieldset>
                 <legend>Select a Plan:</legend>
                 <input
-                  type="checkbox"
-                  name="loanPlan"
-                  onChange={this.handleOneYPlanSelection}
-                />{' '}
-                Full Year Subscription - $99.99<br />
+                  type="radio"
+                  value="Full Year Subscription"
+                  checked={this.state.loanPlan === 'Full Year Subscription'}
+                  onClick={this.handleOptionChange}
+                />
+                Full Year Subscription - $99.99
+                <br />
                 <input
-                  type="checkbox"
-                  name="loanPlan"
-                  onChange={this.handleOneLPlanSelection}
-                />{' '}
-                Single Loan - $9.99<br />
+                  type="radio"
+                  value="Single Loan"
+                  checked={this.state.loanPlan === 'Single Loan'}
+                  onClick={this.handleOptionChange}
+                />
+                Single Loan - $9.99
+                <br />
                 <br />
                 <legend>Credit/Debit Card Details: </legend>
                 Name as it appears on card:{' '}
                 <input type="text" name="name" onChange={this.handleNameChange} />
               </fieldset>
               <CardElement />
-              <button onClick={this.submitBillingInfo}>Submit</button>
+              <br />
+              <legend>Email Address Of The User To Be Granted Loan Officer Privileges: </legend>
+              Email Address: <input type="text" name="email" onChange={this.handleEmailChange} />
+              <button onClick={this.handleSubmit}>Submit</button>
             </form>
           </div>
         </div>

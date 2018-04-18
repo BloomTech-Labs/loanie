@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button, Input } from 'reactstrap';
+import base from './base';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import '../CSS/EditLoan.css';
@@ -25,7 +26,7 @@ class EditAssignment extends Component {
     const assignmentId = params.substring(params.lastIndexOf('/') + 1, params.lastIndexOf('-'));
     const loanId = params.substring(params.lastIndexOf('-') + 1, params.lastIndexOf('+'));
     axios
-      .get(`http://localhost:3030/loan/${loanId}`)
+      .get(`${base}/loan/${loanId}`)
       .then((res) => {
         const loans = res.data.loanType;
         const assignment = res.data.assignments.filter(assign => assign._id === assignmentId);
@@ -68,7 +69,7 @@ class EditAssignment extends Component {
       assignmentId: this.state.assignmentId,
     };
     axios
-      .post('http://localhost:3030/assignmentdelete', body)
+      .post(`${base}/assignmentdelete`, body)
       .then(() => {
         console.log('Assignment deleted successfully!');
       })
@@ -136,7 +137,7 @@ class EditAssignment extends Component {
       complete: this.state.complete,
     };
     axios
-      .post('http://localhost:3030/assignmentedit', body)
+      .post(`${base}/assignmentedit`, body)
       .then(() => {
         console.log('Assignment edited successfully!');
       })
@@ -196,10 +197,10 @@ class EditAssignment extends Component {
               <br />
               <br />
               Edit Assignment:{' '}
-              <input
-                type="text"
+              <Input
+                type="textarea"
+                name="text"
                 value={this.state.text}
-                name="edit"
                 onChange={this.handleNewAssignment}
               />
               <br />

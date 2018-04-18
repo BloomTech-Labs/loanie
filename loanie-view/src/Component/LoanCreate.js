@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import axios from 'axios';
+import base from './base';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import { assignmentDefaults } from './AssignmentDefaults';
@@ -13,15 +14,12 @@ export default class LoanCreate extends Component {
       tokenId: sessionStorage.getItem('tokenId'),
       managerName: '',
       managerEmail: '',
-      clientName: '',
       phoneNumber: '',
       managerPhone: '',
       loanManagerId: '',
-      clientEmail: 'default@email.com',
+      clientEmail: '',
       loanType: 'new',
       amount: '',
-      acceptTexts: true,
-      acceptEmails: true,
     };
   }
 
@@ -29,17 +27,14 @@ export default class LoanCreate extends Component {
     const body = {
       token: this.state.tokenId,
     };
-
     axios
-      .post('http://localhost:3030/user', body)
+      .post(`${base}/user`, body)
       .then((res) => {
         this.setState({
           managerName: res.data.name,
           managerEmail: res.data.email,
           managerPhone: res.data.mobilePhone,
           loanManagerId: res.data._id,
-          acceptTexts: res.data.acceptTexts,
-          acceptEmails: res.data.acceptEmails,
         });
       })
       .catch((err) => {
@@ -61,53 +56,39 @@ export default class LoanCreate extends Component {
 
   sendNewLoanNotification = () => {
     // axios request to get client name
-    const request = { email: this.state.clientEmail };
+    const link = 'https://loanie.herokuapp.com/';
+    const message = `Hello! Your loan officer, ${
+      this.state.managerName
+    }, would like to cordially invite you to use a new cutting edge mortgage communication tool called Loanie! Your loan information is waiting for you, all you have to do is sign up at ${link} . If you have any trouble or questions you can contact ${
+      this.state.managerName
+    } by phone at ${this.state.managerPhone} or by email at ${this.state.managerEmail} .`;
+
+    // axios request to send text notification.
+    const textRequest = {
+      phoneNumber: this.state.phoneNumber,
+      text: message,
+    };
     axios
-      .post('http://localhost:3030/userbyemail', request)
-      .then((res) => {
-        this.setState({ clientName: res.data.name });
-
-        const link = 'https://loanie.herokuapp.com/';
-        const message = `Hi ${this.state.clientName}! Your loan officer, ${
-          this.state.managerName
-        }, would like to cordially invite you to use a new cutting edge mortgage communication tool called Loanie! Your loan information is waiting for you, all you have to do is sign up at ${link} . If you have any trouble or questions you can contact ${
-          this.state.managerName
-        } by phone at ${this.state.managerPhone} or by email at ${this.state.managerEmail} .`;
-
-        // axios request to send text notification.
-        if(this.state.acceptTexts) {
-          const textRequest = {
-            phoneNumber: this.state.phoneNumber,
-            text: message,
-          };
-          axios
-            .post('http://localhost:3030/sendsms', textRequest)
-            .then((res) => {
-              console.log('Success! Response from server: ', res);
-            })
-            .catch((err) => {
-              console.log('Loan creation failed.', err);
-            });
-        }
-
-        // axios request to send email notification.
-        if(this.state.acceptEmails) {
-          const emailRequest = {
-          email: this.state.clientEmail,
-          text: message,
-        };
-        axios
-          .post('http://localhost:3030/sendemail', emailRequest)
-          .then(() => {
-            window.location = '/open_loans';
-          })
-          .catch((err) => {
-            throw err;
-          });
-        }
+      .post(`${base}/sendsms`, textRequest)
+      .then((resp) => {
+        console.log('SMS Success! Response from server: ', resp);
       })
       .catch((err) => {
-        throw err;
+        console.log('Loan creation failed.', err);
+      });
+
+    // axios request to send email notification.
+    const emailRequest = {
+      email: this.state.clientEmail,
+      text: message,
+    };
+    axios
+      .post(`${base}/sendemail`, emailRequest)
+      .then(() => {
+        window.location = '/open_loans';
+      })
+      .catch((err) => {
+        console.log('Loan creation failed.', err);
       });
   };
 
@@ -121,7 +102,7 @@ export default class LoanCreate extends Component {
       assignments: defaults,
     };
     axios
-      .post('http://localhost:3030/newloan', body)
+      .post(`${base}/newloan`, body)
       .then(() => {
         this.sendNewLoanNotification();
       })

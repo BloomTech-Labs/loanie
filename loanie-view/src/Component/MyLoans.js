@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  Card,
-  CardHeader,
-  CardText,
-  CardBody,
-} from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardText, CardBody } from 'reactstrap';
+import base from './base';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import '../CSS/MyLoans.css';
@@ -23,25 +17,30 @@ export default class MyLoans extends Component {
       tokenId: sessionStorage.getItem('tokenId'),
     };
   }
-  componentWillMount() {
-    const body = { token: this.state.tokenId };
+  componentDidMount() {
+    console.log(this.state.userType);
+    // console.log('hello');
+    // console.log(this.state.tokenId);
+    const body = { token: sessionStorage.getItem('tokenId') };
     axios
-      .post('http://localhost:3030/user', body)
+      .post(`${base}/user`, body)
       .then((res) => {
-        // gran client email to use for next request
         const userEmail = { clientEmail: res.data.email };
+        // console.log('hello');
+        console.log('email to get loans', res.data.email);
         axios
-          .post('http://localhost:3030/getclientloans', userEmail)
+          .post(`${base}/getclientloans`, userEmail)
           .then((loandata) => {
-            // grabs client loans based on email
             this.setState({ loanList: loandata.data });
+            //  console.log(this.state.loanList);
+            console.log(this.state.loanList);
           })
           .catch((err) => {
-            throw err;
+            console.log(err);
           });
       })
       .catch((err) => {
-        throw err;
+        console.log(err);
       });
   }
   render() {
@@ -59,7 +58,7 @@ export default class MyLoans extends Component {
     if (user === 'managerUser') {
       return (
         <div>
-          <h1> Please login to as a standard user </h1>
+          <h1> Please login as a standard user </h1>
         </div>
       );
     }
@@ -77,35 +76,42 @@ export default class MyLoans extends Component {
           </div>
           <Navbar />
           <div className="MyLoans-link-container">
-            {this.state.loanList.map((val, index) =>
-              (
-                <div className="MyLoans-loancard">
-                  <Card>
-                    <CardHeader>
-                      <Link to={`my_loan/${val._id}`}>
-                        <h5><b>Loan</b> {index + 1}</h5>
-                      </Link>
-                    </CardHeader>
-                    <CardBody>
-                      <CardText>
-                        <ul className="list-unstyled">
-                          <li>
-                            <p className="MyLoans-text"><b>Current Phase</b>: {val.currentStatus}</p>
-                          </li>
-                          <li>
-                            <p className="MyLoans-text"><b>Loan Type</b>: {val.loanType}</p>
-                          </li>
-                          <li>
-                            <Link to={`my_loan/${val._id}`}>
-                              <p className="MyLoans-text"><b>See Details</b></p>
-                            </Link>
-                          </li>
-                        </ul>
-                      </CardText>
-                    </CardBody>
-                  </Card>
-                </div>
-              ))}
+            {this.state.loanList.map((val, index) => (
+              <div className="MyLoans-loancard">
+                <Card>
+                  <CardHeader>
+                    <Link to={`my_loan/${val._id}`}>
+                      <h5>
+                        <b>Loan</b> {index + 1}
+                      </h5>
+                    </Link>
+                  </CardHeader>
+                  <CardBody>
+                    <CardText>
+                      <ul className="list-unstyled">
+                        <li>
+                          <p className="MyLoans-text">
+                            <b>Current Phase</b>: {val.currentStatus}
+                          </p>
+                        </li>
+                        <li>
+                          <p className="MyLoans-text">
+                            <b>Loan Type</b>: {val.loanType}
+                          </p>
+                        </li>
+                        <li>
+                          <Link to={`my_loan/${val._id}`}>
+                            <p className="MyLoans-text">
+                              <b>See Details</b>
+                            </p>
+                          </Link>
+                        </li>
+                      </ul>
+                    </CardText>
+                  </CardBody>
+                </Card>
+              </div>
+            ))}
           </div>
           <ClientSideNav />
         </div>
@@ -125,6 +131,7 @@ export default class MyLoans extends Component {
         <Navbar />
         <div className="MyLoans-noloans-text">
           <h2>You currently do not have any active loans.</h2>
+          <Link to="/billing">Click to subscibe (Loan Officers only)</Link>
         </div>
         <ClientSideNav />
       </div>

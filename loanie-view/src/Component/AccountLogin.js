@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import axios from 'axios';
+import moment from 'moment';
+import base from './base';
 import Navbar from './Navbar';
 import firebase from './Firebase';
 // import { connect } from 'react-redux';
@@ -10,6 +11,7 @@ import '../CSS/AccountLogin.css';
 
 const sendToken = (tokenId, sendEmail) => {
   // setter
+  console.log('set sessionStorage id and email', tokenId, sendEmail);
   sessionStorage.setItem('tokenId', tokenId);
   sessionStorage.setItem('email', sendEmail);
   // console.log('Inside sendToken(), this.props: ', this.props);
@@ -21,16 +23,48 @@ const sendToken = (tokenId, sendEmail) => {
     email: sendEmail,
   };
   axios
-    .post('http://localhost:3030/auth', data)
+    .post(`${base}/auth`, data)
     .then((res) => {
-      const usertype = res.data.userType;
-      sessionStorage.setItem('userType', usertype);
-      if (usertype === 'managerUser') window.location = '/open_loans';
-      else window.location = '/my_loans';
+      let type = res.data.userType;
+      if (type === 'managerUser') {
+        if (res.data.subExp <= moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')) {
+          console.log('expired!');
+          const userInfo = {
+            token: tokenId,
+            userType: 'standardUser',
+          };
+          console.log('sending to db:', userInfo);
+          axios
+            .post(`${base}/edituser`, userInfo)
+            .then((resp) => {
+              type = 'standardUser';
+              console.log('Success response: ', resp);
+            })
+            .catch((err) => {
+              console.log('Failed to make changes to user!', err);
+            });
+        } else {
+          sessionStorage.setItem('userType', 'managerUser');
+        }
+        console.log('subscription not expired');
+      }
+      if (type === 'standardUser') {
+        sessionStorage.setItem('userType', 'standardUser');
+        window.location = '/my_loans';
+      }
+      if (type === 'managerUser') {
+        window.location = '/open_loans';
+      }
     })
     .catch((err) => {
       throw err;
     });
+  if (sessionStorage.getItem('userType') === 'standardUser') {
+    window.location = '/my_loans';
+  }
+  if (sessionStorage.getItem('userType') === 'managerUser') {
+    window.location = '/open_loans';
+  }
 };
 
 const uiConfig = {
@@ -42,9 +76,10 @@ const uiConfig = {
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
   ],
   callbacks: {
-    signInSuccess: (credential) => {
+    signInSuccess: () => {
       firebase.auth().onAuthStateChanged((user) => {
-        sessionStorage.setItem('credential', credential);
+        console.log('got the ID!!', user.uid);
+        console.log('user email', user.email);
         sendToken(user.uid, user.email);
       });
     },
@@ -62,9 +97,6 @@ export default function AccountLogin() {
       <Navbar />
       <div className="Account-title-containter">
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-        <div className="Account-text-containter">
-          <Link to="/password_reset">Forgot Password?</Link>
-        </div>
       </div>
     </div>
   );

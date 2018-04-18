@@ -157,7 +157,6 @@ const loanCompleteAssignment = (req, res) => {
   );
 };
 
-
 const loanSaveAssignments = (req, res) => {
   console.log("loan assignment completed");
   const { loanId, assignments } = req.body;

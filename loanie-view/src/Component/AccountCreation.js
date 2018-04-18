@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import axios from 'axios';
+import base from './base';
 import firebase from './Firebase';
 import Navbar from './Navbar';
 import '../CSS/AccountCreate.css';
@@ -35,38 +36,21 @@ class AccountCreation extends Component {
   constructor() {
     super();
     this.state = {
-      userType: '',
+      userType: 'standardUser',
       phoneNumber: '',
+      email: sessionStorage.getItem('email'),
+      name: sessionStorage.getItem('name'),
       acceptText: false,
       acceptEmail: false,
+      tokenId: sessionStorage.getItem('tokenId'),
       invalidPhoneNumber: false,
       invalidCheckBoxSelection: false,
     };
   }
 
-  selectStandardUser = () => {
-    this.setState({ userType: 'standardUser' });
-  };
-
-  selectManagerUser = () => {
-    this.setState({ userType: 'managerUser' });
-  };
-
-  selectGoBack = () => {
-    this.setState({ userType: '' });
-  };
-
   submitClientAccountInfo = () => {
     this.sendToDB();
     window.location = '/my_loans';
-  };
-
-  submitManagerAccountInfo = () => {
-    this.sendToDB();
-    window.location = '/loan_list';
-  };
-  handlePasswordChange = (event) => {
-    this.setState({ password: event.target.value });
   };
 
   handleInputChange = (event) => {
@@ -84,24 +68,26 @@ class AccountCreation extends Component {
 
   sendToDB = () => {
     const userInfo = {
-      name: sessionStorage.getItem('name'),
+      name: this.state.name,
       userType: this.state.userType,
-      email: sessionStorage.getItem('email'),
-      token: sessionStorage.getItem('tokenId'),
+      email: this.state.email,
+      token: this.state.tokenId,
       mobilePhone: this.state.phoneNumber,
       acceptTexts: this.state.acceptText,
       acceptEmails: this.state.acceptEmail,
-      password: this.state.password,
     };
     sessionStorage.setItem('userType', this.state.userType);
+    console.log('sending to db:', userInfo);
     axios
-      .post('http://localhost:3030/newuser', userInfo)
+      .post(`${base}/newuser`, userInfo)
       .then((res) => {
         console.log('Response from server: ', res);
+        // window.location = '/my_loans';
       })
       .catch((err) => {
         throw err;
       });
+    // window.location = '/my_loans';
   };
 
   render() {
@@ -116,53 +102,35 @@ class AccountCreation extends Component {
         </div>
       );
     }
-    if (this.state.userType === 'managerUser') {
+    if (sessionStorage.getItem('userType') === 'managerUser') {
+      window.location = '/loan_list';
       return (
-        <div className="Login">
-          <Navbar />
-          <div className="Login-header-container">
-            <h1> Loan Officer Account Creation</h1>
-          </div>
-          <div>
-            <form>
-              <fieldset>
-                <legend>Additional information:</legend>
-                Credentials(optional):{' '}
-                <input type="text" name="password" onChange={this.handlePasswordChange} />
-                <br />
-                <br />
-                Mobile Phone:{' '}
-                <input
-                  type="text"
-                  onChange={this.handleInputChange}
-                />
-                <br />
-                <br />
-                <button onClick={this.submitManagerAccountInfo}>Submit</button>
-              </fieldset>
-            </form>
-            <button onClick={this.selectGoBack}>Go Back</button>
-          </div>
+        <div>
+          <h1> Logged In </h1>
         </div>
       );
     }
-    if (this.state.userType === 'standardUser') {
+    if (sessionStorage.getItem('userType') === 'standardUser') {
+      console.log('standardUser redirect!');
+      window.location = '/my_loans';
       return (
-        <div className="Login">
+        <div>
+          <h1> Logged In </h1>
+        </div>
+      );
+    }
+    if (this.state.userType) {
+      return (
+        <div className="Create">
           <Navbar />
-          <div className="Login-header-container">
+          <div className="Create-title-containter">
             <h1> Client Account Creation</h1>
           </div>
           <div>
-            <form>
+            <form className="Create-form-container">
               <fieldset>
                 <legend>Additional information:</legend>
-                Mobile Phone:{' '}
-                <input
-                  type="text"
-                  value={this.state.phoneNumber}
-                  onChange={this.handleInputChange}
-                />
+                Mobile Phone: <input type="text" onChange={this.handleInputChange} />
                 <br />
                 <br />
                 <input type="checkbox" name="acceptText" onChange={this.handleTextAlerts} /> I would
@@ -173,39 +141,10 @@ class AccountCreation extends Component {
                 <button onClick={this.submitClientAccountInfo}>Submit</button>
               </fieldset>
             </form>
-            <button onClick={this.selectGoBack}>Go Back</button>
           </div>
         </div>
       );
     }
-    if (!sessionStorage.getItem('userType')) {
-      return (
-        <div>
-          <Navbar />
-          <div className="Login-header-container">
-            <h1> Select User Type </h1>
-          </div>
-          <div>
-            <button onClick={this.selectStandardUser}>Client</button>
-            <button onClick={this.selectManagerUser}>Loan Officer</button>
-          </div>
-        </div>
-      );
-    }
-    if (sessionStorage.getItem('userType') === 'managerUser') {
-      window.location = '/loan_list';
-      return (
-        <div>
-          <h1> Logged In </h1>
-        </div>
-      );
-    }
-    window.location = '/my_loans';
-    return (
-      <div>
-        <h1> Logged In </h1>
-      </div>
-    );
   }
 }
 

@@ -24,7 +24,7 @@ const userCreate = (req, res) => {
       console.log(err);
       return;
     }
-    console.log(savedUser);
+    console.log("created", savedUser);
     res.status(200).json(savedUser);
   });
 };
@@ -46,21 +46,19 @@ const userLogin = (req, res) => {
 const userToken = (req, res) => {
   const { token, email } = req.body;
   console.log(token, email);
-  User.findOne({ email })
+  User.findOne({ email: email })
     .then((user) => {
       console.log(user);
       if (token) user.UID = token;
       user.save(user, (err) => {
         if (err) {
           res.status(500).json(err);
-          return;
         }
-        console.log("hello");
-        console.log(user);
+        console.log("token stored", user);
         res.status(200).json(user);
       });
     })
-    .catch(err => res.status(422).json({ error: "User not found!", err }));
+    .catch(err => res.status(422).json({ error: err }));
 };
 
 const usersGetAll = (req, res) => {
@@ -97,10 +95,9 @@ const userGetByUID = (req, res) => {
   console.log("token:", token);
   User.findOne({ UID: token })
     .then((user) => {
-      console.log('hello');
       console.log(user);
       if (user === null) throw new Error();
-      else res.json(user);
+      else res.status(200).json(user);
     })
     .catch(err => res.status(422).json({ error: "User not found!", err }));
 };
@@ -125,11 +122,13 @@ const userGetByEmail = (req, res) => {
 const userEdit = (req, res) => {
   console.log("user edit");
   const {
-    name, userType, email, mobilePhone, acceptTexts, acceptEmails, token,
+    name, userType, email, mobilePhone, acceptTexts, acceptEmails, token, subExp,
   } = req.body;
   // find a single User
   // edit user details
   // save User
+  console.log(token);
+  console.log("req.body", req.body);
   User.findOne({ UID: token })
     .then((user) => {
       console.log("user", user);
@@ -140,8 +139,7 @@ const userEdit = (req, res) => {
       if (mobilePhone !== undefined) user.mobilePhone = mobilePhone;
       if (acceptTexts !== undefined) user.acceptTexts = acceptTexts;
       if (acceptEmails !== undefined) user.acceptEmails = acceptEmails;
-      console.log("user.acceptTexts: ", user.acceptTexts);
-      console.log("user.acceptEmails: ", user.acceptEmails);
+      if (subExp !== undefined) user.subExp = subExp;
       user.save(user, (err, saveduser) => {
         if (err) {
           console.log("error", err);

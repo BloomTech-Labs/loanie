@@ -5,7 +5,7 @@
   flex-wrap: wrap;
 }
 .MyLoans-title-container {
-  margin-left: 42em;
+  margin-left: 1.3em;
 }
 
 .MyLoans-loancard {
@@ -16,7 +16,7 @@
 }
 
 .MyLoans-borrower-container {
-  margin-left: 14em;
+  margin-left: 1.3em;
 }
 
 .Myloans-progress-container {
@@ -36,7 +36,7 @@
 
 .MyLoans-text-container{
   margin-top: 2em;
-  margin-left: 14em;
+  margin-left: 1.3em;
   order: 1;
   width: 45em;
 }

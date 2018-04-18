@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardBody } from 'reactstrap';
+import base from './base';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import ProgressBar from './ProgressBar';
@@ -41,7 +42,7 @@ export default class ClientSelectedLoan extends Component {
     // grabs username inside current url
     getLoanId = getLoanId.split('/').pop();
     axios
-      .get(`http://localhost:3030/loan/${getLoanId}`)
+      .get(`${base}/loan/${getLoanId}`)
       .then((loandata) => {
         // console.log(loandata.data);
         const assignArr = loandata.data.assignments;
@@ -83,12 +84,12 @@ export default class ClientSelectedLoan extends Component {
         const request = { email: loandata.data.clientEmail };
         // console.log('request: ', request);
         axios
-          .post('http://localhost:3030/userbyemail', request)
+          .post(`${base}/userbyemail`, request)
           .then((res) => {
-            this.setState({ 
+            this.setState({
               borrower: res.data.name,
               acceptTexts: res.data.acceptTexts,
-              acceptEmails:res.data.acceptEmails,
+              acceptEmails: res.data.acceptEmails,
             });
           })
           .catch((err) => {
@@ -111,7 +112,7 @@ export default class ClientSelectedLoan extends Component {
     };
 
     axios
-      .post('http://localhost:3030/assignmentcomplete', body)
+      .post(`${base}/assignmentcomplete`, body)
       .then(console.log('loan marked complete'))
       .catch((err) => {
         throw err;
@@ -129,18 +130,18 @@ export default class ClientSelectedLoan extends Component {
     if (isPhaseComplete) {
       let phaseIncrement = parseInt(this.state.phaseNumber, 10);
       phaseIncrement += 1;
-      if(this.state.totalPhases.length < phaseIncrement) {
-        const request = {openLoan: false}
+      if (this.state.totalPhases.length < phaseIncrement) {
+        const request = { openLoan: false };
         axios
-        .post(`http://localhost:3030/loan/${this.state.currentLoanId}`, request)
-        .then((res) => {
-          this.setState({openLoan: false});
-          this.sendNewLoanNotification();
-          window.location = '/closed_loans';
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          .post(`${base}/loan/${this.state.currentLoanId}`, request)
+          .then(() => {
+            this.setState({ openLoan: false });
+            this.sendNewLoanNotification();
+            window.location = '/closed_loans';
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         return;
       }
       phaseIncrement += '';
@@ -149,7 +150,7 @@ export default class ClientSelectedLoan extends Component {
       // TODO: Also send openLoan to the axios request to update if the loan is open or closed!
       const request = { currentStatus: phaseIncrement };
       axios
-        .post(`http://localhost:3030/loan/${this.state.currentLoanId}`, request)
+        .post(`${base}/loan/${this.state.currentLoanId}`, request)
         .then((res) => {
           const userName = res.data.name;
           this.setState({ borrower: userName, assignments: [] });
@@ -171,7 +172,7 @@ export default class ClientSelectedLoan extends Component {
     // grabs username inside current url
     getLoanId = getLoanId.split('/').pop();
     axios
-      .get(`http://localhost:3030/loan/${getLoanId}`)
+      .get(`${base}/loan/${getLoanId}`)
       .then((loandata) => {
         const assignArr = loandata.data.assignments;
         for (let j = 0; j < assignArr.length; j += 1) {
@@ -179,12 +180,19 @@ export default class ClientSelectedLoan extends Component {
             filteredAssign.push(assignArr[j]);
           }
         }
-        this.setState({
-          phaseTitle: PhaseContent[updatePhase].phaseTitle,
-          phaseContent: PhaseContent[updatePhase].description,
-          assignments: filteredAssign,
-          phaseTitleNumber: updatePhase,
-        });
+        for (let i = 0; i < PhaseContent.length; i += 1) {
+          if (
+            PhaseContent[i].loanType === this.state.type &&
+            PhaseContent[i].phase === updatePhase
+          ) {
+            this.setState({
+              phaseTitle: PhaseContent[i].phaseTitle,
+              phaseContent: PhaseContent[i].description,
+              assignments: filteredAssign,
+              phaseTitleNumber: updatePhase,
+            });
+          }
+        }
       })
       .catch((err) => {
         throw err;
@@ -195,21 +203,21 @@ export default class ClientSelectedLoan extends Component {
     // axios request to get client name
     const request = { email: this.state.clientEmail };
     axios
-      .post('http://localhost:3030/userbyemail', request)
+      .post(`${base}/userbyemail`, request)
       .then((res) => {
         const clientName = res.data.name;
 
         // const link = "https://loanie.herokuapp.com/";
         const message = `Hi ${clientName}! Congratulations! Your loan process has now moved to the next phase! If you have any trouble or questions you can contact by phone at 1-800-000-0000 or by email at loaniecs4@gmail.com .`;
 
-        if(this.state.acceptTexts) {
+        if (this.state.acceptTexts) {
           // axios request to send text notification.
           const textRequest = {
-            phoneNumber: res.data.phoneNumber,
+            phoneNumber: res.data.mobilePhone,
             text: message,
           };
           axios
-            .post('http://localhost:3030/sendsms', textRequest)
+            .post(`${base}/sendsms`, textRequest)
             .then((resp) => {
               console.log('Success! Response from server: ', resp);
             })
@@ -217,15 +225,15 @@ export default class ClientSelectedLoan extends Component {
               console.log('Loan creation failed.', err);
             });
         }
-        
+
         // axios request to send email notification.
-        if(this.state.acceptEmails) {
+        if (this.state.acceptEmails) {
           const emailRequest = {
             email: this.state.clientEmail,
             text: message,
           };
           axios
-            .post('http://localhost:3030/sendemail', emailRequest)
+            .post(`${base}/sendemail`, emailRequest)
             .then((response) => {
               console.log('Success! Response from server: ', response);
             })
@@ -233,10 +241,10 @@ export default class ClientSelectedLoan extends Component {
               console.log('Loan creation failed.', err);
             });
         }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -278,7 +286,7 @@ export default class ClientSelectedLoan extends Component {
         );
       });
 
-      const editableAssignments =
+    const editableAssignments =
         this.state.assignments.map((val, index) => {
           const assignmentId = val._id;
           return (
@@ -290,7 +298,7 @@ export default class ClientSelectedLoan extends Component {
               /> {val.text}
             </p>
           );
-        })
+        });
 
     return (
       <div>

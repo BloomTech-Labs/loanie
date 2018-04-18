@@ -12,6 +12,7 @@ import {
 } from 'reactstrap';
 // import { connect } from 'react-redux';
 // import { getManagerLoans } from '../Actions';
+import base from './base';
 import Navbar from './Navbar';
 import SideBarNav from './SideBarNav';
 import '../CSS/OpenAndClosedLoans.css';
@@ -30,7 +31,7 @@ export default class ClosedLoans extends Component {
   componentDidMount() {
     const body = { token: this.state.tokenId };
     axios
-      .post('http://localhost:3030/user', body)
+      .post(`${base}/user`, body)
       .then((res) => {
         this.setState({
           loanManagerId: res.data._id,
@@ -48,7 +49,7 @@ export default class ClosedLoans extends Component {
       loanManagerId: this.state.loanManagerId,
     };
     axios
-      .post('http://localhost:3030/getmanagerloans', body)
+      .post(`${base}/getmanagerloans`, body)
       .then((res) => {
         this.setState({ loans: res.data });
       })

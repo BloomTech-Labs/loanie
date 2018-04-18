@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import axios from 'axios';
+import base from './base';
 import Navbar from './Navbar';
 import SideBarNav from './SideBarNav';
-import firebase from './Firebase';
 
 import '../CSS/Settings.css';
 
@@ -11,11 +11,10 @@ export default class Settings extends Component {
   constructor() {
     super();
     this.state = {
-      email: '',
-      originalEmail: '',
+      email: sessionStorage.getItem('email'),
+      subExp: '',
       phoneNumber: '',
       name: '',
-      password: '',
       tokenId: sessionStorage.getItem('tokenId'),
       invalidName: false,
       invalidPhoneNumber: false,
@@ -23,19 +22,18 @@ export default class Settings extends Component {
   }
 
   componentDidMount() {
-    const body = {
-      token: this.state.tokenId,
-    };
+    const body = { token: sessionStorage.getItem('tokenId') };
 
     axios
-      .post('http://localhost:3030/user', body)
+      .post(`${base}/user`, body)
       .then((res) => {
+        console.log('get user', res);
         const contactNum = res.data.mobilePhone;
         this.setState({
           name: res.data.name,
-          originalEmail: res.data.email,
           email: res.data.email,
           phoneNumber: contactNum,
+          subExp: res.data.subExp,
         });
       })
       .catch((err) => {
@@ -45,48 +43,21 @@ export default class Settings extends Component {
 
   sendToDB = (event) => {
     event.preventDefault();
-
-    // check to see if email changed
-    if (this.state.email !== this.state.originalEmail) {
-      firebase
-        .signInAndRetrieveDataWithEmailAndPassword(this.state.originalEmail, this.state.password)
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          if (errorCode === 'auth/wrong-password') {
-            throw errorCode;
-          } else {
-            throw errorMessage;
-          }
-        });
-
-      firebase
-        .auth()
-        .updateEmail(this.state.email)
-        .then(() => {
-          this.send();
-        })
-        .catch((error) => {
-          throw error;
-        });
-    } else {
-      this.send();
-    }
   };
 
-  send() {
+  send = () => {
     // Validate user input.
-    if (this.state.name.length === 0) {
-      this.setState({ invalidName: true });
-      return; 
-    }
-    this.setState({ invalidName: false });
+    // if (this.state.name.length === 0) {
+    //   this.setState({ invalidName: true });
+    //   return;
+    // }
+    // this.setState({ invalidName: false });
 
-    if (isNaN(this.state.phoneNumber) || this.state.phoneNumber.length < 10) {
-      this.setState({ invalidPhoneNumber: true });
-      return; 
-    }
-    this.setState({ invalidPhoneNumber: false });
+    // if (isNaN(this.state.phoneNumber) || this.state.phoneNumber.length < 10) {
+    //   this.setState({ invalidPhoneNumber: true });
+    //   return;
+    // }
+    // this.setState({ invalidPhoneNumber: false });
 
     const userInfo = {
       name: this.state.name,
@@ -95,7 +66,7 @@ export default class Settings extends Component {
       token: this.state.tokenId,
     };
     axios
-      .post('http://localhost:3030/edituser', userInfo)
+      .post(`${base}/edituser`, userInfo)
       .then((res) => {
         console.log('Success response: ', res);
         window.location = '/open_loans';
@@ -103,18 +74,10 @@ export default class Settings extends Component {
       .catch((err) => {
         throw err;
       });
-  }
-
-  handleEmailChange = (event) => {
-    this.setState({ email: event.target.value });
   };
 
   handleNameChange = (event) => {
     this.setState({ name: event.target.value });
-  };
-
-  handlePasswordChange = (event) => {
-    this.setState({ password: event.target.value });
   };
 
   handlePhoneChange = (event) => {
@@ -136,12 +99,12 @@ export default class Settings extends Component {
 
     let invalidNameDiv = null;
     if (this.state.invalidName) {
-      invalidNameDiv = <div className="invalid-user-input">*Invalid Name</div>
+      invalidNameDiv = <div className="invalid-user-input">*Invalid Name</div>;
     }
 
     let invalidPhoneNumberDiv = null;
     if (this.state.invalidPhoneNumber) {
-      invalidPhoneNumberDiv = <div className="invalid-user-input">*Invalid Phone Number</div>
+      invalidPhoneNumberDiv = <div className="invalid-user-input">*Invalid Phone Number</div>;
     }
 
     return (
@@ -189,7 +152,8 @@ export default class Settings extends Component {
               </div>
               <br />
               <br />
-              <button onClick={this.sendToDB}>Submit</button>
+              <p>Subscription expiration date: {this.state.subExp}</p>
+              <button onClick={this.send}>Submit</button>
             </fieldset>
           </form>
         </div>

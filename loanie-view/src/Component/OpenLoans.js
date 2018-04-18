@@ -11,6 +11,7 @@ import {
   CardColumns,
   CardBody,
 } from 'reactstrap';
+import base from './base';
 // import { getManagerLoans } from '../Actions';
 import Navbar from './Navbar';
 import SideBarNav from './SideBarNav';
@@ -30,7 +31,7 @@ export default class OpenLoans extends Component {
   componentDidMount() {
     const body = { token: this.state.tokenId };
     axios
-      .post('http://localhost:3030/user', body)
+      .post(`${base}/user`, body)
       .then((res) => {
         this.setState({ loanManagerId: res.data._id });
         this.handleGetOpenLoans();
@@ -49,50 +50,48 @@ export default class OpenLoans extends Component {
       loanManagerId: this.state.loanManagerId,
     };
     axios
-      .post('http://localhost:3030/getmanagerloans', body)
+      .post(`${base}/getmanagerloans`, body)
       .then((res) => {
         this.setState({ loans: res.data });
-        // this.setState({ loans: [] });
       })
       .catch((err) => {
         throw err;
       });
-  }
+  };
 
   handleGetAllOpenLoans = () => {
     const openLoans = this.state.loans.filter(loan => loan.openLoan === true);
     return openLoans;
-  }
+  };
 
   render() {
     const loans = this.handleGetAllOpenLoans();
     const cards = [];
     loans.forEach((loan, index) => {
-      cards.push(
-        <div className="OpenLoans-card-container">
-          <Card>
-            <CardHeader><b>Loan {index + 1}</b></CardHeader>
-            <CardBody>
-              <CardText>
-                <ul className="list-unstyled">
-                  <li>Client email: {loan.clientEmail}</li>
-                  <li>Current Status: {loan.currentStatus}</li>
-                  <Link to={`my_loan/${loan._id}`}>
-                    See Details
-                  </Link>
-                  {' | '}
-                  <Link to={`edit_loan/${loan._id}`}>
-                    Edit
-                  </Link>
-                  {' | '}
-                  <Link to={`add_assignment/${loan._id}`}>
-                    Add Assignment
-                  </Link>
-                </ul>
-              </CardText>
-            </CardBody>
-          </Card>
-        </div>);
+      cards.push(<div className="OpenLoans-card-container">
+        <Card>
+          <CardHeader><b>Loan {index + 1}</b></CardHeader>
+          <CardBody>
+            <CardText>
+              <ul className="list-unstyled">
+                <li>Client email: {loan.clientEmail}</li>
+                <li>Current Status: {loan.currentStatus}</li>
+                <Link to={`my_loan/${loan._id}`}>
+                  View Details
+                </Link>
+                {' | '}
+                <Link to={`edit_loan/${loan._id}`}>
+                  Edit Loan
+                </Link>
+                {' | '}
+                <Link to={`add_assignment/${loan._id}`}>
+                  Edit Assignments
+                </Link>
+              </ul>
+            </CardText>
+          </CardBody>
+        </Card>
+      </div>);
       if (index === loans.length - 1) {
         cards.push(
           <div className="OpenLoans-card-container">
@@ -125,9 +124,7 @@ export default class OpenLoans extends Component {
               <BreadcrumbItem active>Loans</BreadcrumbItem>
             </Breadcrumb>
           </div>
-          <CardColumns>
-            {cards}
-          </CardColumns>
+          <CardColumns>{cards}</CardColumns>
           {noCards}
           <div className="OpenLoans-image-container">
             <h1> Add a New Loan</h1>

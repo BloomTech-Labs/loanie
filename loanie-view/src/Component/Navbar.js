@@ -23,7 +23,7 @@ export default class Navbar extends Component {
       .signOut()
       .then(() => {
         sessionStorage.clear();
-        window.location = '/login_user';
+        window.location = '/';
       })
       .catch((error) => {
         throw error;

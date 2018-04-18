@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
+import base from './base';
 import firebase from './Firebase';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
@@ -26,11 +27,12 @@ export default class BorrowerSettings extends Component {
   }
 
   componentDidMount() {
+    console.log(this.state.tokenId);
     const body = {
       token: this.state.tokenId,
     };
     axios
-      .post('http://localhost:3030/user', body)
+      .post(`${base}/user`, body)
       .then((res) => {
         this.setState({
           name: res.data.name,
@@ -47,15 +49,11 @@ export default class BorrowerSettings extends Component {
   }
 
   handleTextAlerts = () => {
-    console.log("inside handleTextAlerts1: ", this.state.acceptTexts);
     const toggledValue = !this.state.acceptTexts;
-    console.log("toggledValue: ", toggledValue);
     this.setState({ acceptTexts: toggledValue });
-    console.log("inside handleTextAlerts2: ", this.state.acceptTexts);
   };
 
   handleEmailAlerts = () => {
-    console.log("inside handleEmailAlerts"); 
     this.setState({ acceptEmails: !this.state.acceptEmails });
   };
 
@@ -94,24 +92,24 @@ export default class BorrowerSettings extends Component {
     // Validate user input.
     if (this.state.name.length === 0) {
       this.setState({ invalidName: true });
-      return; 
+      return;
     }
     this.setState({ invalidName: false });
 
     if (isNaN(this.state.phoneNumber) || this.state.phoneNumber.length < 10) {
       this.setState({ invalidPhoneNumber: true });
-      return; 
+      return;
     }
     this.setState({ invalidPhoneNumber: false });
 
-    if ((this.state.acceptTexts === false) && (this.state.acceptEmails === false)) {
+    if (this.state.acceptTexts === false && this.state.acceptEmails === false) {
       console.log(typeof this.state.acceptTexts);
       this.setState({ invalidCheckBoxSelection: true });
-      return; 
+      return;
     }
     this.setState({ invalidCheckBoxSelection: false });
 
-    console.log("acceptTexts:", this.state.acceptTexts);
+    console.log('acceptTexts:', this.state.acceptTexts);
     const userInfo = {
       name: this.state.name,
       email: this.state.email,
@@ -120,9 +118,9 @@ export default class BorrowerSettings extends Component {
       acceptEmails: this.state.acceptEmails,
       token: this.state.tokenId,
     };
-
+    console.log('sending to db:', userInfo);
     axios
-      .post('http://localhost:3030/edituser', userInfo)
+      .post(`${base}/edituser`, userInfo)
       .then((res) => {
         console.log('Success response: ', res);
         window.location = '/my_loans';
@@ -162,20 +160,20 @@ export default class BorrowerSettings extends Component {
     }
     let invalidNameDiv = null;
     if (this.state.invalidName) {
-      invalidNameDiv = <div className="invalid-user-input">*Invalid Name</div>
+      invalidNameDiv = <div className="invalid-user-input">*Invalid Name</div>;
     }
 
     let invalidPhoneNumberDiv = null;
     if (this.state.invalidPhoneNumber) {
-      invalidPhoneNumberDiv = <div className="invalid-user-input">*Invalid Phone Number</div>
+      invalidPhoneNumberDiv = <div className="invalid-user-input">*Invalid Phone Number</div>;
     }
 
     let invalidCheckBoxesDiv = null;
     if (this.state.invalidCheckBoxSelection) {
-      invalidCheckBoxesDiv = <div className="invalid-user-input">*Please select at least one type of </div>
+      invalidCheckBoxesDiv = (
+        <div className="invalid-user-input">*Please select at least one type of </div>
+      );
     }
-    console.log("in render, this.state.acceptTexts:", this.state.acceptTexts);
-    console.log("in render, this.state.acceptEmails:", this.state.acceptEmails);
     return (
       <div className="Settings">
         <div className="BreadCrumb">
@@ -189,6 +187,15 @@ export default class BorrowerSettings extends Component {
             <BreadcrumbItem active>Settings</BreadcrumbItem>
           </Breadcrumb>
         </div>
+        <Button
+          color="info"
+          onClick={() => {
+            window.location = '/billing';
+          }}
+        >
+          {' '}
+          Loan Officers{' '}
+        </Button>
         <div className="Settings-title-containter">
           <h1>Settings</h1>
         </div>
@@ -211,7 +218,7 @@ export default class BorrowerSettings extends Component {
               <div>
                 <p>Phone Number:</p>{' '}
                 <input
-                  type="text" 
+                  type="text"
                   value={this.state.phoneNumber}
                   onChange={this.handlePhoneChange}
                 />
