@@ -37,7 +37,6 @@ export default class LoanCreate extends Component {
           managerPhone: res.data.mobilePhone,
           loanManagerId: res.data._id,
         });
-        console.log('Response from server: ', res);
       })
       .catch((err) => {
         throw err;
@@ -115,8 +114,7 @@ export default class LoanCreate extends Component {
     };
     axios
       .post('http://localhost:3030/newloan', body)
-      .then((res) => {
-        console.log('Success! Response from server: ', res);
+      .then(() => {
         this.sendNewLoanNotification();
       })
       .catch((err) => {

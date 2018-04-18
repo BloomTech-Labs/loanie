@@ -601,6 +601,7 @@ export function assignmentDefaults(loanType) {
   if (loanType === 'new') return newDefs;
   else if (loanType === 'refinance') return refDefs;
   else if (loanType === 'construction') return conDefs;
+  return 'err';
 }
 
 export function foo() {

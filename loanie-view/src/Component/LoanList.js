@@ -16,7 +16,6 @@ export default class LoanList extends Component {
     };
   }
   componentWillMount() {
-    // if (this.props.tokenId === '') window.location = '/login_user';
     const body = { token: this.state.tokenId };
     axios
       .post('http://localhost:3030/user', body)

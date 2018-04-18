@@ -92,8 +92,7 @@ export default class OpenLoans extends Component {
               </CardText>
             </CardBody>
           </Card>
-        </div>,
-      );
+        </div>);
       if (index === loans.length - 1) {
         cards.push(
           <div className="OpenLoans-card-container">
@@ -164,11 +163,3 @@ export default class OpenLoans extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     loansBySingleManager: state.loans,
-//     //userLoginDetails: state.userLoginDetails,
-//   };
-// };
-
-// connect(mapStateToProps)(OpenLoans);
