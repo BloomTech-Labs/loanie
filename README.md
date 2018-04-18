@@ -11,11 +11,11 @@ Loanie simplifies the mortgage process by breaking it down into phases. Each pha
 
 What you'll need:
 
-* Twilio API key - In order to automate text messages to clients, you'll need a Twilio API key. Sign up at https://twilio.com to receive an API key.
+* Twilio API key - In order to automate text messages to clients, you'll need a Twilio API key. Sign up at https://twilio.com.
 
 * Stripe API key - In order to receive payments from subscribers, you'll need a Stripe account and API key. Setup an account at https://stripe.com.
 
-* SendGrid API key - In order to automate email messages to clients, you'll need a SendGrid API key. Sign up at https://sendgrid.com to receive an API key.
+* SendGrid API key - In order to automate email messages to clients, you'll need a SendGrid API key. Sign up at https://sendgrid.com.
 
 ---
 
@@ -48,7 +48,7 @@ Executing the `npm start` or `yarn start` command in the loanie directory will s
 
 ### Running Tests
 
-Testing will be done using Jest.  Run tests using `npm test` or `yarn test` in your terminal from the loanie directory.
+Testing were created using Jest. Run tests using `npm test` or `yarn test` in  the loanie and loanie-view directories.
 
 ---
 
