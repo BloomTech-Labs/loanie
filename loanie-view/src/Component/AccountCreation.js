@@ -67,6 +67,13 @@ class AccountCreation extends Component {
   };
 
   sendToDB = () => {
+    // Validate user input.
+    if (isNaN(this.state.phoneNumber) || (this.state.phoneNumber.length >= 1 && this.state.phoneNumber.length < 10) {
+      this.setState({ invalidPhoneNumber: true });
+      return;
+    }
+    this.setState({ invalidPhoneNumber: false });
+
     const userInfo = {
       name: this.state.name,
       userType: this.state.userType,
@@ -91,6 +98,11 @@ class AccountCreation extends Component {
   };
 
   render() {
+    let invalidPhoneNumberDiv = null;
+    if (this.state.invalidPhoneNumber) {
+      invalidPhoneNumberDiv = <div className="invalid-user-input">*Invalid Phone Number</div>;
+    }
+
     const token = sessionStorage.getItem('tokenId');
     if (token === null || token === undefined || token === '') {
       return (
@@ -131,6 +143,7 @@ class AccountCreation extends Component {
               <fieldset>
                 <legend>Additional information:</legend>
                 Mobile Phone: <input type="text" onChange={this.handleInputChange} />
+                {invalidPhoneNumberDiv}
                 <br />
                 <br />
                 <input type="checkbox" name="acceptText" onChange={this.handleTextAlerts} /> I would
