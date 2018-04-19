@@ -29,12 +29,12 @@ describe("Starting up server", () => {
 
   describe("Post /getclientloans", () => {
     beforeAll((done) => {
-      spyOn(loanControllers, "loansGetAllByClientId");
-      loanControllers.loansGetAllByClientId();
+      spyOn(loanControllers, "loansGetAllByClientEmail");
+      loanControllers.loansGetAllByClientEmail();
       done();
     });
     it("tracks that the spy was called", () => {
-      expect(loanControllers.loansGetAllByClientId).toHaveBeenCalled();
+      expect(loanControllers.loansGetAllByClientEmail).toHaveBeenCalled();
     });
   });
 
@@ -48,19 +48,6 @@ describe("Starting up server", () => {
       expect(loanControllers.loansGetAllByManagerId).toHaveBeenCalled();
     });
   });
-
-  describe("Get /loan/:id", () => {
-    beforeAll((done) => {
-      request.get("http://localhost:3030/loan/5abece41ba16143fa098eb26", (error, response) => {
-        data.status = response.statusCode;
-        done();
-      });
-    });
-    it("Status should return 200", () => {
-      expect(data.status).toBe(200);
-    });
-  });
-
   describe("Post /loan/:id", () => {
     beforeAll((done) => {
       spyOn(loanControllers, "loanEdit");

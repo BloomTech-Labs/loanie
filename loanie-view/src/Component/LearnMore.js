@@ -54,7 +54,7 @@ export default class LearnMore extends Component {
           </p>
         </div>
         <div>
-          <h1 className="Learn-header">About Us</h1>
+          <h1 className="AboutUs-header">About Us</h1>
         </div>
         <div className="Learn-text-container">
           <p className="Learn-text-item">
@@ -77,7 +77,7 @@ export default class LearnMore extends Component {
                 </div>
               </div>
               <div className="individual-about-container">
-                <img className="individual-picture-crop" width="180px" height="180px" src="https://files.slack.com/files-pri/T4JUEB3ME-FA91UNJUU/image_uploaded_from_ios.jpg" alt="joshua_hall" />
+                <img className="individual-picture-item" width="180px" height="180px" src="https://files.slack.com/files-pri/T4JUEB3ME-FA91UNJUU/image_uploaded_from_ios.jpg" alt="joshua_hall" />
                 <div className="individual-name-item">
                   <b>Rashmi Baheti</b>
                   <p className="individual-text-item">
@@ -96,7 +96,7 @@ export default class LearnMore extends Component {
                 <div className="individual-name-item">
                   <b>Samuel Kim</b>
                   <p className="individual-text-item">
-                    Samuel's role in this project is brining in front end knowledge to
+                    Samuel's role in this project is bringing in front end knowledge to
                     increase the functionality of the front end side of the application
                     as well runnning unit tests. His abilty to excel in both a group
                     as well as individual work environment allowed the team to get Loanie

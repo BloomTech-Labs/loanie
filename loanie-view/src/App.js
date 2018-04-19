@@ -16,7 +16,7 @@ export default function App() {
       </div>
       <div className="button-container">
         <button
-          className="button1 button"
+          className="App-button button1"
           onClick={() => {
             window.location = '/learn_more';
           }}
