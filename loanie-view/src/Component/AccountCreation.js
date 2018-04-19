@@ -97,6 +97,7 @@ class AccountCreation extends Component {
 
   render() {
     let invalidPhoneNumberDiv = null;
+    console.log("invalidPhoneNumberDiv");
     if (this.state.invalidPhoneNumber) {
       invalidPhoneNumberDiv = <div className="invalid-user-input">*Invalid phone number. Please enter a 10-digit number or keep it blank.</div>;
     }
