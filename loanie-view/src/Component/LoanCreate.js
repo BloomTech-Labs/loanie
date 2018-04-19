@@ -5,6 +5,7 @@ import base from './base';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import { assignmentDefaults } from './AssignmentDefaults';
+import { phaseDefaults } from './PhaseDefaults';
 import '../CSS/LoanCreate.css';
 
 export default class LoanCreate extends Component {
@@ -20,6 +21,7 @@ export default class LoanCreate extends Component {
       clientEmail: '',
       loanType: 'new',
       amount: '',
+      label: '',
     };
   }
 
@@ -52,6 +54,10 @@ export default class LoanCreate extends Component {
 
   handleSmsChange = (event) => {
     this.setState({ phoneNumber: event.target.value });
+  };
+
+  handleLabel = (e) => {
+    this.setState({ label: e.target.value });
   };
 
   sendNewLoanNotification = () => {
@@ -94,12 +100,15 @@ export default class LoanCreate extends Component {
 
   sendNewLoanDB() {
     const defaults = assignmentDefaults(this.state.loanType);
+    const pdefaults = phaseDefaults(this.state.loanType);
     const body = {
       loanManagerId: this.state.loanManagerId,
       clientEmail: this.state.clientEmail,
       loanType: this.state.loanType,
       amount: this.state.amount,
+      phases: pdefaults,
       assignments: defaults,
+      label: this.state.label,
     };
     axios
       .post(`${base}/newloan`, body)
@@ -185,6 +194,9 @@ export default class LoanCreate extends Component {
                 name="contactNo"
                 onChange={this.handleSmsChange}
               />
+              <br />
+              <br />
+              Custom Label: <input type="text" name="text" onChange={this.handleLabel} />
               <br />
             </fieldset>
           </form>

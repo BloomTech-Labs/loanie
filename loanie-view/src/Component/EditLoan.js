@@ -18,6 +18,7 @@ class EditLoan extends Component {
       currentStatus: '',
       openLoan: '',
       loanId: '',
+      label: '',
     };
   }
 
@@ -34,6 +35,7 @@ class EditLoan extends Component {
           currentStatus: res.data.currentStatus,
           openLoan: res.data.openLoan,
           loanId: id,
+          label: res.data.label,
         });
       })
       .catch((err) => {
@@ -59,6 +61,10 @@ class EditLoan extends Component {
 
   handleDropDownPhase = (e) => {
     this.setState({ currentStatus: e.target.value });
+  };
+
+  handleLabel = (e) => {
+    this.setState({ label: e.target.value });
   };
 
   phaseDropDown() {
@@ -117,6 +123,7 @@ class EditLoan extends Component {
       clientEmail: this.state.clientEmail,
       loanType: this.state.loanType,
       amount: this.state.amount,
+      label: this.state.label,
     };
     axios
       .post(`${base}/loan/${id}`, body)
@@ -189,6 +196,14 @@ class EditLoan extends Component {
                 onChange={this.handleAmountChange}
               />
               <br />
+              <br />
+              Custom Label:{' '}
+              <input
+                type="text"
+                name="text"
+                value={this.state.label || ''}
+                onChange={this.handleLabel}
+              />
               <br />
             </fieldset>
           </form>

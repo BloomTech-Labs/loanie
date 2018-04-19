@@ -30,6 +30,8 @@ module.exports = (app) => {
   app.route("/assignmentcomplete").post(loanControllers.loanCompleteAssignment);
   app.route("/saveassignments").post(loanControllers.loanSaveAssignments);
 
+  app.route("/phaseedit").post(loanControllers.loanEditPhase);
+
   // Creates a new user. Creates a new row for the user in User collection.
   app.route("/newuser").post(userControllers.userCreate);
 
