@@ -24,6 +24,7 @@ import LearnMore from './Component/LearnMore';
 import ClientSelectedLoan from './Component/ClientSelectedLoan';
 import registerServiceWorker from './registerServiceWorker';
 import EditAssignment from './Component/EditAssignment';
+import EditPhase from './Component//EditPhase';
 
 // import rootReducers from './Reducers';
 
@@ -53,6 +54,7 @@ ReactDOM.render(
       <Route path="/edit_loan" component={EditLoan} />
       <Route path="/add_assignment" component={AddAssignment} />
       <Route path="/edit_assignment" component={EditAssignment} />
+      <Route path="/edit_phase" component={EditPhase} />
     </div>
   </Router>,
   document.getElementById('root'),

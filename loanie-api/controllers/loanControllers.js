@@ -2,7 +2,7 @@ const Loan = require("../models/loanModels");
 
 const loanCreate = (req, res) => {
   const {
-    clientEmail, loanManagerId, amount, loanType, assignments,
+    clientEmail, loanManagerId, amount, loanType, assignments, phases, label,
   } = req.body;
 
   const newLoan = new Loan({
@@ -11,6 +11,8 @@ const loanCreate = (req, res) => {
     amount,
     loanType,
     assignments,
+    label,
+    phases,
   });
   newLoan.save(newLoan, (err, savedloan) => {
     if (err) {
@@ -71,6 +73,9 @@ const loanEdit = (req, res) => {
   }
   if (req.body.amount !== undefined) {
     setObj.amount = req.body.amount;
+  }
+  if (req.body.label !== undefined) {
+    setObj.label = req.body.label;
   }
   // find a single Loan
   // edit loan details
@@ -219,6 +224,30 @@ const loanDelete = (req, res) => {
     .catch(err => res.status(422).json({ error: "No Loan!", err }));
 };
 
+const loanEditPhase = (req, res) => {
+  const {
+    loanId, phaseId, phaseTitle, description,
+  } = req.body;
+  // find a single Loan
+  // edit loan phase
+  Loan.updateOne(
+    { _id: loanId, "phases._id": phaseId },
+    {
+      $set: {
+        "phases.$.phaseTitle": phaseTitle,
+        "phases.$.description": description,
+      },
+    },
+    (err, doc) => {
+      if (err) {
+        res.status(500).json(err);
+      } else {
+        res.status(200).json(doc);
+      }
+    },
+  );
+};
+
 module.exports = {
   loanCreate,
   loansGetAll,
@@ -232,4 +261,5 @@ module.exports = {
   loanCreateAssignment,
   loanCompleteAssignment,
   loanSaveAssignments,
+  loanEditPhase,
 };

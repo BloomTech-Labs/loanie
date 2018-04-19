@@ -83,9 +83,16 @@ class Billing extends Component {
     // }
 
     console.log(subDate);
+    let type;
+    if (sessionStorage.getItem('email') === this.state.email) {
+      type = 'managerUser';
+    } else {
+      type = sessionStorage.getItem('userType');
+    }
+
     const userInfo = {
       token: id,
-      userType: 'managerUser',
+      userType: type,
       subExp: subDate,
     };
 
@@ -94,8 +101,14 @@ class Billing extends Component {
       .post(`${base}/edituser`, userInfo)
       .then((res) => {
         console.log('Success response: ', res);
-        sessionStorage.setItem('userType', 'managerUser');
-        window.location = '/open_loans';
+        console.log('email', sessionStorage.getItem('email'), 'elevate email', this.state.email);
+        console.log('current user type', sessionStorage.getItem('userType'));
+        if (sessionStorage.getItem('email') === this.state.email) {
+          sessionStorage.setItem('userType', 'managerUser');
+          window.location = '/open_loans';
+        } else {
+          window.location = '/my_loans';
+        }
       })
       .catch((err) => {
         console.log('Failed to make changes to user!', err);
@@ -160,7 +173,7 @@ class Billing extends Component {
                   checked={this.state.loanPlan === 'Single Loan'}
                   onClick={this.handleOptionChange}
                 />
-                Single Loan - $9.99
+                One Month - $9.99
                 <br />
                 <br />
                 <legend>Credit/Debit Card Details: </legend>

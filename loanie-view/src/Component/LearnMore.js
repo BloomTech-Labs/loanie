@@ -18,40 +18,45 @@ export default class LearnMore extends Component {
   render() {
     return (
       <div className="LearnMore">
-        <Navbar />
-        <SidebarNav />
-        <div>
-          <h1 className="Learn-header">Why Loanie?</h1>
-        </div>
-        <div className="Learn-text-container">
-          <p className="Learn-text-item Learn-text-font">
-            <b>Loanie is the cutting edge tool that takes all the guess work out of getting a mortgage.</b>
-          </p>
-          <p className="Learn-text-list">
-            <ul>
-              <li className="Learn-text-font"><b>No more phone tag.</b></li>
-              <li>
-                <b>No more wondering if you sent the correct document or if your documents were
-                accepted.
-                </b>
-              </li>
-              <li className="Learn-text-font"><b>No more conflicting schedules slowing you down.</b></li>
-              <li className="Learn-text-font">
-                <b>
-                Loanie is here 24 hours a day, 7 days a week to track every step of your mortgage
-                process so you can relax and enjoy life.
-                </b>
-              </li>
-            </ul>
+        <div className="LearnMore-statement">
+          <Navbar />
+          <SidebarNav />
+          <div>
+            <h1 className="Learn-header">Why Loanie?</h1>
+          </div>
+          <div className="Learn-text-container">
             <p className="Learn-text-item">
               <b>
-              Loanie breaks the mortgage process down into phases. In each phase your loan officer
-              provides a simple list of assignments. As each assignment is completed you receive an
-              optional text or email letting you know the loan officer has acknowledge the
-              completion of each assignment.
+              Loanie is the cutting edge tool that takes all the guess work out of the mortgage
+              process.
               </b>
             </p>
-          </p>
+            <p className="Learn-text-list">
+              <ul>
+                <li className="Learn-text-item"><b>No more phone tag.</b></li>
+                <li>
+                  <b>No more wondering if you sent the correct document or if your documents were
+                  accepted.
+                  </b>
+                </li>
+                <li className="Learn-text-item"><b>No more conflicting schedules slowing you down.</b></li>
+                <li className="Learn-text-item">
+                  <b>
+                  Loanie is here 24 hours a day, 7 days a week to track every step of your mortgage
+                  process so you can relax and enjoy life.
+                  </b>
+                </li>
+              </ul>
+              <p className="Learn-text-item">
+                <b>
+                Loanie breaks the mortgage process down into phases. In each phase your loan officer
+                provides a simple list of assignments. As each phase is completed you receive an
+                optional text or email letting you know your loan officer has acknowledge the
+                completion of each assignment.
+                </b>
+              </p>
+            </p>
+          </div>
         </div>
         <div>
           <h1 className="AboutUs-header">About Us</h1>
@@ -81,13 +86,13 @@ export default class LearnMore extends Component {
                 <div className="individual-name-item">
                   <b>Rashmi Baheti</b>
                   <p className="individual-text-item">
-                    asdfoijwefiojaiofjaesfioqewrqwerqwefqweAGFASDFAS
-                    jsefioashfasioefaseuifghqwefqwfwqefcqwffqwadvasdv
-                    saeuiasdfsdsdfsadfsdafertqeefqwefqasdvasdvasdvasdv
-                    qwefqwefqwefwqefqwfqwefqwfqwefqwefdvasdvasdvasdv
-                    qwefqwfqwefqwefqwefqwecvweqvwevwvvasdvasdvasdvas
-                    qwevqwevqwevqwvqwevqwevwqevqwevqwvqweadvasdvasv
-                    qwvqwvqwevwevqwvqwvqwvqwvwqevqwvqwev
+                  Rashmi is a Lambda School graduate and holds a bachelor's degree i
+                  n electronics engineering. She has worked for Loanie as a front-end
+                  as well as a back-end engineer. She brings both front-end and back-end
+                  expertise to her programming team and has experience building desktop
+                  and mobile web applications. In her free time, she likes to spend
+                  time with her family and friends. She enjoys gardening, hiking and
+                   watching movies.
                   </p>
                 </div>
               </div>

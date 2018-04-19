@@ -40,41 +40,46 @@ class AccountCreation extends Component {
       phoneNumber: '',
       email: sessionStorage.getItem('email'),
       name: sessionStorage.getItem('name'),
-      acceptText: false,
-      acceptEmail: false,
+      acceptTexts: false,
+      acceptEmails: false,
       tokenId: sessionStorage.getItem('tokenId'),
       invalidPhoneNumber: false,
-      invalidCheckBoxSelection: false,
     };
   }
 
-  submitClientAccountInfo = () => {
-    this.sendToDB();
-    window.location = '/my_loans';
-  };
-
-  handleInputChange = (event) => {
+  handlePhoneNumber = (event) => {
     const contactNo = event.target.value.substring(0, 10);
     this.setState({ phoneNumber: contactNo });
   };
 
   handleTextAlerts = () => {
-    this.setState({ acceptText: !this.state.acceptText });
+    this.setState({ acceptTexts: !this.state.acceptTexts });
   };
 
   handleEmailAlerts = () => {
-    this.setState({ acceptEmail: !this.state.acceptEmail });
+    this.setState({ acceptEmails: !this.state.acceptEmails });
   };
 
-  sendToDB = () => {
+  sendToDB = (event) => {
+    event.preventDefault();
+
+    // Validate user input.
+    if(this.state.phoneNumber !== '') {
+      if (isNaN(this.state.phoneNumber) || (this.state.phoneNumber.length < 10)) {
+        this.setState({ invalidPhoneNumber: true });
+        return;
+      }
+      this.setState({ invalidPhoneNumber: false });
+    }
+
     const userInfo = {
       name: this.state.name,
       userType: this.state.userType,
       email: this.state.email,
       token: this.state.tokenId,
       mobilePhone: this.state.phoneNumber,
-      acceptTexts: this.state.acceptText,
-      acceptEmails: this.state.acceptEmail,
+      acceptTexts: this.state.acceptTexts,
+      acceptEmails: this.state.acceptEmails,
     };
     sessionStorage.setItem('userType', this.state.userType);
     console.log('sending to db:', userInfo);
@@ -82,7 +87,7 @@ class AccountCreation extends Component {
       .post(`${base}/newuser`, userInfo)
       .then((res) => {
         console.log('Response from server: ', res);
-        // window.location = '/my_loans';
+        window.location = '/my_loans';
       })
       .catch((err) => {
         throw err;
@@ -91,6 +96,11 @@ class AccountCreation extends Component {
   };
 
   render() {
+    let invalidPhoneNumberDiv = null;
+    if (this.state.invalidPhoneNumber) {
+      invalidPhoneNumberDiv = <div className="invalid-user-input">*Invalid phone number. Please enter a 10-digit number or keep it blank.</div>;
+    }
+
     const token = sessionStorage.getItem('tokenId');
     if (token === null || token === undefined || token === '') {
       return (
@@ -130,15 +140,31 @@ class AccountCreation extends Component {
             <form className="Create-form-container">
               <fieldset>
                 <legend>Additional information:</legend>
-                Mobile Phone: <input type="text" onChange={this.handleInputChange} />
+                Mobile Phone: 
+                <input 
+                  type="text" 
+                  value={this.state.phoneNumber} 
+                  onChange={this.handlePhoneNumber} 
+                />
+                {invalidPhoneNumberDiv}
                 <br />
                 <br />
-                <input type="checkbox" name="acceptText" onChange={this.handleTextAlerts} /> I would
-                like to recieve TEXT notifications about my loan<br />
-                <input type="checkbox" name="acceptEmail" onChange={this.handleEmailAlerts} /> I
+                <input 
+                  type="checkbox" 
+                  name="acceptTexts"
+                  checked={this.state.acceptTexts}
+                  onChange={this.handleTextAlerts} 
+                /> 
+                I would like to recieve TEXT notifications about my loan 
+                <br/>
+                <input 
+                  type="checkbox" 
+                  name="acceptEmails" 
+                  checked={this.state.acceptEmails}
+                  onChange={this.handleEmailAlerts} /> I
                 would like to recieve EMAIL notifications about my loan<br />
                 <br />
-                <button onClick={this.submitClientAccountInfo}>Submit</button>
+                <button onClick={this.sendToDB}>Submit</button>
               </fieldset>
             </form>
           </div>
