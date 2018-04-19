@@ -47,7 +47,7 @@
     background-color: forestgreen; 
     color: white;
   }
-  @media all and (max-width: 900px) { 
+  @media all and (max-width: 1000px) { 
     .App {
       background-size: 120% 100%;
 
