@@ -95,7 +95,11 @@ class Billing extends Component {
       .then((res) => {
         console.log('Success response: ', res);
         sessionStorage.setItem('userType', 'managerUser');
-        window.location = '/open_loans';
+        if (sessionStorage.getItem('email') === this.state.email) {
+          window.location = '/open_loans';
+        } else {
+          window.location = '/my_loans';
+        }
       })
       .catch((err) => {
         console.log('Failed to make changes to user!', err);
