@@ -5,6 +5,7 @@ import base from './base';
 import Navbar from './Navbar';
 import SidebarNav from './SideBarNav';
 import { assignmentDefaults } from './AssignmentDefaults';
+import { phaseDefaults } from './PhaseDefaults';
 import '../CSS/LoanCreate.css';
 
 export default class LoanCreate extends Component {
@@ -99,11 +100,13 @@ export default class LoanCreate extends Component {
 
   sendNewLoanDB() {
     const defaults = assignmentDefaults(this.state.loanType);
+    const pdefaults = phaseDefaults(this.state.loanType);
     const body = {
       loanManagerId: this.state.loanManagerId,
       clientEmail: this.state.clientEmail,
       loanType: this.state.loanType,
       amount: this.state.amount,
+      phases: pdefaults,
       assignments: defaults,
       label: this.state.label,
     };

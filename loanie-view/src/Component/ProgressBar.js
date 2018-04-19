@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import base from './base';
-import PhaseContent from './PhaseContent';
 import '../CSS/ProgressBar.css';
 
 export default class ProgressBar extends Component {
@@ -21,11 +20,9 @@ export default class ProgressBar extends Component {
     axios
       .get(`${base}/loan/${getLoanId}`)
       .then((loandata) => {
-        // filter loan phases based on the loantype
-        const filteredLoans = PhaseContent.filter(post =>
-          post.loanType.includes(loandata.data.loanType));
+        const phaseArr = loandata.data.phases;
         // records the length of filtered loans to indicate total number of phases
-        const totalPhaseNo = filteredLoans.length;
+        const totalPhaseNo = phaseArr.length;
         this.setState({
           currentPhase: loandata.data.currentStatus,
           progressValue: Number(loandata.data.currentStatus) * (100 / totalPhaseNo),
