@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardBody } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import base from './base';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
 import ProgressBar from './ProgressBar';
-import PhaseContent from './PhaseContent';
 import '../CSS/ClientSelectedLoan.css';
 
 export default class ClientSelectedLoan extends Component {
@@ -28,6 +28,7 @@ export default class ClientSelectedLoan extends Component {
       openLoan: true,
       acceptTexts: true,
       acceptEmails: true,
+      phaseId: '',
     };
   }
 
@@ -45,11 +46,11 @@ export default class ClientSelectedLoan extends Component {
       .then((loandata) => {
         // console.log(loandata.data);
         const assignArr = loandata.data.assignments;
-        const filteredLoans = PhaseContent.filter(post =>
-          post.loanType.includes(loandata.data.loanType));
-        const totalPhaseNo = filteredLoans;
+        const phaseArr = loandata.data.phases;
+        const totalPhaseNo = phaseArr;
         console.log('totalPhase', totalPhaseNo);
         this.setState({
+          loanId: getLoanId,
           amount: loandata.data.amount,
           type: loandata.data.loanType,
           phaseNumber: loandata.data.currentStatus,
@@ -60,14 +61,14 @@ export default class ClientSelectedLoan extends Component {
           openLoan: loandata.data.openLoan,
         });
 
-        for (let i = 0; i < PhaseContent.length; i += 1) {
+        for (let i = 0; i < phaseArr.length; i += 1) {
           if (
-            PhaseContent[i].loanType === this.state.type &&
-            PhaseContent[i].phase === this.state.phaseNumber
+            phaseArr[i].phase === this.state.phaseNumber
           ) {
             this.setState({
-              phaseContent: PhaseContent[i].description,
-              phaseTitle: PhaseContent[i].phaseTitle,
+              phaseId: phaseArr[i]._id,
+              phaseContent: phaseArr[i].description,
+              phaseTitle: phaseArr[i].phaseTitle,
             });
           }
         }
@@ -174,19 +175,19 @@ export default class ClientSelectedLoan extends Component {
       .get(`${base}/loan/${getLoanId}`)
       .then((loandata) => {
         const assignArr = loandata.data.assignments;
+        const phaseArr = loandata.data.phases;
         for (let j = 0; j < assignArr.length; j += 1) {
           if (updatePhase === assignArr[j].phase) {
             filteredAssign.push(assignArr[j]);
           }
         }
-        for (let i = 0; i < PhaseContent.length; i += 1) {
-          if (
-            PhaseContent[i].loanType === this.state.type &&
-            PhaseContent[i].phase === updatePhase
+        for (let i = 0; i < phaseArr.length; i += 1) {
+          if (phaseArr[i].phase === updatePhase
           ) {
             this.setState({
-              phaseTitle: PhaseContent[i].phaseTitle,
-              phaseContent: PhaseContent[i].description,
+              phaseId: phaseArr[i]._id,
+              phaseTitle: phaseArr[i].phaseTitle,
+              phaseContent: phaseArr[i].description,
               assignments: filteredAssign,
               phaseTitleNumber: updatePhase,
             });
@@ -357,7 +358,8 @@ export default class ClientSelectedLoan extends Component {
         </div>
         <div className="ClientLoan-phase-container">
           <Card>
-            <CardHeader> <h5><b>Phase {this.state.phaseTitleNumber}</b></h5></CardHeader>
+            <CardHeader><h5><b>Phase {this.state.phaseTitleNumber}</b><Link to={`/edit_phase/${this.state.phaseId}-${this.state.loanId}+`}>{'  '}Edit</Link></h5>
+            </CardHeader>
             <CardBody>
               <p className="ClientLoan-phase-item">
                 {' '}
