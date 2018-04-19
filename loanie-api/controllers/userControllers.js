@@ -46,7 +46,7 @@ const userLogin = (req, res) => {
 const userToken = (req, res) => {
   const { token, email } = req.body;
   console.log(token, email);
-  User.findOne({ email: email })
+  User.findOne({ email })
     .then((user) => {
       console.log(user);
       if (token) user.UID = token;
@@ -156,15 +156,17 @@ const userEdit = (req, res) => {
 // Stripe
 const stripeTransaction = (req, res) => {
   let cost = 0;
-  const { stripeToken, loanPlan } = req.body;
+  let { stripeToken, loanPlan, email } = req.body;
   // const mdata = {
   //   name: stripeToken.card.name,
   //   plan: loanPlan,
   //   brand: stripeToken.card.brand,
   //   last4: stripeToken.card.last4,
   // };
-  if (loanPlan === "Single Loan") cost = 9.99;
-  else if (loanPlan === "Full Year Subscription") cost = 99.99;
+  if (loanPlan === "Single Loan") {
+    loanPlan = "One Month";
+    cost = 9.99;
+  } else if (loanPlan === "Full Year Subscription") cost = 99.99;
   else return res.json("error: No plan selected.");
   const int = Math.round(cost * 100);
   console.log("stripeToken", stripeToken);
@@ -174,8 +176,9 @@ const stripeTransaction = (req, res) => {
     {
       amount: int,
       currency: "usd",
-      description: "loanie purchase",
+      description: loanPlan,
       // metadata: mdata,
+      receipt_email: email,
       source: stripeToken.id,
     },
     (err, charge) => {
