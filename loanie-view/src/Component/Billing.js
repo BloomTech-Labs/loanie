@@ -160,7 +160,7 @@ class Billing extends Component {
                   checked={this.state.loanPlan === 'Single Loan'}
                   onClick={this.handleOptionChange}
                 />
-                Single Loan - $9.99
+                One Month - $9.99
                 <br />
                 <br />
                 <legend>Credit/Debit Card Details: </legend>
