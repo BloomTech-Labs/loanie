@@ -2,7 +2,7 @@ const Loan = require("../models/loanModels");
 
 const loanCreate = (req, res) => {
   const {
-    clientEmail, loanManagerId, amount, loanType, assignments,
+    clientEmail, loanManagerId, amount, loanType, assignments, label,
   } = req.body;
 
   const newLoan = new Loan({
@@ -11,6 +11,7 @@ const loanCreate = (req, res) => {
     amount,
     loanType,
     assignments,
+    label,
   });
   newLoan.save(newLoan, (err, savedloan) => {
     if (err) {
@@ -71,6 +72,9 @@ const loanEdit = (req, res) => {
   }
   if (req.body.amount !== undefined) {
     setObj.amount = req.body.amount;
+  }
+  if (req.body.label !== undefined) {
+    setObj.label = req.body.label;
   }
   // find a single Loan
   // edit loan details

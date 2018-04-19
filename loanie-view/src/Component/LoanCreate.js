@@ -20,6 +20,7 @@ export default class LoanCreate extends Component {
       clientEmail: '',
       loanType: 'new',
       amount: '',
+      label: '',
     };
   }
 
@@ -52,6 +53,10 @@ export default class LoanCreate extends Component {
 
   handleSmsChange = (event) => {
     this.setState({ phoneNumber: event.target.value });
+  };
+
+  handleLabel = (e) => {
+    this.setState({ label: e.target.value });
   };
 
   sendNewLoanNotification = () => {
@@ -100,6 +105,7 @@ export default class LoanCreate extends Component {
       loanType: this.state.loanType,
       amount: this.state.amount,
       assignments: defaults,
+      label: this.state.label,
     };
     axios
       .post(`${base}/newloan`, body)
@@ -185,6 +191,9 @@ export default class LoanCreate extends Component {
                 name="contactNo"
                 onChange={this.handleSmsChange}
               />
+              <br />
+              <br />
+              Custom Label: <input type="text" name="text" onChange={this.handleLabel} />
               <br />
             </fieldset>
           </form>

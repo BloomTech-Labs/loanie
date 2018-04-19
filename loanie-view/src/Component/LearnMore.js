@@ -25,7 +25,8 @@ export default class LearnMore extends Component {
         </div>
         <div className="Learn-text-container">
           <p className="Learn-text-item">
-            Loanie is the cutting edge tool that takes all the guess work out of getting a mortgage.
+            Loanie is the cutting edge tool that takes all the guess work out of the mortgage
+            process.
           </p>
           <p className="Learn-text-list">
             <ul>

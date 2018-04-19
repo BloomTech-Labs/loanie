@@ -14,7 +14,6 @@ export default class ClientSelectedLoan extends Component {
     this.state = {
       assignments: [],
       borrower: '',
-      coBorrower: 'Bob',
       type: '',
       amount: '',
       userType: sessionStorage.getItem('userType'),
@@ -326,10 +325,6 @@ export default class ClientSelectedLoan extends Component {
               {this.state.borrower}
             </p>
             <p>
-              <b>Co-Borrower: </b>
-              {this.state.coBorrower}
-            </p>
-            <p>
               <b>Type: </b>
               {this.state.type}
             </p>
@@ -381,8 +376,7 @@ export default class ClientSelectedLoan extends Component {
             <div className="ClientLoan-assignment-container">
               <p>
                 <b>
-                  Your loan officer will update these boxes as they recieve your documents. If you
-                  have any questions call Bob Officer: 1-800-000-000.
+                  Check back to see if your loan officer has checked off or added anymore assignments.
                 </b>
               </p>
             </div>
