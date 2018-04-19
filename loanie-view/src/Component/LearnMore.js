@@ -25,7 +25,8 @@ export default class LearnMore extends Component {
         </div>
         <div className="Learn-text-container">
           <p className="Learn-text-item">
-            Loanie is the cutting edge tool that takes all the guess work out of getting a mortgage.
+            Loanie is the cutting edge tool that takes all the guess work out of the mortgage
+            process.
           </p>
           <p className="Learn-text-list">
             <ul>
@@ -41,10 +42,10 @@ export default class LearnMore extends Component {
               </li>
             </ul>
             <p className="Learn-text-item">
-              Loanie breaks the mortgage process down into phases. In each phase your loan officer
-              provides a simple list of assignments. As each assignment is completed you receive an
-              optional text or email letting you know the loan officer has acknowledge the
-              completion of each assignment.
+              Loanie breaks down the mortgage process into phases. In each phase the loan officer
+              provides a simple list of assignments. As each phase is completed the client receives
+              an optional text or email informing them that their loan officer has acknowledged the
+              completion of the phase.
             </p>
           </p>
         </div>
