@@ -17,7 +17,6 @@ class EditPhase extends Component {
       phaseNo: '',
       description: '',
       title: '',
-      loanType: '',
     };
   }
 
@@ -28,64 +27,41 @@ class EditPhase extends Component {
     axios
       .get(`${base}/loan/${loanId}`)
       .then((res) => {
-        const loans = res.data.loanType;
-        const phase = res.data.phases.filter(assign => assign._id === phaseId);
+        const phase = res.data.phases.filter(phases => phases._id === phaseId);
         this.setState({
           phase,
         });
-        this.initState(loanId, phaseId, loans);
+        console.log('edit phase', phase);
+        this.initState(loanId, phaseId, phase);
       })
       .catch((err) => {
         throw err;
       });
   }
 
-  initState(loanId, phaseId, loanType) {
+  initState(loanId, phaseId, phase) {
     this.setState({
-      loanType,
       loanId,
       phaseId,
-      title: this.state.phase[0].title,
-      description: this.state.phase[0].description,
-      phaseNo: this.state.phase[0].phaseNo,
+      title: phase[0].phaseTitle,
+      description: phase[0].description,
+      phaseNo: phase[0].phase,
     });
   }
 
-  handleDropDownComplete = (e) => {
-    this.setState({ complete: e.target.value });
+  handleTitle = (e) => {
+    this.setState({ title: e.target.value });
   };
 
-  handleDropDownPhaseNo = (e) => {
-    this.setState({ phaseNo: e.target.value });
-  };
-
-  handleNewPhase = (e) => {
-    this.setState({ text: e.target.value });
-  };
-
-  submitDeletePhase = () => {
-    const body = {
-      loanId: this.state.loanId,
-      phaseId: this.state.phaseId,
-    };
-    axios
-      .post(`${base}/phasedelete`, body)
-      .then(() => {
-        console.log('Phase deleted successfully!');
-      })
-      .catch((err) => {
-        throw err;
-      });
-    const str = '/add_phase/';
-    const url = str + this.state.loanId;
-    window.location = url;
+  handleDescription = (e) => {
+    this.setState({ description: e.target.value });
   };
 
   submitEditedPhase = () => {
     const body = {
       loanId: this.state.loanId,
       phaseId: this.state.phaseId,
-      title: this.state.title,
+      phaseTitle: this.state.title,
       description: this.state.description,
     };
     axios
@@ -96,8 +72,7 @@ class EditPhase extends Component {
       .catch((err) => {
         throw err;
       });
-    const str = '/add_phase/';
-    const url = str + this.state.loanId;
+    const url = `/my_loan/${this.state.loanId}`;
     window.location = url;
   };
 
@@ -125,8 +100,8 @@ class EditPhase extends Component {
             <BreadcrumbItem tag="a" href="/loan_list">
               Loans
             </BreadcrumbItem>
-            <BreadcrumbItem tag="a" href={`/edit_loan/${this.state.loanId}`}>
-              Edit Loan
+            <BreadcrumbItem tag="a" href={`/my_loan/${this.state.loanId}`}>
+              Loan Details
             </BreadcrumbItem>
             <BreadcrumbItem active>Edit Phase</BreadcrumbItem>
           </Breadcrumb>
@@ -137,23 +112,24 @@ class EditPhase extends Component {
         <div className="EditLoan-form-container">
           <form>
             <fieldset>
-              Edit Phase Number:
-              {this.phaseNoDropDown()}
+              Phase Number: {this.state.phaseNo}
               <br />
               <br />
-              Edit Complete Status:
-              <select value={this.state.complete} onChange={this.handleDropDownComplete}>
-                <option value="true">Complete</option>
-                <option value="false">Incomplete</option>
-              </select>
-              <br />
-              <br />
-              Edit Phase:{' '}
+              Edit Phase Title:{' '}
               <Input
                 type="textarea"
                 name="text"
-                value={this.state.text}
-                onChange={this.handleNewPhase}
+                value={this.state.title}
+                onChange={this.handleTitle}
+              />
+              <br />
+              <br />
+              Edit Phase Description:{' '}
+              <Input
+                type="textarea"
+                name="text"
+                value={this.state.description}
+                onChange={this.handleDescription}
               />
               <br />
             </fieldset>
@@ -161,9 +137,6 @@ class EditPhase extends Component {
           <Button color="warning" onClick={this.submitEditedPhase}>
             Submit Changes
           </Button>{' '}
-          <Button color="danger" onClick={this.submitDeletePhase}>
-            Delete Phase
-          </Button>
           <br />
           <br />
         </div>

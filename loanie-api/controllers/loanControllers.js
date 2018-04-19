@@ -226,7 +226,7 @@ const loanDelete = (req, res) => {
 
 const loanEditPhase = (req, res) => {
   const {
-    loanId, phaseId, title, phase, description,
+    loanId, phaseId, phaseTitle, description,
   } = req.body;
   // find a single Loan
   // edit loan phase
@@ -234,8 +234,7 @@ const loanEditPhase = (req, res) => {
     { _id: loanId, "phases._id": phaseId },
     {
       $set: {
-        "phases.$.title": title,
-        "phases.$.phase": phase,
+        "phases.$.phaseTitle": phaseTitle,
         "phases.$.description": description,
       },
     },

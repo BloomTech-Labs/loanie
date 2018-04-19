@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Breadcrumb, BreadcrumbItem, Card, CardHeader, CardBody } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import base from './base';
 import Navbar from './Navbar';
 import ClientSideNav from './ClientSideNav';
@@ -27,6 +28,7 @@ export default class ClientSelectedLoan extends Component {
       openLoan: true,
       acceptTexts: true,
       acceptEmails: true,
+      phaseId: '',
     };
   }
 
@@ -45,9 +47,10 @@ export default class ClientSelectedLoan extends Component {
         // console.log(loandata.data);
         const assignArr = loandata.data.assignments;
         const phaseArr = loandata.data.phases;
-        const totalPhaseNo = phaseArr.length;
+        const totalPhaseNo = phaseArr;
         console.log('totalPhase', totalPhaseNo);
         this.setState({
+          loanId: getLoanId,
           amount: loandata.data.amount,
           type: loandata.data.loanType,
           phaseNumber: loandata.data.currentStatus,
@@ -60,10 +63,10 @@ export default class ClientSelectedLoan extends Component {
 
         for (let i = 0; i < phaseArr.length; i += 1) {
           if (
-            phaseArr[i].loanType === this.state.type &&
             phaseArr[i].phase === this.state.phaseNumber
           ) {
             this.setState({
+              phaseId: phaseArr[i]._id,
               phaseContent: phaseArr[i].description,
               phaseTitle: phaseArr[i].phaseTitle,
             });
@@ -182,6 +185,7 @@ export default class ClientSelectedLoan extends Component {
           if (phaseArr[i].phase === updatePhase
           ) {
             this.setState({
+              phaseId: phaseArr[i]._id,
               phaseTitle: phaseArr[i].phaseTitle,
               phaseContent: phaseArr[i].description,
               assignments: filteredAssign,
@@ -354,7 +358,8 @@ export default class ClientSelectedLoan extends Component {
         </div>
         <div className="ClientLoan-phase-container">
           <Card>
-            <CardHeader> <h5><b>Phase {this.state.phaseTitleNumber}</b></h5></CardHeader>
+            <CardHeader><h5><b>Phase {this.state.phaseTitleNumber}</b><Link to={`/edit_phase/${this.state.phaseId}-${this.state.loanId}+`}>{'  '}Edit</Link></h5>
+            </CardHeader>
             <CardBody>
               <p className="ClientLoan-phase-item">
                 {' '}
