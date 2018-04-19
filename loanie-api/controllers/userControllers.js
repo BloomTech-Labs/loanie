@@ -24,7 +24,7 @@ const userCreate = (req, res) => {
       console.log(err);
       return;
     }
-    console.log(savedUser);
+    console.log("created", savedUser);
     res.status(200).json(savedUser);
   });
 };
@@ -46,7 +46,7 @@ const userLogin = (req, res) => {
 const userToken = (req, res) => {
   const { token, email } = req.body;
   console.log(token, email);
-  User.findOne({ email })
+  User.findOne({ email: email })
     .then((user) => {
       console.log(user);
       if (token) user.UID = token;
@@ -54,7 +54,7 @@ const userToken = (req, res) => {
         if (err) {
           res.status(500).json(err);
         }
-        console.log(user);
+        console.log("token stored", user);
         res.status(200).json(user);
       });
     })
@@ -133,13 +133,13 @@ const userEdit = (req, res) => {
     .then((user) => {
       console.log("user", user);
       if (user === null) throw new Error();
-      if (name) user.name = name;
-      if (userType) user.userType = userType;
-      if (email) user.email = email;
-      if (mobilePhone) user.mobilePhone = mobilePhone;
-      if (acceptTexts) user.acceptTexts = acceptTexts;
-      if (acceptEmails) user.acceptEmails = acceptEmails;
-      if (subExp) user.subExp = subExp;
+      if (name !== undefined) user.name = name;
+      if (userType !== undefined) user.userType = userType;
+      if (email !== undefined) user.email = email;
+      if (mobilePhone !== undefined) user.mobilePhone = mobilePhone;
+      if (acceptTexts !== undefined) user.acceptTexts = acceptTexts;
+      if (acceptEmails !== undefined) user.acceptEmails = acceptEmails;
+      if (subExp !== undefined) user.subExp = subExp;
       user.save(user, (err, saveduser) => {
         if (err) {
           console.log("error", err);

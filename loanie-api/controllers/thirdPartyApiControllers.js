@@ -24,7 +24,10 @@ const sendEmailNotification = (req, res) => {
 };
 
 const sendSmsNotification = (req, res) => {
-  const { phoneNumber, text } = req.body;
+  let { phoneNumber, text } = req.body;
+  if (phoneNumber.length === 10) {
+    phoneNumber = `+1${phoneNumber}`;
+  }
   console.log("Request Body:", req.body);
 
   const accountSid = process.env.TWILIO_ACCOUNT_SID || "default_twilio_sid"; // Your Account SID from www.twilio.com/console

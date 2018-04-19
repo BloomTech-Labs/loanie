@@ -11,7 +11,7 @@ import '../CSS/AccountLogin.css';
 
 const sendToken = (tokenId, sendEmail) => {
   // setter
-  console.log('set sessionStorage id ann email', tokenId, sendEmail);
+  console.log('set sessionStorage id and email', tokenId, sendEmail);
   sessionStorage.setItem('tokenId', tokenId);
   sessionStorage.setItem('email', sendEmail);
   // console.log('Inside sendToken(), this.props: ', this.props);
@@ -59,6 +59,12 @@ const sendToken = (tokenId, sendEmail) => {
     .catch((err) => {
       throw err;
     });
+  if (sessionStorage.getItem('userType') === 'standardUser') {
+    window.location = '/my_loans';
+  }
+  if (sessionStorage.getItem('userType') === 'managerUser') {
+    window.location = '/open_loans';
+  }
 };
 
 const uiConfig = {

@@ -42,10 +42,10 @@ export default class LearnMore extends Component {
               </li>
             </ul>
             <p className="Learn-text-item">
-              Loanie breaks down the mortgage process into phases. In each phase the loan officer
-              provides a simple list of assignments. As each phase is completed the client receives
-              an optional text or email informing them that their loan officer has acknowledged the
-              completion of the phase.
+              Loanie breaks the mortgage process down into phases. In each phase your loan officer
+              provides a simple list of assignments. As each phase is completed you receive an
+              optional text or email letting you know your loan officer has acknowledge the
+              completion of each assignment.
             </p>
           </p>
         </div>

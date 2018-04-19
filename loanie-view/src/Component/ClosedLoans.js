@@ -114,11 +114,3 @@ export default class ClosedLoans extends Component {
     );
   }
 }
-
-// const mapStateToProps = (state) => {
-//   return {
-//     loansBySingleManager: state.loans
-//   };
-// };
-
-// connect(mapStateToProps)(ClosedLoans);

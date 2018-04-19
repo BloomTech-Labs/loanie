@@ -102,11 +102,6 @@ class Billing extends Component {
       });
   };
 
-  handleCreditCardNumber(event) {
-    this.setState({ creditCardNumber: event.target.value });
-    console.log(this.state.creditCardNumber);
-  }
-
   handleOptionChange = (e) => {
     this.setState({ loanPlan: e.target.value });
   };
