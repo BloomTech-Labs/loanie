@@ -49,6 +49,7 @@ const userToken = (req, res) => {
   User.findOne({ email })
     .then((user) => {
       console.log(user);
+      if (user === null) throw new Error();
       if (token) user.UID = token;
       user.save(user, (err) => {
         if (err) {
