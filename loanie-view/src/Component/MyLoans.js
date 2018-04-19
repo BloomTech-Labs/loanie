@@ -64,6 +64,10 @@ export default class MyLoans extends Component {
     }
     // renders if loan list is not empty
     if (this.state.loanList.length !== 0) {
+      console.log('loanList', this.state.loanList);
+      // if (this.state.loanList.length === 1) {
+      //   window.location = ''
+      // }
       return (
         <div>
           <div className="BreadCrumb">

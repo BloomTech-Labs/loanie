@@ -52,6 +52,9 @@ const LoanSchema = new mongoose.Schema({
     default: true,
     required: true,
   },
+  label: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Loan", LoanSchema);
