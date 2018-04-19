@@ -36,7 +36,7 @@ class AccountCreation extends Component {
   constructor() {
     super();
     this.state = {
-      userType: 'standardUser',
+      userType: '',
       phoneNumber: '',
       email: sessionStorage.getItem('email'),
       name: sessionStorage.getItem('name'),
@@ -76,11 +76,11 @@ class AccountCreation extends Component {
       acceptTexts: this.state.acceptText,
       acceptEmails: this.state.acceptEmail,
     };
-    sessionStorage.setItem('userType', this.state.userType);
     console.log('sending to db:', userInfo);
     axios
       .post(`${base}/newuser`, userInfo)
       .then((res) => {
+        sessionStorage.setItem('userType', 'standardUser');
         console.log('Response from server: ', res);
         // window.location = '/my_loans';
       })
@@ -119,7 +119,7 @@ class AccountCreation extends Component {
         </div>
       );
     }
-    if (this.state.userType) {
+    if (!sessionStorage.setItem('userType')) {
       return (
         <div className="Create">
           <Navbar />
