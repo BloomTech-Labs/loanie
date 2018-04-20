@@ -31,7 +31,7 @@ export default class LearnMore extends Component {
               process.
               </b>
             </p>
-            <p className="Learn-text-list">
+            <div className="Learn-text-list">
               <ul>
                 <li className="Learn-text-item"><b>No more phone tag.</b></li>
                 <li>
@@ -55,17 +55,19 @@ export default class LearnMore extends Component {
                 completion of each assignment.
                 </b>
               </p>
-            </p>
+            </div>
           </div>
         </div>
         <div>
           <h1 className="AboutUs-header">About Us</h1>
         </div>
         <div className="Learn-text-container">
-          <p className="Learn-text-item">
+          <div className="Learn-text-item">
             <div className="AboutUs-container">
               <div className="individual-about-container">
-                <img className="individual-picture-item" src="https://files.slack.com/files-pri/T4JUEB3ME-FAA4JM2DD/mecropped.jpg" alt="joshua_hall" />
+                <div className="individual-picture-container">
+                  <img className="individual-picture-item" src="https://files.slack.com/files-pri/T4JUEB3ME-FAA4JM2DD/mecropped.jpg" alt="joshua_hall" />
+                </div>
                 <div className="individual-name-item">
                   <b>Joshua Hall</b>
                   <p className="individual-text-item">
@@ -82,7 +84,9 @@ export default class LearnMore extends Component {
                 </div>
               </div>
               <div className="individual-about-container">
-                <img className="individual-picture-item" width="180px" height="180px" src="https://files.slack.com/files-pri/T4JUEB3ME-FA91UNJUU/image_uploaded_from_ios.jpg" alt="joshua_hall" />
+                <div className="individual-picture-container">
+                  <img className="individual-picture-item" src="https://files.slack.com/files-pri/T4JUEB3ME-FA91UNJUU/image_uploaded_from_ios.jpg" alt="rashmi_baheti" />
+                </div>
                 <div className="individual-name-item">
                   <b>Rashmi Baheti</b>
                   <p className="individual-text-item">
@@ -97,7 +101,9 @@ export default class LearnMore extends Component {
                 </div>
               </div>
               <div className="individual-about-container">
-                <img className="individual-picture-item" src="https://files.slack.com/files-pri/T4JUEB3ME-FA9B3NJBF/default_photo_1.jpg" alt="joshua_hall" />
+                <div className="individual-picture-container">
+                  <img className="individual-picture-item" src="https://files.slack.com/files-pri/T4JUEB3ME-FA9B3NJBF/default_photo_1.jpg" alt="samuel_kim" />
+                </div>
                 <div className="individual-name-item">
                   <b>Samuel Kim</b>
                   <p className="individual-text-item">
@@ -114,7 +120,7 @@ export default class LearnMore extends Component {
                 </div>
               </div>
             </div>
-          </p>
+          </div>
         </div>
       </div>
     );
