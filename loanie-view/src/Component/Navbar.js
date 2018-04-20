@@ -46,14 +46,14 @@ export default class Navbar extends Component {
           <div className="container-fluidA">
             <div className="navbar-headerA">
               <Link to="/">
-                <h1 className="App-title-item">Loanie</h1>
+                <h1 className="Nav-title-item">Loanie</h1>
               </Link>
             </div>
-            <ul className="App-signin-container">
-              <Button outline color="info" className="App-signup-item" onClick={this.login}>
+            <ul className="Nav-signin-container">
+              <Button outline color="info" className="Nav-signup-item" onClick={this.login}>
                 Login
               </Button>
-              <Button outline color="info" className="App-signup-item" onClick={this.signin}>
+              <Button outline color="info" className="Nav-signup-item" onClick={this.signin}>
                 Sign Up
               </Button>
             </ul>
@@ -67,14 +67,14 @@ export default class Navbar extends Component {
         <div className="container-fluidA">
           <div className="navbar-headerA">
             <Link to="/">
-              <h1 className="App-title-item">Loanie</h1>
+              <h1 className="Nav-title-signedin">Loanie</h1>
             </Link>
           </div>
-          <ul className="App-signin-container">
+          <ul className="Nav-signin-container">
             <Button
               outline
               color="info"
-              className="App-signup-item"
+              className="Nav-signup-item"
               onClick={this.logout}
               to="/login_user"
             >
