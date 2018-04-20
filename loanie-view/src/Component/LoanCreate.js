@@ -22,6 +22,9 @@ export default class LoanCreate extends Component {
       loanType: 'new',
       amount: '',
       label: '',
+      invalidAmount: false,
+      invalidEmail: false,
+      invalidPhoneNumber: false,
     };
   }
 
@@ -53,11 +56,17 @@ export default class LoanCreate extends Component {
   };
 
   handleSmsChange = (event) => {
-    this.setState({ phoneNumber: event.target.value });
+    const contactNo = event.target.value.substring(0, 10);
+    this.setState({ phoneNumber: contactNo });
   };
 
   handleLabel = (e) => {
     this.setState({ label: e.target.value });
+  };
+
+  validateEmail = (email) => {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
   };
 
   sendNewLoanNotification = () => {
@@ -98,7 +107,30 @@ export default class LoanCreate extends Component {
       });
   };
 
-  sendNewLoanDB() {
+  sendNewLoanDB = (event) => {
+    event.preventDefault();
+
+    // Validate user input.
+    if (isNaN(this.state.amount)) {
+      this.setState({ invalidAmount: true });
+      return;
+    }
+    this.setState({ invalidAmount: false });
+
+    if (this.validateEmail(this.state.clientEmail) === false) {
+      this.setState({ invalidEmail: true });
+      return;
+    }
+    this.setState({ invalidEmail: false });
+
+    if(this.state.phoneNumber !== '') {
+      if (isNaN(this.state.phoneNumber) || this.state.phoneNumber.length < 10) {
+        this.setState({ invalidPhoneNumber: true });
+        return;
+      }
+    }
+    this.setState({ invalidPhoneNumber: false });
+
     const defaults = assignmentDefaults(this.state.loanType);
     const pdefaults = phaseDefaults(this.state.loanType);
     const body = {
@@ -120,9 +152,9 @@ export default class LoanCreate extends Component {
       });
   }
 
-  submitNewLoan = () => {
-    this.sendNewLoanDB();
-  };
+  // submitNewLoan = (event) => {
+  //   this.sendNewLoanDB();
+  // };
 
   handleDropDown = (e) => {
     this.setState({ loanType: e.target.value });
@@ -139,6 +171,22 @@ export default class LoanCreate extends Component {
         </div>
       );
     }
+
+    let invalidAmountDiv = null;
+    if (this.state.invalidAmount) {
+      invalidAmountDiv = <div className="invalid-user-input">*Invalid amount.</div>;
+    }
+
+    let invalidEmailDiv = null;
+    if (this.state.invalidEmail) {
+      invalidEmailDiv = <div className="invalid-user-input">*Invalid email.</div>;
+    }
+
+    let invalidPhoneNumberDiv = null;
+    if (this.state.invalidPhoneNumber) {
+      invalidPhoneNumberDiv = <div className="invalid-user-input">*Invalid Phone Number. Please enter a 10-digit number or keep it blank.</div>;
+    }
+
     return (
       <div className="LoanCreate">
         <Navbar />
@@ -176,6 +224,7 @@ export default class LoanCreate extends Component {
                 placeholder="$0.00"
                 onChange={this.handleAmountChange}
               />
+              {invalidAmountDiv}
               <br />
               <br />
               Borrower Email:{' '}
@@ -185,22 +234,24 @@ export default class LoanCreate extends Component {
                 name="email"
                 onChange={this.handleEmailChange}
               />
+              {invalidEmailDiv}
               <br />
               <br />
               Borrower Contact No.:{' '}
               <input
                 type="text"
-                placeholder="2223334444"
+                value={this.state.phoneNumber}
                 name="contactNo"
                 onChange={this.handleSmsChange}
               />
+              {invalidPhoneNumberDiv}
               <br />
               <br />
               Custom Label: <input type="text" name="text" onChange={this.handleLabel} />
               <br />
             </fieldset>
           </form>
-          <button onClick={this.submitNewLoan}>Submit</button>
+          <button onClick={this.sendNewLoanDB}>Submit</button>
         </div>
       </div>
     );

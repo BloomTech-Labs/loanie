@@ -49,8 +49,7 @@ export default class BorrowerSettings extends Component {
   }
 
   handleTextAlerts = () => {
-    const toggledValue = !this.state.acceptTexts;
-    this.setState({ acceptTexts: toggledValue });
+    this.setState({ acceptText: !this.state.acceptText });
   };
 
   handleEmailAlerts = () => {
@@ -109,7 +108,6 @@ export default class BorrowerSettings extends Component {
     }
     this.setState({ invalidCheckBoxSelection: false });
 
-    console.log('acceptTexts:', this.state.acceptTexts);
     const userInfo = {
       name: this.state.name,
       email: this.state.email,
@@ -165,13 +163,13 @@ export default class BorrowerSettings extends Component {
 
     let invalidPhoneNumberDiv = null;
     if (this.state.invalidPhoneNumber) {
-      invalidPhoneNumberDiv = <div className="invalid-user-input">*Invalid Phone Number</div>;
+      invalidPhoneNumberDiv = <div className="invalid-user-input">*Invalid Phone Number. Please enter 10-digit number.</div>;
     }
 
     let invalidCheckBoxesDiv = null;
     if (this.state.invalidCheckBoxSelection) {
       invalidCheckBoxesDiv = (
-        <div className="invalid-user-input">*Please select at least one type of </div>
+        <div className="invalid-user-input">*Please select at least one form of notification.</div>
       );
     }
     return (
@@ -239,7 +237,7 @@ export default class BorrowerSettings extends Component {
               <div>
                 <input
                   type="checkbox"
-                  name="acceptEmail"
+                  name="acceptEmails"
                   checked={this.state.acceptEmails}
                   onChange={this.handleEmailAlerts}
                 />{' '}
