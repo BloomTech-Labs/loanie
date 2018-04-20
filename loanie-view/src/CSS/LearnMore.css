@@ -48,23 +48,28 @@
 }
 
 .individual-about-container{
-	
-	margin-bottom: 1em;
 	display: flex;
+	margin-bottom: 1em;
 }
-.individual-picture-item {
-	vertical-align: bottom;
+.individual-picture-container {
 	width:7.5em;
 	height:7.5em;
 	margin-right: 1em;
 }
+.individual-picture-item {
+	vertical-align: middle;
+	width:7.4em;
+	height:7.4em;
+	margin-top: 0.5em;
+	margin-left: 0.5em;
+}
 .individual-text-item {	
-
 	font-size: 0.6em;
 	font-family: Georgia, 'Times New Roman', Times, serif;
 	font-weight: bold;
 }
 .individual-name-item {
+	margin-top: 0.3em;
 	font-size: 1em;
 }
 .individual-picture-crop {
@@ -116,8 +121,8 @@
 		background-size: 150% 100%;
 	}
 	.Learn-header {
-		margin-top: 3.5em;
-		font-size: 35px;
+		margin-top: 5em;
+		font-size: 30px;
 	}
 	
 	.Learn-text-list {
@@ -142,8 +147,13 @@
 	}
 }
 @media all and (max-width: 400px) {
+	
 	.LearnMore {
 		background-size: 160% 100%;
+	}
+	.Learn-header {
+		margin-top: 5.5em;
+		font-size: 25px;
 	}
 	.Learn-text-list {
 		font-size: 16px;
@@ -159,6 +169,9 @@
 	}
 }
 @media all and (max-width: 320px) {
+	.AboutUs-header {
+		font-size: 20px;
+	}
 	.LearnMore {
 		background-size: 250% 100%;
 	}
@@ -166,5 +179,9 @@
 		font-size: 0.3em;
 		font-family: Georgia, 'Times New Roman', Times, serif;
 		font-weight: bold;
+	}
+	.individual-picture-item {
+		width:6em;
+		height:6em;
 	}
 }

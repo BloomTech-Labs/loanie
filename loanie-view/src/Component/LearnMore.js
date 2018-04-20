@@ -31,7 +31,7 @@ export default class LearnMore extends Component {
                 process.
               </b>
             </p>
-            <p className="Learn-text-list">
+            <div className="Learn-text-list">
               <ul>
                 <li className="Learn-text-item">
                   <b>No more phone tag.</b>
@@ -60,21 +60,23 @@ export default class LearnMore extends Component {
                   acknowledge the completion of each assignment.
                 </b>
               </p>
-            </p>
+            </div>
           </div>
         </div>
         <div>
           <h1 className="AboutUs-header">About Us</h1>
         </div>
         <div className="Learn-text-container">
-          <p className="Learn-text-item">
+          <div className="Learn-text-item">
             <div className="AboutUs-container">
               <div className="individual-about-container">
-                <img
-                  className="individual-picture-item"
-                  src="https://s3.us-east-2.amazonaws.com/djangorpg/joshua.jpg"
-                  alt="Joshua_Hall"
-                />
+                <div className="individual-picture-container">
+                  <img
+                    className="individual-picture-item"
+                    src="https://s3.us-east-2.amazonaws.com/djangorpg/joshua.jpg"
+                    alt="Joshua_Hall"
+                  />
+                </div>
                 <div className="individual-name-item">
                   <b>Joshua Hall</b>
                   <p className="individual-text-item">
@@ -90,13 +92,13 @@ export default class LearnMore extends Component {
                 </div>
               </div>
               <div className="individual-about-container">
-                <img
-                  className="individual-picture-item"
-                  width="180px"
-                  height="180px"
-                  src="https://s3.us-east-2.amazonaws.com/djangorpg/rashmi.jpg"
-                  alt="Rashmi_Baheti"
-                />
+                <div className="individual-picture-container">
+                  <img
+                    className="individual-picture-item"
+                    src="https://s3.us-east-2.amazonaws.com/djangorpg/rashmi.jpg"
+                    alt="Rashmi_Baheti"
+                  />
+                </div>
                 <div className="individual-name-item">
                   <b>Rashmi Baheti</b>
                   <p className="individual-text-item">
@@ -110,11 +112,13 @@ export default class LearnMore extends Component {
                 </div>
               </div>
               <div className="individual-about-container">
-                <img
-                  className="individual-picture-item"
-                  src="https://s3.us-east-2.amazonaws.com/djangorpg/samuel.jpg"
-                  alt="Samuel_Kim"
-                />
+                <div className="individual-picture-container">
+                  <img
+                    className="individual-picture-item"
+                    src="https://s3.us-east-2.amazonaws.com/djangorpg/samuel.jpg"
+                    alt="Samuel_Kim"
+                  />
+                </div>
                 <div className="individual-name-item">
                   <b>Samuel Kim</b>
                   <p className="individual-text-item">
@@ -130,7 +134,7 @@ export default class LearnMore extends Component {
                 </div>
               </div>
             </div>
-          </p>
+          </div>
         </div>
       </div>
     );
