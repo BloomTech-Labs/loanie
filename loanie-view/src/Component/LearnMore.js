@@ -37,27 +37,24 @@ export default class LearnMore extends Component {
                   <b>No more phone tag.</b>
                 </li>
                 <li>
-                  <b>
-                    No more wondering if you sent the correct document or if your documents were
-                    accepted.
-                  </b>
+                  <b>No more wondering if the correct document was sent or accepted.</b>
                 </li>
                 <li className="Learn-text-item">
-                  <b>No more conflicting schedules slowing you down.</b>
+                  <b>No more conflicting schedules slowing things down.</b>
                 </li>
                 <li className="Learn-text-item">
                   <b>
-                    Loanie is here 24 hours a day, 7 days a week to track every step of your
-                    mortgage process so you can relax and enjoy life.
+                    Loanie is here 24 hours a day, 7 days a week to track every step of the mortgage
+                    process so everyone can relax and enjoy life.
                   </b>
                 </li>
               </ul>
               <p className="Learn-text-center">
                 <b>
-                  Loanie breaks the mortgage process down into phases. In each phase your loan
-                  officer provides a simple list of assignments. As each phase is completed you
-                  receive an optional text or email letting you know your loan officer has
-                  acknowledge the completion of each assignment.
+                  Loanie breaks the mortgage process down into phases. In each phase the loan
+                  officer provides a simple list of assignments. As each phase is completed the
+                  borrower receives an optional text or email letting them know their loan officer
+                  has acknowledged the completion of each phase.
                 </b>
               </p>
             </p>
@@ -70,11 +67,13 @@ export default class LearnMore extends Component {
           <p className="Learn-text-item">
             <div className="AboutUs-container">
               <div className="individual-about-container">
-                <img
-                  className="individual-picture-item"
-                  src="https://s3.us-east-2.amazonaws.com/djangorpg/joshua.jpg"
-                  alt="Joshua_Hall"
-                />
+                <div>
+                  <img
+                    className="individual-picture-item"
+                    src="https://s3.us-east-2.amazonaws.com/djangorpg/joshua.jpg"
+                    alt="Joshua_Hall"
+                  />
+                </div>
                 <div className="individual-name-item">
                   <b>Joshua Hall</b>
                   <p className="individual-text-item">
@@ -90,13 +89,15 @@ export default class LearnMore extends Component {
                 </div>
               </div>
               <div className="individual-about-container">
-                <img
-                  className="individual-picture-item"
-                  width="180px"
-                  height="180px"
-                  src="https://s3.us-east-2.amazonaws.com/djangorpg/rashmi.jpg"
-                  alt="Rashmi_Baheti"
-                />
+                <div>
+                  <img
+                    className="individual-picture-item"
+                    width="180px"
+                    height="180px"
+                    src="https://s3.us-east-2.amazonaws.com/djangorpg/rashmi.jpg"
+                    alt="Rashmi_Baheti"
+                  />
+                </div>
                 <div className="individual-name-item">
                   <b>Rashmi Baheti</b>
                   <p className="individual-text-item">
@@ -110,11 +111,13 @@ export default class LearnMore extends Component {
                 </div>
               </div>
               <div className="individual-about-container">
-                <img
-                  className="individual-picture-item"
-                  src="https://s3.us-east-2.amazonaws.com/djangorpg/samuel.jpg"
-                  alt="Samuel_Kim"
-                />
+                <div>
+                  <img
+                    className="individual-picture-item"
+                    src="https://s3.us-east-2.amazonaws.com/djangorpg/samuel.jpg"
+                    alt="Samuel_Kim"
+                  />
+                </div>
                 <div className="individual-name-item">
                   <b>Samuel Kim</b>
                   <p className="individual-text-item">
