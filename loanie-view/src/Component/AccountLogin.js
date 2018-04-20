@@ -9,11 +9,12 @@ import firebase from './Firebase';
 // import { changeTokenId } from '../Actions';
 import '../CSS/AccountLogin.css';
 
-const sendToken = (tokenId, sendEmail) => {
+const sendToken = (tokenId, sendEmail, name) => {
   // setter
   console.log('set sessionStorage id and email', tokenId, sendEmail);
   sessionStorage.setItem('tokenId', tokenId);
   sessionStorage.setItem('email', sendEmail);
+  sessionStorage.setItem('name', name);
   // console.log('Inside sendToken(), this.props: ', this.props);
   // Change token in Redux state.
   // this.props.dispatch(changeTokenId(tokenId));
@@ -26,6 +27,7 @@ const sendToken = (tokenId, sendEmail) => {
     .post(`${base}/auth`, data)
     .then((res) => {
       let type = res.data.userType;
+      console.log('userType', type);
       if (type === 'managerUser') {
         if (res.data.subExp <= moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')) {
           console.log('expired!');
@@ -57,6 +59,7 @@ const sendToken = (tokenId, sendEmail) => {
       }
     })
     .catch((err) => {
+      window.location = '/new_account';
       throw err;
     });
   if (sessionStorage.getItem('userType') === 'standardUser') {
@@ -80,7 +83,8 @@ const uiConfig = {
       firebase.auth().onAuthStateChanged((user) => {
         console.log('got the ID!!', user.uid);
         console.log('user email', user.email);
-        sendToken(user.uid, user.email);
+        console.log('fb user', user);
+        sendToken(user.uid, user.email, user.displayName);
       });
     },
   },

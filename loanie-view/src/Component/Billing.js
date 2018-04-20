@@ -49,7 +49,7 @@ class Billing extends Component {
     const body = {
       loanPlan: this.state.loanPlan,
       stripeToken: this.state.stripeToken,
-      email: this.state.email,
+      email: sessionStorage.getItem('email'),
     };
     axios
       .post(`${base}/stripe`, body)
@@ -103,7 +103,7 @@ class Billing extends Component {
         console.log('Success response: ', res);
         console.log('email', sessionStorage.getItem('email'), 'elevate email', this.state.email);
         console.log('current user type', sessionStorage.getItem('userType'));
-        if (sessionStorage.getItem('email') === this.state.email) {
+        if (sessionStorage.getItem('email') === this.state.email || sessionStorage.getItem('userType') === 'managerUser') {
           sessionStorage.setItem('userType', 'managerUser');
           window.location = '/open_loans';
         } else {

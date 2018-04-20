@@ -253,6 +253,7 @@ export default class ClientSelectedLoan extends Component {
     const user = this.state.userType;
     let loanRoute = '';
     let progressBarStyle = {};
+
     if (this.state.totalPhases.length === 5) {
       progressBarStyle = { marginLeft: '8.5em' };
     } else if (this.state.totalPhases.length === 6) {
