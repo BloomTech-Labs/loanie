@@ -21,10 +21,9 @@ server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 
 mongoose.Promise = global.Promise;
-// mongoose.connect(process.env.MONGOLAB_MAROON_URI);
 mongoose
-  /// .connect(process.env.MONGOLAB_MAROON_URI)
-  .connect("mongodb://localhost:27017/loanie")
+  .connect(process.env.MONGOLAB_MAROON_URI)
+  // .connect("mongodb://localhost:27017/loanie")
   .then(function(db) {
     console.log("All your dbs are belong to us!");
     server.listen(port, function() {
