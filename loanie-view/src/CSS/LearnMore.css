@@ -121,8 +121,8 @@
 		background-size: 150% 100%;
 	}
 	.Learn-header {
-		margin-top: 3.5em;
-		font-size: 35px;
+		margin-top: 5em;
+		font-size: 30px;
 	}
 	
 	.Learn-text-list {
@@ -147,8 +147,13 @@
 	}
 }
 @media all and (max-width: 400px) {
+	
 	.LearnMore {
 		background-size: 160% 100%;
+	}
+	.Learn-header {
+		margin-top: 5.5em;
+		font-size: 25px;
 	}
 	.Learn-text-list {
 		font-size: 16px;
@@ -164,6 +169,9 @@
 	}
 }
 @media all and (max-width: 320px) {
+	.AboutUs-header {
+		font-size: 20px;
+	}
 	.LearnMore {
 		background-size: 250% 100%;
 	}
