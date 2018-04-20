@@ -64,8 +64,8 @@ class AccountCreation extends Component {
     event.preventDefault();
 
     // Validate user input.
-    if(this.state.phoneNumber !== '') {
-      if (isNaN(this.state.phoneNumber) || (this.state.phoneNumber.length < 10)) {
+    if (this.state.phoneNumber !== '') {
+      if (isNaN(this.state.phoneNumber) || this.state.phoneNumber.length < 10) {
         this.setState({ invalidPhoneNumber: true });
         return;
       }
@@ -99,7 +99,11 @@ class AccountCreation extends Component {
     let invalidPhoneNumberDiv = null;
     console.log("invalidPhoneNumberDiv");
     if (this.state.invalidPhoneNumber) {
-      invalidPhoneNumberDiv = <div className="invalid-user-input">*Invalid phone number. Please enter a 10-digit number or keep it blank.</div>;
+      invalidPhoneNumberDiv = (
+        <div className="invalid-user-input">
+          *Invalid phone number. Please enter a 10-digit number or keep it blank.
+        </div>
+      );
     }
 
     const token = sessionStorage.getItem('tokenId');
@@ -141,29 +145,30 @@ class AccountCreation extends Component {
             <form className="Create-form-container">
               <fieldset>
                 <legend>Additional information:</legend>
-                Mobile Phone: 
-                <input 
-                  type="text" 
-                  value={this.state.phoneNumber} 
-                  onChange={this.handlePhoneNumber} 
+                Mobile Phone:
+                <input
+                  type="text"
+                  value={this.state.phoneNumber}
+                  onChange={this.handlePhoneNumber}
                 />
                 {invalidPhoneNumberDiv}
                 <br />
                 <br />
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   name="acceptTexts"
                   checked={this.state.acceptTexts}
-                  onChange={this.handleTextAlerts} 
-                /> 
-                I would like to recieve TEXT notifications about my loan 
-                <br/>
-                <input 
-                  type="checkbox" 
-                  name="acceptEmails" 
+                  onChange={this.handleTextAlerts}
+                />
+                I would like to recieve TEXT notifications about my loan
+                <br />
+                <input
+                  type="checkbox"
+                  name="acceptEmails"
                   checked={this.state.acceptEmails}
-                  onChange={this.handleEmailAlerts} /> I
-                would like to recieve EMAIL notifications about my loan<br />
+                  onChange={this.handleEmailAlerts}
+                />{' '}
+                I would like to recieve EMAIL notifications about my loan<br />
                 <br />
                 <button onClick={this.sendToDB}>Submit</button>
               </fieldset>

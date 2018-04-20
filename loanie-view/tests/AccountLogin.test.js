@@ -8,8 +8,8 @@ configure({ adapter: new Adapter() });
 const wrapper = shallow(<Accountlogin />);
 
 describe('<Accountlogin />', () => {
-  it('should have one links', () => {
-    expect(wrapper.find('Link')).have.length(1);
+  it('should have 2 div tag elements', () => {
+    expect(wrapper.find('div')).have.length(2);
   });
   it('should have a Navbar in the webpage', () => {
     expect(wrapper.find('Navbar')).to.have.length(1);

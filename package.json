@@ -8,7 +8,7 @@
     "npm": "4.6.1"
   },
   "scripts": {
-    "test": "jasmine tests/*.js",
+    "test": "jasmine loanie-api/tests/*.js",
     "start": "node server.js",
     "heroku-postbuild": "cd loanie-view/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
