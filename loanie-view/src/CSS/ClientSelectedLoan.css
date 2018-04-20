@@ -1,5 +1,8 @@
 .ClientLoan-title-container {
-  text-align: center;
+  text-align: left;
+  margin-left: 1.3em;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 .ClientLoan-container {
   display: flex;
