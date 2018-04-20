@@ -199,6 +199,15 @@ export default class ClientSelectedLoan extends Component {
       });
   }
 
+  editPhase = () => {
+    if (this.state.userType === 'managerUser') {
+      return (
+        <Link to={`/edit_phase/${this.state.phaseId}-${this.state.loanId}+`}>{'  '}Edit</Link>
+      );
+    }
+    return (<div />);
+  }
+
   sendNewLoanNotification = () => {
     // axios request to get client name
     const request = { email: this.state.clientEmail };
@@ -359,7 +368,7 @@ export default class ClientSelectedLoan extends Component {
         </div>
         <div className="ClientLoan-phase-container">
           <Card>
-            <CardHeader><h5><b>Phase {this.state.phaseTitleNumber}</b><Link to={`/edit_phase/${this.state.phaseId}-${this.state.loanId}+`}>{'  '}Edit</Link></h5>
+            <CardHeader><h5><b>Phase {this.state.phaseTitleNumber}</b>{this.editPhase()}</h5>
             </CardHeader>
             <CardBody>
               <p className="ClientLoan-phase-item">
