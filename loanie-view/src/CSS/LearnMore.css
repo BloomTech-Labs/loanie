@@ -85,6 +85,9 @@
 	.Learn-text-item {
 		font-size: 22px;
 	}
+	.Learn-text-center {
+		font-size: 22px;
+	}
 	.AboutUs-header {
 		font-size: 50px;
 	}
@@ -98,6 +101,9 @@
 		font-size: 19px;
 	}
 	.Learn-text-item {
+		font-size: 19px;
+	}
+	.Learn-text-center {
 		font-size: 19px;
 	}
 	.AboutUs-header {
@@ -126,6 +132,9 @@
 		font-size: 18px;
 		margin-top: 2em;
 	}
+	.Learn-text-center {
+		font-size: 18px;
+	}
 
 	.AboutUs-header {
 		margin-top: 1em;
@@ -140,6 +149,9 @@
 		font-size: 16px;
 	}
 	.Learn-text-item {
+		font-size: 16px;
+	}
+	.Learn-text-center {
 		font-size: 16px;
 	}
 	.AboutUs-header {
