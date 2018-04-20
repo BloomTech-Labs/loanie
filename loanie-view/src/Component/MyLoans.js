@@ -64,7 +64,6 @@ export default class MyLoans extends Component {
     }
     // renders if loan list is not empty
     if (this.state.loanList.length !== 0) {
-      console.log('loanList', this.state.loanList);
       if (this.state.loanList.length === 1) {
         const url = `my_loan/${this.state.loanList[0]._id}`;
         window.location = url;
