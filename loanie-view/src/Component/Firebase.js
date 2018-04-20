@@ -4,7 +4,7 @@ require('firebase/auth');
 // Initialize Firebase
 
 const config = {
-  apiKey: 'AIzaSyBUytt2TnjQ7Zso0GqnhQPctglDlcVqfdw',
+  apiKey: 'AIzaSyBUytt2TnjQ7Zso0GqnhQPctglDlcVqfdw', // add new api key to env
   authDomain: 'loanie-web.firebaseapp.com',
   databaseURL: 'https://loanie-web.firebaseio.com',
   projectId: 'loanie-web',
