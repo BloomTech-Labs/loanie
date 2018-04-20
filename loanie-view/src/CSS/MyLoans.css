@@ -9,10 +9,12 @@
 }
 
 .MyLoans-loancard {
-  width: 12em;
-  height: 14em;
-  margin-left:1em;
-  text-align: center;
+  width: 33.85em;
+  height: 12em;
+  margin-left:0.3em;
+  margin-right: 0.7em;
+  margin-bottom: 0.83em;
+  text-align: left;
 }
 
 .MyLoans-borrower-container {
@@ -43,13 +45,19 @@
 .MyLoans-text-item {
   height: 30em;
 }
+.MyLoans-header-text {
+  margin-top: 0.5em;
+  font-size: 1.2em;
+}
 .BreadCrumb {
   margin-top: 6em;
   margin-left: 1.2em;
 }
 .MyLoans-text {
-  font-size: 0.8em;
+  font-size: 0.9em;
+  margin-bottom: 0.5em;
 }
 .MyLoans-noloans-text {
   margin-left: 1.3em;
 }
+
