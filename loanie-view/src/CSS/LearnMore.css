@@ -16,7 +16,11 @@
 	font-size: 60px;
 	font-weight: bolder;
 }
-
+.Learn-text-center {
+	text-align: center;
+	font-size: 24px;
+	margin-bottom: 2em;
+}
 .Learn-text-container {
 	margin-top: 2em;
 	text-align: Left;
@@ -34,7 +38,7 @@
 .Learn-text-item {
 	text-align: left;
 	font-size: 24px;
-	margin-top: 2em;
+
 }
 .AboutUs-header {
 	margin-top: 2em;

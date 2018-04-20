@@ -25,7 +25,7 @@ export default class LearnMore extends Component {
             <h1 className="Learn-header">Why Loanie?</h1>
           </div>
           <div className="Learn-text-container">
-            <p className="Learn-text-item">
+            <p className="Learn-text-center">
               <b>
               Loanie is the cutting edge tool that takes all the guess work out of the mortgage
               process.
@@ -47,7 +47,7 @@ export default class LearnMore extends Component {
                   </b>
                 </li>
               </ul>
-              <p className="Learn-text-item">
+              <p className="Learn-text-center">
                 <b>
                 Loanie breaks the mortgage process down into phases. In each phase your loan officer
                 provides a simple list of assignments. As each phase is completed you receive an
